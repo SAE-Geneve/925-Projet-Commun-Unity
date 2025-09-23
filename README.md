@@ -1,7 +1,10 @@
 # 925-Projet-Commun-Unity
-Projet commun 2eme Année Promo 924 
+
+Projet commun 2eme Année Promo 924
 
 Matteo - Test Push  
-Hugo - Test Push    
-Jemo - Test Push    
-Sebastien - Test liaison Jira (KAN-19 - )   
+Hugo - Test Push  
+Jemo - Test Push  
+Maximilien - Test Push
+Sebastien - Test liaison Jira (KAN-19 - )
+

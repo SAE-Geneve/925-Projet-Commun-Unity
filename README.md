@@ -7,5 +7,5 @@ Jemo - Test Push
 Benjamin - Test Push    
 Sebastien - Test liaison Jira (KAN-19 - )   
 Maximilien - Test Push  
-Anthony - Test Push 
+Anthony - Test Push   
 Yanis - Test Push

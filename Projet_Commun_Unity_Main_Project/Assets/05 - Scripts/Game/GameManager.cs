@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Parameters")] 
-    [SerializeField] [Min(0)] private float _initialTimer = 30f;
-    
+    [Header("Parameters")] [SerializeField] [Min(0)]
+    private float _initialTimer = 30f;
+
     public static GameManager Instance { get; private set; }
-    
+
     public float Timer { get; private set; }
 
     private GameState _gameState;
-    
-    #region Initialization 
+
+    #region Initialization
 
     private void Awake()
     {
-        if(Instance && Instance != this) Destroy(gameObject);
+        if (Instance && Instance != this) Destroy(gameObject);
         else Instance = this;
     }
 
@@ -29,13 +29,15 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        switch (_gameState)
-        {
-            case GameState.Running: Timer -= Time.deltaTime; break;
-            case GameState.Paused: break;
-            case GameState.Cinematic: break;
-            case GameState.Disconnected: break;
-        }
+        if (_gameState == GameState.Running)
+            Timer -= Time.deltaTime;
+    }
+
+    public void PauseTrigger()
+    {
+        if (_gameState != GameState.Running || _gameState == GameState.Cinematic) return;
+
+        // TODO: Display pause panel
     }
 
     #region Deconnexion

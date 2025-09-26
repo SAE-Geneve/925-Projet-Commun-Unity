@@ -6,18 +6,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] [Min(0)] private float _initialTimer = 30f;
     
     public static GameManager Instance { get; private set; }
-
-    public enum State
-    {
-        Running,
-        Paused,
-        Cinematic,
-        Disconnected
-    }
     
     public float Timer { get; private set; }
 
-    private State _state;
+    private GameState _gameState;
     
     #region Initialization 
 
@@ -30,19 +22,19 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Timer = _initialTimer;
-        _state = State.Running;
+        _gameState = GameState.Running;
     }
 
     #endregion
 
     private void Update()
     {
-        switch (_state)
+        switch (_gameState)
         {
-            case State.Running: Timer -= Time.deltaTime; break;
-            case State.Paused: break;
-            case State.Cinematic: break;
-            case State.Disconnected: break;
+            case GameState.Running: Timer -= Time.deltaTime; break;
+            case GameState.Paused: break;
+            case GameState.Cinematic: break;
+            case GameState.Disconnected: break;
         }
     }
 
@@ -59,4 +51,12 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+}
+
+public enum GameState
+{
+    Running,
+    Paused,
+    Cinematic,
+    Disconnected
 }

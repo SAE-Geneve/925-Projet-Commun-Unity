@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public float Timer { get; private set; }
 
     private GameState _state;
+    private GameState _lastState;
     private GameContext _context;
 
     #region Initialization
@@ -24,7 +25,7 @@ public class GameManager : MonoBehaviour
     {
         Timer = _initialTimer;
         
-        _state = GameState.Playing;
+        _state = GameState.Menu;
         _context = GameContext.Hub;
     }
 
@@ -38,18 +39,45 @@ public class GameManager : MonoBehaviour
         //Debug.Log($"Timer: {Timer}");
     }
 
-    public void StartMission()
+    #region Game Context
+
+    public void StartGame()
     {
         
     }
 
+    public void StartMission()
+    {
+        if (_state != GameState.Playing && _context != GameContext.Hub)
+        {
+            Debug.LogWarning("Mission can only be started when game is playing in the hub");
+            return;
+        }
+
+        _context = GameContext.Mission;
+    }
+
+    #endregion
+
     public void PauseTrigger()
     {
-        if (_state != GameState.Playing 
-            && _state != GameState.Cinematic 
-            && _state != GameState.Paused) return;
+        if (_state == GameState.Paused)
+            Unpause();
+        else if (_state == GameState.Playing || _state == GameState.Cinematic)
+            Pause();
+    }
+    
+    private void Pause()
+    {
+        _lastState = _state;
+        _state = GameState.Paused;
+        Debug.Log($"Game paused (from {_lastState})");
+    }
 
-        // TODO: Display pause panel or stop pausing
+    private void Unpause()
+    {
+        _state = _lastState;
+        Debug.Log($"Game unpaused (back to {_state})");
     }
 
     #region Deconnexion

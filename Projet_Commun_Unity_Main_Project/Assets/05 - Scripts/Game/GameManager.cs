@@ -52,14 +52,13 @@ public class GameManager : MonoBehaviour
         _state = newState;
         Debug.Log($"Game State: {_state}");
     }
-
-    #region Game Context
+    
 
     public void StartGame()
     {
-
+        SwitchState(GameState.Playing);
     }
-
+    
     public void StartMission()
     {
         if (_state != GameState.Playing && _context != GameContext.Hub)
@@ -71,8 +70,6 @@ public class GameManager : MonoBehaviour
         _context = GameContext.Mission;
     }
 
-    #endregion
-
     #region Pause
 
     public void PauseTrigger()
@@ -81,6 +78,7 @@ public class GameManager : MonoBehaviour
             Unpause();
         else if (_state == GameState.Playing || _state == GameState.Cinematic)
             Pause();
+        else Debug.LogWarning("Can only pause when playing or cinematic");
     }
     
     private void Pause()
@@ -102,14 +100,14 @@ public class GameManager : MonoBehaviour
 
     public void OnPlayerDisconnected()
     {
-        _state = GameState.Disconnected;
+        SwitchState(GameState.Disconnected);
         // TODO: Handle when a player is disconnected
     }
 
     public void OnPlayerReconnected()
     {
         // TODO: Handle when the disconnected player reconnected
-        _state = GameState.Playing;
+        SwitchState(GameState.Playing);
     }
 
     public void OnDisconnectedTimeOut()
@@ -135,4 +133,9 @@ public enum GameContext
     Hub,
     Mission,
     LastMission
+}
+
+public enum GameMission
+{
+    
 }

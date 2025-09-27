@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     private GameState _state;
     private GameState _lastState;
     private GameContext _context;
+    
+    private Mission _currentMission;
 
     #region Initialization
 
@@ -53,6 +55,12 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Game State: {_state}");
     }
 
+    public void ResetGame()
+    {
+        Timer = _initialTimer;
+        _context = GameContext.Hub;
+    }
+
     public void StartGame()
     {
         SwitchState(GameState.Playing);
@@ -60,15 +68,33 @@ public class GameManager : MonoBehaviour
         // TODO: Spawn players in the Hub
     }
     
-    public void StartMission()
+    public void StartMission(Mission mission)
     {
-        if (_state != GameState.Playing && _context != GameContext.Hub)
+        if (_state != GameState.Playing || _context != GameContext.Hub)
         {
             Debug.LogWarning("Mission can only be started when game is playing in the hub");
             return;
         }
+        
+        _currentMission = mission;
+        _currentMission.OnMissionBegin();
 
         _context = GameContext.Mission;
+    }
+
+    public void StopMission()
+    {
+        // Check if it's playing and
+        if (_state != GameState.Playing || _context == GameContext.Hub)
+        {
+            Debug.LogWarning("Mission can only be stopped when game is playing in a mission");
+            return;
+        }
+        
+        _currentMission.Finish();
+        _currentMission = null;
+        
+        _context = GameContext.Hub;
     }
 
     #region Pause

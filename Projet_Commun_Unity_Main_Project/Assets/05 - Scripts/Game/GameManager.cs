@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         Timer = _initialTimer;
+        _currentMission = null;
         _context = GameContext.Hub;
     }
 

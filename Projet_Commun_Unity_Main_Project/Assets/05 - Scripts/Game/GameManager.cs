@@ -22,20 +22,27 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Timer = _initialTimer;
-        _gameState = GameState.Running;
+        _gameState = GameState.Playing;
     }
 
     #endregion
 
     private void Update()
     {
-        if (_gameState == GameState.Running)
+        if (_gameState == GameState.Playing)
             Timer -= Time.deltaTime;
+        
+        //Debug.Log($"Timer: {Timer}");
+    }
+
+    public void StartMission()
+    {
+        
     }
 
     public void PauseTrigger()
     {
-        if (_gameState != GameState.Running || _gameState == GameState.Cinematic) return;
+        if (_gameState != GameState.Playing || _gameState == GameState.Cinematic) return;
 
         // TODO: Display pause panel
     }
@@ -57,8 +64,17 @@ public class GameManager : MonoBehaviour
 
 public enum GameState
 {
-    Running,
+    Menu,
+    Lobby,
+    Playing,
     Paused,
     Cinematic,
     Disconnected
+}
+
+public enum GameContext
+{
+    Hub,
+    Mission,
+    LastMission
 }

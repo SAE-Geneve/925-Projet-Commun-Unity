@@ -25,7 +25,7 @@ public class Mission : MonoBehaviour
 
     public void OnMissionBegin()
     {
-        Debug.Log($"Mission {_name} beggined");
+        Debug.Log($"Mission {_name} began");
     }
 
     public void Finish()

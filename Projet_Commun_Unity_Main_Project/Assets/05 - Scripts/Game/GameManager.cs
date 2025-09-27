@@ -67,7 +67,9 @@ public class GameManager : MonoBehaviour
         
         // TODO: Spawn players in the Hub
     }
-    
+
+    #region Mission
+
     public void StartMission(Mission mission)
     {
         if (_state != GameState.Playing || _context != GameContext.Hub)
@@ -97,6 +99,8 @@ public class GameManager : MonoBehaviour
         _context = GameContext.Hub;
     }
 
+    #endregion
+    
     #region Pause
 
     public void PauseTrigger()

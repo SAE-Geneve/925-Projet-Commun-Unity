@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
         
         _state = GameState.Menu;
         _context = GameContext.Hub;
+        
+        Debug.Log($"Game State: {_state}");
     }
 
     #endregion
@@ -39,11 +41,23 @@ public class GameManager : MonoBehaviour
         //Debug.Log($"Timer: {Timer}");
     }
 
+    public void SwitchState(GameState newState)
+    {
+        if (newState == _state)
+        {
+            Debug.LogWarning($"Already in {_state} state, cannot change");
+            return;
+        }
+        
+        _state = newState;
+        Debug.Log($"Game State: {_state}");
+    }
+
     #region Game Context
 
     public void StartGame()
     {
-        
+
     }
 
     public void StartMission()
@@ -58,6 +72,8 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    #region Pause
 
     public void PauseTrigger()
     {
@@ -80,6 +96,8 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Game unpaused (back to {_state})");
     }
 
+    #endregion
+    
     #region Deconnexion
 
     public void OnPlayerDisconnected()

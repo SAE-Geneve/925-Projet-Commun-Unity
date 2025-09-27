@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
 
     public float Timer { get; private set; }
 
-    private GameState _gameState;
+    private GameState _state;
+    private GameContext _context;
 
     #region Initialization
 
@@ -22,14 +23,16 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Timer = _initialTimer;
-        _gameState = GameState.Playing;
+        
+        _state = GameState.Playing;
+        _context = GameContext.Hub;
     }
 
     #endregion
 
     private void Update()
     {
-        if (_gameState == GameState.Playing)
+        if (_state == GameState.Playing)
             Timer -= Time.deltaTime;
         
         //Debug.Log($"Timer: {Timer}");
@@ -42,21 +45,30 @@ public class GameManager : MonoBehaviour
 
     public void PauseTrigger()
     {
-        if (_gameState != GameState.Playing || _gameState == GameState.Cinematic) return;
+        if (_state != GameState.Playing 
+            && _state != GameState.Cinematic 
+            && _state != GameState.Paused) return;
 
-        // TODO: Display pause panel
+        // TODO: Display pause panel or stop pausing
     }
 
     #region Deconnexion
 
     public void OnPlayerDisconnected()
     {
+        _state = GameState.Disconnected;
         // TODO: Handle when a player is disconnected
     }
 
     public void OnPlayerReconnected()
     {
         // TODO: Handle when the disconnected player reconnected
+        _state = GameState.Playing;
+    }
+
+    public void OnDisconnectedTimeOut()
+    {
+        // TODO: Leave the game and go to the menu
     }
 
     #endregion

@@ -52,11 +52,12 @@ public class GameManager : MonoBehaviour
         _state = newState;
         Debug.Log($"Game State: {_state}");
     }
-    
 
     public void StartGame()
     {
         SwitchState(GameState.Playing);
+        
+        // TODO: Spawn players in the Hub
     }
     
     public void StartMission()
@@ -112,7 +113,7 @@ public class GameManager : MonoBehaviour
 
     public void OnDisconnectedTimeOut()
     {
-        // TODO: Leave the game and go to the menu
+        SwitchState(GameState.Menu); // Maybe make the scene transition and after that switch the state into "Menu"
     }
 
     #endregion
@@ -133,9 +134,4 @@ public enum GameContext
     Hub,
     Mission,
     LastMission
-}
-
-public enum GameMission
-{
-    
 }

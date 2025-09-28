@@ -1,19 +1,63 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Parameters")] [SerializeField] [Min(0)]
-    private float _initialTimer = 30f;
+    [Header("Parameters")] 
+    [Tooltip("The global timer initial time")]
+    [SerializeField] [Min(0)] private float _initialTimer = 90f;
+
+    [Tooltip("The initial time to wait when a player is disconnected")]
+    [SerializeField] [Min(0)] private float _initialDisconnectionTime = 60f;
 
     public static GameManager Instance { get; private set; }
 
-    public float Timer { get; private set; }
+    // Events
+    public event Action OnTimerUpdate;
+    public event Action OnDisconnectionTimerUpdate;
+    
+    // Getter/Setter
+    public float Timer
+    {
+        get => _timer;
+        private set
+        {
+            if (value <= 0)
+            {
+                _timer = 0;
+                Debug.Log("Game ended! Back to menu for the moment");
+                MenuReset();
+            }
+            else _timer = value;
+            OnTimerUpdate?.Invoke();
+        } 
+    }
 
+    public float DisconnectionTimer
+    {
+        get => _disconnectionTimer;
+        private set
+        {
+            if (value <= 0)
+            {
+                _disconnectionTimer = 0;
+                Debug.LogWarning("Players did not reconnect, back to menu");
+                MenuReset();
+            }
+            else _disconnectionTimer = value;
+            OnDisconnectionTimerUpdate?.Invoke();
+        }
+    }
+
+    // Members
     private GameState _state;
     private GameState _lastState;
     private GameContext _context;
     
     private Mission _currentMission;
+    
+    private float _timer;
+    private float _disconnectionTimer;
 
     #region Initialization
 
@@ -25,11 +69,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Timer = _initialTimer;
-        
-        _state = GameState.Menu;
-        _context = GameContext.Hub;
-        
+        ResetGame();
         Debug.Log($"Game State: {_state}");
     }
 
@@ -39,8 +79,8 @@ public class GameManager : MonoBehaviour
     {
         if (_state == GameState.Playing)
             Timer -= Time.deltaTime;
-        
-        //Debug.Log($"Timer: {Timer}");
+        else if (_state == GameState.Disconnected)
+            DisconnectionTimer -= Time.deltaTime;
     }
 
     public void SwitchState(GameState newState)
@@ -55,18 +95,43 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Game State: {_state}");
     }
 
+    #region Reset
+
+    private void MenuReset()
+    {
+        SwitchState(GameState.Menu);
+        ResetGame();
+    }
+
     public void ResetGame()
     {
         Timer = _initialTimer;
+        DisconnectionTimer = _initialDisconnectionTime;
+        
         _currentMission = null;
+        
         _context = GameContext.Hub;
     }
+
+    #endregion
+
 
     public void StartGame()
     {
         SwitchState(GameState.Playing);
         
         // TODO: Spawn players in the Hub
+    }
+
+    public void StartCinematic()
+    {
+        if (_state != GameState.Playing)
+        {
+            Debug.LogWarning($"Can only start cinematic when the game is in playing state");
+            return;
+        }
+        
+        SwitchState(GameState.Cinematic);
     }
 
     #region Mission
@@ -104,6 +169,10 @@ public class GameManager : MonoBehaviour
     
     #region Pause
 
+    /// <summary>
+    /// Triggered when the pause input is performed, it will resume the game
+    /// if it's already in pause state
+    /// </summary>
     public void PauseTrigger()
     {
         if (_state == GameState.Paused)
@@ -128,23 +197,42 @@ public class GameManager : MonoBehaviour
 
     #endregion
     
-    #region Deconnexion
+    #region Disconnection
 
+    /// <summary>
+    /// Triggered when a player is disconnected
+    /// </summary>
     public void OnPlayerDisconnected()
     {
+        if (_state != GameState.Playing && _state != GameState.Cinematic)
+        {
+            Debug.LogWarning($"Can only start the disconnection timer when the game is in playing/cinematic state");    
+            return;
+        }
+        
+        _lastState = _state;
         SwitchState(GameState.Disconnected);
         // TODO: Handle when a player is disconnected
+        
+        Debug.Log("One or multiple players have been disconnected");
     }
 
+    /// <summary>
+    /// All disconnected players reconnected before the timer is finished
+    /// </summary>
     public void OnPlayerReconnected()
     {
+        if (_state != GameState.Disconnected)
+        {
+            Debug.LogWarning("Can only reconnect when the game is in disconnected state");
+            return;
+        }
+            
         // TODO: Handle when the disconnected player reconnected
-        SwitchState(GameState.Playing);
-    }
-
-    public void OnDisconnectedTimeOut()
-    {
-        SwitchState(GameState.Menu); // Maybe make the scene transition and after that switch the state into "Menu"
+        SwitchState(_lastState);
+        DisconnectionTimer = _initialDisconnectionTime;
+        
+        Debug.Log("All players have been reconnected");
     }
 
     #endregion

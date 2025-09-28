@@ -169,6 +169,10 @@ public class GameManager : MonoBehaviour
     
     #region Pause
 
+    /// <summary>
+    /// Triggered when the pause input is performed, it will resume the game
+    /// if it's already in pause state
+    /// </summary>
     public void PauseTrigger()
     {
         if (_state == GameState.Paused)

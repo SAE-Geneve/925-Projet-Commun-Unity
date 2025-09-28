@@ -206,6 +206,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         
+        _lastState = _state;
         SwitchState(GameState.Disconnected);
         // TODO: Handle when a player is disconnected
         
@@ -224,7 +225,7 @@ public class GameManager : MonoBehaviour
         }
             
         // TODO: Handle when the disconnected player reconnected
-        SwitchState(GameState.Playing);
+        SwitchState(_lastState);
         DisconnectionTimer = _initialDisconnectionTime;
         
         Debug.Log("All players have been reconnected");

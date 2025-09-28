@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Grabbable : MonoBehaviour, IGrabbable
+public class Prop : MonoBehaviour, IGrabbable
 {
     private Rigidbody _rb;
     
@@ -16,13 +16,13 @@ public class Grabbable : MonoBehaviour, IGrabbable
     }
 
 
-    public void Grabbable()
+    public virtual void Grabbed()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Grabbing");
     }
 
-    public void Dropped()
+    public virtual void Dropped()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Dropped");
     }
 }

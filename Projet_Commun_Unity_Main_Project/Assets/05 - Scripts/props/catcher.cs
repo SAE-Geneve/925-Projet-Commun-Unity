@@ -8,6 +8,7 @@ public class catcher : MonoBehaviour
 {
     
     [SerializeField] private Transform catchPoint;
+    private bool isHolding = false;
     
     private Grabbable _catchedGrabbable;
     private Rigidbody _catchedGrabbableRb;
@@ -26,9 +27,18 @@ public class catcher : MonoBehaviour
     public void CatchInput(InputAction.CallbackContext context)
     {
         if (context.performed)
-            CatchBox();
-        else if (context.canceled)
-            ReleaseBox();
+        {
+            if (!isHolding)
+            {
+                CatchBox();
+                isHolding = true;
+            }
+            else
+            {
+                ReleaseBox();
+                isHolding = false;
+            }
+        }
     }
     
     void CatchBox()

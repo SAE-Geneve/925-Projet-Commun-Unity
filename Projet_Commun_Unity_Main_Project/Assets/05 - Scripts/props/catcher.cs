@@ -2,9 +2,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
-public class catcher : MonoBehaviour
+public class Catcher : MonoBehaviour
 {
     
     [SerializeField] private Transform catchPoint;

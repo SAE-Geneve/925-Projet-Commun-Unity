@@ -5,11 +5,11 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "SelfHitPlayer", story: "[self] hit [player]", category: "Action", id: "5d0d270614a901b06627ec9175fb0b4e")]
+[NodeDescription(name: "SelfHitPlayer", story: "[self] hit player", category: "Action", id: "5d0d270614a901b06627ec9175fb0b4e")]
 public partial class SelfHitPlayerAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
-    [SerializeReference] public BlackboardVariable<GameObject> Player;
+
     protected override Status OnStart()
     {
         return Status.Running;
@@ -17,23 +17,27 @@ public partial class SelfHitPlayerAction : Action
 
     protected override Status OnUpdate()
     {
-        if (Self == null || Self.Value == null || Player == null || Player.Value == null)
+        if (Self == null || Self.Value == null)
             return Status.Failure;
-        
-        Collider selfCollider = Self.Value.GetComponent<Collider>();
-        Collider playerCollider = Player.Value.GetComponent<Collider>();
 
-        if (selfCollider == null || playerCollider == null)
+        Collider selfCollider = Self.Value.GetComponent<Collider>();
+        if (selfCollider == null)
             return Status.Failure;
         
-        if (selfCollider.bounds.Intersects(playerCollider.bounds))
+        Collider[] hits = Physics.OverlapBox(
+            selfCollider.bounds.center,
+            selfCollider.bounds.extents,
+            Self.Value.transform.rotation
+        );
+
+        foreach (Collider hit in hits)
         {
-            return Status.Success;
+            if (hit.CompareTag("Player"))
+                return Status.Success;
         }
+
         return Status.Running;
     }
 
-    protected override void OnEnd()
-    {
-    }
+    protected override void OnEnd() { }
 }

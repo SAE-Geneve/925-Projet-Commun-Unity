@@ -3,13 +3,20 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    private CharacterMovement _characterMovement;
+    private PlayerMovement _playerMovement;
 
     private void Start()
     {
-        _characterMovement = GetComponent<CharacterMovement>();
+        _playerMovement = GetComponent<PlayerMovement>();
     }
 
-    public void OnMove(InputAction.CallbackContext context) => _characterMovement.MoveInput = context.ReadValue<Vector2>();
-    public void OnJump(InputAction.CallbackContext context) => _characterMovement.IsJumping = context.ReadValueAsButton();
+    public void OnMove(InputAction.CallbackContext context) => _playerMovement.SetMovement(context.ReadValue<Vector2>());
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _playerMovement.Dash();
+        }
+    }
 }

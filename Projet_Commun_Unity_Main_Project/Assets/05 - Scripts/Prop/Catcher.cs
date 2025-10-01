@@ -106,7 +106,7 @@ public class Catcher : MonoBehaviour
                 source.weight = 1;
                 pc.AddSource(source);
                 
-               // _grabbed.GetComponent<Rigidbody>().isKinematic = true;
+               _grabbed.GetComponent<Rigidbody>().isKinematic = true;
                var rb = _grabbed.GetComponent<Rigidbody>();
                if (rb != null) rb.isKinematic = true;
                 return;

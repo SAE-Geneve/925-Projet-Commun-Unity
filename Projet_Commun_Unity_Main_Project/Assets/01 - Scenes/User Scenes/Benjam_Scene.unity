@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cae627ec9714754e8407ea6fcf3db60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rb: {fileID: 0}
 --- !u!54 &46043505
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -536,7 +537,7 @@ Transform:
   m_GameObject: {fileID: 387725998}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.6814923, y: 0.76, z: -2.96}
+  m_LocalPosition: {x: 7.93, y: 0.76, z: -2.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -554,6 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89bfc836febcb7e4ba319a05e5d86449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rb: {fileID: 0}
 --- !u!1 &540918784
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,10 +798,10 @@ GameObject:
   - component: {fileID: 1639710017}
   - component: {fileID: 1639710016}
   - component: {fileID: 1639710015}
-  - component: {fileID: 1639710014}
   - component: {fileID: 1639710020}
   - component: {fileID: 1639710021}
   - component: {fileID: 1639710022}
+  - component: {fileID: 1639710023}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -807,24 +809,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1639710014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1639710013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d08734480d070ea44bcb16e26f79c516, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  jumpHeight: 1.5
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
-  groundCheckDistance: 0.4
 --- !u!114 &1639710015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,9 +1031,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catchPoint: {fileID: 1727733926}
-  _maxThrowForce: 20
-  _chargeSpeed: 10
-  holdThreshold: 0.25
+--- !u!114 &1639710023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639710013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75a22c90e7e448c3a96071cfe2b51c93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  dashForce: 5
+  dashDuration: 5
 --- !u!1 &1727733925
 GameObject:
   m_ObjectHideFlags: 0

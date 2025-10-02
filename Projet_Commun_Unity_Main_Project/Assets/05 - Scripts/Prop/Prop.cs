@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Prop : MonoBehaviour, IGrabbable
 {
-    private Rigidbody _rb;
+    public Rigidbody _rb;
     
     void Start()
     {
@@ -16,14 +16,14 @@ public class Prop : MonoBehaviour, IGrabbable
     }
 
 
-    public virtual void Grabbed()
+    public virtual void Grabbed(Transform grabbedBy)
     {
-        Debug.Log("Grabbing");
+        //Debug.Log("Grabbing");
         //if (_rb != null) _rb.isKinematic = true;
     }
 
     public virtual void Dropped()
     {
-        Debug.Log("Dropped");
+        //Debug.Log("Dropped");
     }
 }

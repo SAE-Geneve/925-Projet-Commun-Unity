@@ -16,7 +16,7 @@ public class Prop : MonoBehaviour, IGrabbable
     }
 
 
-    public virtual void Grabbed(Transform grabbedBy)
+    public virtual void Grabbed(Transform grabber)
     {
         //Debug.Log("Grabbing");
         //if (_rb != null) _rb.isKinematic = true;

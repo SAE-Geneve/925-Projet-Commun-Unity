@@ -5,10 +5,10 @@ public class ThrowableProp : Prop
 
     private Transform _originalParent;
     
-    public override void Grabbed(Transform grabbedBy)
+    public override void Grabbed(Transform grabber)
     {
         _originalParent = transform.parent;
-        transform.SetParent(grabbedBy);
+        transform.SetParent(grabber);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         

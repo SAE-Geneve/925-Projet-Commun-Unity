@@ -1,25 +1,15 @@
 using UnityEngine;
 
-public class PushPullProp : MonoBehaviour
+public class PushPullProp : Prop
 {
     private Transform player;
-    void Start()
+
+    public override void Grabbed(Catcher catcher)
     {
-        
+        // player = grabber;
     }
 
-    
-    void Update()
-    {
-        
-    }
-    
-    public virtual void Grabbed(Transform grabber)
-    {
-        player = grabber;
-    }
-
-    public virtual void Dropped()
+    public override void Dropped()
     {
         player = null;
     }

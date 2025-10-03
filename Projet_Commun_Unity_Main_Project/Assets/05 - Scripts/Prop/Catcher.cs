@@ -1,37 +1,30 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 
 public class Catcher : MonoBehaviour
 {
+    public Transform CatchPoint;
     
-    [SerializeField] private Transform catchPoint;
     private IGrabbable _grabbed;
 
     public void CatchInput(InputAction.CallbackContext context)
     {
-        if (_grabbed != null)
-        {
-            _grabbed.Dropped();
-            _grabbed = null;
-        }
-        else
-        {
-            TryGrab();
-        }
+        if (_grabbed != null) _grabbed.Dropped();
+        else TryGrab();
     }
 
-    public void TryGrab()
+    private void TryGrab()
     {
-        Collider[] hits = Physics.OverlapSphere(catchPoint.position, .1f);
+        Collider[] hits = Physics.OverlapSphere(CatchPoint.position, .1f);
+        
         foreach (var hit in hits)
         {
             IGrabbable grabbable = hit.GetComponent<IGrabbable>();
-            grabbable.Grabbed(catchPoint);
+            grabbable.Grabbed(this);
             _grabbed = grabbable;
             break;
-            
         }
     }
+    
+    public void Reset() => _grabbed = null;
 }

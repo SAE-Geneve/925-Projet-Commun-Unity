@@ -1,10 +1,6 @@
-
-
-using UnityEngine;
-
 public interface IGrabbable
 {
-    void Grabbed(Transform grabber);
+    void Grabbed(Catcher catcher);
 
     void Dropped();
 }

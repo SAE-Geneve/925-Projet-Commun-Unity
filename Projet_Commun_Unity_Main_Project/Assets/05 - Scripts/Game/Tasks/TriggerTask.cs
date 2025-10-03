@@ -12,10 +12,13 @@ public class TriggerTask : GameTask
     private void OnTriggerEnter(Collider other)
     {
         if(!other.CompareTag(_taskTag) || _done) return;
+
+        if (other.TryGetComponent(out Prop prop) && prop.IsGrabbed)
+            prop.Dropped();
         
         Succeed();
         Destroy(other.gameObject);
-        _done = true;
+        // _done = true;
         
         Debug.Log($"Task {_taskName} done!");
     }

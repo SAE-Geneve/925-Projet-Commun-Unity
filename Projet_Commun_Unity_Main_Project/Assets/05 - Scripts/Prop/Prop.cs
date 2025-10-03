@@ -1,29 +1,45 @@
 using UnityEngine;
 
-public class Prop : MonoBehaviour, IGrabbable
+public class Prop: MonoBehaviour, IGrabbable
 {
-    public Rigidbody _rb;
+    private Transform _originalParent;
+    
+    private Rigidbody _rb;
+    private Catcher _catcher;
+    
+    public bool IsGrabbed { get; private set; }
     
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public virtual void Grabbed(Catcher catcher)
     {
+        IsGrabbed = true;
+        _originalParent = transform.parent;
+        transform.SetParent(catcher.CatchPoint);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
         
-    }
-
-
-    public virtual void Grabbed(Transform grabber)
-    {
-        //Debug.Log("Grabbing");
-        //if (_rb != null) _rb.isKinematic = true;
+        _catcher = catcher;
+        
+        if (_rb != null) _rb.isKinematic = true;
+        Debug.Log("Grabbed movable object");
     }
 
     public virtual void Dropped()
     {
-        //Debug.Log("Dropped");
+        transform.SetParent(_originalParent);
+        if(_rb != null) _rb.isKinematic = false;
+
+        if (_catcher)
+        {
+            _catcher.Reset();
+            _catcher = null;
+        }
+        
+        IsGrabbed = false;
+        Debug.Log("Dropped movable object");
     }
 }

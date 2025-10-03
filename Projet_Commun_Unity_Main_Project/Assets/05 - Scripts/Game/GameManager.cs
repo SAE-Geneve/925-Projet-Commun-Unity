@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     [Tooltip("The initial time to wait when a player is disconnected")]
     [SerializeField] [Min(0)] private float _initialDisconnectionTime = 60f;
 
+    [Tooltip("The maximal client satisfaction point we can get")]
+    [SerializeField] [Min(0)] private int _maxSatisfaction = 100;
+
     public static GameManager Instance { get; private set; }
 
     // Events
@@ -49,6 +52,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public int ClientSatisfaction
+    {
+        get => _clientSatisfaction;
+        set => _clientSatisfaction = Mathf.Clamp(value, 0, _maxSatisfaction);
+    }
+
     // Members
     private GameState _state;
     private GameState _lastState;
@@ -58,6 +67,8 @@ public class GameManager : MonoBehaviour
     
     private float _timer;
     private float _disconnectionTimer;
+
+    private int _clientSatisfaction;
 
     #region Initialization
 

@@ -25,6 +25,19 @@ public class Catcher : MonoBehaviour
             break;
         }
     }
+
+    public void TryInteract()
+    {
+        Collider[] hits = Physics.OverlapSphere(CatchPoint.position, .1f);
+        
+        foreach (var hit in hits)
+        {
+            if(!hit.TryGetComponent(out IInteractable interactable)) continue;
+            
+            interactable.Interact();
+            return;
+        }
+    }
     
     public void Reset() => _grabbed = null;
 }

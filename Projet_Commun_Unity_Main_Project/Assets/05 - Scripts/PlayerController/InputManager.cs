@@ -4,11 +4,15 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     private PlayerMovement _playerMovement;
-
+    private Catcher _catcher;
+    
     private void Start()
     {
         _playerMovement = GetComponent<PlayerMovement>();
+        _catcher = GetComponent<Catcher>();
     }
+
+    #region Input Events
 
     public void OnMove(InputAction.CallbackContext context) => _playerMovement.SetMovement(context.ReadValue<Vector2>());
 
@@ -19,4 +23,11 @@ public class InputManager : MonoBehaviour
             _playerMovement.Dash();
         }
     }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if(context.started) _catcher.TryInteract();
+    }
+
+    #endregion
 }

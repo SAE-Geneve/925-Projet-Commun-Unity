@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,31 +13,35 @@ public class Catcher : MonoBehaviour
         if (_grabbed != null) _grabbed.Dropped();
         else TryGrab();
     }
-
-    private void TryGrab()
+    
+    private void TryAction<T>(Action<T> onFound) where T : class
     {
-        Collider[] hits = Physics.OverlapSphere(CatchPoint.position, .1f);
-        
+        Collider[] hits = Physics.OverlapSphere(CatchPoint.position, .2f);
+    
         foreach (var hit in hits)
         {
-            IGrabbable grabbable = hit.GetComponent<IGrabbable>();
-            grabbable.Grabbed(this);
-            _grabbed = grabbable;
+            if (!hit.TryGetComponent(out T component)) continue;
+
+            onFound(component);
             break;
         }
+    }
+    
+    private void TryGrab()
+    {
+        TryAction<IGrabbable>(grabbable =>
+        {
+            grabbable.Grabbed(this);
+            _grabbed = grabbable;
+        });
     }
 
     public void TryInteract()
     {
-        Collider[] hits = Physics.OverlapSphere(CatchPoint.position, .1f);
-        
-        foreach (var hit in hits)
+        TryAction<IInteractable>(interactable =>
         {
-            if(!hit.TryGetComponent(out IInteractable interactable)) continue;
-            
             interactable.Interact();
-            return;
-        }
+        });
     }
     
     public void Reset() => _grabbed = null;

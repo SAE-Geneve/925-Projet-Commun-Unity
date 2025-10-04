@@ -14,7 +14,7 @@ public class CharacterMovement : MonoBehaviour
     protected Vector3 CamRight;
     
     
-    void Start()
+    protected void Start()
     {
         Rb = GetComponent<Rigidbody>();
         GetCameraDirections();
@@ -53,7 +53,7 @@ public class CharacterMovement : MonoBehaviour
         }
     }
     
-    private void GetCameraDirections()
+    protected void GetCameraDirections()
     {
         // Calculate directions relative to the camera (static camera)
         CamForward = Camera.main.transform.forward;

@@ -6,15 +6,23 @@ public class PlayerMovement : CharacterMovement
 {
     [SerializeField] private float dashForce = 5f;
     [SerializeField] private float dashDuration = 5f;
-    
+    private Animator _animator;
+
     private bool _isDashing;
-    
+
+    private void Start()
+    {
+        base.Start();
+        _animator = GetComponent<Animator>();
+    }
     
     protected override void HorizontalMovement()
     {
         if (!_isDashing)
         {
             base.HorizontalMovement();
+            
+            _animator.SetFloat("Speed", Mathf.Abs(Rb.linearVelocity.magnitude));
         }
     }
 

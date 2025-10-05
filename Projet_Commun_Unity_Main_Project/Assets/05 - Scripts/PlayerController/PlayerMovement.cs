@@ -21,8 +21,8 @@ public class PlayerMovement : CharacterMovement
         if (!_isDashing)
         {
             base.HorizontalMovement();
-            
-            _animator.SetFloat("Speed", Mathf.Abs(Rb.linearVelocity.magnitude));
+
+            _animator.SetFloat("Speed", Mathf.Abs(Rb.linearVelocity.magnitude) > Mathf.Epsilon ? Mathf.Abs(Rb.linearVelocity.magnitude) : 0);
         }
     }
 

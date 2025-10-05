@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class Ragdoll : MonoBehaviour
 {
@@ -12,9 +13,11 @@ public class Ragdoll : MonoBehaviour
     private Rigidbody _mainRigidbody;
     private PlayerInput _playerInput;
     
-    [SerializeField] private GameObject playerRig;    
+    [SerializeField] private GameObject playerRig; 
+    [SerializeField] private Transform hipsTransform; 
     private Collider[] _ragdollColliders;
     private Rigidbody[] _ragdollRigidbodies;
+    
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,6 +39,7 @@ public class Ragdoll : MonoBehaviour
 
     public void RagdollOn()
     {
+        
         foreach (Collider col in _ragdollColliders)
         {
             col.enabled = true;
@@ -44,6 +48,7 @@ public class Ragdoll : MonoBehaviour
         foreach (Rigidbody rb in _ragdollRigidbodies)
         {
             rb.isKinematic = false;
+            rb.linearVelocity = _mainRigidbody.linearVelocity;
         }
         
         _mainRigidbody.isKinematic = true;
@@ -61,6 +66,9 @@ public class Ragdoll : MonoBehaviour
     
     public void RagdollOff()
     {
+        
+        transform.position = hipsTransform.position;
+        
         foreach (Collider col in _ragdollColliders)
         {
             col.enabled = false;

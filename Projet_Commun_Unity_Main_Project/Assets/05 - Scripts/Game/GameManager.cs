@@ -136,13 +136,8 @@ public class GameManager : MonoBehaviour
 
     public void StartCinematic()
     {
-        if (_state != GameState.Playing)
-        {
-            Debug.LogWarning($"Can only start cinematic when the game is in playing state");
-            return;
-        }
-        
-        SwitchState(GameState.Cinematic);
+        if (_state != GameState.Playing) Debug.LogWarning($"Can only start cinematic when the game is in playing state");
+        else SwitchState(GameState.Cinematic);
     }
 
     #region Mission

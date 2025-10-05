@@ -62,4 +62,12 @@ public class Catcher : MonoBehaviour
     }
     
     public void Reset() => _grabbed = null;
+    
+    private void OnDrawGizmos()
+    {
+        if (!CatchPoint) return;
+        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(CatchPoint.position, 0.2f);
+    }
 }

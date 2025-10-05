@@ -7,10 +7,27 @@ public class Catcher : MonoBehaviour
     public Transform CatchPoint;
     
     private IGrabbable _grabbed;
+    private float grabStartTime;
+    [SerializeField] private float throwThreshold = 1.0f;
+    Vector3 throwDirection;
 
     public void CatchInput(InputAction.CallbackContext context)
     {
-        if (_grabbed != null) _grabbed.Dropped();
+        if (context.started)
+        {
+            grabStartTime = Time.time;
+        }
+        if (context.canceled)
+        {
+            float heldTime = Time.time - grabStartTime;
+            Vector3 forward = transform.forward;
+            Vector3 upward = transform.up * 0.5f;
+            throwDirection = (forward + upward).normalized * heldTime * 6;
+        }
+        if (_grabbed != null)
+        {
+            _grabbed.Dropped(throwDirection);
+        }
         else TryGrab();
     }
     

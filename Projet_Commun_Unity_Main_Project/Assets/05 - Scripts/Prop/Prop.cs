@@ -28,7 +28,7 @@ public class Prop: MonoBehaviour, IGrabbable
         Debug.Log("Grabbed movable object");
     }
 
-    public virtual void Dropped()
+    public virtual void Dropped(Vector3 throwForce = default)
     {
         transform.SetParent(_originalParent);
         if(_rb != null) _rb.isKinematic = false;
@@ -38,8 +38,11 @@ public class Prop: MonoBehaviour, IGrabbable
             _catcher.Reset();
             _catcher = null;
         }
-        
+
+        if (throwForce != Vector3.zero)
+        {
+            _rb.AddForce(throwForce, ForceMode.Impulse);
+        }
         IsGrabbed = false;
-        Debug.Log("Dropped movable object");
     }
 }

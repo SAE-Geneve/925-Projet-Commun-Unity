@@ -9,7 +9,7 @@ public class PushPullProp : Prop
         // player = grabber;
     }
 
-    public override void Dropped()
+    public override void Dropped(Vector3 throwForce = default)
     {
         player = null;
     }

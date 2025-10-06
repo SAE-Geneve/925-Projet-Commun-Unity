@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class TriggerTask : GameTask
 {
-    [Header("Parameters")]
-    [Tooltip("The object tag that needs to touch the task collider to succeed")]
-    [SerializeField] string _taskTag;
+    [Header("Trigger Parameters")]
+    [Tooltip("The prop type that needs to touch the task collider to succeed")]
+    [SerializeField] private PropType _propType = PropType.None;
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!other.CompareTag(_taskTag) || Done) return;
+        if(Done || !other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
 
-        if (other.TryGetComponent(out Prop prop) && prop.IsGrabbed)
+        if (prop.IsGrabbed)
             prop.Dropped();
         
         Succeed();

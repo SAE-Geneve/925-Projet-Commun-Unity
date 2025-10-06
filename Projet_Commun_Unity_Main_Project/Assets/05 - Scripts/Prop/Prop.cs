@@ -2,12 +2,16 @@ using UnityEngine;
 
 public class Prop: MonoBehaviour, IGrabbable
 {
-    private Transform _originalParent;
+    [Header("Parameters")]
+    [Tooltip("Define the prop type of the game object")]
+    [SerializeField] private PropType _type = PropType.None;
     
+    public PropType Type => _type;
+    public bool IsGrabbed { get; private set; }
+    
+    private Transform _originalParent;
     private Rigidbody _rb;
     private Catcher _catcher;
-    
-    public bool IsGrabbed { get; private set; }
     
     void Start()
     {
@@ -25,7 +29,7 @@ public class Prop: MonoBehaviour, IGrabbable
         _catcher = catcher;
         
         if (_rb != null) _rb.isKinematic = true;
-        Debug.Log("Grabbed movable object");
+        Debug.Log("Grabbed object");
     }
 
     public virtual void Dropped(Vector3 throwForce = default)
@@ -45,4 +49,10 @@ public class Prop: MonoBehaviour, IGrabbable
         }
         IsGrabbed = false;
     }
+}
+
+public enum PropType
+{
+    None,
+    Luggage
 }

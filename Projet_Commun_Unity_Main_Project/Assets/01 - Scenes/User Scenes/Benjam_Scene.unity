@@ -417,7 +417,6 @@ GameObject:
   - component: {fileID: 387726002}
   - component: {fileID: 387726001}
   - component: {fileID: 387726000}
-  - component: {fileID: 387726004}
   - component: {fileID: 387725999}
   m_Layer: 0
   m_Name: luggage
@@ -542,18 +541,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &387726004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387725998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89bfc836febcb7e4ba319a05e5d86449, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &540918784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,6 +1025,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CatchPoint: {fileID: 1727733926}
   throwThreshold: 1
+  _rb: {fileID: 1639710020}
+  maxThrowForce: 10
 --- !u!114 &1639710023
 MonoBehaviour:
   m_ObjectHideFlags: 0

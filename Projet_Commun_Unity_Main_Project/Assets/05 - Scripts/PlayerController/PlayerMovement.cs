@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerMovement : CharacterMovement
@@ -21,8 +20,9 @@ public class PlayerMovement : CharacterMovement
         if (!_isDashing)
         {
             base.HorizontalMovement();
-
-            _animator.SetFloat("Speed", Mathf.Abs(Rb.linearVelocity.magnitude) > Mathf.Epsilon ? Mathf.Abs(Rb.linearVelocity.magnitude) : 0);
+            
+            if(_animator)
+                _animator.SetFloat("Speed", Mathf.Abs(Rb?.linearVelocity.magnitude ?? 0) > Mathf.Epsilon ? Mathf.Abs(Rb.linearVelocity.magnitude) : 0);
         }
     }
 

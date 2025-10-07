@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class Catcher : MonoBehaviour
 {
-    public Transform CatchPoint;
+    [SerializeField] private Transform _catchPoint;
+    
+    public Transform CatchPoint => _catchPoint;
     
     private IGrabbable _grabbed;
     private float grabStartTime;

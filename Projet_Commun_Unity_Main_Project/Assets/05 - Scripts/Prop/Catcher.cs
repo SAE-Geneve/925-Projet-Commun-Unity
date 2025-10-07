@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Catcher : MonoBehaviour
 {
@@ -11,12 +12,13 @@ public class Catcher : MonoBehaviour
     [SerializeField] private float throwThreshold = 1.0f;
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private float maxThrowForce = 10f;
+    [SerializeField] private Slider throwBar;
     Vector3 throwDirection;
     float heldTime;
     private float throwPower;
     private bool isCharging;
 
-    public void CatchInput(InputAction.CallbackContext context)
+    public void Catch(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -31,6 +33,7 @@ public class Catcher : MonoBehaviour
         if (_grabbed != null)
         {
             _grabbed.Dropped(ThrowDirection());
+            throwPower = 0f;
         }
         else TryGrab();
     }
@@ -40,6 +43,11 @@ public class Catcher : MonoBehaviour
         if (isCharging)
         {
             throwPower = Mathf.PingPong((Time.time - grabStartTime) * 2, 1f);
+            throwBar.value = throwPower;
+        }
+        else
+        {
+            throwBar.value = 0f;
         }
     }
     

@@ -7,9 +7,9 @@ public class KartMouvement : MonoBehaviour
     private Rigidbody rb;
 
     [Header("Player Control")]
-    public float maxForwardSpeed = 100f;
-    public float acceleration = 25f;
-    public float turnSpeed = 10f;
+    [SerializeField]private float maxForwardSpeed = 100f;
+    [SerializeField]private float acceleration = 25f;
+    [SerializeField]private float turnSpeed = 10f;
 
     private float verticalInput;
     private float horizontalInput;
@@ -23,13 +23,13 @@ public class KartMouvement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 forwardVelocity = transform.forward * verticalInput * maxForwardSpeed;
+        Vector3 forwardVelocity = transform.forward * (verticalInput * maxForwardSpeed);
         Vector3 velocityChange = forwardVelocity - rb.linearVelocity;
 
         Vector3 accelerationVector = Vector3.ClampMagnitude(velocityChange, acceleration * Time.fixedDeltaTime);
         rb.AddForce(accelerationVector, ForceMode.VelocityChange);
 
-        rb.AddTorque(Vector3.up * horizontalInput * turnSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        rb.AddTorque(Vector3.up * (horizontalInput * (turnSpeed * Time.fixedDeltaTime)), ForceMode.VelocityChange);
     }
     
     void OnMove(InputValue value)

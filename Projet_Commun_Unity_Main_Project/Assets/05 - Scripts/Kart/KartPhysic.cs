@@ -5,21 +5,21 @@ using UnityEngine.InputSystem;
 public class KartPhysic : MonoBehaviour
 {
     [Header("Flottaison")]
-    public float floatHeight = 2f;
-    public float floatForce = 50f;
-    public LayerMask groundLayer;
+    [SerializeField]private float floatHeight = 2f;
+    [SerializeField]private float floatForce = 50f;
+    [SerializeField]private LayerMask groundLayer;
 
     [Header("Roues / Suspension")]
-    public Transform[] wheels;
-    public float suspensionSpeed = 5f;
-    public float wheelHeightOffset = 0.5f;
+    [SerializeField]private Transform[] wheels;
+    [SerializeField]private float suspensionSpeed = 5f;
+    [SerializeField]private float wheelHeightOffset = 0.5f;
 
     [Header("Self-Righting")]
-    public float rightingTorque = 10f;
+    [SerializeField]private float rightingTorque = 10f;
 
     [Header("Tilt Physique")]
-    public float maxTiltForce = 80f;
-    public float tiltDuration = 0.3f;
+    [SerializeField]private float maxTiltForce = 80f;
+    [SerializeField]private float tiltDuration = 0.3f;
 
     private Rigidbody rb;
     private Vector3[] localOffsets;
@@ -45,6 +45,7 @@ public class KartPhysic : MonoBehaviour
     {
         HoverForce();
         HandleTilt();
+        UpdateSuspension();
     }
 
     void HoverForce()
@@ -53,7 +54,7 @@ public class KartPhysic : MonoBehaviour
         {
             float distance = hit.distance;
             float forceFactor = floatHeight - distance;
-            rb.AddForce(Vector3.up * forceFactor * floatForce, ForceMode.Acceleration);
+            rb.AddForce(Vector3.up * (forceFactor * floatForce), ForceMode.Acceleration);
             
             Vector3 torqueDir = Vector3.Cross(transform.up, hit.normal);
             rb.AddTorque(torqueDir * rightingTorque, ForceMode.Acceleration);
@@ -69,7 +70,7 @@ public class KartPhysic : MonoBehaviour
             tiltTimer = tiltDuration;
 
             float tiltForce = Mathf.Clamp(Mathf.Abs(deltaInput) * maxTiltForce, 0f, maxTiltForce);
-            rb.AddTorque(transform.right * tiltDirection * tiltForce, ForceMode.Acceleration);
+            rb.AddTorque(transform.right * (tiltDirection * tiltForce), ForceMode.Acceleration);
         }
 
         if (tiltTimer > 0f)
@@ -77,12 +78,7 @@ public class KartPhysic : MonoBehaviour
 
         lastMoveInput = moveInput;
     }
-
-    void Update()
-    {
-        UpdateSuspension();
-    }
-
+    
     void UpdateSuspension()
     {
         for (int i = 0; i < wheels.Length; i++)

@@ -9,9 +9,9 @@ public class ButtonPress : MonoBehaviour
     //Unoptimized way to load scenes but it works
     private enum SceneList
     {
-        UI_Templates, 
-        UI_SceneChangeTest,
-        UI_SceneChangeTest2
+        UI_MainMenu, 
+        UI_OptionsMenu,
+        UI_SceneChangeTest
     };
     
     [SerializeField] SceneList sceneToLoad;
@@ -21,14 +21,14 @@ public class ButtonPress : MonoBehaviour
 
     void Awake()
     {
-        for (int i = 0; i<SceneManager.sceneCountInBuildSettings; i++)
+        for (int i = 0; i<SceneManager.sceneCount; i++)
         {
             Debug.Log(SceneManager.GetSceneAt(i).name);
             SceneList.Add(SceneManager.GetSceneAt(i).name);
         }
     }*/
         
-    public void MainMenuStart()
+    public void ChangeScene()
     {
         SceneManager.LoadScene(sceneToLoad.ToString());
     }

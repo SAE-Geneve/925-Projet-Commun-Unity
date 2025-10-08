@@ -24,20 +24,20 @@ public class Catcher : MonoBehaviour
     {
         if (context.started)
         {
-            grabStartTime = Time.time;
-            isCharging = true;
+            if(_grabbed == null) TryGrab();
+            else
+            {
+                isCharging = true;
+                grabStartTime = Time.time;
+                throwPower = 0f;
+                throwBar.value = 0f;
+            }
         }
-        if (context.canceled)
-        {
-            heldTime = Time.time - grabStartTime;
-            isCharging = false;
-        }
-        if (_grabbed != null)
+        else if (context.canceled && _grabbed != null && isCharging)
         {
             _grabbed.Dropped(ThrowDirection());
-            throwPower = 0f;
+            isCharging = false;
         }
-        else TryGrab();
     }
 
     private void Update()
@@ -46,10 +46,6 @@ public class Catcher : MonoBehaviour
         {
             throwPower = Mathf.PingPong((Time.time - grabStartTime) * 2, 1f);
             throwBar.value = throwPower;
-        }
-        else
-        {
-            throwBar.value = 0f;
         }
     }
     

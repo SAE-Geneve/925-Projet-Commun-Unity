@@ -7,11 +7,11 @@ public class Prop: MonoBehaviour, IGrabbable
     [SerializeField] private PropType _type = PropType.None;
     
     public PropType Type => _type;
-    public bool IsGrabbed { get; private set; }
+    public bool IsGrabbed { get; protected set; }
     
-    private Transform _originalParent;
-    private Rigidbody _rb;
-    private Catcher _catcher;
+    protected Transform _originalParent;
+    protected Rigidbody _rb;
+    protected Catcher _catcher;
     
     void Start()
     {

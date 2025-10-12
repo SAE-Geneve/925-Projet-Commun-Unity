@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_isCharging)
         {
-            _throwPower = Mathf.PingPong((Time.time - _grabStartTime) * _barSpeed, _throwBar.maxValue);
+            _throwPower = Mathf.PingPong((Time.time - _grabStartTime) * _barSpeed, _throwBar ? _throwBar.maxValue : 1f);
             if(_throwBar) _throwBar.value = _throwPower;
         }
     }

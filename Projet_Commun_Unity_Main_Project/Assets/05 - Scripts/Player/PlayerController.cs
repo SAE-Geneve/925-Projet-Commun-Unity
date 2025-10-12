@@ -5,20 +5,32 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Transform _catchPoint;
+    [SerializeField] private Rigidbody _rb;
+    [SerializeField] private Slider _throwBar;
+
+    [Header("Throw bar")] 
+    [SerializeField] private float _barSpeed = 2f;
+    
+    [Header("Throw")]
+    [SerializeField] private float _throwThreshold = 1f;
+    [SerializeField] private float _maxThrowForce = 10f;
+    [SerializeField] private float _upForceMultiplier = 1f;
+    
+    [Header("Catch/Interact")]
+    [SerializeField] private float _sphereRadius = 0.2f;
     
     public Transform CatchPoint => _catchPoint;
     
-    private IGrabbable _grabbed;
-    private float grabStartTime;
-    [SerializeField] private float throwThreshold = 1.0f;
-    [SerializeField] private Rigidbody _rb;
-    [SerializeField] private float maxThrowForce = 10f;
-    [SerializeField] private Slider throwBar;
     Vector3 throwDirection;
-    float heldTime;
-    private float throwPower;
-    private bool isCharging;
+    
+    private IGrabbable _grabbed;
+    
+    private float _grabStartTime;
+    private float _throwPower;
+    
+    private bool _isCharging;
 
     public void Catch(InputAction.CallbackContext context)
     {
@@ -27,36 +39,33 @@ public class PlayerController : MonoBehaviour
             if(_grabbed == null) TryGrab();
             else
             {
-                isCharging = true;
-                grabStartTime = Time.time;
-                throwPower = 0f;
-                if(throwBar != null) throwBar.value = 0f;
+                _isCharging = true;
+                _grabStartTime = Time.time;
+                _throwPower = 0f;
+                if(_throwBar != null) _throwBar.value = 0f;
             }
         }
-        else if (context.canceled && _grabbed != null && isCharging)
+        else if (context.canceled && _grabbed != null && _isCharging)
         {
             _grabbed.Dropped(ThrowDirection());
-            isCharging = false;
+            _isCharging = false;
         }
     }
 
     private void Update()
     {
-        if (isCharging)
+        if (_isCharging)
         {
-            throwPower = Mathf.PingPong((Time.time - grabStartTime) * 2, 1f);
-            if(throwBar != null)
-            {
-                throwBar.value = throwPower;
-            }
+            _throwPower = Mathf.PingPong((Time.time - _grabStartTime) * _barSpeed, _throwBar.maxValue);
+            if(_throwBar) _throwBar.value = _throwPower;
         }
     }
     
     private Vector3 ThrowDirection()
     {
         Vector3 forward = transform.forward;
-        Vector3 upward = transform.up * 0.5f;
-        float force = throwPower * maxThrowForce;
+        Vector3 upward = transform.up * _upForceMultiplier;
+        float force = _throwPower * _maxThrowForce;
         throwDirection = (forward + upward).normalized * force;
         
         return throwDirection + _rb.linearVelocity;
@@ -65,7 +74,7 @@ public class PlayerController : MonoBehaviour
     
     private void TryAction<T>(Action<T> onFound) where T : class
     {
-        Collider[] hits = Physics.OverlapSphere(CatchPoint.position, .2f);
+        Collider[] hits = Physics.OverlapSphere(CatchPoint.position, _sphereRadius);
     
         foreach (var hit in hits)
         {
@@ -100,6 +109,6 @@ public class PlayerController : MonoBehaviour
         if (!CatchPoint) return;
         
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(CatchPoint.position, 0.2f);
+        Gizmos.DrawWireSphere(CatchPoint.position, _sphereRadius);
     }
 }

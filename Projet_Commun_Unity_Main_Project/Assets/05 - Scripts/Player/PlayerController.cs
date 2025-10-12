@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class Catcher : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform _catchPoint;
     

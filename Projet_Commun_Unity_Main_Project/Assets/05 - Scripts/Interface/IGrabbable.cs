@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IGrabbable
 {
-    void Grabbed(Catcher catcher);
+    void Grabbed(PlayerController playerController);
 
     void Dropped(Vector3 throwForce = default);
 }

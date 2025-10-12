@@ -11,22 +11,22 @@ public class Prop: MonoBehaviour, IGrabbable
     
     protected Transform _originalParent;
     protected Rigidbody _rb;
-    protected Catcher _catcher;
+    protected PlayerController PlayerController;
     
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
     }
     
-    public virtual void Grabbed(Catcher catcher)
+    public virtual void Grabbed(PlayerController playerController)
     {
         IsGrabbed = true;
         _originalParent = transform.parent;
-        transform.SetParent(catcher.CatchPoint);
+        transform.SetParent(playerController.CatchPoint);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         
-        _catcher = catcher;
+        PlayerController = playerController;
         
         if (_rb != null) _rb.isKinematic = true;
         Debug.Log("Grabbed object");
@@ -37,10 +37,10 @@ public class Prop: MonoBehaviour, IGrabbable
         transform.SetParent(_originalParent);
         if(_rb != null) _rb.isKinematic = false;
 
-        if (_catcher)
+        if (PlayerController)
         {
-            _catcher.Reset();
-            _catcher = null;
+            PlayerController.Reset();
+            PlayerController = null;
         }
 
         if (throwForce != Vector3.zero)

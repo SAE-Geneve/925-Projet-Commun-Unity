@@ -8,10 +8,10 @@ public class PushPullProp : Prop
     {
         _rb.isKinematic = true;
     }
-    public override void Grabbed(Catcher catcher)
+    public override void Grabbed(PlayerController playerController)
     {
         IsGrabbed = true;
-        _catcher = catcher;
+        PlayerController = playerController;
         
         if (_rb != null) _rb.isKinematic = false;
         Debug.Log("push pull prop grabbed");
@@ -21,10 +21,10 @@ public class PushPullProp : Prop
     {
         if(_rb != null) _rb.isKinematic = true;
         IsGrabbed = false;
-        if(_catcher)
+        if(PlayerController)
         {
-            _catcher.Reset();
-            _catcher = null;
+            PlayerController.Reset();
+            PlayerController = null;
         }
         Debug.Log("push pull prop dropped");
     }

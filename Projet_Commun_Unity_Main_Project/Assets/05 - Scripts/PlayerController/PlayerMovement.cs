@@ -18,12 +18,14 @@ public class PlayerMovement : CharacterMovement
     
     protected override void HorizontalMovement()
     {
+        
+        Vector2 velocity = new Vector2(Rb.linearVelocity.x, Rb.linearVelocity.z);
         if (!_isDashing)
         {
             base.HorizontalMovement();
             if (_animator)
             {
-                _animator.SetFloat("Speed", Mathf.Abs(Rb?.linearVelocity.x ?? 0) > Mathf.Epsilon ? Mathf.Abs(Rb.linearVelocity.x) : 0);
+                _animator.SetFloat("Speed", Mathf.Abs(velocity.magnitude) > Mathf.Epsilon ? Mathf.Abs(velocity.magnitude) : 0);
             }
         }
     }

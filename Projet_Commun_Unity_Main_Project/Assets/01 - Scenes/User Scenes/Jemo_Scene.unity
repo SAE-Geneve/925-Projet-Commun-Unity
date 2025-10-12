@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2085098159}
     m_Modifications:
+    - target: {fileID: 1120125876580256080, guid: 5d35f496bf141a241b3cd98b69591707, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2040826413027773398, guid: 5d35f496bf141a241b3cd98b69591707, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.25
@@ -1399,7 +1403,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.5, y: 2, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2085098159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1419,7 +1423,7 @@ MonoBehaviour:
   - {fileID: 7699608862005257477, guid: f2ec8bf5554a0f04db88f8327113e6b8, type: 3}
   - {fileID: 7064917365448206456, guid: cf5db37982f1deb4181c834b1aa464de, type: 3}
   - {fileID: 7358909262448355338, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
-  _spawnDelay: 2
+  _spawnDelay: 3
 --- !u!1 &644783642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,7 +1578,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &665518967
 Transform:
   m_ObjectHideFlags: 0
@@ -1635,7 +1639,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: bf37f6da8f58ccc4992bebaf71758bff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4971,7 +4975,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 2, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2085098159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4991,7 +4995,7 @@ MonoBehaviour:
   - {fileID: 7699608862005257477, guid: f2ec8bf5554a0f04db88f8327113e6b8, type: 3}
   - {fileID: 7064917365448206456, guid: cf5db37982f1deb4181c834b1aa464de, type: 3}
   - {fileID: 7358909262448355338, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
-  _spawnDelay: 2
+  _spawnDelay: 3
 --- !u!1 &2085098158
 GameObject:
   m_ObjectHideFlags: 0

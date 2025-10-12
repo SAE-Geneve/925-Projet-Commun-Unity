@@ -28,6 +28,8 @@ public class ConveyorBelt : MonoBehaviour
         if(other.tag != "Prop" || !other.TryGetComponent(out ConveyorProp prop)) return;
         
         prop.RemoveConveyorBelt(this);
-        _props.Remove(prop);
+        Remove(prop);
     }
+    
+    public void Remove(ConveyorProp prop) => _props.Remove(prop);
 }

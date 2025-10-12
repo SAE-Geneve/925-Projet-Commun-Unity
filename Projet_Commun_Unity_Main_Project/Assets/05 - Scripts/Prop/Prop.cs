@@ -58,5 +58,7 @@ public class Prop: MonoBehaviour, IGrabbable
 public enum PropType
 {
     None,
-    Luggage
+    RedLuggage,
+    BlueLuggage,
+    GreenLuggage,
 }

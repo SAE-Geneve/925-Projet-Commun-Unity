@@ -16,7 +16,7 @@ public abstract class GameTask : MonoBehaviour
 
     protected bool Done;
 
-    protected void Succeed()
+    protected virtual void Succeed()
     {
         if(!_multiple) Done = true;
         OnSucceed?.Invoke();

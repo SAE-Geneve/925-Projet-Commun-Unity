@@ -52,7 +52,7 @@ public class Ragdoll : MonoBehaviour
         _mainRigidbody.isKinematic = true;
         _mainCollider.enabled = false;
         _animator.enabled = false;
-        _playerInput.enabled = false;
+        _playerInput.currentActionMap.Disable();
 
         if (_ragdollCoroutine != null)
         {
@@ -79,7 +79,7 @@ public class Ragdoll : MonoBehaviour
         _mainRigidbody.isKinematic = false;
         _mainCollider.enabled = true;
         _animator.enabled = true;
-        _playerInput.enabled = true;
+        _playerInput.currentActionMap.Enable();
     }
     
     

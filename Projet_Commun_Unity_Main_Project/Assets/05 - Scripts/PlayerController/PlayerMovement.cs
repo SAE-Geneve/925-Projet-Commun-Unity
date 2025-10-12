@@ -6,8 +6,9 @@ public class PlayerMovement : CharacterMovement
     [SerializeField] private float dashForce = 5f;
     [SerializeField] private float dashDuration = 5f;
     private Animator _animator;
-
+    
     private bool _isDashing;
+    
 
     private void Start()
     {
@@ -20,9 +21,10 @@ public class PlayerMovement : CharacterMovement
         if (!_isDashing)
         {
             base.HorizontalMovement();
-            
-            if(_animator)
-                _animator.SetFloat("Speed", Mathf.Abs(Rb?.linearVelocity.magnitude ?? 0) > Mathf.Epsilon ? Mathf.Abs(Rb.linearVelocity.magnitude) : 0);
+            if (_animator)
+            {
+                _animator.SetFloat("Speed", Mathf.Abs(Rb?.linearVelocity.x ?? 0) > Mathf.Epsilon ? Mathf.Abs(Rb.linearVelocity.x) : 0);
+            }
         }
     }
 

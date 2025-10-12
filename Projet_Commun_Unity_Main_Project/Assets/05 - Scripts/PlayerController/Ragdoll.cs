@@ -18,7 +18,6 @@ public class Ragdoll : MonoBehaviour
     private Collider[] _ragdollColliders;
     private Rigidbody[] _ragdollRigidbodies;
     
-    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,7 +38,6 @@ public class Ragdoll : MonoBehaviour
 
     public void RagdollOn()
     {
-        
         foreach (Collider col in _ragdollColliders)
         {
             col.enabled = true;
@@ -66,7 +64,6 @@ public class Ragdoll : MonoBehaviour
     
     public void RagdollOff()
     {
-        
         transform.position = hipsTransform.position;
         
         foreach (Collider col in _ragdollColliders)

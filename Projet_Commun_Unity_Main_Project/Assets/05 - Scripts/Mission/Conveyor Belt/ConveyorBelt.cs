@@ -12,22 +12,22 @@ public class ConveyorBelt : MonoBehaviour
     private void FixedUpdate()
     {
         foreach (Prop prop in _props)
-            prop.Rb.AddForce(_direction * _speed, ForceMode.Force);
+            prop.Rb.AddForce(_direction.normalized * _speed, ForceMode.Force);
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        GameObject obj = other.gameObject;
-        if(obj.tag != "Prop" || !obj.TryGetComponent(out Prop prop)) return;
+        if(other.tag != "Prop" || !other.TryGetComponent(out ConveyorProp prop)) return;
         
+        prop.AddConveyorBelt(this);
         _props.Add(prop);
     }
 
-    private void OnCollisionExit(Collision other)
+    private void OnTriggerExit(Collider other)
     {
-        GameObject obj = other.gameObject;
-        if(obj.tag != "Prop" || !obj.TryGetComponent(out Prop prop)) return;
+        if(other.tag != "Prop" || !other.TryGetComponent(out ConveyorProp prop)) return;
         
+        prop.RemoveConveyorBelt(this);
         _props.Remove(prop);
     }
 }

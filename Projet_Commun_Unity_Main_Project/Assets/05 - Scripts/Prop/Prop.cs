@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Prop: MonoBehaviour, IGrabbable
@@ -14,9 +15,11 @@ public class Prop: MonoBehaviour, IGrabbable
     protected PlayerController PlayerController;
     
     private Transform _originalParent;
-    
-    void Start() => _rb = GetComponent<Rigidbody>();
-    
+
+    protected virtual void Start() => _rb = GetComponent<Rigidbody>();
+
+    #region Grab
+
     public virtual void Grabbed(PlayerController playerController)
     {
         IsGrabbed = true;
@@ -48,6 +51,8 @@ public class Prop: MonoBehaviour, IGrabbable
         }
         IsGrabbed = false;
     }
+
+    #endregion
 }
 
 public enum PropType

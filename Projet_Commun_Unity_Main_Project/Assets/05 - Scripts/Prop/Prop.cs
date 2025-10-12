@@ -7,16 +7,15 @@ public class Prop: MonoBehaviour, IGrabbable
     [SerializeField] private PropType _type = PropType.None;
     
     public PropType Type => _type;
+    public Rigidbody Rb => _rb;
     public bool IsGrabbed { get; protected set; }
     
-    protected Transform _originalParent;
     protected Rigidbody _rb;
     protected PlayerController PlayerController;
     
-    void Start()
-    {
-        _rb = GetComponent<Rigidbody>();
-    }
+    private Transform _originalParent;
+    
+    void Start() => _rb = GetComponent<Rigidbody>();
     
     public virtual void Grabbed(PlayerController playerController)
     {

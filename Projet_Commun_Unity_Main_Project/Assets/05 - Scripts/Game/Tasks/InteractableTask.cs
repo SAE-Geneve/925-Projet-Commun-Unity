@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class InteractableTask : GameTask, IInteractable
 {
     public void Interact()
@@ -7,8 +5,5 @@ public class InteractableTask : GameTask, IInteractable
         if (Done) return;
         
         Succeed();
-        Done = true;
-        
-        Debug.Log($"Task {TaskName} done!");
     }
 }

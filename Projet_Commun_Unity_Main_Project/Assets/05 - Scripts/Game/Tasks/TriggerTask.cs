@@ -15,8 +15,5 @@ public class TriggerTask : GameTask
         
         Succeed();
         Destroy(other.gameObject);
-        Done = true;
-        
-        Debug.Log($"Task {TaskName} done!");
     }
 }

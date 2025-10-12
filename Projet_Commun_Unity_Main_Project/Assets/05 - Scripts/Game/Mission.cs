@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Mission : MonoBehaviour
 {
-    [Header("References")]
-    [Tooltip("All the tasks to do to complete the missino")]
-    [SerializeField] private GameTask[] _tasks;
+    // [Header("References")]
+    // [Tooltip("All the tasks to do to complete the mission")]
+    // [SerializeField] private GameTask[] _tasks;
     
     [Header("Parameters")] 
     [SerializeField] private string _name = "New Mission";

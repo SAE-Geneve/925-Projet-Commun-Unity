@@ -32,16 +32,18 @@ public class PlayerMovement : CharacterMovement
 
     public void Dash()
     {
-        if (_isDashing)
+        if (Rb != null)
         {
-            return;
+            if (_isDashing)
+            {
+                return;
+            }
+        
+            _isDashing = true;
+            StartCoroutine("DashCoroutine");
+        
+            Rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
         }
-        
-        _isDashing = true;
-        StartCoroutine("DashCoroutine");
-        
-        Rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
-
     }
 
     private IEnumerator DashCoroutine()

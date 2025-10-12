@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour
     private Catcher _catcher;
     private Ragdoll _ragdoll;
     
-    private void Start()
+    private void Awake()
     {
         _playerMovement = GetComponent<PlayerMovement>();
         _catcher = GetComponent<Catcher>();

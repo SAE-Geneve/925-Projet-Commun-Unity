@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [Header("Catch/Interact")]
     [SerializeField] private float _sphereRadius = 0.2f;
     
+    public Rigidbody Rb => _rb;
     public Transform CatchPoint => _catchPoint;
     
     Vector3 throwDirection;

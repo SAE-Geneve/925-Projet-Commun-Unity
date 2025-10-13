@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ConveyorLuggageSpawner : MonoBehaviour
 {
@@ -12,17 +14,14 @@ public class ConveyorLuggageSpawner : MonoBehaviour
 
     void Start() => SpawnLuggage();
 
-    private void SpawnLuggage()
+    private void SpawnLuggage() => _conveyorProp = Instantiate(_propsToSpawn[Random.Range(0, _propsToSpawn.Length)], transform.position, Quaternion.identity);
+    
+    private void OnTriggerExit(Collider other)
     {
-        _conveyorProp = Instantiate(_propsToSpawn[Random.Range(0, _propsToSpawn.Length)], transform.position, Quaternion.identity);
-        _conveyorProp.OnGrab += GrabbedProp;
-    }
-
-    private void GrabbedProp()
-    {
-        _conveyorProp.OnGrab -= GrabbedProp;
-        _conveyorProp = null;
-
-        Invoke(nameof(SpawnLuggage), _spawnDelay);
+        if (_conveyorProp && other.gameObject == _conveyorProp.gameObject)
+        {
+            _conveyorProp = null;
+            Invoke(nameof(SpawnLuggage), _spawnDelay);
+        }
     }
 }

@@ -61,4 +61,5 @@ public enum PropType
     RedLuggage,
     BlueLuggage,
     GreenLuggage,
+    YellowLuggage,
 }

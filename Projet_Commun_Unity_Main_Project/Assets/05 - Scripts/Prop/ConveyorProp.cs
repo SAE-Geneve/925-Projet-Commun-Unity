@@ -10,8 +10,6 @@ public class ConveyorProp : Prop
     
     [Tooltip("The angular damping to set when the prop is on a conveyor")]
     [SerializeField] private float _conveyorAngularDamping = 10f;
-
-    public event Action OnGrab;
     
     private readonly List<ConveyorBelt> _conveyorBelts = new();
     
@@ -54,13 +52,6 @@ public class ConveyorProp : Prop
     }
 
     #endregion
-
-    public override void Grabbed(PlayerController playerController)
-    {
-        base.Grabbed(playerController);
-        
-        OnGrab?.Invoke();
-    }
 
     private void OnDestroy()
     {

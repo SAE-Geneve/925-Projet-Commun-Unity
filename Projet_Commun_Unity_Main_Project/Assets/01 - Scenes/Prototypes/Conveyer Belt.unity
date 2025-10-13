@@ -246,6 +246,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
+      propertyPath: _yellowMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4eff23ca71f30d94585a65b820d1fb72, type: 2}
+    - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
       propertyPath: _maxTaskDuration
       value: 15
       objectReference: {fileID: 0}
@@ -655,6 +659,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
+      propertyPath: _yellowMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4eff23ca71f30d94585a65b820d1fb72, type: 2}
+    - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
       propertyPath: _maxTaskDuration
       value: 15
       objectReference: {fileID: 0}
@@ -780,6 +788,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
+      propertyPath: _yellowMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4eff23ca71f30d94585a65b820d1fb72, type: 2}
     - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
       propertyPath: _maxTaskDuration
       value: 15
@@ -1000,6 +1012,7 @@ GameObject:
   m_Component:
   - component: {fileID: 617101795}
   - component: {fileID: 617101796}
+  - component: {fileID: 617101797}
   m_Layer: 0
   m_Name: ConveyorLuggageSpawner (7)
   m_TagString: Untagged
@@ -1016,7 +1029,7 @@ Transform:
   m_GameObject: {fileID: 617101794}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: 1, z: -1.5}
+  m_LocalPosition: {x: -4, y: 0.6, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1038,7 +1051,29 @@ MonoBehaviour:
   - {fileID: 7699608862005257477, guid: f2ec8bf5554a0f04db88f8327113e6b8, type: 3}
   - {fileID: 7064917365448206456, guid: cf5db37982f1deb4181c834b1aa464de, type: 3}
   - {fileID: 7358909262448355338, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
+  - {fileID: 7358909262448355338, guid: 6e3ff8516cc29d2449ed6008ebc9298c, type: 3}
   _spawnDelay: 2
+--- !u!135 &617101797
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617101794}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &630384538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,6 +1450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 828647085}
   - component: {fileID: 828647086}
+  - component: {fileID: 828647087}
   m_Layer: 0
   m_Name: ConveyorLuggageSpawner (5)
   m_TagString: Untagged
@@ -1431,7 +1467,7 @@ Transform:
   m_GameObject: {fileID: 828647084}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: 1, z: 0.5}
+  m_LocalPosition: {x: -4, y: 0.6, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1453,7 +1489,29 @@ MonoBehaviour:
   - {fileID: 7699608862005257477, guid: f2ec8bf5554a0f04db88f8327113e6b8, type: 3}
   - {fileID: 7064917365448206456, guid: cf5db37982f1deb4181c834b1aa464de, type: 3}
   - {fileID: 7358909262448355338, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
+  - {fileID: 7358909262448355338, guid: 6e3ff8516cc29d2449ed6008ebc9298c, type: 3}
   _spawnDelay: 2
+--- !u!135 &828647087
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828647084}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &971412882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1671,6 +1729,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
+      propertyPath: _yellowMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4eff23ca71f30d94585a65b820d1fb72, type: 2}
+    - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
       propertyPath: _maxTaskDuration
       value: 15
       objectReference: {fileID: 0}
@@ -1754,6 +1816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1051079678}
   - component: {fileID: 1051079679}
+  - component: {fileID: 1051079680}
   m_Layer: 0
   m_Name: ConveyorLuggageSpawner (4)
   m_TagString: Untagged
@@ -1770,7 +1833,7 @@ Transform:
   m_GameObject: {fileID: 1051079677}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: 1, z: 1.5}
+  m_LocalPosition: {x: -4, y: 0.6, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1792,7 +1855,29 @@ MonoBehaviour:
   - {fileID: 7699608862005257477, guid: f2ec8bf5554a0f04db88f8327113e6b8, type: 3}
   - {fileID: 7064917365448206456, guid: cf5db37982f1deb4181c834b1aa464de, type: 3}
   - {fileID: 7358909262448355338, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
+  - {fileID: 7358909262448355338, guid: 6e3ff8516cc29d2449ed6008ebc9298c, type: 3}
   _spawnDelay: 2
+--- !u!135 &1051079680
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051079677}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1086709670
 GameObject:
   m_ObjectHideFlags: 0
@@ -1885,6 +1970,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
+      propertyPath: _yellowMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4eff23ca71f30d94585a65b820d1fb72, type: 2}
+    - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
       propertyPath: _maxTaskDuration
       value: 15
       objectReference: {fileID: 0}
@@ -1968,6 +2057,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1251932723}
   - component: {fileID: 1251932724}
+  - component: {fileID: 1251932725}
   m_Layer: 0
   m_Name: ConveyorLuggageSpawner (6)
   m_TagString: Untagged
@@ -1984,7 +2074,7 @@ Transform:
   m_GameObject: {fileID: 1251932722}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: 1, z: -0.5}
+  m_LocalPosition: {x: -4, y: 0.6, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2006,7 +2096,29 @@ MonoBehaviour:
   - {fileID: 7699608862005257477, guid: f2ec8bf5554a0f04db88f8327113e6b8, type: 3}
   - {fileID: 7064917365448206456, guid: cf5db37982f1deb4181c834b1aa464de, type: 3}
   - {fileID: 7358909262448355338, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
+  - {fileID: 7358909262448355338, guid: 6e3ff8516cc29d2449ed6008ebc9298c, type: 3}
   _spawnDelay: 2
+--- !u!135 &1251932725
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251932722}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1343682611
 GameObject:
   m_ObjectHideFlags: 0
@@ -2215,6 +2327,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
+      propertyPath: _yellowMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4eff23ca71f30d94585a65b820d1fb72, type: 2}
     - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
       propertyPath: _maxTaskDuration
       value: 15
@@ -2471,6 +2587,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
+      propertyPath: _yellowMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4eff23ca71f30d94585a65b820d1fb72, type: 2}
+    - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
       propertyPath: _maxTaskDuration
       value: 15
       objectReference: {fileID: 0}
@@ -2675,6 +2795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1531189987}
   - component: {fileID: 1531189988}
+  - component: {fileID: 1531189989}
   m_Layer: 0
   m_Name: ConveyorLuggageSpawner (3)
   m_TagString: Untagged
@@ -2691,7 +2812,7 @@ Transform:
   m_GameObject: {fileID: 1531189986}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: 1, z: -1.5}
+  m_LocalPosition: {x: 4, y: 0.6, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2713,7 +2834,29 @@ MonoBehaviour:
   - {fileID: 7699608862005257477, guid: f2ec8bf5554a0f04db88f8327113e6b8, type: 3}
   - {fileID: 7064917365448206456, guid: cf5db37982f1deb4181c834b1aa464de, type: 3}
   - {fileID: 7358909262448355338, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
+  - {fileID: 7358909262448355338, guid: 6e3ff8516cc29d2449ed6008ebc9298c, type: 3}
   _spawnDelay: 2
+--- !u!135 &1531189989
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531189986}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1572430063
 GameObject:
   m_ObjectHideFlags: 0
@@ -2776,6 +2919,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1714824403}
   - component: {fileID: 1714824404}
+  - component: {fileID: 1714824405}
   m_Layer: 0
   m_Name: ConveyorLuggageSpawner (2)
   m_TagString: Untagged
@@ -2792,7 +2936,7 @@ Transform:
   m_GameObject: {fileID: 1714824402}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: 1, z: -0.5}
+  m_LocalPosition: {x: 4, y: 0.6, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2814,7 +2958,29 @@ MonoBehaviour:
   - {fileID: 7699608862005257477, guid: f2ec8bf5554a0f04db88f8327113e6b8, type: 3}
   - {fileID: 7064917365448206456, guid: cf5db37982f1deb4181c834b1aa464de, type: 3}
   - {fileID: 7358909262448355338, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
+  - {fileID: 7358909262448355338, guid: 6e3ff8516cc29d2449ed6008ebc9298c, type: 3}
   _spawnDelay: 2
+--- !u!135 &1714824405
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714824402}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1761237813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3191,6 +3357,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
+      propertyPath: _yellowMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 4eff23ca71f30d94585a65b820d1fb72, type: 2}
+    - target: {fileID: 1552969016076928259, guid: b6eacd570ab173740bf468c33f30047c, type: 3}
       propertyPath: _maxTaskDuration
       value: 15
       objectReference: {fileID: 0}
@@ -3536,6 +3706,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1995911167}
   - component: {fileID: 1995911168}
+  - component: {fileID: 1995911169}
   m_Layer: 0
   m_Name: ConveyorLuggageSpawner (1)
   m_TagString: Untagged
@@ -3552,7 +3723,7 @@ Transform:
   m_GameObject: {fileID: 1995911166}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: 1, z: 0.5}
+  m_LocalPosition: {x: 4, y: 0.6, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3574,7 +3745,29 @@ MonoBehaviour:
   - {fileID: 7699608862005257477, guid: f2ec8bf5554a0f04db88f8327113e6b8, type: 3}
   - {fileID: 7064917365448206456, guid: cf5db37982f1deb4181c834b1aa464de, type: 3}
   - {fileID: 7358909262448355338, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
+  - {fileID: 7358909262448355338, guid: 6e3ff8516cc29d2449ed6008ebc9298c, type: 3}
   _spawnDelay: 2
+--- !u!135 &1995911169
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995911166}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2019996661
 GameObject:
   m_ObjectHideFlags: 0
@@ -3622,6 +3815,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2042741511}
   - component: {fileID: 2042741512}
+  - component: {fileID: 2042741513}
   m_Layer: 0
   m_Name: ConveyorLuggageSpawner
   m_TagString: Untagged
@@ -3638,7 +3832,7 @@ Transform:
   m_GameObject: {fileID: 2042741510}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: 1, z: 1.5}
+  m_LocalPosition: {x: 4, y: 0.6, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3660,7 +3854,29 @@ MonoBehaviour:
   - {fileID: 7699608862005257477, guid: f2ec8bf5554a0f04db88f8327113e6b8, type: 3}
   - {fileID: 7064917365448206456, guid: cf5db37982f1deb4181c834b1aa464de, type: 3}
   - {fileID: 7358909262448355338, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
+  - {fileID: 7358909262448355338, guid: 6e3ff8516cc29d2449ed6008ebc9298c, type: 3}
   _spawnDelay: 2
+--- !u!135 &2042741513
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042741510}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

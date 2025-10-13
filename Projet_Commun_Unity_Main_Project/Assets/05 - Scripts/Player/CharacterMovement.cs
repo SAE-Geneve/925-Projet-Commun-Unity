@@ -3,7 +3,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     [Header("Physic")]
-    [SerializeField] private float speed = 5f;
+    [SerializeField] protected float speed = 5f;
     
     protected Rigidbody Rb;
 

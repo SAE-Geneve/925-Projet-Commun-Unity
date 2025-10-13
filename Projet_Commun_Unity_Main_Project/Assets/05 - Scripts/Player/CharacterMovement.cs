@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
     [Header("Physic")]
     [SerializeField] private float speed = 5f;
+    public event Action<Vector3> OnMove;
     
     protected Rigidbody Rb;
 
@@ -41,6 +43,7 @@ public class CharacterMovement : MonoBehaviour
         Vector3 velocityChange = targetVelocity - new Vector3(velocity.x, 0, velocity.z);
         
         Rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        OnMove?.Invoke(moveDir);
     }
     
     private void RotateCharacter()

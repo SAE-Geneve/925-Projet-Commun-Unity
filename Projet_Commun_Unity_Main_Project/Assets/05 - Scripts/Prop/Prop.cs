@@ -14,7 +14,7 @@ public class Prop: MonoBehaviour, IGrabbable
     protected Rigidbody _rb;
     protected PlayerController PlayerController;
     
-    private Transform _originalParent;
+    protected Transform _originalParent;
 
     protected virtual void Start() => _rb = GetComponent<Rigidbody>();
 

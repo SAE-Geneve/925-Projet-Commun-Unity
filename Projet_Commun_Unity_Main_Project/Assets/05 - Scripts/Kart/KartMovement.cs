@@ -47,6 +47,15 @@ public class KartMouvement : MonoBehaviour, IInteractable
 
         rb.AddTorque(Vector3.up * (horizontalInput * (turnSpeed * Time.fixedDeltaTime)), ForceMode.VelocityChange);
     }
+    
+    public void OnInteract()
+    {
+        if (isControlled)
+        {
+            Debug.Log("Sort du véhicule !");
+            ExitVehicle();
+        }
+    }
 
     void OnMove(InputValue value)
     {

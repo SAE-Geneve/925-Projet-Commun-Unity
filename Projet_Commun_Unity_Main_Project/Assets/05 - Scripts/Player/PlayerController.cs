@@ -75,7 +75,6 @@ public class PlayerController : MonoBehaviour
     private void TryAction<T>(Action<T> onFound) where T : class
     {
         Collider[] hits = Physics.OverlapSphere(CatchPoint.position, _sphereRadius);
-    
         foreach (var hit in hits)
         {
             if (!hit.TryGetComponent(out T component)) continue;
@@ -96,9 +95,10 @@ public class PlayerController : MonoBehaviour
 
     public void TryInteract()
     {
+
         TryAction<IInteractable>(interactable =>
         {
-            interactable.Interact();
+            interactable.Interact(gameObject);
         });
     }
     

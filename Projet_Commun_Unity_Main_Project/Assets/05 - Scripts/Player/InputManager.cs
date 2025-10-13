@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     {
         _playerMovement = GetComponent<PlayerMovement>();
         _playerController = GetComponent<PlayerController>();
+        Debug.Log(_playerController);
         _ragdoll = GetComponent<Ragdoll>();
     }
 

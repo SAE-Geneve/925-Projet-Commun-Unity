@@ -33,6 +33,11 @@ public class PlayerController : MonoBehaviour
     
     private bool _isCharging;
 
+    private void Start()
+    {
+        _throwBar.gameObject.SetActive(false);
+    }
+
     public void Catch(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -43,12 +48,14 @@ public class PlayerController : MonoBehaviour
                 _isCharging = true;
                 _grabStartTime = Time.time;
                 _throwPower = 0f;
-                if(_throwBar != null) _throwBar.value = 0f;
+                _throwBar.gameObject.SetActive(true);
+                _throwBar.value = 0f;
             }
         }
         else if (context.canceled && _grabbed != null && _isCharging)
         {
             _grabbed.Dropped(ThrowDirection());
+            _throwBar.gameObject.SetActive(false);
             _isCharging = false;
         }
     }
@@ -57,8 +64,8 @@ public class PlayerController : MonoBehaviour
     {
         if (_isCharging)
         {
-            _throwPower = Mathf.PingPong((Time.time - _grabStartTime) * _barSpeed, _throwBar ? _throwBar.maxValue : 1f);
-            if(_throwBar) _throwBar.value = _throwPower;
+            _throwPower = Mathf.PingPong((Time.time - _grabStartTime) * _barSpeed, _throwBar.maxValue);
+            _throwBar.value = _throwPower;
         }
     }
     

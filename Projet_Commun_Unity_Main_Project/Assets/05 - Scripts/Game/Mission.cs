@@ -10,7 +10,10 @@ public class Mission : MonoBehaviour
     
     private bool _missionPlaying;
 
-    private void Start() => _gameManager = GameManager.Instance;
+    private void Start()
+    {
+        _gameManager = GameManager.Instance;
+    }
 
     public void StartMission()
     {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Prop: MonoBehaviour, IGrabbable
@@ -7,26 +8,27 @@ public class Prop: MonoBehaviour, IGrabbable
     [SerializeField] private PropType _type = PropType.None;
     
     public PropType Type => _type;
-    public bool IsGrabbed { get; private set; }
+    public Rigidbody Rb => _rb;
+    public bool IsGrabbed { get; protected set; }
+    
+    protected Rigidbody _rb;
+    protected PlayerController PlayerController;
     
     private Transform _originalParent;
-    private Rigidbody _rb;
-    private Catcher _catcher;
-    
-    void Start()
-    {
-        _rb = GetComponent<Rigidbody>();
-    }
-    
-    public virtual void Grabbed(Catcher catcher)
+
+    protected virtual void Start() => _rb = GetComponent<Rigidbody>();
+
+    #region Grab
+
+    public virtual void Grabbed(PlayerController playerController)
     {
         IsGrabbed = true;
         _originalParent = transform.parent;
-        transform.SetParent(catcher.CatchPoint);
+        transform.SetParent(playerController.CatchPoint);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         
-        _catcher = catcher;
+        PlayerController = playerController;
         
         if (_rb != null) _rb.isKinematic = true;
         Debug.Log("Grabbed object");
@@ -37,10 +39,10 @@ public class Prop: MonoBehaviour, IGrabbable
         transform.SetParent(_originalParent);
         if(_rb != null) _rb.isKinematic = false;
 
-        if (_catcher)
+        if (PlayerController)
         {
-            _catcher.Reset();
-            _catcher = null;
+            PlayerController.Reset();
+            PlayerController = null;
         }
 
         if (throwForce != Vector3.zero)
@@ -49,10 +51,14 @@ public class Prop: MonoBehaviour, IGrabbable
         }
         IsGrabbed = false;
     }
+
+    #endregion
 }
 
 public enum PropType
 {
     None,
-    Luggage
+    RedLuggage,
+    BlueLuggage,
+    GreenLuggage,
 }

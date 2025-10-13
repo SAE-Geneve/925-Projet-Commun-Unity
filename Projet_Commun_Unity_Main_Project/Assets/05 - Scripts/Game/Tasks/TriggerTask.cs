@@ -4,7 +4,7 @@ public class TriggerTask : GameTask
 {
     [Header("Trigger Parameters")]
     [Tooltip("The prop type that needs to touch the task collider to succeed")]
-    [SerializeField] private PropType _propType = PropType.None;
+    [SerializeField] protected PropType _propType = PropType.None;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,8 +15,5 @@ public class TriggerTask : GameTask
         
         Succeed();
         Destroy(other.gameObject);
-        Done = true;
-        
-        Debug.Log($"Task {TaskName} done!");
     }
 }

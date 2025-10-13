@@ -70,4 +70,9 @@ public class CharacterMovement : MonoBehaviour
     {
         Movement = move;
     }
+    
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
 }

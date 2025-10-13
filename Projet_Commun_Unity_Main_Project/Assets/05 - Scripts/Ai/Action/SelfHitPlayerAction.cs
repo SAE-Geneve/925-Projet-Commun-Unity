@@ -5,7 +5,7 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "SelfHitPlayer", story: "[self] hit player", category: "Action", id: "5d0d270614a901b06627ec9175fb0b4e")]
+[NodeDescription(name: "SelfHitPlayer", story: "[self] touches a player", category: "Action", id: "self_hit_player")]
 public partial class SelfHitPlayerAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
@@ -17,27 +17,29 @@ public partial class SelfHitPlayerAction : Action
 
     protected override Status OnUpdate()
     {
-        if (Self == null || Self.Value == null)
+        if (Self?.Value == null)
             return Status.Failure;
-
-        Collider selfCollider = Self.Value.GetComponent<Collider>();
-        if (selfCollider == null)
+        
+        Collider selfCol = Self.Value.GetComponent<Collider>();
+        if (selfCol == null)
             return Status.Failure;
         
         Collider[] hits = Physics.OverlapBox(
-            selfCollider.bounds.center,
-            selfCollider.bounds.extents,
-            Self.Value.transform.rotation
+            selfCol.bounds.center,
+            selfCol.bounds.extents,
+            Quaternion.identity,
+            Physics.AllLayers,
+            QueryTriggerInteraction.Ignore
         );
 
         foreach (Collider hit in hits)
         {
             if (hit.CompareTag("Player"))
+            {
                 return Status.Success;
+            }
         }
 
         return Status.Running;
     }
-
-    protected override void OnEnd() { }
 }

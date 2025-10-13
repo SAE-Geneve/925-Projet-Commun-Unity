@@ -837,7 +837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &279628578
 Transform:
   m_ObjectHideFlags: 0
@@ -3970,7 +3970,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1642204324
 Transform:
   m_ObjectHideFlags: 0
@@ -4345,6 +4345,7 @@ GameObject:
   - component: {fileID: 1951730668}
   - component: {fileID: 1951730667}
   - component: {fileID: 1951730669}
+  - component: {fileID: 1951730671}
   m_Layer: 0
   m_Name: HubNpc
   m_TagString: Untagged
@@ -4455,45 +4456,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Graph: {fileID: -7067439787621656969, guid: e35c791afe156384c867514adce6abae, type: 2}
-  m_BlackboardVariableOverridesList:
-  - rid: 1911685239610802569
-  - rid: 1911685239610802627
-  - rid: 1911685239610802628
+  m_Graph: {fileID: 0}
+  m_BlackboardVariableOverridesList: []
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
-    RefIds:
-    - rid: 1911685239610802569
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 1
-          m_Value1: 0
-        Name: Self
-        m_Value: {fileID: 1951730662}
-    - rid: 1911685239610802627
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 13121213854061266938
-          m_Value1: 7959471194492975010
-        Name: Player
-        m_Value: {fileID: 1104712121}
-    - rid: 1911685239610802628
-      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 1722462139895037715
-          m_Value1: 11884576770274269026
-        Name: Waypoints
-        m_Value:
-        - {fileID: 1403017065}
-        - {fileID: 1068018122}
-        - {fileID: 989377141}
-        - {fileID: 1440923429}
-        - {fileID: 1053447643}
+    RefIds: []
 --- !u!195 &1951730668
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4538,11 +4507,24 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 96
   m_CollisionDetection: 0
+--- !u!114 &1951730671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951730662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08734480d070ea44bcb16e26f79c516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
 --- !u!1 &2047638546
 GameObject:
   m_ObjectHideFlags: 0

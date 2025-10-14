@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     
     public Rigidbody Rb => _rb;
     public Transform CatchPoint => _catchPoint;
+    public PlayerMovement PlayerMovement { get; private set; }
     
     Vector3 throwDirection;
     
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        PlayerMovement = GetComponent<PlayerMovement>();
+        
         _throwBar.gameObject.SetActive(false);
     }
 

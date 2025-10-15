@@ -41,7 +41,7 @@ public class UITextEffects : MonoBehaviour
         
         while (t < duration)
         { 
-            tempText.rectTransform.anchoredPosition += new Vector2(0f, -50f) * Time.deltaTime;
+            tempText.rectTransform.anchoredPosition += new Vector2(0f, -25f) * Time.deltaTime;
             t += Time.deltaTime;
             yield return null;
         }
@@ -54,15 +54,14 @@ public class UITextEffects : MonoBehaviour
     {
         var tempText = TemporaryVariableMaker(fadeText);
         
-        Vector3 startPos = tempText.transform.localPosition;
         float t = 0.0f;
-        float duration = 1.5f;
+        float duration = 2f;
         Color startcolor = tempText.color;
         Color endcolor = new Color(tempText.color.r, tempText.color.g, tempText.color.b, 0);
         
         while(tempText.color.a > 0)
         { 
-            tempText.transform.localPosition += new Vector3(0f, -50f, 0f)*Time.deltaTime;
+            tempText.rectTransform.anchoredPosition += new Vector2(0f, -25f) * Time.deltaTime;
             tempText.color = Color.Lerp(startcolor, endcolor, t);
             if (t < 1)
             {

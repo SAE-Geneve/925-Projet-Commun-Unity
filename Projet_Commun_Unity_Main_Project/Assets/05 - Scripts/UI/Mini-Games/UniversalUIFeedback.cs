@@ -12,7 +12,7 @@ public class UniversalUIFeedback
         Color startcolor = fadeImage.color;
         Color endcolor = new Color(fadeImage.color.r, fadeImage.color.g, fadeImage.color.b, 0);
         float t = 0.0f;
-        float duration = 1.5f;
+        float duration = 2f;
         while (fadeImage.color.a > 0)
         {
             fadeImage.color = Color.Lerp(startcolor, endcolor, t);

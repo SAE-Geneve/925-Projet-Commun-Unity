@@ -1,7 +1,9 @@
 using System.Collections;
+using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using Action = System.Action;
 
 public class Ragdoll : MonoBehaviour
 {
@@ -17,6 +19,8 @@ public class Ragdoll : MonoBehaviour
     [SerializeField] private Transform hipsTransform; 
     private Collider[] _ragdollColliders;
     private Rigidbody[] _ragdollRigidbodies;
+    
+    public event Action OnRagdoll;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,6 +42,8 @@ public class Ragdoll : MonoBehaviour
 
     public void RagdollOn()
     {
+        OnRagdoll?.Invoke();
+            
         foreach (Collider col in _ragdollColliders)
         {
             col.enabled = true;

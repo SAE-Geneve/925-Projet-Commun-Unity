@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     public Transform CatchPoint => _catchPoint;
     public PlayerMovement PlayerMovement { get; private set; }
     
+    private Ragdoll _ragdoll;
+    
     Vector3 throwDirection;
     
     private IGrabbable _grabbed;
@@ -37,6 +39,9 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         PlayerMovement = GetComponent<PlayerMovement>();
+        _ragdoll = GetComponent<Ragdoll>();
+
+        _ragdoll.OnRagdoll += Drop;
         
         _throwBar.gameObject.SetActive(false);
     }
@@ -55,7 +60,18 @@ public class PlayerController : MonoBehaviour
                 _throwBar.value = 0f;
             }
         }
-        else if (context.canceled && _grabbed != null && _isCharging)
+        else if (context.canceled)
+        {
+            if (_isCharging)
+            {
+                Drop();
+            }
+        }
+    }
+
+    private void Drop()
+    {
+        if (_grabbed != null)
         {
             _grabbed.Dropped(ThrowDirection());
             _throwBar.gameObject.SetActive(false);

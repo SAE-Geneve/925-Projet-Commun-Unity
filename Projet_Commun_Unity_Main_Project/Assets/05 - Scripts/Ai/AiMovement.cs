@@ -6,7 +6,9 @@ public class AIMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float stopDistance = 0f;
+    [SerializeField] private float stopDistance = 0.5f;
+    [SerializeField] private float accelerationPower = 50f;
+    [SerializeField] private float turnSpeed = 0.15f;
 
     private Rigidbody rb;
     private Vector3 destination;
@@ -18,12 +20,13 @@ public class AIMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         path = new NavMeshPath();
+        rb.freezeRotation = true; 
     }
 
     void FixedUpdate()
     {
         if (!moving) return;
-
+        
         if (path.corners.Length == 0 || currentCorner >= path.corners.Length)
         {
             Stop();
@@ -31,60 +34,67 @@ public class AIMovement : MonoBehaviour
         }
 
         Vector3 agentPos = transform.position;
-        Vector3 nextCorner = path.corners[Mathf.Min(currentCorner, path.corners.Length - 1)];
-        Vector3 dir = nextCorner - agentPos;
-        dir.y = 0f;
-
-        // Ajouter une petite tolérance pour éviter le mini teleport
-        if (dir.magnitude <= stopDistance || dir.magnitude <= 0.05f)
+        
+        Vector3 nextCorner = path.corners[currentCorner];
+        Vector3 dirToCorner = nextCorner - agentPos;
+        dirToCorner.y = 0f;
+        
+        if (dirToCorner.magnitude <= 0.15f || (currentCorner == path.corners.Length - 1 && dirToCorner.magnitude <= stopDistance))
         {
             currentCorner++;
+
             if (currentCorner >= path.corners.Length)
             {
                 Stop();
                 return;
             }
+            
+            nextCorner = path.corners[currentCorner];
+            dirToCorner = nextCorner - agentPos;
+            dirToCorner.y = 0f;
         }
-        else
-        {
-            dir.Normalize();
-            Move(dir);
-        }
+        
+        dirToCorner.Normalize();
+        Move(dirToCorner);
     }
 
 
     private void Move(Vector3 dir)
     {
-        Vector3 moveDir = dir * speed;
-        Vector3 velocityChange = moveDir - new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-        rb.AddForce(velocityChange, ForceMode.VelocityChange);
-
-        // Rotation
+        rb.AddForce(dir * accelerationPower, ForceMode.Acceleration);
+        
+        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        if (flatVelocity.magnitude > speed)
+        {
+            rb.linearVelocity = flatVelocity.normalized * speed + new Vector3(0, rb.linearVelocity.y, 0);
+        }
+        
         if (dir != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation,
-                Quaternion.LookRotation(dir), 0.15f);
+                Quaternion.LookRotation(dir), turnSpeed);
         }
     }
-
     public void SetDestination(Vector3 target)
     {
         destination = target;
-        if (NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path))
+        if (NavMesh.SamplePosition(target, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {
-            currentCorner = 0;
-            moving = true;
+            if (NavMesh.CalculatePath(transform.position, hit.position, NavMesh.AllAreas, path))
+            {
+                currentCorner = 0;
+                moving = true;
+            }
         }
     }
 
     public void Stop()
     {
         moving = false;
-        rb.linearVelocity = Vector3.zero;      // Reset complet de la vélocité
-        rb.angularVelocity = Vector3.zero; // Supprime toute rotation résiduelle
+        rb.linearVelocity = Vector3.zero;      
+        rb.angularVelocity = Vector3.zero; 
     }
-
-
+    
     public void SetSpeed(float newSpeed)
     {
         speed = newSpeed;

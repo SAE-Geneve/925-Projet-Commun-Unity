@@ -41,7 +41,8 @@ public class PlayerController : MonoBehaviour
         PlayerMovement = GetComponent<PlayerMovement>();
         _ragdoll = GetComponent<Ragdoll>();
 
-        _ragdoll.OnRagdoll += Drop;
+        //TODO: enlever quand on utilisera plus le capsule de la scene prop
+        if(_ragdoll)_ragdoll.OnRagdoll += Drop;
         
         _throwBar.gameObject.SetActive(false);
     }
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_grabbed != null)
         {
-            _grabbed.Dropped(ThrowDirection());
+            _grabbed.Dropped(ThrowDirection(), this);
             _throwBar.gameObject.SetActive(false);
             _isCharging = false;
         }

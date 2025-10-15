@@ -34,7 +34,7 @@ public class Prop: MonoBehaviour, IGrabbable
         Debug.Log("Grabbed object");
     }
 
-    public virtual void Dropped(Vector3 throwForce = default)
+    public virtual void Dropped(Vector3 throwForce = default, PlayerController playerController = null)
     {
         transform.SetParent(_originalParent);
         if(_rb != null) _rb.isKinematic = false;

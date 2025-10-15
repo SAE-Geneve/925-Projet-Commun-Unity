@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UniversalUIFeedback
 {
-    static public IEnumerator DoFade(Image fadeImage)
+    public static IEnumerator DoFade(Image fadeImage)
     {
         fadeImage.gameObject.SetActive(true);
         Color startcolor = fadeImage.color;
@@ -26,7 +26,7 @@ public class UniversalUIFeedback
         yield return null;
     }
     
-    static public IEnumerator DoTextFade(TextMeshProUGUI fadeText)
+    public static IEnumerator DoTextFade(TextMeshProUGUI fadeText)
     {
         fadeText.gameObject.SetActive(true);
         Color startcolor = fadeText.color;
@@ -44,6 +44,26 @@ public class UniversalUIFeedback
         }
         fadeText.gameObject.SetActive(false);
         fadeText.color = startcolor;
+        yield return null;
+    }
+    
+    //Fragile, if spammed, position will be altered
+    public static IEnumerator DoTextMoveDown(TextMeshProUGUI fadeText)
+    {
+        fadeText.gameObject.SetActive(true);
+        Vector3 startPos = fadeText.transform.localPosition;
+        float t = 0.0f;
+        float duration = 1.5f;
+        
+        while (t < duration)
+        { 
+            fadeText.transform.localPosition += new Vector3(0f, -50f, 0f)*Time.deltaTime;
+            t += Time.deltaTime;
+            yield return null;
+        }
+        
+        fadeText.gameObject.SetActive(false);
+        fadeText.transform.localPosition = startPos;
         yield return null;
     }
 }

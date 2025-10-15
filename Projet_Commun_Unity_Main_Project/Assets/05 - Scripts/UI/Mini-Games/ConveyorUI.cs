@@ -1,4 +1,3 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,41 +6,42 @@ public class ConveyorUI : MonoBehaviour
 {
     
     [Header("Score Texts")]
-    [SerializeField] TextMeshProUGUI totalScore=null;
-    private int total_score = 0;
-    [SerializeField] TextMeshProUGUI totalCollected=null;
-    private int collected_score = 0;
-    [SerializeField] TextMeshProUGUI totalUnclaimed=null;
-    private int unclaimed_score = 0;
+    [SerializeField] private TextMeshProUGUI totalScore;
+    private int _totalScore;
+    [SerializeField] private TextMeshProUGUI totalCollected;
+    private int _collectedScore;
+    [SerializeField] private TextMeshProUGUI totalUnclaimed;
+    private int _unclaimedScore;
     
     [Header("Total Score Effects")]
-    [SerializeField] Image scoreImageFade=null;
-    [SerializeField] TextMeshProUGUI scoreTextFade=null;
+    [SerializeField] private Image scoreImageFade;
+    [SerializeField] private TextMeshProUGUI scoreTextFade;
     
     [Header("Secondary Score Effects")]
-    [SerializeField] TextMeshProUGUI collectedScoreText=null;
-    [SerializeField] TextMeshProUGUI unclaimedScoreText=null;
+    [SerializeField] private TextMeshProUGUI collectedScoreText;
+    [SerializeField] private TextMeshProUGUI unclaimedScoreText;
     
     public void TotalScoreIncrease()
     {
         StartCoroutine(UniversalUIFeedback.DoFade(scoreImageFade));
         StartCoroutine(UniversalUIFeedback.DoTextFade(scoreTextFade));
-        total_score += 150;
-        totalScore.text = ""+total_score.ToString("00000000");
+        StartCoroutine(UniversalUIFeedback.DoTextMoveDown(scoreTextFade));
+        _totalScore += 150;
+        totalScore.text = ""+_totalScore.ToString("00000000");
     }
     
     public void CollectedScoreIncrease()
     {
         StartCoroutine(UniversalUIFeedback.DoTextFade(collectedScoreText));
-        collected_score += 1;
-        totalCollected.text = ""+collected_score.ToString();
+        _collectedScore += 1;
+        totalCollected.text = ""+_collectedScore.ToString();
     }
     
     public void UnclaimedScoreIncrease()
     {
         StartCoroutine(UniversalUIFeedback.DoTextFade(unclaimedScoreText));
-        unclaimed_score += 1;
-        totalUnclaimed.text = ""+unclaimed_score.ToString();
+        _unclaimedScore += 1;
+        totalUnclaimed.text = ""+_unclaimedScore.ToString();
     }
     
     //TO BE USED WHEN BUTTONS AREN'T USED ANYMORE

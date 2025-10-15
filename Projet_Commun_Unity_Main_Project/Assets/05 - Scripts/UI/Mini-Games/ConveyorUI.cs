@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,25 +22,37 @@ public class ConveyorUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI collectedScoreText;
     [SerializeField] private TextMeshProUGUI unclaimedScoreText;
     
+    private UITextEffects _uiTextEffects;
+    
+    private void Start()
+    {
+        if (TryGetComponent(out _uiTextEffects))
+        {
+            Debug.Log("Found UI Text Effects");
+        }
+    }
+    
     public void TotalScoreIncrease()
     {
-        StartCoroutine(UniversalUIFeedback.DoFade(scoreImageFade));
-        StartCoroutine(UniversalUIFeedback.DoTextFade(scoreTextFade));
-        StartCoroutine(UniversalUIFeedback.DoTextMoveDown(scoreTextFade));
+        StartCoroutine(UniversalUIFeedback.DoImageFade(scoreImageFade));
+        StartCoroutine(_uiTextEffects.DoTextFadeMoveDown(scoreTextFade));
+        
         _totalScore += 150;
         totalScore.text = ""+_totalScore.ToString("00000000");
     }
     
     public void CollectedScoreIncrease()
     {
-        StartCoroutine(UniversalUIFeedback.DoTextFade(collectedScoreText));
+        StartCoroutine(_uiTextEffects.DoTextFade(collectedScoreText));
+        
         _collectedScore += 1;
         totalCollected.text = ""+_collectedScore.ToString();
     }
     
     public void UnclaimedScoreIncrease()
     {
-        StartCoroutine(UniversalUIFeedback.DoTextFade(unclaimedScoreText));
+        StartCoroutine(_uiTextEffects.DoTextFade(unclaimedScoreText));
+        
         _unclaimedScore += 1;
         totalUnclaimed.text = ""+_unclaimedScore.ToString();
     }
@@ -47,7 +60,7 @@ public class ConveyorUI : MonoBehaviour
     //TO BE USED WHEN BUTTONS AREN'T USED ANYMORE
     public void SecondaryScoreIncrease(int score, TextMeshProUGUI scoreText, TextMeshProUGUI effectText)
     {
-        StartCoroutine(UniversalUIFeedback.DoTextFade(effectText));
+        StartCoroutine(_uiTextEffects.DoTextFade(effectText));
         score += 1;
         scoreText.text = ""+score.ToString();
     }

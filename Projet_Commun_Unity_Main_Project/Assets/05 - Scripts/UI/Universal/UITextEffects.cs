@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UITextEffects : MonoBehaviour
 {
+    [SerializeField] private float effectDuration=2.5f;
     private TextMeshProUGUI TemporaryVariableMaker(TextMeshProUGUI textSample)
     {
         TextMeshProUGUI tempText=Instantiate(textSample, textSample.transform.parent);
@@ -18,13 +19,12 @@ public class UITextEffects : MonoBehaviour
         Color startcolor = tempText.color;
         Color endcolor = new Color(tempText.color.r, tempText.color.g, tempText.color.b, 0);
         float t = 0.0f;
-        float duration = 1.5f;
         while (tempText.color.a > 0)
         {
             tempText.color = Color.Lerp(startcolor, endcolor, t);
             if (t < 1)
             {
-                t += Time.deltaTime / duration;
+                t += Time.deltaTime / effectDuration;
             }
             yield return null;
         }
@@ -37,9 +37,8 @@ public class UITextEffects : MonoBehaviour
         var tempText = TemporaryVariableMaker(fadeText);
         
         float t = 0.0f;
-        float duration = 1.5f;
         
-        while (t < duration)
+        while (t < effectDuration)
         { 
             tempText.rectTransform.anchoredPosition += new Vector2(0f, -25f) * Time.deltaTime;
             t += Time.deltaTime;
@@ -55,7 +54,6 @@ public class UITextEffects : MonoBehaviour
         var tempText = TemporaryVariableMaker(fadeText);
         
         float t = 0.0f;
-        float duration = 2f;
         Color startcolor = tempText.color;
         Color endcolor = new Color(tempText.color.r, tempText.color.g, tempText.color.b, 0);
         
@@ -65,7 +63,7 @@ public class UITextEffects : MonoBehaviour
             tempText.color = Color.Lerp(startcolor, endcolor, t);
             if (t < 1)
             {
-                t += Time.deltaTime / duration;
+                t += Time.deltaTime / effectDuration;
             }
             yield return null;
         }

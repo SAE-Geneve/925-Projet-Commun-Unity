@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _catchPoint;
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Slider _throwBar;
+    [SerializeField] private Collider _collider;
 
     [Header("Throw bar")] 
     [SerializeField] private float _barSpeed = 2f;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _sphereRadius = 0.2f;
     
     public Rigidbody Rb => _rb;
+    public Collider Collider => _collider;
     public Transform CatchPoint => _catchPoint;
     public PlayerMovement PlayerMovement { get; private set; }
     

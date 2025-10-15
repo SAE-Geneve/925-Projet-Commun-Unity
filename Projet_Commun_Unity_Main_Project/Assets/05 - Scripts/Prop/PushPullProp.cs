@@ -11,14 +11,13 @@ public class PushPullProp : Prop
     
     public override void Grabbed(PlayerController playerController)
     {
-        //PlayerControllers = playerController;
         playerController.transform.parent = transform;
         _playerControllers.Add(playerController);
         IsGrabbed = true;
         var playerRb = playerController.Rb;
         playerRb.linearVelocity = Vector3.zero;
         playerRb.isKinematic = true;
-
+        Physics.IgnoreCollision(playerController.Collider, _collider, true);
         playerController.PlayerMovement.OnMove += MoveProp;
     }
     
@@ -29,6 +28,7 @@ public class PushPullProp : Prop
         if(_playerControllers.Contains(playerController))
         {
             playerController.Reset();
+            Physics.IgnoreCollision(playerController.Collider, _collider, false);
             playerController.Rb.isKinematic = false;
             playerController.transform.parent = null;
             playerController.PlayerMovement.OnMove -= MoveProp;

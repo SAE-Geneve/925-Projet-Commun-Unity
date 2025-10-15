@@ -15,8 +15,13 @@ public class Prop: MonoBehaviour, IGrabbable
     protected PlayerController PlayerController;
     
     protected Transform _originalParent;
+    protected Collider _collider;
 
-    protected virtual void Start() => _rb = GetComponent<Rigidbody>();
+    protected virtual void Start()
+    {
+        _collider = GetComponent<Collider>();
+        _rb = GetComponent<Rigidbody>();
+    }
 
     #region Grab
 

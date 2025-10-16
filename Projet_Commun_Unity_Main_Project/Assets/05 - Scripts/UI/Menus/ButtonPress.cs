@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 [ExecuteInEditMode]
 public class ButtonPress : MonoBehaviour
@@ -17,10 +14,10 @@ public class ButtonPress : MonoBehaviour
     [Header("Scene Changes")]
     [SerializeField] SceneList sceneToLoad;
     
-    //Shouldn't be universal (Like main menu does not care about ingame canvas)
+    //Shouldn't be universal (Like main menu does not care about in-game canvas)
     [Header("Game Canvas")]
-    [SerializeField] Canvas currentCanvas=null;
-    [SerializeField] Canvas newCanvas=null;
+    [SerializeField] Canvas currentCanvas;
+    [SerializeField] Canvas newCanvas;
     
     //NEED TO BUILD BEFORE BEING ABLE TO USE SCENE COUNT
     /*[SerializeField] public List<String> SceneList;

@@ -195,8 +195,8 @@ GameObject:
   - component: {fileID: 5282472786817731129}
   - component: {fileID: 1461780338827374522}
   - component: {fileID: 1901091691029870629}
-  - component: {fileID: 5734412684264462019}
   - component: {fileID: 3432724173745202922}
+  - component: {fileID: 3731500560562344544}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -223,7 +223,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 40, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5282472786817731129
 Canvas:
@@ -288,18 +288,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5734412684264462019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 746499402808828194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1473a2ec60e4c7841a2b1e1a4d36b217, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3432724173745202922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,6 +303,18 @@ MonoBehaviour:
   effectDuration: 2
   happyImage: {fileID: 3374854975274120723}
   unhappyImage: {fileID: 5526102581169029563}
+--- !u!114 &3731500560562344544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746499402808828194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb957ba366bd8645976488569f3ea39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7996882598980164724
 GameObject:
   m_ObjectHideFlags: 0

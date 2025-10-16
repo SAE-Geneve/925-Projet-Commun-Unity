@@ -10,7 +10,6 @@ public class CameraManager : MonoBehaviour
     void Start()
     {
         _cam = GetComponent<CinemachineCamera>();
-        
     }
 
     // Update is called once per frame

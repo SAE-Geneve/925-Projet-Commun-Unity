@@ -193,6 +193,7 @@ MonoBehaviour:
   _catchPoint: {fileID: 1640967426003292745}
   _rb: {fileID: 1975232992882927089}
   _throwBar: {fileID: 1033605845465251157}
+  _collider: {fileID: 788503736778780130}
   _barSpeed: 2
   _throwThreshold: 1
   _maxThrowForce: 10
@@ -257,7 +258,19 @@ MonoBehaviour:
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7225438044755663946}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: ControllerDisconnected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_DeviceRegainedEvent:
     m_PersistentCalls:
       m_Calls: []

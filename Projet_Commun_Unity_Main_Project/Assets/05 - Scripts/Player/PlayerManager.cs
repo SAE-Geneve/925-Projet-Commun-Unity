@@ -1,6 +1,5 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -15,19 +14,31 @@ public class PlayerManager : MonoBehaviour
     public void OnPlayerJoined(PlayerInput player)
     {
         player.transform.position = spawnPoints[_playerCount].position;
-        _players.Add(player.gameObject.GetComponent<PlayerController>());
+        player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
+        _players.Add(player.GetComponent<PlayerController>());
         _playerCount++;
     }
     
-    void OnPlayerLeft(PlayerInput player)
+    private void OnPlayerDisconnect(PlayerInput player)
     {
+        StartCoroutine(RemovePlayerNextFrame(player));
+    }
+
+    private IEnumerator RemovePlayerNextFrame(PlayerInput player)
+    {
+        player.user.UnpairDevices();
+
+        yield return null; // wait one frame to let the Input System process internal cleanup
+
         for (int i = 0; i < _playerCount; i++)
         {
-            if (_players[i] == player.gameObject.GetComponent<PlayerController>())
+            if (_players[i] == player.GetComponent<PlayerController>())
             {
-                _players[i] = null;
+                Destroy(_players[i].gameObject);
+                _players.RemoveAt(i);
                 _playerCount--;
                 Debug.LogWarning("Player disconnected");
+                break;
             }
         }
     }

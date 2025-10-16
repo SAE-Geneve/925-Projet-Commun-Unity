@@ -15,10 +15,8 @@ public class PlayerManager : MonoBehaviour
     public void OnPlayerJoined(PlayerInput player)
     {
         player.transform.position = spawnPoints[_playerCount].position;
-        Debug.Log(player.gameObject.GetComponent<PlayerController>());
         _players.Add(player.gameObject.GetComponent<PlayerController>());
         _playerCount++;
-        Debug.Log(_playerCount);
     }
     
     void OnPlayerLeft(PlayerInput player)

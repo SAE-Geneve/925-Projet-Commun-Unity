@@ -9,6 +9,8 @@ public class SceneLoader : MonoBehaviour
     {
         if(Instance && Instance != this) Destroy(gameObject);
         else Instance = this;
+        
+        DontDestroyOnLoad(gameObject);
     }
     
     public void LoadScene(string sceneName) => SceneManager.LoadScene(sceneName);

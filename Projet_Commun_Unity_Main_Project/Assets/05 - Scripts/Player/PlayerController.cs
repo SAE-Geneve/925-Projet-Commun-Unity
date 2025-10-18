@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     public Transform CatchPoint => _catchPoint;
     public PlayerMovement PlayerMovement { get; private set; }
     
+    public IInteractable InteractableGrabbed { get; set; }
+    
     private Ragdoll _ragdoll;
     
     private Vector3 throwDirection;
@@ -124,7 +126,12 @@ public class PlayerController : MonoBehaviour
 
     public void TryInteract()
     {
-
+        if (InteractableGrabbed != null)
+        {
+            InteractableGrabbed.Interact(gameObject);
+            return;
+        }
+        
         TryAction<IInteractable>(interactable =>
         {
             interactable.Interact(gameObject);

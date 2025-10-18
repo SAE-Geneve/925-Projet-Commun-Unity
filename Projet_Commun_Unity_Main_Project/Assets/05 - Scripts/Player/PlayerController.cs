@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _barSpeed = 2f;
     
     [Header("Throw")]
-    [SerializeField] private float _throwThreshold = 1f;
     [SerializeField] private float _maxThrowForce = 10f;
     [SerializeField] private float _upForceMultiplier = 1f;
     

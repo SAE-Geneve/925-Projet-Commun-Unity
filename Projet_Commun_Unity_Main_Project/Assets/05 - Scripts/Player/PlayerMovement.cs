@@ -13,7 +13,7 @@ public class PlayerMovement : CharacterMovement
     private bool _isDashing;
     
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         _animator = GetComponent<Animator>();

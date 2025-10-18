@@ -16,7 +16,7 @@ public class CharacterMovement : MonoBehaviour
     protected Vector3 CamRight;
     
     
-    protected void Start()
+    protected virtual void Start()
     {
         Rb = GetComponent<Rigidbody>();
         GetCameraDirections();

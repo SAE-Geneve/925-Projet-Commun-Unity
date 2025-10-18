@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     
     private Ragdoll _ragdoll;
     
-    Vector3 throwDirection;
+    private Vector3 throwDirection;
     
     private IGrabbable _grabbed;
     

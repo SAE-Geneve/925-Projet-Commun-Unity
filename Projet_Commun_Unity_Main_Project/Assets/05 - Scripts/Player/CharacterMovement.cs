@@ -46,7 +46,7 @@ public class CharacterMovement : MonoBehaviour
         OnMove?.Invoke(moveDir);
     }
     
-    private void RotateCharacter()
+    protected virtual void RotateCharacter()
     {
         // Rotate character to face move direction
         Vector3 moveDir = CamRight * Movement.x + CamForward * Movement.y;

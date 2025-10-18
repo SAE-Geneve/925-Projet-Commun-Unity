@@ -5,6 +5,9 @@ public class PlayerMovement : CharacterMovement
 {
     [SerializeField] private float dashForce = 5f;
     [SerializeField] private float dashDuration = 5f;
+    
+    public bool IsPushPull { get; set; }
+    
     private Animator _animator;
     
     private bool _isDashing;
@@ -32,18 +35,17 @@ public class PlayerMovement : CharacterMovement
 
     public void Dash()
     {
-        if (Rb != null)
-        {
-            if (_isDashing)
-            {
-                return;
-            }
-        
-            _isDashing = true;
-            StartCoroutine("DashCoroutine");
-        
-            Rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
-        }
+        if (!Rb || _isDashing) return;
+    
+        _isDashing = true;
+        StartCoroutine(nameof(DashCoroutine));
+    
+        Rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
+    }
+
+    protected override void RotateCharacter()
+    {
+        if(!IsPushPull) base.RotateCharacter();
     }
 
     private IEnumerator DashCoroutine()

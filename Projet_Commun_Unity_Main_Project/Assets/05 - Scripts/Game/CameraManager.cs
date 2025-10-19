@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class CameraManager : MonoBehaviour
 {
     private CinemachineCamera _cam;
     [SerializeField] private PlayerManager playerManager;
-    private readonly List<Vector3> _positions = new List<Vector3>();
     [SerializeField] private Transform targetPosition;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,30 +25,22 @@ public class CameraManager : MonoBehaviour
         }
         else
         {
-            _positions.Clear();
-            foreach (var pl in playerManager.Players)
-            {
-                _positions.Add(pl.transform.position);
-            }
-            
             targetPosition.position = GetMeanVector();
         }
     }
 
     private Vector3 GetMeanVector(){
-        if (_positions.Count == 0)
-            return Vector3.zero;
-         
+        
         float x = 0f;
         float y = 0f;
         float z = 0f;
  
-        foreach (Vector3 pos in _positions)
+        foreach (var pl in playerManager.Players)
         {
-            x += pos.x;
-            y += pos.y;
-            z += pos.z;
+            x += pl.transform.position.x;
+            y += pl.transform.position.y;
+            z += pl.transform.position.z;
         }
-        return new Vector3(x / _positions.Count, y / _positions.Count, z / _positions.Count);
+        return new Vector3(x / playerManager.Players.Count, y / playerManager.Players.Count, z / playerManager.Players.Count);
     }
 }

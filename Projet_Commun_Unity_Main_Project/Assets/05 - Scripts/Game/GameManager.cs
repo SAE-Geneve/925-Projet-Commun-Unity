@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] [Min(0)] private int _maxSatisfaction = 100;
 
     public static GameManager Instance { get; private set; }
+    
+    private PlayerManager _playerManager;
 
     // Events
     public event Action OnTimerUpdate;
@@ -82,6 +85,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        _playerManager = FindFirstObjectByType<PlayerManager>();
+        
         ResetGame();
         Debug.Log($"Game State: {_state}");
     }
@@ -210,7 +215,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Triggered when a player is disconnected
     /// </summary>
-    public void OnPlayerDisconnected()
+    public void OnPlayerDisconnected(PlayerInput player)
     {
         if (_state != GameState.Playing && _state != GameState.Cinematic)
         {
@@ -218,9 +223,11 @@ public class GameManager : MonoBehaviour
             return;
         }
         
+        
         _lastState = _state;
         SwitchState(GameState.Disconnected);
         // TODO: Handle when a player is disconnected
+        _playerManager.OnPlayerDisconnect(player, DisconnectionTimer);
         
         Debug.Log("One or multiple players have been disconnected");
     }

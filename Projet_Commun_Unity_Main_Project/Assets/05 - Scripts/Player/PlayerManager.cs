@@ -8,20 +8,28 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private Transform[] spawnPoints;
     private int _playerCount;
-
     private readonly List<PlayerController> _players = new();
+    public List<PlayerController> Players => _players;
+    private GameManager _gameManager;
+
+
+    private void Start()
+    {
+        _gameManager = FindFirstObjectByType<GameManager>();
+    }
 
     public void OnPlayerJoined(PlayerInput player)
     {
         player.transform.position = spawnPoints[_playerCount].position;
-        player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
+        player.GetComponent<InputManager>().OnControllerDisconnected += _gameManager.OnPlayerDisconnected;
+        
         _players.Add(player.GetComponent<PlayerController>());
         _playerCount++;
     }
 
-    private void OnPlayerDisconnect(PlayerInput player)
+    public void OnPlayerDisconnect(PlayerInput player, float timer)
     {
-        StartCoroutine(HandleDisconnectWithReconnectWindow(player, 5f)); // wait up to 5 seconds
+        StartCoroutine(HandleDisconnectWithReconnectWindow(player, timer)); // wait up to 5 seconds
     }
 
     private IEnumerator HandleDisconnectWithReconnectWindow(PlayerInput player, float reconnectTimeout)
@@ -76,6 +84,7 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
+            _gameManager.OnPlayerReconnected();
             Debug.Log($"Player {player.playerIndex + 1} successfully reconnected!");
         }
     }

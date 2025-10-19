@@ -11,19 +11,21 @@ public class PlayerManager : MonoBehaviour
     private readonly List<PlayerController> _players = new();
     public List<PlayerController> Players => _players;
     private GameManager _gameManager;
+    private CameraManager _cameraManager;
 
 
     private void Start()
     {
         _gameManager = FindFirstObjectByType<GameManager>();
+        _cameraManager = FindFirstObjectByType<CameraManager>();
     }
 
     public void OnPlayerJoined(PlayerInput player)
     {
         player.transform.position = spawnPoints[_playerCount].position;
         player.GetComponent<InputManager>().OnControllerDisconnected += _gameManager.OnPlayerDisconnected;
-        
         _players.Add(player.GetComponent<PlayerController>());
+        
         _playerCount++;
     }
 

@@ -11,6 +11,7 @@ public class AIMovement : MonoBehaviour
     [SerializeField] private float turnSpeed = 0.15f;
 
     private Rigidbody rb;
+    private Animator animator;
     private Vector3 destination;
     private NavMeshPath path;
     private int currentCorner = 0;
@@ -18,6 +19,7 @@ public class AIMovement : MonoBehaviour
 
     void Awake()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         path = new NavMeshPath();
         rb.freezeRotation = true; 
@@ -25,20 +27,24 @@ public class AIMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!moving) return;
-        
+        if (!moving)
+        {
+            if (animator != null) animator.SetFloat("Speed", 0f);
+            return;
+        }
+    
         if (path.corners.Length == 0 || currentCorner >= path.corners.Length)
         {
             Stop();
+            if (animator != null) animator.SetFloat("Speed", 0f);
             return;
         }
 
         Vector3 agentPos = transform.position;
-        
         Vector3 nextCorner = path.corners[currentCorner];
         Vector3 dirToCorner = nextCorner - agentPos;
         dirToCorner.y = 0f;
-        
+
         if (dirToCorner.magnitude <= 0.15f || (currentCorner == path.corners.Length - 1 && dirToCorner.magnitude <= stopDistance))
         {
             currentCorner++;
@@ -46,35 +52,42 @@ public class AIMovement : MonoBehaviour
             if (currentCorner >= path.corners.Length)
             {
                 Stop();
+                if (animator != null) animator.SetFloat("Speed", 0f);
                 return;
             }
-            
+
             nextCorner = path.corners[currentCorner];
             dirToCorner = nextCorner - agentPos;
             dirToCorner.y = 0f;
         }
-        
+
         dirToCorner.Normalize();
         Move(dirToCorner);
+        
+        if (animator != null)
+        {
+            Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+            animator.SetFloat("Speed", flatVelocity.magnitude / speed);
+        }
     }
-
 
     private void Move(Vector3 dir)
     {
         rb.AddForce(dir * accelerationPower, ForceMode.Acceleration);
-        
+
         Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
         if (flatVelocity.magnitude > speed)
         {
             rb.linearVelocity = flatVelocity.normalized * speed + new Vector3(0, rb.linearVelocity.y, 0);
         }
-        
+
         if (dir != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation,
                 Quaternion.LookRotation(dir), turnSpeed);
         }
     }
+
     public void SetDestination(Vector3 target)
     {
         destination = target;

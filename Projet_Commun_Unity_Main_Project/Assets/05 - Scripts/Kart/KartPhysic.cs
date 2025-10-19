@@ -27,9 +27,12 @@ public class KartPhysic : MonoBehaviour
     private float tiltDirection = 0f;
     private float moveInput = 0f;
     private float lastMoveInput = 0f;
+    
+    KartController kartController;
 
     void Start()
     {
+        kartController = GetComponent<KartController>();
         rb = GetComponent<Rigidbody>();
         WheelOffset();
     }
@@ -63,6 +66,7 @@ public class KartPhysic : MonoBehaviour
 
     void HandleTilt()
     {
+        if(!kartController.IsControlled) return;
         float deltaInput = moveInput - lastMoveInput;
         if (Mathf.Abs(moveInput) > 0.1f && Mathf.Abs(deltaInput) > 0.01f)
         {

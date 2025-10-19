@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     private GameState _lastState;
     private GameContext _context;
     
-    private Mission _currentMission;
+    //private Mission _currentMission;
     
     private float _timer;
     private float _disconnectionTimer;
@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
         Timer = _initialTimer;
         DisconnectionTimer = _initialDisconnectionTime;
         
-        _currentMission = null;
+        //_currentMission = null;
         
         _context = GameContext.Hub;
     }
@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
 
     #region Mission
 
-    public void StartMission(Mission mission)
+    public void StartMission()
     {
         if (_state != GameState.Playing || _context != GameContext.Hub)
         {
@@ -157,23 +157,22 @@ public class GameManager : MonoBehaviour
             return;
         }
         
-        _currentMission = mission;
-        _currentMission.OnMissionBegin();
+        // _currentMission = mission;
+        // _currentMission.OnMissionBegin();
 
         _context = GameContext.Mission;
     }
 
     public void StopMission()
     {
-        // Check if it's playing and
         if (_state != GameState.Playing || _context == GameContext.Hub)
         {
             Debug.LogWarning("Mission can only be stopped when game is playing in a mission");
             return;
         }
         
-        _currentMission.Finish();
-        _currentMission = null;
+        // _currentMission.Finish();
+        // _currentMission = null;
         
         _context = GameContext.Hub;
     }

@@ -1569,6 +1569,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
+  speedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!54 &188162112
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3726,7 +3732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ragdollTime: 3
-  aiRig: {fileID: 467424723}
+  playerRig: {fileID: 0}
   hipsTransform: {fileID: 904928788}
   behaviorGraphAgent: {fileID: 467424728}
   testRagdoll: 0
@@ -3745,7 +3751,6 @@ MonoBehaviour:
   speed: 3.5
   stopDistance: 1
   accelerationPower: 50
-  turnSpeed: 0.15
 --- !u!54 &467424727
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6392,7 +6397,6 @@ MonoBehaviour:
   speed: 3.5
   stopDistance: 0
   accelerationPower: 50
-  turnSpeed: 0.15
 --- !u!54 &793923951
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9268,7 +9272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ragdollTime: 3
-  aiRig: {fileID: 1075613262}
+  playerRig: {fileID: 0}
   hipsTransform: {fileID: 943046833}
   behaviorGraphAgent: {fileID: 1075613264}
   testRagdoll: 0
@@ -9287,7 +9291,6 @@ MonoBehaviour:
   speed: 3.5
   stopDistance: 1
   accelerationPower: 50
-  turnSpeed: 0.15
 --- !u!54 &1075613267
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -12701,7 +12704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ragdollTime: 3
-  aiRig: {fileID: 1497460883}
+  playerRig: {fileID: 0}
   hipsTransform: {fileID: 1288833198}
   behaviorGraphAgent: {fileID: 1497460892}
   testRagdoll: 0
@@ -12720,7 +12723,6 @@ MonoBehaviour:
   speed: 3.5
   stopDistance: 1
   accelerationPower: 50
-  turnSpeed: 0.15
 --- !u!54 &1497460887
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13546,7 +13548,7 @@ RectTransform:
   m_Father: {fileID: 567352460}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -0.25, y: 0}
   m_SizeDelta: {x: 0.5, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14364,7 +14366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1852370263
 Transform:
   m_ObjectHideFlags: 0
@@ -14849,7 +14851,6 @@ MonoBehaviour:
   speed: 3.5
   stopDistance: 1
   accelerationPower: 50
-  turnSpeed: 0.15
 --- !u!1 &1961419877
 GameObject:
   m_ObjectHideFlags: 0
@@ -17851,7 +17852,6 @@ MonoBehaviour:
   speed: 3.5
   stopDistance: 0
   accelerationPower: 50
-  turnSpeed: 0.15
 --- !u!1 &5157044541184182180
 GameObject:
   m_ObjectHideFlags: 0
@@ -18269,7 +18269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &6067252467029285766
 GameObject:
   m_ObjectHideFlags: 0
@@ -18326,7 +18326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ragdollTime: 3
-  aiRig: {fileID: 5958741479989803262}
+  playerRig: {fileID: 8783926350464543773}
   hipsTransform: {fileID: 7434635246653448804}
   behaviorGraphAgent: {fileID: 3367244486518535291}
   testRagdoll: 0
@@ -18881,7 +18881,7 @@ Transform:
   m_GameObject: {fileID: 5958741479989803262}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -77.92908, y: -34.278362, z: 9.913715}
+  m_LocalPosition: {x: -77.92908, y: -32.98, z: 9.913715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19136,7 +19136,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.3
   m_Height: 2

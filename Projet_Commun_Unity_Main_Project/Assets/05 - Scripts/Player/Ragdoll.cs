@@ -1,35 +1,35 @@
 using System.Collections;
-using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using Action = System.Action;
 
 public class Ragdoll : MonoBehaviour
 {
-    [SerializeField] private float ragdollTime = 3f;
+    [SerializeField] protected float ragdollTime = 3f;
     private Coroutine _ragdollCoroutine;
-    
+
+    [SerializeField] protected GameObject playerRig;
+    [SerializeField] protected Transform hipsTransform;
+
     private Animator _animator;
     private Collider _mainCollider;
     private Rigidbody _mainRigidbody;
     private PlayerInput _playerInput;
-    
-    [SerializeField] private GameObject playerRig; 
-    [SerializeField] private Transform hipsTransform; 
+
     private Collider[] _ragdollColliders;
     private Rigidbody[] _ragdollRigidbodies;
-    
+
     public event Action OnRagdoll;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    protected virtual void Start()
     {
         _animator = GetComponent<Animator>();
         _mainCollider = GetComponent<Collider>();
         _mainRigidbody = GetComponent<Rigidbody>();
-        _playerInput  = GetComponent<PlayerInput>();
-        
+
+        if (_playerInput == null)
+            _playerInput = GetComponent<PlayerInput>();
+
         GetRagdollBits();
         RagdollOff();
     }
@@ -40,55 +40,50 @@ public class Ragdoll : MonoBehaviour
         _ragdollRigidbodies = playerRig.GetComponentsInChildren<Rigidbody>();
     }
 
-    public void RagdollOn()
+    public virtual void RagdollOn()
     {
         OnRagdoll?.Invoke();
-            
-        foreach (Collider col in _ragdollColliders)
-        {
+
+        foreach (var col in _ragdollColliders)
             col.enabled = true;
-        }
-        
-        foreach (Rigidbody rb in _ragdollRigidbodies)
+
+        foreach (var rb in _ragdollRigidbodies)
         {
             rb.isKinematic = false;
             rb.linearVelocity = _mainRigidbody.linearVelocity;
         }
-        
+
         _mainRigidbody.isKinematic = true;
         _mainCollider.enabled = false;
         _animator.enabled = false;
-        _playerInput.currentActionMap.Disable();
+
+        if (_playerInput != null)
+            _playerInput.currentActionMap.Disable();
 
         if (_ragdollCoroutine != null)
-        {
             StopCoroutine(_ragdollCoroutine);
-        }
-        
-        _ragdollCoroutine = StartCoroutine("RagdollTimer");
+        _ragdollCoroutine = StartCoroutine(RagdollTimer());
     }
-    
-    public void RagdollOff()
+
+    protected virtual void RagdollOff()
     {
-        transform.position = hipsTransform.position;
-        
-        foreach (Collider col in _ragdollColliders)
-        {
+        if (hipsTransform != null)
+            transform.position = hipsTransform.position;
+
+        foreach (var col in _ragdollColliders)
             col.enabled = false;
-        }
-        
-        foreach (Rigidbody rb in _ragdollRigidbodies)
-        {
+
+        foreach (var rb in _ragdollRigidbodies)
             rb.isKinematic = true;
-        }
-        
+
         _mainRigidbody.isKinematic = false;
         _mainCollider.enabled = true;
         _animator.enabled = true;
-        _playerInput.currentActionMap.Enable();
+
+        if (_playerInput != null)
+            _playerInput.currentActionMap.Enable();
     }
-    
-    
+
     private IEnumerator RagdollTimer()
     {
         yield return new WaitForSeconds(ragdollTime);

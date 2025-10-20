@@ -1,45 +1,15 @@
-using System.Collections;
 using UnityEngine;
 using Unity.Behavior;
-using Action = System.Action;
 
-public class AIRagdoll : MonoBehaviour
+public class AIRagdoll : Ragdoll
 {
-    [Header("Ragdoll Settings")]
-    [SerializeField] private float ragdollTime = 3f;
-    [SerializeField] private GameObject aiRig; 
-    [SerializeField] private Transform hipsTransform; 
-
     [Header("Behavior Graph")]
     [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;
 
     [Header("Debug/Test")]
     [SerializeField] private bool testRagdoll = false;
 
-    private Animator _animator;
-    private Collider _mainCollider;
-    private Rigidbody _mainRigidbody;
-    private Collider[] _ragdollColliders;
-    private Rigidbody[] _ragdollRigidbodies;
-    private Coroutine _ragdollCoroutine;
-
-    public bool IsRagdoll { get; private set; }
-    public event Action OnRagdoll;
-
-    void Start()
-    {
-        _animator = GetComponent<Animator>();
-        _mainCollider = GetComponent<Collider>();
-        _mainRigidbody = GetComponent<Rigidbody>();
-        GetRagdollBits();
-        RagdollOff();
-    }
-
-    private void GetRagdollBits()
-    {
-        _ragdollColliders = aiRig.GetComponentsInChildren<Collider>();
-        _ragdollRigidbodies = aiRig.GetComponentsInChildren<Rigidbody>();
-    }
+    public bool IsRagdollState { get; private set; }
 
     void Update()
     {
@@ -50,57 +20,24 @@ public class AIRagdoll : MonoBehaviour
         }
     }
 
-    public void RagdollOn()
+    public override void RagdollOn()
     {
-        if (IsRagdoll) return;
-        IsRagdoll = true;
-        OnRagdoll?.Invoke();
+        if (IsRagdollState) return;
+        IsRagdollState = true;
 
-        // Mettre le bool dans le Blackboard à true
+        base.RagdollOn();
+        
         SetVariableInBlackboard(true, "IsRagdoll");
-
-        foreach (Collider col in _ragdollColliders)
-            col.enabled = true;
-
-        foreach (Rigidbody rb in _ragdollRigidbodies)
-        {
-            rb.isKinematic = false;
-            rb.linearVelocity = _mainRigidbody.linearVelocity;
-        }
-
-        _mainRigidbody.isKinematic = true;
-        _mainCollider.enabled = false;
-        _animator.enabled = false;
-
-        if (_ragdollCoroutine != null)
-            StopCoroutine(_ragdollCoroutine);
-        _ragdollCoroutine = StartCoroutine(RagdollTimer());
     }
 
-    public void RagdollOff()
+    protected override void RagdollOff()
     {
-        IsRagdoll = false;
+        if (!IsRagdollState) return;
+        IsRagdollState = false;
 
-        transform.position = hipsTransform.position;
-
-        foreach (Collider col in _ragdollColliders)
-            col.enabled = false;
-
-        foreach (Rigidbody rb in _ragdollRigidbodies)
-            rb.isKinematic = true;
-
-        _mainRigidbody.isKinematic = false;
-        _mainCollider.enabled = true;
-        _animator.enabled = true;
-
-        // Mettre le bool dans le Blackboard à false
+        base.RagdollOff();
+        
         SetVariableInBlackboard(false, "IsRagdoll");
-    }
-
-    private IEnumerator RagdollTimer()
-    {
-        yield return new WaitForSeconds(ragdollTime);
-        RagdollOff();
     }
 
     private void SetVariableInBlackboard<T>(T value, string variableName)
@@ -116,5 +53,4 @@ public class AIRagdoll : MonoBehaviour
             Debug.LogWarning($"Variable '{variableName}' introuvable dans le Blackboard !");
         }
     }
-
 }

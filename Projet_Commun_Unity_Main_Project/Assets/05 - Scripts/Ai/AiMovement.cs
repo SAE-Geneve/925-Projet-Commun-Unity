@@ -2,41 +2,40 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class AIMovement : MonoBehaviour
+public class AIMovement : CharacterMovement
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float speed = 5f;
+    [Header("AI Navigation")]
     [SerializeField] private float stopDistance = 0.5f;
     [SerializeField] private float accelerationPower = 50f;
-    [SerializeField] private float turnSpeed = 0.15f;
 
-    private Rigidbody rb;
     private Animator animator;
-    private Vector3 destination;
     private NavMeshPath path;
     private int currentCorner = 0;
     private bool moving = false;
+    private Vector3 destination;
 
-    void Awake()
+    protected override void Start()
     {
+        base.Start();
         animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
         path = new NavMeshPath();
-        rb.freezeRotation = true; 
+        Rb.freezeRotation = true;
     }
 
     void FixedUpdate()
     {
         if (!moving)
         {
-            if (animator != null) animator.SetFloat("Speed", 0f);
+            if (animator != null)
+                animator.SetFloat("Speed", 0f);
             return;
         }
-    
+
         if (path.corners.Length == 0 || currentCorner >= path.corners.Length)
         {
             Stop();
-            if (animator != null) animator.SetFloat("Speed", 0f);
+            if (animator != null)
+                animator.SetFloat("Speed", 0f);
             return;
         }
 
@@ -52,7 +51,8 @@ public class AIMovement : MonoBehaviour
             if (currentCorner >= path.corners.Length)
             {
                 Stop();
-                if (animator != null) animator.SetFloat("Speed", 0f);
+                if (animator != null)
+                    animator.SetFloat("Speed", 0f);
                 return;
             }
 
@@ -62,30 +62,31 @@ public class AIMovement : MonoBehaviour
         }
 
         dirToCorner.Normalize();
-        Move(dirToCorner);
-        
+        MoveAI(dirToCorner);
+
         if (animator != null)
         {
-            Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+            Vector3 flatVelocity = new Vector3(Rb.linearVelocity.x, 0, Rb.linearVelocity.z);
             animator.SetFloat("Speed", flatVelocity.magnitude / speed);
         }
     }
 
-    private void Move(Vector3 dir)
+    private void MoveAI(Vector3 dir)
     {
-        rb.AddForce(dir * accelerationPower, ForceMode.Acceleration);
+        Rb.AddForce(dir * accelerationPower, ForceMode.Acceleration);
 
-        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        Vector3 flatVelocity = new Vector3(Rb.linearVelocity.x, 0, Rb.linearVelocity.z);
         if (flatVelocity.magnitude > speed)
         {
-            rb.linearVelocity = flatVelocity.normalized * speed + new Vector3(0, rb.linearVelocity.y, 0);
+            Rb.linearVelocity = flatVelocity.normalized * speed + new Vector3(0, Rb.linearVelocity.y, 0);
         }
 
         if (dir != Vector3.zero)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation,
-                Quaternion.LookRotation(dir), turnSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 0.15f);
         }
+
+        InvokeOnMove(dir);
     }
 
     public void SetDestination(Vector3 target)
@@ -104,13 +105,8 @@ public class AIMovement : MonoBehaviour
     public void Stop()
     {
         moving = false;
-        rb.linearVelocity = Vector3.zero;      
-        rb.angularVelocity = Vector3.zero; 
-    }
-    
-    public void SetSpeed(float newSpeed)
-    {
-        speed = newSpeed;
+        Rb.linearVelocity = Vector3.zero;
+        Rb.angularVelocity = Vector3.zero;
     }
 
     public bool HasReachedDestination()

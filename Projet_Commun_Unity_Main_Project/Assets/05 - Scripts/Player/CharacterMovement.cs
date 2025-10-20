@@ -78,4 +78,8 @@ public class CharacterMovement : MonoBehaviour
     {
         speed = newSpeed;
     }
+    protected void InvokeOnMove(Vector3 moveDir)
+    {
+        OnMove?.Invoke(moveDir);
+    }
 }

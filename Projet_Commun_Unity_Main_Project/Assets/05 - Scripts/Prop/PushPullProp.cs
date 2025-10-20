@@ -5,40 +5,40 @@ using UnityEngine;
 public class PushPullProp : Prop
 {
     [SerializeField] private float _moveForce;
-    private readonly List<PlayerController> _playerControllers = new();
+    private readonly List<Controller> _playerControllers = new();
     
     private void MoveProp(Vector3 direction) => _rb.AddForce(direction*_moveForce, ForceMode.Force);
     
-    public override void Grabbed(PlayerController playerController)
+    public override void Grabbed(Controller controller)
     {
-        playerController.transform.parent = transform;
+        controller.transform.parent = transform;
         
-        var playerRb = playerController.Rb;
+        var playerRb = controller.Rb;
         playerRb.linearVelocity = Vector3.zero;
         playerRb.isKinematic = true;
         
-        Physics.IgnoreCollision(playerController.Collider, _collider, true);
+        Physics.IgnoreCollision(controller.Collider, _collider, true);
 
-        PlayerMovement playerMovement = playerController.PlayerMovement;
+        PlayerMovement playerMovement = controller.PlayerMovement;
         playerMovement.IsPushPull = true;
         playerMovement.OnMove += MoveProp;
         
-        _playerControllers.Add(playerController);
+        _playerControllers.Add(controller);
         
         IsGrabbed = true;
     }
     
-    public override void Dropped(Vector3 throwForce = default, PlayerController playerController = null)
+    public override void Dropped(Vector3 throwForce = default, Controller controller = null)
     {
-        if(!_playerControllers.Contains(playerController)) return;
+        if(!_playerControllers.Contains(controller)) return;
         
-        playerController.Reset();
-        playerController.transform.parent = null;
-        playerController.Rb.isKinematic = false;
+        controller.Reset();
+        controller.transform.parent = null;
+        controller.Rb.isKinematic = false;
         
-        Physics.IgnoreCollision(playerController.Collider, _collider, false);
+        Physics.IgnoreCollision(controller.Collider, _collider, false);
         
-        PlayerMovement playerMovement = playerController.PlayerMovement;
+        PlayerMovement playerMovement = controller.PlayerMovement;
         playerMovement.IsPushPull = false;
         playerMovement.OnMove -= MoveProp;
         

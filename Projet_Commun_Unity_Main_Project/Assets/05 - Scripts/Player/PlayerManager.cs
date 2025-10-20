@@ -8,8 +8,8 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private Transform[] spawnPoints;
     private int _playerCount;
-    private readonly List<PlayerController> _players = new();
-    public List<PlayerController> Players => _players;
+    private readonly List<Controller> _players = new();
+    public List<Controller> Players => _players;
     private GameManager _gameManager;
     private CameraManager _cameraManager;
     private PlayerInput _lastDisconnectPlayer;
@@ -26,7 +26,7 @@ public class PlayerManager : MonoBehaviour
     {
         player.transform.position = spawnPoints[_playerCount].position;
         player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
-        _players.Add(player.GetComponent<PlayerController>());
+        _players.Add(player.GetComponent<Controller>());
         
         _playerCount++;
     }
@@ -100,7 +100,7 @@ public class PlayerManager : MonoBehaviour
     {
         for (int i = 0; i < _playerCount; i++)
         {
-            if (_players[i] == player.GetComponent<PlayerController>())
+            if (_players[i] == player.GetComponent<Controller>())
             {
                 Destroy(_players[i].gameObject);
                 _players.RemoveAt(i);

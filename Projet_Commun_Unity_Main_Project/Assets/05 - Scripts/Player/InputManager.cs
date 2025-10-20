@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     private PlayerMovement _playerMovement;
-    private PlayerController _playerController;
+    private Controller _controller;
     private Ragdoll _ragdoll;
     
     public event Action<PlayerInput> OnControllerDisconnected;
@@ -13,7 +13,7 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         _playerMovement = GetComponent<PlayerMovement>();
-        _playerController = GetComponent<PlayerController>();
+        _controller = GetComponent<Controller>();
         _ragdoll = GetComponent<Ragdoll>();
     }
 
@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if(context.started) _playerController.TryInteract();
+        if(context.started) _controller.TryInteract();
     }
     
     public void OnRagdoll(InputAction.CallbackContext context)
@@ -39,6 +39,18 @@ public class InputManager : MonoBehaviour
         if (context.started)
         {
             _ragdoll.RagdollOn();
+        }
+    }
+
+    public void OnCatch(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _controller.CatchStart();
+        }
+        else if (context.canceled)
+        {
+            _controller.CatchCanceled();
         }
     }
 

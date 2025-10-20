@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovement : MonoBehaviour, IGrabbable
 {
     [Header("Physic")]
     [SerializeField] protected float speed = 5f;
@@ -81,5 +81,15 @@ public class CharacterMovement : MonoBehaviour
     protected void InvokeOnMove(Vector3 moveDir)
     {
         OnMove?.Invoke(moveDir);
+    }
+
+    public void Grabbed(Controller controller)
+    {
+        
+    }
+
+    public void Dropped(Vector3 throwForce = default, Controller controller = null)
+    {
+        
     }
 }

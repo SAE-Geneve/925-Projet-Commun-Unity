@@ -144,7 +144,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3926752659163565658}
-  - component: {fileID: 4498045848333023106}
   - component: {fileID: 1418267840803347493}
   - component: {fileID: 8409218089253370588}
   - component: {fileID: 7225438044755663946}
@@ -152,6 +151,7 @@ GameObject:
   - component: {fileID: 788503736778780130}
   - component: {fileID: 1975232992882927089}
   - component: {fileID: 3199574302572243236}
+  - component: {fileID: 8077717732748034734}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -178,26 +178,6 @@ Transform:
   - {fileID: 7445835975844170823}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4498045848333023106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 339534166581132500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c5aea5c2991b84689cbc87be3699d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _catchPoint: {fileID: 1640967426003292745}
-  _rb: {fileID: 1975232992882927089}
-  _throwBar: {fileID: 1033605845465251157}
-  _collider: {fileID: 788503736778780130}
-  _barSpeed: 2
-  _maxThrowForce: 10
-  _upForceMultiplier: 1
-  _sphereRadius: 0.4
 --- !u!114 &1418267840803347493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,9 +291,9 @@ MonoBehaviour:
     m_ActionName: 'Game/Jump[/Keyboard/space]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4498045848333023106}
-        m_TargetAssemblyTypeName: Catcher, Assembly-CSharp
-        m_MethodName: Catch
+      - m_Target: {fileID: 7225438044755663946}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnCatch
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -357,6 +337,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 419f090b-af8c-4729-8f9d-51a73e397c94
     m_ActionName: 'Game/Ragdoll[/DualShock4GamepadHID/buttonNorth,/Keyboard/shift]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2eada7e7-3b22-4b71-86fc-87094bd1bf2c
+    m_ActionName: 'Kart/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e18e3daa-d5aa-4050-b994-3fea456fd7a9
+    m_ActionName: 'Kart/Interact[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game
@@ -434,6 +422,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8077717732748034734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339534166581132500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a3b6a2a38bb3c448815db141d69cb62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _catchPoint: {fileID: 1640967426003292745}
+  _rb: {fileID: 1975232992882927089}
+  _throwBar: {fileID: 1033605845465251157}
+  _collider: {fileID: 788503736778780130}
+  _barSpeed: 2
+  _maxThrowForce: 10
+  _upForceMultiplier: 1
+  _sphereRadius: 0.2
 --- !u!1 &399084412740662978
 GameObject:
   m_ObjectHideFlags: 0

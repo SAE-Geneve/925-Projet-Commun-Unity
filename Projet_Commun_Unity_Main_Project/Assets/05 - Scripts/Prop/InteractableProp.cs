@@ -7,15 +7,15 @@ public class InteractableProp : Prop, IInteractable
         Debug.Log("Interact with prop");
     }
 
-    public override void Grabbed(PlayerController playerController)
+    public override void Grabbed(Controller controller)
     {
-        base.Grabbed(playerController);
-        playerController.InteractableGrabbed = this;
+        base.Grabbed(controller);
+        controller.InteractableGrabbed = this;
     }
 
-    public override void Dropped(Vector3 throwForce = default, PlayerController playerController = null)
+    public override void Dropped(Vector3 throwForce = default, Controller controller = null)
     {
-        base.Dropped(throwForce, playerController);
-        playerController.InteractableGrabbed = null;
+        base.Dropped(throwForce, controller);
+        controller.InteractableGrabbed = null;
     }
 }

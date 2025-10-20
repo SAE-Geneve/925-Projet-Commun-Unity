@@ -11,7 +11,7 @@ public partial class GrabAndThrowAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Self;
 
     private AIMovement aiMove;
-    private PlayerController playerController;
+    private Controller _controller;
     private Transform selfTransform;
     private IGrabbable targetGrabbable;
 
@@ -30,10 +30,10 @@ public partial class GrabAndThrowAction : Action
             return Status.Failure;
 
         aiMove = Self.Value.GetComponent<AIMovement>();
-        playerController = Self.Value.GetComponent<PlayerController>();
+        _controller = Self.Value.GetComponent<Controller>();
         selfTransform = Self.Value.transform;
 
-        if (aiMove == null || playerController == null)
+        if (aiMove == null || _controller == null)
             return Status.Failure;
 
         phase = Phase.Searching;
@@ -98,7 +98,7 @@ public partial class GrabAndThrowAction : Action
 
         if (distance <= 1.5f)
         {
-            targetGrabbable.Grabbed(playerController);
+            targetGrabbable.Grabbed(_controller);
             aiMove.Stop();
             
             Vector2 random2D = UnityEngine.Random.insideUnitCircle.normalized;
@@ -127,8 +127,8 @@ public partial class GrabAndThrowAction : Action
 
     private void HandleThrowing()
     {
-        playerController.InteractableGrabbed = null;
-        targetGrabbable.Dropped(selfTransform.forward * 10f, playerController);
+        _controller.InteractableGrabbed = null;
+        targetGrabbable.Dropped(selfTransform.forward * 10f, _controller);
 
         phase = Phase.Done;
     }

@@ -7,8 +7,7 @@ public class AIMovement : CharacterMovement
     [Header("AI Navigation")]
     [SerializeField] private float stopDistance = 0.5f;
     [SerializeField] private float accelerationPower = 50f;
-
-    private Animator animator;
+    
     private NavMeshPath path;
     private int currentCorner = 0;
     private bool moving = false;
@@ -17,7 +16,6 @@ public class AIMovement : CharacterMovement
     protected override void Start()
     {
         base.Start();
-        animator = GetComponent<Animator>();
         path = new NavMeshPath();
         Rb.freezeRotation = true;
     }
@@ -26,16 +24,16 @@ public class AIMovement : CharacterMovement
     {
         if (!moving)
         {
-            if (animator != null)
-                animator.SetFloat("Speed", 0f);
+            if (_animator != null)
+                _animator.SetFloat("Speed", 0f);
             return;
         }
 
         if (path.corners.Length == 0 || currentCorner >= path.corners.Length)
         {
             Stop();
-            if (animator != null)
-                animator.SetFloat("Speed", 0f);
+            if (_animator != null)
+                _animator.SetFloat("Speed", 0f);
             return;
         }
 
@@ -51,8 +49,8 @@ public class AIMovement : CharacterMovement
             if (currentCorner >= path.corners.Length)
             {
                 Stop();
-                if (animator != null)
-                    animator.SetFloat("Speed", 0f);
+                if (_animator != null)
+                    _animator.SetFloat("Speed", 0f);
                 return;
             }
 
@@ -64,10 +62,10 @@ public class AIMovement : CharacterMovement
         dirToCorner.Normalize();
         MoveAI(dirToCorner);
 
-        if (animator != null)
+        if (_animator != null)
         {
             Vector3 flatVelocity = new Vector3(Rb.linearVelocity.x, 0, Rb.linearVelocity.z);
-            animator.SetFloat("Speed", flatVelocity.magnitude / speed);
+            _animator.SetFloat("Speed", flatVelocity.magnitude / speed);
         }
     }
 

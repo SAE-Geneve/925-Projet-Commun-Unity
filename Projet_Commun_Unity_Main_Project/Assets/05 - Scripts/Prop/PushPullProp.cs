@@ -19,9 +19,9 @@ public class PushPullProp : Prop
         
         Physics.IgnoreCollision(controller.Collider, _collider, true);
 
-        PlayerMovement playerMovement = controller.PlayerMovement;
-        playerMovement.IsPushPull = true;
-        playerMovement.OnMove += MoveProp;
+        CharacterMovement movement = controller.Movement;
+        movement.IsPushPull = true;
+        movement.OnMove += MoveProp;
         
         _playerControllers.Add(controller);
         
@@ -38,9 +38,9 @@ public class PushPullProp : Prop
         
         Physics.IgnoreCollision(controller.Collider, _collider, false);
         
-        PlayerMovement playerMovement = controller.PlayerMovement;
-        playerMovement.IsPushPull = false;
-        playerMovement.OnMove -= MoveProp;
+        CharacterMovement movement = controller.Movement;
+        movement.IsPushPull = false;
+        movement.OnMove -= MoveProp;
         
         IsGrabbed = false;
         Debug.Log("push pull prop dropped");

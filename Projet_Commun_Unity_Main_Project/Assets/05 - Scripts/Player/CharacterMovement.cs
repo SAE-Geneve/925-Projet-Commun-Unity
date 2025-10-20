@@ -15,6 +15,8 @@ public class CharacterMovement : MonoBehaviour, IGrabbable
     protected Vector3 CamForward;
     protected Vector3 CamRight;
     
+    public bool IsPushPull { get; set; }
+    
     
     protected virtual void Start()
     {

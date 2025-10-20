@@ -6,8 +6,6 @@ public class PlayerMovement : CharacterMovement
     [SerializeField] private float dashForce = 5f;
     [SerializeField] private float dashDuration = 5f;
     
-    public bool IsPushPull { get; set; }
-    
     private Animator _animator;
     
     private bool _isDashing;

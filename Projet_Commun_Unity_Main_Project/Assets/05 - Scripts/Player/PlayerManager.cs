@@ -12,83 +12,88 @@ public class PlayerManager : MonoBehaviour
     public List<PlayerController> Players => _players;
     private GameManager _gameManager;
     private CameraManager _cameraManager;
+    private PlayerInput _lastDisconnectPlayer;
+    private bool _lastPlayerHasReconnected = false;
 
 
     private void Start()
     {
-        _gameManager = FindFirstObjectByType<GameManager>();
+        _gameManager = GameManager.Instance;
         _cameraManager = FindFirstObjectByType<CameraManager>();
     }
 
     public void OnPlayerJoined(PlayerInput player)
     {
         player.transform.position = spawnPoints[_playerCount].position;
-        player.GetComponent<InputManager>().OnControllerDisconnected += _gameManager.OnPlayerDisconnected;
+        player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
         _players.Add(player.GetComponent<PlayerController>());
         
         _playerCount++;
     }
 
-    public void OnPlayerDisconnect(PlayerInput player, float timer)
+    private void OnPlayerDisconnect(PlayerInput player)
     {
-        StartCoroutine(HandleDisconnectWithReconnectWindow(player, timer)); // wait up to 5 seconds
+        _gameManager.OnPlayerDisconnected();
+        
+        if (_gameManager.State == GameState.Disconnected)
+        {
+            _lastDisconnectPlayer = player;
+            StartCoroutine(HandleDisconnectWithReconnectWindow()); 
+        }
+    }
+    
+    void OnDeviceChange(InputDevice device, InputDeviceChange change)
+    {
+        if (change is not (InputDeviceChange.Reconnected or InputDeviceChange.Added)) return;
+        try
+        {
+            // Try to pair the new device back to this player
+            InputUser.PerformPairingWithDevice(device, _lastDisconnectPlayer.user);
+            _lastPlayerHasReconnected = true;
+            Debug.Log($"Player {_lastDisconnectPlayer.playerIndex + 1} controller reconnected.");
+        }
+        catch
+        {
+            // Ignore invalid pairing attempts
+        }
     }
 
-    private IEnumerator HandleDisconnectWithReconnectWindow(PlayerInput player, float reconnectTimeout)
+    private IEnumerator HandleDisconnectWithReconnectWindow()
     {
-        var user = player.user;
-
         // Unpair immediately so input stops
-        user.UnpairDevices();
+        _lastDisconnectPlayer.user.UnpairDevices();
 
-        Debug.LogWarning($"Player {player.playerIndex + 1} controller disconnected — waiting for reconnection...");
-
-        float timer = 0f;
-        bool reconnected = false;
+        Debug.LogWarning($"Player {_lastDisconnectPlayer.playerIndex + 1} controller disconnected — waiting for reconnection...");
 
         // Subscribe temporarily to device connection events
         InputSystem.onDeviceChange += OnDeviceChange;
 
-        void OnDeviceChange(InputDevice device, InputDeviceChange change)
-        {
-            if (change == InputDeviceChange.Reconnected || change == InputDeviceChange.Added)
-            {
-                try
-                {
-                    // Try to pair the new device back to this player
-                    user = InputUser.PerformPairingWithDevice(device, user);
-                    reconnected = true;
-                    Debug.Log($"Player {player.playerIndex + 1} controller reconnected.");
-                }
-                catch
-                {
-                    // Ignore invalid pairing attempts
-                }
-            }
-        }
-
         // Wait for reconnection or timeout
-        while (timer < reconnectTimeout && !reconnected)
+        while (!_lastPlayerHasReconnected)
         {
-            timer += Time.deltaTime;
             yield return null;
         }
+        
+        ClearLastPlayer();
+        _lastPlayerHasReconnected = false;
+        
+        _gameManager.OnPlayerReconnected();
+    }
 
+    private void ClearLastPlayer()
+    {
         // Cleanup the listener
         InputSystem.onDeviceChange -= OnDeviceChange;
 
-        if (!reconnected)
-        {
-            Debug.LogWarning(
-                $"Player {player.playerIndex + 1} did not reconnect within {reconnectTimeout} seconds. Removing player.");
-            yield return null; // give Input System a frame for cleanup
-            RemovePlayer(player);
-        }
-        else
-        {
-            _gameManager.OnPlayerReconnected();
-            Debug.Log($"Player {player.playerIndex + 1} successfully reconnected!");
-        }
+        _lastDisconnectPlayer = null;
+    }
+
+    public void OnReconnectionTimeOut()
+    {
+        StopAllCoroutines();
+        
+        RemovePlayer(_lastDisconnectPlayer);
+        ClearLastPlayer();
     }
 
     private void RemovePlayer(PlayerInput player)

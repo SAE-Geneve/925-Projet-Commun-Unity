@@ -46,15 +46,22 @@ public class GameManager : MonoBehaviour
         {
             if (value <= 0)
             {
-                _disconnectionTimer = 0;
-                Debug.LogWarning("Players did not reconnect, back to menu");
-                MenuReset();
+                ReconnectionTimeOut();
             }
             else _disconnectionTimer = value;
             OnDisconnectionTimerUpdate?.Invoke();
         }
     }
 
+    private void ReconnectionTimeOut()
+    {
+        _disconnectionTimer = _initialDisconnectionTime;
+        _playerManager.OnReconnectionTimeOut();
+        SwitchState(GameState.Playing);
+    }
+
+    public GameState State => _state;
+    
     public int ClientSatisfaction
     {
         get => _clientSatisfaction;
@@ -214,7 +221,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Triggered when a player is disconnected
     /// </summary>
-    public void OnPlayerDisconnected(PlayerInput player)
+    public void OnPlayerDisconnected()
     {
         if (_state != GameState.Playing && _state != GameState.Cinematic)
         {
@@ -226,7 +233,6 @@ public class GameManager : MonoBehaviour
         _lastState = _state;
         SwitchState(GameState.Disconnected);
         // TODO: Handle when a player is disconnected
-        _playerManager.OnPlayerDisconnect(player, DisconnectionTimer);
         
         Debug.Log("One or multiple players have been disconnected");
     }

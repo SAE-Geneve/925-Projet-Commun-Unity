@@ -7,6 +7,7 @@ using UnityEngine.Splines;
 public class CameraManager : MonoBehaviour
 {
     private CinemachineCamera _cam;
+    private float _baseFOV;
     [SerializeField] private PlayerManager playerManager;
     [SerializeField] private Transform targetPosition;
     
@@ -14,6 +15,7 @@ public class CameraManager : MonoBehaviour
     void Start()
     {
         _cam = GetComponent<CinemachineCamera>();
+        _baseFOV = _cam.Lens.FieldOfView;
     }
     
     // Update is called once per frame
@@ -30,6 +32,7 @@ public class CameraManager : MonoBehaviour
     }
 
     private Vector3 GetMeanVector(){
+        int playerCount = playerManager.Players.Count;
         
         float x = 0f;
         float y = 0f;
@@ -37,10 +40,11 @@ public class CameraManager : MonoBehaviour
  
         foreach (var pl in playerManager.Players)
         {
-            x += pl.transform.position.x;
-            y += pl.transform.position.y;
-            z += pl.transform.position.z;
+            Vector3 pos = pl.transform.position;
+            x += pos.x;
+            y += pos.y;
+            z += pos.z;
         }
-        return new Vector3(x / playerManager.Players.Count, y / playerManager.Players.Count, z / playerManager.Players.Count);
+        return new Vector3(x / playerCount, y / playerCount, z / playerCount);
     }
 }

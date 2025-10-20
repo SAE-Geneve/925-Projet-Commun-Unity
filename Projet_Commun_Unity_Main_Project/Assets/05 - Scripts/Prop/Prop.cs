@@ -6,7 +6,9 @@ public class Prop: MonoBehaviour, IGrabbable
     [Header("Parameters")]
     [Tooltip("Define the prop type of the game object")]
     [SerializeField] private PropType _type = PropType.None;
-    
+
+
+    public AnimationCurve speedCurve;
     public PropType Type => _type;
     public Rigidbody Rb => _rb;
     public bool IsGrabbed { get; protected set; }
@@ -52,7 +54,9 @@ public class Prop: MonoBehaviour, IGrabbable
 
         if (throwForce != Vector3.zero)
         {
-            _rb.AddForce(throwForce, ForceMode.Impulse);
+            float curveValue = speedCurve.Evaluate(throwForce.magnitude);
+            Vector3 curvedForce = throwForce * curveValue;
+            _rb.AddForce(curvedForce, ForceMode.Impulse);
         }
         IsGrabbed = false;
     }

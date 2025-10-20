@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     
     [Header("Throw")]
     [SerializeField] private float _maxThrowForce = 10f;
-    [SerializeField] private float _upForceMultiplier = 1f;
+    [SerializeField] private float _upForceMultiplier = 0.7f;
     
     [Header("Catch/Interact")]
     [SerializeField] private float _sphereRadius = 0.2f;
@@ -44,8 +44,7 @@ public class PlayerController : MonoBehaviour
         PlayerMovement = GetComponent<PlayerMovement>();
         _ragdoll = GetComponent<Ragdoll>();
 
-        //TODO: enlever le if(_ragdoll) quand on utilisera plus le capsule de la scene prop
-        if(_ragdoll)_ragdoll.OnRagdoll += Drop;
+        _ragdoll.OnRagdoll += Drop;
         
         _throwBar.gameObject.SetActive(false);
     }

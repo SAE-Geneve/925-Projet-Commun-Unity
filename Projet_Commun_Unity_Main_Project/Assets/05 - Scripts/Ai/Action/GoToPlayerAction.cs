@@ -6,26 +6,25 @@ using Unity.Properties;
 using UnityEngine.AI;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "GoToPlayer", story: "[self] move toward [player] physically", category: "Action", id: "ai_gotoplayer")]
+[NodeDescription(name: "GoToPlayer", story: "[self] move toward closest player physically", category: "Action", id: "ai_gotoplayer")]
 public partial class GoToPlayerAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
-    [SerializeReference] public BlackboardVariable<GameObject> Player;
 
     public float StopDistance = 1.5f;
     public float RecalculateDistance = 1f;
 
-    private AIMovement aiMove;
+    private Transform _player;
+
+    private AIMovement _aiMovement;
     private Vector3 lastDestination;
 
     protected override Status OnStart()
     {
-        if (Self?.Value == null || Player?.Value == null)
-            return Status.Failure;
-
-        aiMove = Self.Value.GetComponent<AIMovement>();
-        if (aiMove == null)
-            return Status.Failure;
+        _player = GameObject.FindGameObjectWithTag("Player").transform;
+        _aiMovement = Self.Value.GetComponent<AIMovement>();
+        
+        if (AnyNull()) return Status.Failure;
 
         UpdateDestination();
 
@@ -34,35 +33,32 @@ public partial class GoToPlayerAction : Action
 
     protected override Status OnUpdate()
     {
-        if (Self?.Value == null || Player?.Value == null || aiMove == null)
-            return Status.Failure;
+        if (AnyNull()) return Status.Failure;
 
-        float distanceToPlayer = Vector3.Distance(Self.Value.transform.position, Player.Value.transform.position);
+        float distanceToPlayer = Vector3.Distance(Self.Value.transform.position, _player.transform.position);
         if (distanceToPlayer <= StopDistance)
         {
-            aiMove.Stop();
+            _aiMovement.Stop();
             return Status.Success;
         }
         
-        if (Vector3.Distance(lastDestination, Player.Value.transform.position) > RecalculateDistance)
-        {
+        if (Vector3.Distance(lastDestination, _player.position) > RecalculateDistance)
             UpdateDestination();
-        }
 
         return Status.Running;
     }
 
-    protected override void OnEnd()
-    {
-        aiMove?.Stop();
-    }
+    protected override void OnEnd() => _aiMovement?.Stop();
+    
 
     private void UpdateDestination()
     {
-        if (NavMesh.SamplePosition(Player.Value.transform.position, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(_player.position, out NavMeshHit hit, 2f, NavMesh.AllAreas))
         {
             lastDestination = hit.position;
-            aiMove.SetDestination(lastDestination);
+            _aiMovement.SetDestination(lastDestination);
         }
     }
+
+    private bool AnyNull() => Self?.Value == null || !_player || !_aiMovement;
 }

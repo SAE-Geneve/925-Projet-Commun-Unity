@@ -385,6 +385,76 @@ Transform:
   - {fileID: 395223291}
   m_Father: {fileID: 2085098159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &90131249 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6505405206070894942, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
+  m_PrefabInstance: {fileID: 1799366755}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &90131253 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
+  m_PrefabInstance: {fileID: 1799366755}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90131249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &90131258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90131249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfefeb52e6f51774d9bb73a1847f598c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _taskName: Luggage Task
+  _multiple: 0
+  OnSucceed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 90131253}
+        m_TargetAssemblyTypeName: Unity.Behavior.BehaviorGraphAgent, Unity.Behavior
+        m_MethodName: SendMessage
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  _propType: 1
+--- !u!135 &90131259
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90131249}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 1, z: 1}
 --- !u!1 &237925075
 GameObject:
   m_ObjectHideFlags: 0
@@ -2357,6 +2427,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 339534166581132500, guid: daaeca025ac31434a9e118618d3157e1, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 458494165876165315, guid: daaeca025ac31434a9e118618d3157e1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2555,6 +2629,11 @@ MonoBehaviour:
   - {fileID: 7064917365448206456, guid: cf5db37982f1deb4181c834b1aa464de, type: 3}
   - {fileID: 7358909262448355338, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
   _spawnDelay: 2
+--- !u!1 &1562029289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1838621322768625333, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
+  m_PrefabInstance: {fileID: 8137178975880798007}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1674765012
 GameObject:
   m_ObjectHideFlags: 0
@@ -2692,9 +2771,14 @@ PrefabInstance:
     - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
       propertyPath: m_Graph
       value: 
-      objectReference: {fileID: -7067439787621656969, guid: e35c791afe156384c867514adce6abae, type: 2}
+      objectReference: {fileID: -703982533443489288, guid: e54f3b2ef0a591649a4603a9e73c99a9, type: 2}
     - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
       propertyPath: 'managedReferences[5845235154999574594]'
+      value: 'Unity.Behavior Unity.Behavior.BlackboardVariable`1[[UnityEngine.GameObject,
+        UnityEngine.CoreModule]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
+      propertyPath: 'managedReferences[5845235173486231669]'
       value: 'Unity.Behavior Unity.Behavior.BlackboardVariable`1[[UnityEngine.GameObject,
         UnityEngine.CoreModule]]'
       objectReference: {fileID: 0}
@@ -2703,13 +2787,25 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
+      propertyPath: managedReferences[5845235173486231669].Name
+      value: Luggage
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
       propertyPath: m_BlackboardVariableOverridesList.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
       propertyPath: managedReferences[5845235154999574594].m_Value
       value: 
       objectReference: {fileID: 1375739561}
+    - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
+      propertyPath: managedReferences[5845235173486231669].m_Value
+      value: 
+      objectReference: {fileID: 1562029289}
+    - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[1]'
+      value: 5845235173486231669
+      objectReference: {fileID: 0}
     - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
       propertyPath: 'm_BlackboardVariableOverridesList.Array.data[2]'
       value: 5845235154999574594
@@ -2721,6 +2817,14 @@ PrefabInstance:
     - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
       propertyPath: managedReferences[5845235154999574594].GUID.m_Value1
       value: 7959471194492975010
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
+      propertyPath: managedReferences[5845235173486231669].GUID.m_Value0
+      value: 9318557448556285088
+      objectReference: {fileID: 0}
+    - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
+      propertyPath: managedReferences[5845235173486231669].GUID.m_Value1
+      value: 9082609361464274404
       objectReference: {fileID: 0}
     - target: {fileID: 2759791066519186907, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
       propertyPath: managedReferences[7650009674374185208].m_Value.Array.size
@@ -2789,7 +2893,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6505405206070894942, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 90131258}
+    - targetCorrespondingSourceObject: {fileID: 6505405206070894942, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 90131259}
   m_SourcePrefab: {fileID: 100100000, guid: b8928bcfd0a86b94eac228a289e70c43, type: 3}
 --- !u!1 &1843981719
 GameObject:

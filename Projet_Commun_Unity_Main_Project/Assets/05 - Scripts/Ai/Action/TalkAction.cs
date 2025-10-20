@@ -44,11 +44,11 @@ namespace Unity.Behavior.Example
             CreateTextObject(Sentence, Agent);
 
             // Animate the character.
-            m_Animator = Agent.Value.GetComponent<Animator>();
-            if (m_Animator != null)
-            {
-                m_Animator.SetBool(s_Talking, true);
-            }
+            // m_Animator = Agent.Value.GetComponent<Animator>();
+            // if (m_Animator != null)
+            // {
+            //     m_Animator.SetBool(s_Talking, true);
+            // }
 
             // Start the timer.
             m_WaitTimer = Duration.Value;

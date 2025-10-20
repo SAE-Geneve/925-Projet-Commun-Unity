@@ -154,16 +154,19 @@ public class Controller : MonoBehaviour, IGrabbable
         transform.SetParent(controller.CatchPoint);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
+        Rb.isKinematic = true;
     }
 
     public void Dropped(Vector3 throwForce = default, Controller controller = null)
     {
         Debug.Log("Dropped");
         transform.SetParent(_originalParent);
-        if(_rb != null) _rb.isKinematic = false;
 
+        Rb.isKinematic = false;
+        
         if (controller)
         {
+            
             controller.Reset();
         }
 

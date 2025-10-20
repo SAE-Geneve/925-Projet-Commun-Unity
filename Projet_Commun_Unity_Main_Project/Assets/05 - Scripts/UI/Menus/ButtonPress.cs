@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class ButtonPress : MonoBehaviour
 {
     //Unoptimized way to load scenes but it works

@@ -48,7 +48,6 @@ public class Controller : MonoBehaviour, IGrabbable
         _ragdoll = GetComponent<Ragdoll>();
 
         _ragdoll.OnRagdoll += Drop;
-        _ragdoll.OffRagdoll += () => Movement.FreeMovement = false;
         
         _throwBar.gameObject.SetActive(false);
     }
@@ -183,7 +182,7 @@ public class Controller : MonoBehaviour, IGrabbable
     private IEnumerator DropRoutine()
     {
         yield return new WaitForSeconds(0.1f);
-        
         _ragdoll.RagdollOn();
+        Movement.FreeMovement = false;
     }
 }

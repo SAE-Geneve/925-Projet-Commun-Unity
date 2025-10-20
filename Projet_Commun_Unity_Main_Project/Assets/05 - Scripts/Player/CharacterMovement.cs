@@ -8,6 +8,7 @@ public class CharacterMovement : MonoBehaviour
     public event Action<Vector3> OnMove;
     
     protected Rigidbody Rb;
+    protected Animator _animator;
 
     protected Vector2 Movement;
    
@@ -17,10 +18,12 @@ public class CharacterMovement : MonoBehaviour
     
     public bool IsPushPull { get; set; }
     
+    public bool FreeMovement { get; set; }
     
     protected virtual void Start()
     {
         Rb = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
         GetCameraDirections();
     }
     
@@ -36,6 +39,7 @@ public class CharacterMovement : MonoBehaviour
 
     protected virtual void HorizontalMovement()
     {
+        if(FreeMovement) return;
         // Calculate the change in velocity needed and apply it (no acceleration or deceleration)
         Vector3 moveDir = CamRight * Movement.x + CamForward * Movement.y;
         
@@ -48,8 +52,9 @@ public class CharacterMovement : MonoBehaviour
         OnMove?.Invoke(moveDir);
     }
     
-    protected virtual void RotateCharacter()
+    private void RotateCharacter()
     {
+        if(IsPushPull) return;
         // Rotate character to face move direction
         Vector3 moveDir = CamRight * Movement.x + CamForward * Movement.y;
         if (moveDir != Vector3.zero)

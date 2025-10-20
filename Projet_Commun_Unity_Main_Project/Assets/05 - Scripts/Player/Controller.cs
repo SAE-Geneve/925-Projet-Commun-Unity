@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -47,6 +48,7 @@ public class Controller : MonoBehaviour, IGrabbable
         _ragdoll = GetComponent<Ragdoll>();
 
         _ragdoll.OnRagdoll += Drop;
+        _ragdoll.OffRagdoll += () => Movement.FreeMovement = false;
         
         _throwBar.gameObject.SetActive(false);
     }
@@ -164,15 +166,24 @@ public class Controller : MonoBehaviour, IGrabbable
 
         Rb.isKinematic = false;
         
-        if (controller)
-        {
-            
-            controller.Reset();
-        }
-
         if (throwForce != Vector3.zero)
         {
+            Movement.FreeMovement = true;
             _rb.AddForce(throwForce, ForceMode.Impulse);
         }
+
+        StartCoroutine(DropRoutine());
+        
+        if (controller)
+        {
+            controller.Reset();
+        }
+    }
+
+    private IEnumerator DropRoutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        
+        _ragdoll.RagdollOn();
     }
 }

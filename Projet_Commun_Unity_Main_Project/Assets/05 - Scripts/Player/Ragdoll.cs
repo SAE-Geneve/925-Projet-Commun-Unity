@@ -20,6 +20,7 @@ public class Ragdoll : MonoBehaviour
     private Rigidbody[] _ragdollRigidbodies;
 
     public event Action OnRagdoll;
+    public event Action OffRagdoll;
 
     protected virtual void Start()
     {
@@ -67,7 +68,7 @@ public class Ragdoll : MonoBehaviour
 
     protected virtual void RagdollOff()
     {
-        if (hipsTransform != null)
+        if (hipsTransform)
             transform.position = hipsTransform.position;
 
         foreach (var col in _ragdollColliders)
@@ -80,8 +81,10 @@ public class Ragdoll : MonoBehaviour
         _mainCollider.enabled = true;
         _animator.enabled = true;
 
-        if (_playerInput != null)
+        if (_playerInput)
             _playerInput.currentActionMap.Enable();
+        
+        OffRagdoll?.Invoke();
     }
 
     private IEnumerator RagdollTimer()

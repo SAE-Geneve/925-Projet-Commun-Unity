@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +10,7 @@ public class KartController : MonoBehaviour, IInteractable
     private GameObject _driver;
     private PlayerInput _playerInput;
     private MonoBehaviour _driverMovementScript;
-    private KartMouvement _kartMouvement;
+    private KartMovement _kartMovement;
     private float _lastInteractTime;
     
     // Références pour la gestion dynamique des inputs
@@ -27,7 +26,7 @@ public class KartController : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        _kartMouvement = GetComponent<KartMouvement>();
+        _kartMovement = GetComponent<KartMovement>();
     }
 
     public void Interact(PlayerController playerController)
@@ -97,8 +96,8 @@ public class KartController : MonoBehaviour, IInteractable
                 _moveAction = kartActionMap.FindAction("Move"); 
                 if (_moveAction != null)
                 {
-                    _moveAction.performed += _kartMouvement.OnMove;
-                    _moveAction.canceled += _kartMouvement.OnMove;
+                    _moveAction.performed += _kartMovement.OnMove;
+                    _moveAction.canceled += _kartMovement.OnMove;
                 }
                 
                 // Câblage de l'action d'Interaction/Sortie (Interact)
@@ -127,8 +126,8 @@ public class KartController : MonoBehaviour, IInteractable
         // --- DÉSABONNEMENT DES INPUTS (TRÈS IMPORTANT) ---
         if (_moveAction != null)
         {
-            _moveAction.performed -= _kartMouvement.OnMove;
-            _moveAction.canceled -= _kartMouvement.OnMove;
+            _moveAction.performed -= _kartMovement.OnMove;
+            _moveAction.canceled -= _kartMovement.OnMove;
         }
         if (_interactAction != null)
         {
@@ -139,7 +138,7 @@ public class KartController : MonoBehaviour, IInteractable
         if (_playerInput != null)
             _playerInput.SwitchCurrentActionMap("Game");
             
-        _kartMouvement.ResetInputs(); 
+        _kartMovement.ResetInputs(); 
 
         // --- RÉACTIVATION VISUELLE ET PHYSIQUE DU JOUEUR ---
         

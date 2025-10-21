@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class KartMouvement : MonoBehaviour
+public class KartMovement : MonoBehaviour
 {
     private Rigidbody rb;
 

@@ -20,14 +20,12 @@ public class KartMouvement : MonoBehaviour
     {
         _kartController = GetComponent<KartController>();
         rb = GetComponent<Rigidbody>();
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-
-      
     }
+    
     void FixedUpdate()
     {
-        
+        // Si le kart n'est pas contrôlé, on ne fait rien
         if (!_kartController.IsControlled) return;
 
         Vector3 forwardVelocity = transform.forward * (_verticalInput * maxForwardSpeed);
@@ -38,19 +36,29 @@ public class KartMouvement : MonoBehaviour
 
         rb.AddTorque(Vector3.up * (_horizontalInput * (turnSpeed * Time.fixedDeltaTime)), ForceMode.VelocityChange);
     }
-
-    void OnMove(InputValue value)
+    
+    // Cette méthode est maintenant appelée par le PlayerInput du joueur
+    public void OnMove(InputAction.CallbackContext context)
     {
-        if (!_kartController.IsControlled) return;
-
-        Vector2 input = value.Get<Vector2>();
-        _horizontalInput = input.x;
-        _verticalInput = input.y;
+        // Si l'Action est activée (bouton pressé ou joystick déplacé)
+        if (context.performed)
+        {
+            Vector2 input  = context.ReadValue<Vector2>();
+            _horizontalInput = input.x;
+            _verticalInput = input.y;
+        }
+        // Si l'Action est annulée (bouton relâché ou joystick centré)
+        else if (context.canceled)
+        {
+            // Remet les inputs à zéro pour arrêter le mouvement et la rotation
+            _verticalInput = 0f;
+            _horizontalInput = 0f;
+        }
     }
+    
     public void ResetInputs()
     {
         _verticalInput = 0f;
         _horizontalInput = 0f;
     }
-    
 }

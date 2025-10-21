@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Controller : MonoBehaviour, IGrabbable
@@ -42,7 +41,7 @@ public class Controller : MonoBehaviour, IGrabbable
     
     protected Transform _originalParent;
 
-    private void Start()
+    protected virtual void Start()
     {
         Movement = GetComponent<CharacterMovement>();
         _ragdoll = GetComponent<Ragdoll>();

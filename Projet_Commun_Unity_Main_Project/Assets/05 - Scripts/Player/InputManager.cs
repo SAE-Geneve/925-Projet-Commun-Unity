@@ -5,15 +5,15 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     private PlayerMovement _playerMovement;
-    private Controller _controller;
+    private PlayerController _controller;
     private Ragdoll _ragdoll;
     
-    public event Action<PlayerInput> OnControllerDisconnected;
+    public event Action<PlayerController> OnControllerDisconnected;
     
     private void Awake()
     {
         _playerMovement = GetComponent<PlayerMovement>();
-        _controller = GetComponent<Controller>();
+        _controller = GetComponent<PlayerController>();
         _ragdoll = GetComponent<Ragdoll>();
     }
 
@@ -58,6 +58,6 @@ public class InputManager : MonoBehaviour
 
     public void ControllerDisconnected()
     {
-        OnControllerDisconnected?.Invoke(gameObject.GetComponent<PlayerInput>());
+        OnControllerDisconnected?.Invoke(_controller);
     }
 }

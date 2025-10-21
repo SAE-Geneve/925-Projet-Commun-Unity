@@ -30,7 +30,7 @@ public class KartController : MonoBehaviour, IInteractable
         _kartMouvement = GetComponent<KartMouvement>();
     }
 
-    public void Interact(GameObject interactor)
+    public void Interact(PlayerController playerController)
     {
         if (Time.time - _lastInteractTime < interactCooldown)
             return;
@@ -38,7 +38,7 @@ public class KartController : MonoBehaviour, IInteractable
         _lastInteractTime = Time.time;
 
         if (!IsControlled)
-            Enter(interactor);
+            Enter(playerController.gameObject);
         // L'action de sortie sera gérée par l'Input System dans OnKartInteract, pas ici
     }
     

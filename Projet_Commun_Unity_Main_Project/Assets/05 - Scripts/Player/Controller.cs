@@ -102,7 +102,7 @@ public class Controller : MonoBehaviour, IGrabbable
     }
    
     
-    private void TryAction<T>(Action<T> onFound) where T : class
+    protected void TryAction<T>(Action<T> onFound) where T : class
     {
         Collider[] hits = Physics.OverlapSphere(CatchPoint.position, _sphereRadius);
         foreach (var hit in hits)
@@ -120,20 +120,6 @@ public class Controller : MonoBehaviour, IGrabbable
         {
             grabbable.Grabbed(this);
             _grabbed = grabbable;
-        });
-    }
-
-    public void TryInteract()
-    {
-        if (InteractableGrabbed != null)
-        {
-            InteractableGrabbed.Interact(gameObject);
-            return;
-        }
-        
-        TryAction<IInteractable>(interactable =>
-        {
-            interactable.Interact(gameObject);
         });
     }
     
@@ -172,10 +158,7 @@ public class Controller : MonoBehaviour, IGrabbable
 
         StartCoroutine(DropRoutine());
         
-        if (controller)
-        {
-            controller.Reset();
-        }
+        if (controller) controller.Reset();
     }
 
     private IEnumerator DropRoutine()

@@ -9,4 +9,18 @@ public class PlayerController : Controller
         Input = GetComponent<PlayerInput>();
         base.Start();
     }
+    
+    public void TryInteract()
+    {
+        if (InteractableGrabbed != null)
+        {
+            InteractableGrabbed.Interact(this);
+            return;
+        }
+        
+        TryAction<IInteractable>(interactable =>
+        {
+            interactable.Interact(this);
+        });
+    }
 }

@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class InteractableProp : Prop, IInteractable
 {
-    public void Interact(GameObject interactor)
+    public void Interact(PlayerController playerController)
     {
+        if(playerController.InteractableGrabbed == null) return;
         Debug.Log("Interact with prop");
     }
 

@@ -5,11 +5,13 @@ using Action = System.Action;
 
 public class Ragdoll : MonoBehaviour
 {
-    [SerializeField] protected float ragdollTime = 3f;
-    private Coroutine _ragdollCoroutine;
-
+    [Header("References")]
     [SerializeField] protected GameObject playerRig;
     [SerializeField] protected Transform hipsTransform;
+    
+    [Header("Parameters")]
+    [SerializeField] protected float ragdollTime = 3f;
+    [SerializeField] private float _ragdollVelocityThreshold = 3f;
 
     private Animator _animator;
     private Collider _mainCollider;
@@ -18,9 +20,10 @@ public class Ragdoll : MonoBehaviour
 
     private Collider[] _ragdollColliders;
     private Rigidbody[] _ragdollRigidbodies;
+    
+    private Coroutine _ragdollCoroutine;
 
     public event Action OnRagdoll;
-    public event Action OffRagdoll;
 
     protected virtual void Start()
     {
@@ -83,8 +86,12 @@ public class Ragdoll : MonoBehaviour
 
         if (_playerInput)
             _playerInput.currentActionMap.Enable();
-        
-        OffRagdoll?.Invoke();
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.TryGetComponent(out Rigidbody rb) && rb.linearVelocity.magnitude >= _ragdollVelocityThreshold)
+            RagdollOn();
     }
 
     private IEnumerator RagdollTimer()

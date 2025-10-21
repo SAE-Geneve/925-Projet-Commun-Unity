@@ -1,8 +1,16 @@
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerController : Controller
 {
+    [Header("Events")] 
+    public UnityEvent OnEnterKart;
+    public UnityEvent OnExitKart;
+    
     public PlayerInput Input { get; private set;}
+    public KartController KartController { get; set; }
+    public KartMovement KartMovement { get; set; }
 
     protected override void Start()
     {

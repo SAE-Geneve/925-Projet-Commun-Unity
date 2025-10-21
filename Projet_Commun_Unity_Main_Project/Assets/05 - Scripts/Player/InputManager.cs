@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour
 {
     private PlayerMovement _playerMovement;
     private PlayerController _playerController;
+    private KartController _kartController;
     private Ragdoll _ragdoll;
     
     public event Action<PlayerController> OnControllerDisconnected;
@@ -17,16 +18,13 @@ public class InputManager : MonoBehaviour
         _ragdoll = GetComponent<Ragdoll>();
     }
 
-    #region Input Events
+    #region Player Input Events
 
     public void OnMove(InputAction.CallbackContext context) => _playerMovement.SetMovement(context.ReadValue<Vector2>());
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.started)
-        {
-            _playerMovement.Dash();
-        }
+        if (context.started) _playerMovement.Dash();
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -36,28 +34,32 @@ public class InputManager : MonoBehaviour
     
     public void OnRagdoll(InputAction.CallbackContext context)
     {
-        if (context.started)
-        {
-            _ragdoll.RagdollOn();
-        }
+        if (context.started) _ragdoll.RagdollOn();
     }
 
     public void OnCatch(InputAction.CallbackContext context)
     {
         if (context.started)
-        {
             _playerController.CatchStart();
-        }
         else if (context.canceled)
-        {
             _playerController.CatchCanceled();
-        }
     }
 
     #endregion
 
-    public void ControllerDisconnected()
+    #region Kart Input Events
+
+    public void OnKartMove(InputAction.CallbackContext context)
     {
-        OnControllerDisconnected?.Invoke(_playerController);
+        _playerController.KartMovement.OnMove(context);
     }
+
+    public void OnKartExit(InputAction.CallbackContext context)
+    {
+        _playerController.KartController.Exit(_playerController);
+    }
+
+    #endregion
+
+    public void ControllerDisconnected() => OnControllerDisconnected?.Invoke(_playerController);
 }

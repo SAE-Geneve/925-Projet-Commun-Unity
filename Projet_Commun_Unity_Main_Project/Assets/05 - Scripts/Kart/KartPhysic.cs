@@ -66,7 +66,6 @@ public class KartPhysic : MonoBehaviour
 
     void HandleTilt()
     {
-        if(!kartController.IsControlled) return;
         float deltaInput = moveInput - lastMoveInput;
         if (Mathf.Abs(moveInput) > 0.1f && Mathf.Abs(deltaInput) > 0.01f)
         {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DebugStateButton : MonoBehaviour
+public class GameStateButton : MonoBehaviour
 {
     [SerializeField] private GameState _stateToEnable;
 

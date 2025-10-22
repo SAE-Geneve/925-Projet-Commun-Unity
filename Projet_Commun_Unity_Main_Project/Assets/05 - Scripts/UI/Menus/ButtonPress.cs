@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class ButtonPress : MonoBehaviour
 {
     //Unoptimized way to load scenes but it works
@@ -30,7 +32,7 @@ public class ButtonPress : MonoBehaviour
             SceneList.Add(SceneManager.GetSceneAt(i).name);
         }
     }*/
-        
+
     public void ChangeScene()
     {
         SceneManager.LoadScene(sceneToLoad.ToString());
@@ -38,6 +40,13 @@ public class ButtonPress : MonoBehaviour
     public void ChangeCanvas()
     {
         currentCanvas.enabled = false;
+        EventSystem.current.SetSelectedGameObject(null);
+        
         newCanvas.enabled = true;
+        BasicButtonSetup buttonSetup = newCanvas.transform.GetComponent<BasicButtonSetup>();
+        if (buttonSetup != null)
+        {
+            buttonSetup.ButtonChange();
+        }
     }
 }

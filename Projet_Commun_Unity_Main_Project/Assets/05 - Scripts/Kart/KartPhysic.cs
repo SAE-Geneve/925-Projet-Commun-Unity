@@ -27,9 +27,12 @@ public class KartPhysic : MonoBehaviour
     private float tiltDirection = 0f;
     private float moveInput = 0f;
     private float lastMoveInput = 0f;
+    
+    KartController kartController;
 
     void Start()
     {
+        kartController = GetComponent<KartController>();
         rb = GetComponent<Rigidbody>();
         WheelOffset();
     }

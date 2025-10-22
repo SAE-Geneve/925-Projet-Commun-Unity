@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] [Min(0)] private int _maxSatisfaction = 100;
 
     public static GameManager Instance { get; private set; }
+    
+    private PlayerManager _playerManager;
 
     // Events
     public event Action OnTimerUpdate;
@@ -43,15 +46,22 @@ public class GameManager : MonoBehaviour
         {
             if (value <= 0)
             {
-                _disconnectionTimer = 0;
-                Debug.LogWarning("Players did not reconnect, back to menu");
-                MenuReset();
+                ReconnectionTimeOut();
             }
             else _disconnectionTimer = value;
             OnDisconnectionTimerUpdate?.Invoke();
         }
     }
 
+    private void ReconnectionTimeOut()
+    {
+        _disconnectionTimer = _initialDisconnectionTime;
+        _playerManager.OnReconnectionTimeOut();
+        SwitchState(GameState.Playing);
+    }
+
+    public GameState State => _state;
+    
     public int ClientSatisfaction
     {
         get => _clientSatisfaction;
@@ -63,7 +73,7 @@ public class GameManager : MonoBehaviour
     private GameState _lastState;
     private GameContext _context;
     
-    private Mission _currentMission;
+    //private Mission _currentMission;
     
     private float _timer;
     private float _disconnectionTimer;
@@ -76,10 +86,14 @@ public class GameManager : MonoBehaviour
     {
         if (Instance && Instance != this) Destroy(gameObject);
         else Instance = this;
+        
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
+        _playerManager = FindFirstObjectByType<PlayerManager>();
+        
         ResetGame();
         Debug.Log($"Game State: {_state}");
     }
@@ -119,7 +133,7 @@ public class GameManager : MonoBehaviour
         Timer = _initialTimer;
         DisconnectionTimer = _initialDisconnectionTime;
         
-        _currentMission = null;
+        //_currentMission = null;
         
         _context = GameContext.Hub;
     }
@@ -142,7 +156,7 @@ public class GameManager : MonoBehaviour
 
     #region Mission
 
-    public void StartMission(Mission mission)
+    public void StartMission()
     {
         if (_state != GameState.Playing || _context != GameContext.Hub)
         {
@@ -150,23 +164,22 @@ public class GameManager : MonoBehaviour
             return;
         }
         
-        _currentMission = mission;
-        _currentMission.OnMissionBegin();
+        // _currentMission = mission;
+        // _currentMission.OnMissionBegin();
 
         _context = GameContext.Mission;
     }
 
     public void StopMission()
     {
-        // Check if it's playing and
         if (_state != GameState.Playing || _context == GameContext.Hub)
         {
             Debug.LogWarning("Mission can only be stopped when game is playing in a mission");
             return;
         }
         
-        _currentMission.Finish();
-        _currentMission = null;
+        // _currentMission.Finish();
+        // _currentMission = null;
         
         _context = GameContext.Hub;
     }
@@ -215,6 +228,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning($"Can only start the disconnection timer when the game is in playing/cinematic state");    
             return;
         }
+        
         
         _lastState = _state;
         SwitchState(GameState.Disconnected);

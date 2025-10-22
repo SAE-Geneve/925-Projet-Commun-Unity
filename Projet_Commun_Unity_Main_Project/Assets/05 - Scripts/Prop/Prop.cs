@@ -6,13 +6,15 @@ public class Prop: MonoBehaviour, IGrabbable
     [Header("Parameters")]
     [Tooltip("Define the prop type of the game object")]
     [SerializeField] private PropType _type = PropType.None;
-    
+
+
+    public AnimationCurve speedCurve;
     public PropType Type => _type;
     public Rigidbody Rb => _rb;
     public bool IsGrabbed { get; protected set; }
     
     protected Rigidbody _rb;
-    protected PlayerController PlayerController;
+    protected Controller Controller;
     
     protected Transform _originalParent;
     protected Collider _collider;
@@ -25,34 +27,36 @@ public class Prop: MonoBehaviour, IGrabbable
 
     #region Grab
 
-    public virtual void Grabbed(PlayerController playerController)
+    public virtual void Grabbed(Controller controller)
     {
         IsGrabbed = true;
         _originalParent = transform.parent;
-        transform.SetParent(playerController.CatchPoint);
+        transform.SetParent(controller.CatchPoint);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         
-        PlayerController = playerController;
+        Controller = controller;
         
         if (_rb != null) _rb.isKinematic = true;
         Debug.Log("Grabbed object");
     }
 
-    public virtual void Dropped(Vector3 throwForce = default, PlayerController playerController = null)
+    public virtual void Dropped(Vector3 throwForce = default, Controller controller = null)
     {
         transform.SetParent(_originalParent);
         if(_rb != null) _rb.isKinematic = false;
 
-        if (PlayerController)
+        if (Controller)
         {
-            PlayerController.Reset();
-            PlayerController = null;
+            Controller.Reset();
+            Controller = null;
         }
 
         if (throwForce != Vector3.zero)
         {
-            _rb.AddForce(throwForce, ForceMode.Impulse);
+            float curveValue = speedCurve.Evaluate(throwForce.magnitude);
+            Vector3 curvedForce = throwForce * curveValue;
+            _rb.AddForce(curvedForce, ForceMode.Impulse);
         }
         IsGrabbed = false;
     }

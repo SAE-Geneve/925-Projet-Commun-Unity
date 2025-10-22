@@ -2,43 +2,46 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class AIMovement : MonoBehaviour
+public class AIMovement : CharacterMovement
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float speed = 5f;
+    [Header("AI Navigation")]
     [SerializeField] private float stopDistance = 0.5f;
     [SerializeField] private float accelerationPower = 50f;
-    [SerializeField] private float turnSpeed = 0.15f;
-
-    private Rigidbody rb;
-    private Vector3 destination;
+    
     private NavMeshPath path;
     private int currentCorner = 0;
     private bool moving = false;
+    private Vector3 destination;
 
-    void Awake()
+    protected override void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        base.Start();
         path = new NavMeshPath();
-        rb.freezeRotation = true; 
+        Rb.freezeRotation = true;
     }
 
     void FixedUpdate()
     {
-        if (!moving) return;
-        
+        if (!moving)
+        {
+            if (_animator != null)
+                _animator.SetFloat("Speed", 0f);
+            return;
+        }
+
         if (path.corners.Length == 0 || currentCorner >= path.corners.Length)
         {
             Stop();
+            if (_animator != null)
+                _animator.SetFloat("Speed", 0f);
             return;
         }
 
         Vector3 agentPos = transform.position;
-        
         Vector3 nextCorner = path.corners[currentCorner];
         Vector3 dirToCorner = nextCorner - agentPos;
         dirToCorner.y = 0f;
-        
+
         if (dirToCorner.magnitude <= 0.15f || (currentCorner == path.corners.Length - 1 && dirToCorner.magnitude <= stopDistance))
         {
             currentCorner++;
@@ -46,35 +49,44 @@ public class AIMovement : MonoBehaviour
             if (currentCorner >= path.corners.Length)
             {
                 Stop();
+                if (_animator != null)
+                    _animator.SetFloat("Speed", 0f);
                 return;
             }
-            
+
             nextCorner = path.corners[currentCorner];
             dirToCorner = nextCorner - agentPos;
             dirToCorner.y = 0f;
         }
-        
+
         dirToCorner.Normalize();
-        Move(dirToCorner);
+        MoveAI(dirToCorner);
+
+        if (_animator != null)
+        {
+            Vector3 flatVelocity = new Vector3(Rb.linearVelocity.x, 0, Rb.linearVelocity.z);
+            _animator.SetFloat("Speed", flatVelocity.magnitude / speed);
+        }
     }
 
-
-    private void Move(Vector3 dir)
+    private void MoveAI(Vector3 dir)
     {
-        rb.AddForce(dir * accelerationPower, ForceMode.Acceleration);
-        
-        Vector3 flatVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        Rb.AddForce(dir * accelerationPower, ForceMode.Acceleration);
+
+        Vector3 flatVelocity = new Vector3(Rb.linearVelocity.x, 0, Rb.linearVelocity.z);
         if (flatVelocity.magnitude > speed)
         {
-            rb.linearVelocity = flatVelocity.normalized * speed + new Vector3(0, rb.linearVelocity.y, 0);
+            Rb.linearVelocity = flatVelocity.normalized * speed + new Vector3(0, Rb.linearVelocity.y, 0);
         }
-        
+
         if (dir != Vector3.zero)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation,
-                Quaternion.LookRotation(dir), turnSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 0.15f);
         }
+
+        InvokeOnMove(dir);
     }
+
     public void SetDestination(Vector3 target)
     {
         destination = target;
@@ -91,13 +103,8 @@ public class AIMovement : MonoBehaviour
     public void Stop()
     {
         moving = false;
-        rb.linearVelocity = Vector3.zero;      
-        rb.angularVelocity = Vector3.zero; 
-    }
-    
-    public void SetSpeed(float newSpeed)
-    {
-        speed = newSpeed;
+        Rb.linearVelocity = Vector3.zero;
+        Rb.angularVelocity = Vector3.zero;
     }
 
     public bool HasReachedDestination()

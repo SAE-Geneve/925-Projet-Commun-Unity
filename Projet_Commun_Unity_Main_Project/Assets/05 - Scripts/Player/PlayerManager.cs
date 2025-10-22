@@ -1,34 +1,82 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
+using UnityEngine.InputSystem.Users;
 
 public class PlayerManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Transform[] spawnPoints;
-    private int _playerCount;
+    public List<PlayerController> Players => _players;
     
-    private readonly List<PlayerController> _players = new ();
+    private readonly List<PlayerController> _players = new();
+    private PlayerController _lastDisconnectPlayer;
     
+    private GameManager _gameManager;
+    
+    private void Start() => _gameManager = GameManager.Instance;
+
     public void OnPlayerJoined(PlayerInput player)
     {
-        player.transform.position = spawnPoints[_playerCount].position;
-        _players.Add(player.gameObject.GetComponent<PlayerController>());
-        _playerCount++;
+        player.transform.position = spawnPoints[_players.Count].position;
+        player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
+        _players.Add(player.GetComponent<PlayerController>());
+    }
+
+    private void OnPlayerDisconnect(PlayerController player)
+    {
+        _gameManager.OnPlayerDisconnected();
+        
+        if (_gameManager.State != GameState.Disconnected) return;
+        
+        _lastDisconnectPlayer = player;
+        _lastDisconnectPlayer.Input.user.UnpairDevices();
+        
+        InputSystem.onDeviceChange += OnDeviceChange;
+        
+        Debug.LogWarning($"Player {_lastDisconnectPlayer.Input.playerIndex + 1} controller disconnected — waiting for reconnection...");
     }
     
-    void OnPlayerLeft(PlayerInput player)
+    void OnDeviceChange(InputDevice device, InputDeviceChange change)
     {
-        for (int i = 0; i < _playerCount; i++)
+        if (change is not (InputDeviceChange.Reconnected or InputDeviceChange.Added)) return;
+        try
         {
-            if (_players[i] == player.gameObject.GetComponent<PlayerController>())
-            {
-                _players[i] = null;
-                _playerCount--;
-                Debug.LogWarning("Player disconnected");
-            }
+            InputUser.PerformPairingWithDevice(device, _lastDisconnectPlayer.Input.user);
+            OnPlayerReconnect();
+            Debug.Log($"Player {_lastDisconnectPlayer.Input.playerIndex + 1} controller reconnected.");
+        }
+        catch
+        {
+            // Ignore invalid pairing attempts
+        }
+    }
+
+    private void CleanupDisconnectedPlayer()
+    {
+        InputSystem.onDeviceChange -= OnDeviceChange;
+        _lastDisconnectPlayer = null;
+    }
+
+    private void OnPlayerReconnect()
+    {
+        CleanupDisconnectedPlayer();
+        _gameManager.OnPlayerReconnected();
+    }
+
+    public void OnReconnectionTimeOut()
+    {
+        RemovePlayer(_lastDisconnectPlayer);
+        CleanupDisconnectedPlayer();
+    }
+
+    private void RemovePlayer(PlayerController player)
+    {
+        
+        if (_players.Contains(player))
+        {
+            Destroy(player.gameObject);
+           _players.Remove(player);
         }
     }
 }

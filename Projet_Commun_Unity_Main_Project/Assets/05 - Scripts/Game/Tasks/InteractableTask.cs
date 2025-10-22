@@ -1,8 +1,6 @@
-using UnityEngine;
-
 public class InteractableTask : GameTask, IInteractable
 {
-    public void Interact(GameObject interactor)
+    public void Interact(PlayerController playerController)
     {
         if (Done) return;
         

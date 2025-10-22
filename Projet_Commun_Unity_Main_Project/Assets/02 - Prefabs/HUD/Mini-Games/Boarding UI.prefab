@@ -148,8 +148,8 @@ GameObject:
   - component: {fileID: 745188950884829235}
   - component: {fileID: 2266283744634169697}
   - component: {fileID: 5063421101251654273}
-  - component: {fileID: 8923964550922222304}
   - component: {fileID: 1267395708655629431}
+  - component: {fileID: 3629173948893940123}
   m_Layer: 5
   m_Name: Boarding UI
   m_TagString: Untagged
@@ -244,25 +244,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8923964550922222304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1901885297684334694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12b271c6ced162e47b02197d0c632786, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalScore: {fileID: 5366091890628828527}
-  totalPassengers: {fileID: 1673116187972354007}
-  totalLuggages: {fileID: 3684232556249801766}
-  scoreImageFade: {fileID: 4172283588300014333}
-  scoreTextFade: {fileID: 6359696553062857196}
-  passengersScoreText: {fileID: 4602300724875777130}
-  luggagesScoreText: {fileID: 8723414841336680767}
 --- !u!114 &1267395708655629431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +257,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectDuration: 2
+--- !u!114 &3629173948893940123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901885297684334694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 082770a2986190743bafa70cafb4096b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalScore: {fileID: 9219756605273029457}
+  totalSubScore1: {fileID: 1673116187972354007}
+  totalSubScore2: {fileID: 3684232556249801766}
+  scoreImageFade: {fileID: 4172283588300014333}
+  scoreTextFade: {fileID: 6359696553062857196}
+  subScoreEffect1: {fileID: 4602300724875777130}
+  subScoreEffect2: {fileID: 8723414841336680767}
 --- !u!1 &2152953595265689446
 GameObject:
   m_ObjectHideFlags: 0

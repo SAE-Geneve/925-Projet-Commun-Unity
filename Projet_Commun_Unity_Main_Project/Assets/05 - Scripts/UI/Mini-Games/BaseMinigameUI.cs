@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [CustomEditor(typeof(BaseMinigameUI))]
 public class BaseMinigameUI : MonoBehaviour
 {
-    public bool ExtraScores;
+    //public bool ExtraScores;
     
     [Header("Score Texts")]
     [SerializeField] private TextMeshProUGUI totalScore;

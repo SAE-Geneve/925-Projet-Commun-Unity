@@ -3,7 +3,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CustomEditor(typeof(BaseMinigameUI))]
 public class BaseMinigameUI : MonoBehaviour
 {
     //public bool ExtraScores;

@@ -3,9 +3,10 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CustomEditor(typeof(BaseMinigameUI))]
 public class BaseMinigameUI : MonoBehaviour
 {
+    //public bool ExtraScores;
+    
     [Header("Score Texts")]
     [SerializeField] private TextMeshProUGUI totalScore;
     private int _totalScore;
@@ -13,9 +14,9 @@ public class BaseMinigameUI : MonoBehaviour
     private int _subScore1;
     [SerializeField] private TextMeshProUGUI totalSubScore2;
     private int _subScore2;
-    [SerializeField] private TextMeshProUGUI totalSubScore3;
+    [SerializeField] public TMP_Text totalSubScore3;
     private int _subScore3;
-    [SerializeField] private TextMeshProUGUI totalSubScore4;
+    [SerializeField] public TMP_Text totalSubScore4;
     private int _subScore4;
     
     [Header("Total Score Effects")]
@@ -25,8 +26,8 @@ public class BaseMinigameUI : MonoBehaviour
     [Header("Secondary Score Effects")]
     [SerializeField] private TextMeshProUGUI subScoreEffect1;
     [SerializeField] private TextMeshProUGUI subScoreEffect2;
-    [SerializeField] private TextMeshProUGUI subScoreEffect3;
-    [SerializeField] private TextMeshProUGUI subScoreEffect4;
+    [SerializeField] public TextMeshProUGUI subScoreEffect3;
+    [SerializeField] public TextMeshProUGUI subScoreEffect4;
     
     private UITextEffects _uiTextEffects;
     

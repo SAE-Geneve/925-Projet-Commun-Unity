@@ -7,7 +7,10 @@ public class TriggerScene : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("loading scene");
-        if(other.CompareTag("Player")) SceneLoader.Instance.LoadScene(sceneToLoad);
+        if(other.CompareTag("Player"))
+        {
+            SceneLoader.Instance.LoadScene(sceneToLoad);
+        }
     }
 
     private void OnTriggerExit(Collider other)

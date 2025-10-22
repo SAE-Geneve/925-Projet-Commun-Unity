@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class KartController : MonoBehaviour, IInteractable
 {
-    [Header("Settings")]
-    [SerializeField] private float interactCooldown = 0.1f;
+    [Header("Settings")] 
     [SerializeField] private Transform seatPosition;
     
     private KartMovement _kartMovement;

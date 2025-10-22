@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using TMPro.EditorUtilities;
-using Unity.AppUI.UI;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.Splines;
 
 public class CameraManager : MonoBehaviour
 {

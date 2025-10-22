@@ -12,10 +12,10 @@ public class Prop: MonoBehaviour, IGrabbable
     public bool IsGrabbed { get; protected set; }
     
     protected Rigidbody _rb;
-    protected Controller Controller;
-    
-    protected Transform _originalParent;
     protected Collider _collider;
+    
+    private Controller Controller;
+    private Transform _originalParent;
 
     protected virtual void Start()
     {

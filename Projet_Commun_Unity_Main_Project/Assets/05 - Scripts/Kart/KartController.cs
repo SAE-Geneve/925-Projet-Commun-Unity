@@ -12,6 +12,9 @@ public class KartController : MonoBehaviour, IInteractable
 
     public void Interact(PlayerController playerController)
     {
+        playerController.transform.SetParent(seatPosition);
+        playerController.transform.position = seatPosition.position;
+        
         playerController.Input.SwitchCurrentActionMap("Kart");
         playerController.KartController = this;
         playerController.KartMovement = _kartMovement;
@@ -21,6 +24,8 @@ public class KartController : MonoBehaviour, IInteractable
 
     public void Exit(PlayerController playerController)
     {
+        playerController.transform.SetParent(null);
+        
         playerController.Input.SwitchCurrentActionMap("game");
         playerController.KartController = null;
         playerController.KartMovement = null;

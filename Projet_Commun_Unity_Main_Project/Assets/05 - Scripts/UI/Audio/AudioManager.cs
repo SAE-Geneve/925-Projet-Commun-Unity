@@ -5,8 +5,6 @@ using UnityEngine.Serialization;
 public class AudioManager : MonoBehaviour
 {
     //Maybe a bit stupid to put all the sound effects in the same script
-    
-    //Test commit
     [Header("Audio Sources")]
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sfxSource;

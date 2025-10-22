@@ -4,10 +4,12 @@ public class TriggerScene : MonoBehaviour
 {
     
     [SerializeField] string sceneToLoad;
+    private int _playerNumber;
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("loading scene");
-        if(other.CompareTag("Player"))
+        if (!other.CompareTag("Player")) return;
+        _playerNumber++;
+        if(_playerNumber == PlayerManager.Instance.PlayerCount)
         {
             SceneLoader.Instance.LoadScene(sceneToLoad);
         }
@@ -15,6 +17,7 @@ public class TriggerScene : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        _playerNumber--;
         if(other.CompareTag("Player")) ;
     }
 }

@@ -31,18 +31,13 @@ public class KartMovement : MonoBehaviour
         _rb.AddTorque(Vector3.up * (_horizontalInput * (turnSpeed * Time.fixedDeltaTime)), ForceMode.VelocityChange);
     }
     
-    public void OnMove(InputAction.CallbackContext context)
+    public void Move(Vector2 input)
     {
-        if (context.canceled) ResetInputs();
-        else
-        {
-            Vector2 input  = context.ReadValue<Vector2>();
-            _horizontalInput = input.x;
-            _verticalInput = input.y;
-        }
+        _horizontalInput = input.x;
+        _verticalInput = input.y;
     }
     
-    private void ResetInputs()
+    public void ResetInputs()
     {
         _verticalInput = 0f;
         _horizontalInput = 0f;

@@ -51,7 +51,11 @@ public class InputManager : MonoBehaviour
 
     public void OnKartMove(InputAction.CallbackContext context)
     {
-        _playerController.KartMovement.OnMove(context);
+        if (context.canceled)
+        {
+            _playerController.KartMovement.ResetInputs();
+        }
+        _playerController.KartMovement.Move(context.ReadValue<Vector2>());
     }
 
     public void OnKartExit(InputAction.CallbackContext context)

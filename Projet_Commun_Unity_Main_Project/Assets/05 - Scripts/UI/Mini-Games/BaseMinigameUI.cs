@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+[CustomEditor(typeof(BaseMinigameUI))]
 public class BaseMinigameUI : MonoBehaviour
 {
-    
     [Header("Score Texts")]
     [SerializeField] private TextMeshProUGUI totalScore;
     private int _totalScore;
@@ -14,6 +13,10 @@ public class BaseMinigameUI : MonoBehaviour
     private int _subScore1;
     [SerializeField] private TextMeshProUGUI totalSubScore2;
     private int _subScore2;
+    [SerializeField] private TextMeshProUGUI totalSubScore3;
+    private int _subScore3;
+    [SerializeField] private TextMeshProUGUI totalSubScore4;
+    private int _subScore4;
     
     [Header("Total Score Effects")]
     [SerializeField] private Image scoreImageFade;
@@ -22,7 +25,8 @@ public class BaseMinigameUI : MonoBehaviour
     [Header("Secondary Score Effects")]
     [SerializeField] private TextMeshProUGUI subScoreEffect1;
     [SerializeField] private TextMeshProUGUI subScoreEffect2;
-    
+    [SerializeField] private TextMeshProUGUI subScoreEffect3;
+    [SerializeField] private TextMeshProUGUI subScoreEffect4;
     
     private UITextEffects _uiTextEffects;
     
@@ -57,5 +61,21 @@ public class BaseMinigameUI : MonoBehaviour
         
         _subScore2 += 1;
         totalSubScore2.text = ""+_subScore2.ToString();
+    }
+    
+    public void SubScore3Increase()
+    {
+        StartCoroutine(_uiTextEffects.DoTextFade(subScoreEffect3));
+        
+        _subScore3 += 1;
+        totalSubScore3.text = ""+_subScore3.ToString();
+    }
+    
+    public void SubScore4Increase()
+    {
+        StartCoroutine(_uiTextEffects.DoTextFade(subScoreEffect4));
+        
+        _subScore4 += 1;
+        totalSubScore4.text = ""+_subScore4.ToString();
     }
 }

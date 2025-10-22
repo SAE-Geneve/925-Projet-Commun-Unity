@@ -8,6 +8,8 @@ public class DebugMission : Mission
     [SerializeField] private Material _playingMaterial;
     [SerializeField] private Material _finishedMaterial;
     
+    [SerializeField] string _sceneToLoad;
+    
     private Renderer _renderer;
 
     protected override void Start()

@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -86,8 +85,6 @@ public class GameManager : MonoBehaviour
     {
         if (Instance && Instance != this) Destroy(gameObject);
         else Instance = this;
-        
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()

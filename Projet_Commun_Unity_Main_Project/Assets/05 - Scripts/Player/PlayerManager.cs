@@ -13,6 +13,14 @@ public class PlayerManager : MonoBehaviour
     private PlayerController _lastDisconnectPlayer;
     
     private GameManager _gameManager;
+    public int PlayerCount => _players.Count;
+    public static PlayerManager Instance { get; private set; }
+    
+    private void Awake()
+    {
+        if (Instance && Instance != this) Destroy(gameObject);
+        else Instance = this;
+    }
     
     private void Start() => _gameManager = GameManager.Instance;
 

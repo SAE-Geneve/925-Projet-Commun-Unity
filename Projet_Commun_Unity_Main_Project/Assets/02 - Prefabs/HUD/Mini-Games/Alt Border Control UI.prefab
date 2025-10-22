@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 3970126123798714878}
   - component: {fileID: 5489950639915513594}
   m_Layer: 5
-  m_Name: CollectedEffectText
+  m_Name: SortedEffectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,12 +471,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalScore: {fileID: 5366091890628828527}
-  totalCollected: {fileID: 1673116187972354007}
-  totalUnclaimed: {fileID: 0}
+  totalSubScore1: {fileID: 1673116187972354007}
+  totalSubScore2: {fileID: 5520021449094218700}
+  totalSubScore3: {fileID: 6617910450909873076}
+  totalSubScore4: {fileID: 7837839145590681040}
   scoreImageFade: {fileID: 4172283588300014333}
   scoreTextFade: {fileID: 6359696553062857196}
-  collectedScoreText: {fileID: 4602300724875777130}
-  unclaimedScoreText: {fileID: 0}
+  subScoreEffect1: {fileID: 4602300724875777130}
+  subScoreEffect2: {fileID: 5489950639915513594}
+  subScoreEffect3: {fileID: 5863306682176377647}
+  subScoreEffect4: {fileID: 5067129690499269823}
 --- !u!114 &1267395708655629431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1254,7 +1258,7 @@ GameObject:
   - component: {fileID: 6345805408307751899}
   - component: {fileID: 4602300724875777130}
   m_Layer: 5
-  m_Name: CollectedEffectText
+  m_Name: ArrestEffectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2658,7 +2662,7 @@ GameObject:
   - component: {fileID: 2985591070714923363}
   - component: {fileID: 5863306682176377647}
   m_Layer: 5
-  m_Name: CollectedEffectText
+  m_Name: CriminalEffectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2721,7 +2725,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4283673683
-  m_fontColor: {r: 0.3254902, g: 0.6745098, b: 0.3254902, a: 1}
+  m_fontColor: {r: 0.96862745, g: 0.39215687, b: 0.39215687, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3119,7 +3123,7 @@ GameObject:
   - component: {fileID: 7006678867583846860}
   - component: {fileID: 5067129690499269823}
   m_Layer: 5
-  m_Name: CollectedEffectText
+  m_Name: MisplacedEffectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3182,7 +3186,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4283673683
-  m_fontColor: {r: 0.3254902, g: 0.6745098, b: 0.3254902, a: 1}
+  m_fontColor: {r: 0.96862745, g: 0.39215687, b: 0.39215687, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

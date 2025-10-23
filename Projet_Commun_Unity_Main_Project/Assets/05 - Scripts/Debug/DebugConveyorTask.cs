@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DebugConveyorTask : TriggerTask
 {
@@ -12,6 +13,9 @@ public class DebugConveyorTask : TriggerTask
     [Header("Parameters")] 
     [SerializeField] [Min(0.1f)] private float _minTaskDuration = 5f;
     [SerializeField] [Min(0.1f)]private float _maxTaskDuration = 15f;
+    
+    [Header("Events")]
+    public UnityEvent OnReset;
     
     private Renderer _renderer;
     

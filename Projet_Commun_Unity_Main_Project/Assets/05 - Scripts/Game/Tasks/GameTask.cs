@@ -12,7 +12,6 @@ public abstract class GameTask : MonoBehaviour
 
     [Header("Events")] 
     public UnityEvent OnStart;
-    public UnityEvent OnReset;
     public UnityEvent OnSucceed;
     public UnityEvent OnFailed;
 
@@ -23,7 +22,6 @@ public abstract class GameTask : MonoBehaviour
     protected virtual void Succeed()
     {
         if(!_multiple) Done = true;
-        else OnReset?.Invoke();
         
         OnSucceed?.Invoke();
         
@@ -32,8 +30,6 @@ public abstract class GameTask : MonoBehaviour
 
     protected void Failed()
     {
-        if(_multiple) OnReset?.Invoke();
-        
         OnFailed?.Invoke();
         
         Debug.Log($"Task {_taskName} failed!");

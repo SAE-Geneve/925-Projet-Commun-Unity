@@ -13,8 +13,9 @@ public class DebugConveyorTask : TriggerTask
     [SerializeField] [Min(0.1f)] private float _minTaskDuration = 5f;
     [SerializeField] [Min(0.1f)]private float _maxTaskDuration = 15f;
     
-    
     private Renderer _renderer;
+    
+    public float Timer { get; private set; }
 
     private void Start()
     {
@@ -44,12 +45,13 @@ public class DebugConveyorTask : TriggerTask
         }
         
         StopAllCoroutines();
+        Timer = Random.Range(_minTaskDuration, _maxTaskDuration);
         StartCoroutine(TaskCooldown());
     }
 
     private IEnumerator TaskCooldown()
     {
-        yield return new WaitForSeconds(Random.Range(_minTaskDuration, _maxTaskDuration));
+        yield return new WaitForSeconds(Timer);
         Failed();
         SwitchType();
     }

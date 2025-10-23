@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,7 +6,7 @@ using UnityEngine.UI;
 public class NPCFeedback : MonoBehaviour
 {
     [SerializeField] private float effectDuration=2.5f;
-    [SerializeField] private float timerDuration=10f;
+    private float _timerDuration=10f;
     
     [Header("Reaction Images")]
     [SerializeField] private Image happyImage;
@@ -16,11 +17,31 @@ public class NPCFeedback : MonoBehaviour
     [SerializeField] private Image timerBackdropImage;
     [SerializeField] private Color startColor;
     [SerializeField] private Color endColor;
+    
+    DebugConveyorTask _debugConveyorTask;
+    private Coroutine _currentTimerCoroutine;
 
-    public void StartUITimer(float duration)
+    private void Awake()
     {
-        timerDuration = duration;
-        StartCoroutine(Timer());
+        _debugConveyorTask = transform.parent.GetComponent<DebugConveyorTask>();
+    }
+
+    public void StartUITimer()
+    {
+        if (_currentTimerCoroutine != null)
+        {
+            StopCoroutine(_currentTimerCoroutine);
+        }
+
+        _currentTimerCoroutine = StartCoroutine(Timer());
+        
+        _timerDuration = _debugConveyorTask.Timer;
+    }
+
+    public void StopUITimer()
+    {
+        timerBackdropImage.gameObject.SetActive(false);
+        StopCoroutine(_currentTimerCoroutine);
     }
     
     public void HappyResult()
@@ -36,12 +57,15 @@ public class NPCFeedback : MonoBehaviour
     
     private IEnumerator Timer()
     {
+        timerImage.fillAmount = 1.0f;
+        timerImage.color = startColor;
+        timerBackdropImage.gameObject.SetActive(true);
         float elapsedTime = 0.0f;
         
         while (timerImage.fillAmount > 0)
         {
             
-            float progress = Mathf.Clamp01(elapsedTime / timerDuration);
+            float progress = Mathf.Clamp01(elapsedTime / _timerDuration);
             
             timerImage.color = Color.Lerp(startColor, endColor, progress);
             timerImage.fillAmount = 1.0f - progress;

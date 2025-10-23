@@ -18,12 +18,17 @@ public abstract class GameTask : MonoBehaviour
 
     protected bool Done;
     
+    //For this mini-game, Start() doesn't work as it will trigger before the NPC even receive the proper values
+    //This means that timer UI will receive the wrong values
+    //Also I don't think it'll work in other mini-games due to the issue mentioned above
     private void Start() => OnStart?.Invoke();
 
     protected virtual void Succeed()
     {
         if(!_multiple) Done = true;
-        else OnReset?.Invoke();
+        //By calling OnReset directly, we end up starting the NPC UI timer before the NPC even gets to receive his values
+        //This means that the timer UI values will always be behind the NPC values
+        //else OnReset?.Invoke();
         
         OnSucceed?.Invoke();
         
@@ -32,7 +37,9 @@ public abstract class GameTask : MonoBehaviour
 
     protected void Failed()
     {
-        if(_multiple) OnReset?.Invoke();
+        //By calling OnReset directly, we end up starting the NPC UI timer before the NPC even gets to receive his values
+        //This means that the timer UI values will always be behind the NPC values
+        //if(_multiple) OnReset?.Invoke();
         
         OnFailed?.Invoke();
         

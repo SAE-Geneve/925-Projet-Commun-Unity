@@ -17,10 +17,10 @@ public class DebugConveyorTask : TriggerTask
     
     public float Timer { get; private set; }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _renderer = GetComponent<Renderer>();
-        
         SwitchType();
     }
 

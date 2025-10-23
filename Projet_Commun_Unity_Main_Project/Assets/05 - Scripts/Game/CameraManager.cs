@@ -9,22 +9,26 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float maxFOV = 80f;
     [SerializeField] private float zoomMultiplier = 1.5f;
     
-    [SerializeField] private PlayerManager playerManager;
-    [SerializeField] private Transform targetPosition;
+    private PlayerManager _playerManager;
+    private Transform _targetPosition;
 
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _playerManager = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<PlayerManager>();
+        _targetPosition = _playerManager.TrackingTarget;
+        
         _cam = GetComponent<CinemachineCamera>();
+        _cam.Target.TrackingTarget = _targetPosition;
         _cam.Lens.FieldOfView = minFOV;
     }
     
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (playerManager.Players.Count <= 0) return;
-        targetPosition.position = GetMeanVector();
+        if (_playerManager.Players.Count <= 0) return;
+        _targetPosition.position = GetMeanVector();
 
         if (minFOV + GetSpacing() <= maxFOV)
         {
@@ -35,25 +39,25 @@ public class CameraManager : MonoBehaviour
     private float GetSpacing()
     {
         float spacing = 0;
-        int playerCount = playerManager.Players.Count;
+        int playerCount = _playerManager.Players.Count;
         
-        foreach (var pl in playerManager.Players)
+        foreach (var pl in _playerManager.Players)
         {
             Vector3 pos = pl.transform.position;
             
-            spacing += Mathf.Abs((pos.x - targetPosition.position.x)) + Mathf.Abs((pos.z - targetPosition.position.z));
+            spacing += Mathf.Abs((pos.x - _targetPosition.position.x)) + Mathf.Abs((pos.z - _targetPosition.position.z));
         }
         return spacing / playerCount;
     }
     
     private Vector3 GetMeanVector(){
-        int playerCount = playerManager.Players.Count;
+        int playerCount = _playerManager.Players.Count;
         
         float x = 0f;
         float y = 0f;
         float z = 0f;
  
-        foreach (var pl in playerManager.Players)
+        foreach (var pl in _playerManager.Players)
         {
             Vector3 pos = pl.transform.position;
             x += pos.x;

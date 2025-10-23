@@ -17,7 +17,7 @@ public class TriggerScene : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        _playerNumber--;
-        if(other.CompareTag("Player")) ;
+        if(other.CompareTag("Player"))
+            _playerNumber--;
     }
 }

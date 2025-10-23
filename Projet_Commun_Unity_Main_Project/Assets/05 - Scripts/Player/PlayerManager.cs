@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Unity.Cinemachine;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;

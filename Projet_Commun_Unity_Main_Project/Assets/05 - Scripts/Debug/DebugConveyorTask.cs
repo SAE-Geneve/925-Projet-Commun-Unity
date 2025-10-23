@@ -50,7 +50,7 @@ public class DebugConveyorTask : TriggerTask
         StartCoroutine(TaskCooldown());
         
         //Whenever the NPC receive new values, it will trigger the OnReset event and apply the appriopriate values for
-        //the timer
+        //the timer.
         OnReset.Invoke();
     }
     

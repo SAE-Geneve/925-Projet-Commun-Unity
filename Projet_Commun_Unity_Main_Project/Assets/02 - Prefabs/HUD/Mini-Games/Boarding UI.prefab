@@ -148,8 +148,8 @@ GameObject:
   - component: {fileID: 745188950884829235}
   - component: {fileID: 2266283744634169697}
   - component: {fileID: 5063421101251654273}
-  - component: {fileID: 1267395708655629431}
   - component: {fileID: 3629173948893940123}
+  - component: {fileID: 1267395708655629431}
   m_Layer: 5
   m_Name: Boarding UI
   m_TagString: Untagged
@@ -244,19 +244,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1267395708655629431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1901885297684334694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e795b35e91237e249b9d69f923807eb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effectDuration: 2
 --- !u!114 &3629173948893940123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,10 +259,27 @@ MonoBehaviour:
   totalScore: {fileID: 9219756605273029457}
   totalSubScore1: {fileID: 1673116187972354007}
   totalSubScore2: {fileID: 3684232556249801766}
+  totalSubScore3: {fileID: 0}
+  totalSubScore4: {fileID: 0}
   scoreImageFade: {fileID: 4172283588300014333}
   scoreTextFade: {fileID: 6359696553062857196}
   subScoreEffect1: {fileID: 4602300724875777130}
   subScoreEffect2: {fileID: 8723414841336680767}
+  subScoreEffect3: {fileID: 0}
+  subScoreEffect4: {fileID: 0}
+--- !u!114 &1267395708655629431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901885297684334694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e795b35e91237e249b9d69f923807eb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectDuration: 2
 --- !u!1 &2152953595265689446
 GameObject:
   m_ObjectHideFlags: 0

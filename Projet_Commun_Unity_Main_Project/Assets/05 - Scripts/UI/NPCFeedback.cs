@@ -5,10 +5,23 @@ using UnityEngine.UI;
 public class NPCFeedback : MonoBehaviour
 {
     [SerializeField] private float effectDuration=2.5f;
+    [SerializeField] private float timerDuration=10f;
     
     [Header("Reaction Images")]
     [SerializeField] private Image happyImage;
     [SerializeField] private Image unhappyImage;
+    
+    [Header("Timer")]
+    [SerializeField] private Image timerImage;
+    [SerializeField] private Image timerBackdropImage;
+    [SerializeField] private Color startColor;
+    [SerializeField] private Color endColor;
+
+    public void StartUITimer(float duration)
+    {
+        timerDuration = duration;
+        StartCoroutine(Timer());
+    }
     
     public void HappyResult()
     {
@@ -19,6 +32,25 @@ public class NPCFeedback : MonoBehaviour
     {
         unhappyImage.gameObject.SetActive(true);
         StartCoroutine(ImageFade(unhappyImage));
+    }
+    
+    private IEnumerator Timer()
+    {
+        float elapsedTime = 0.0f;
+        
+        while (timerImage.fillAmount > 0)
+        {
+            
+            float progress = Mathf.Clamp01(elapsedTime / timerDuration);
+            
+            timerImage.color = Color.Lerp(startColor, endColor, progress);
+            timerImage.fillAmount = 1.0f - progress;
+            
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        timerBackdropImage.gameObject.SetActive(false);
+        yield return null;
     }
     
     private IEnumerator ImageFade(Image imageToFade)

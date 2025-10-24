@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,6 +16,9 @@ public class PlayerManager : MonoBehaviour
     private GameManager _gameManager;
     public int PlayerCount => _players.Count;
     public static PlayerManager Instance { get; private set; }
+    
+    public event Action<PlayerController> OnPlayerConnected;
+    public event Action<PlayerController> OnPlayerRemoved;
     
     [SerializeField] private Transform trackingTarget;
 
@@ -45,6 +49,7 @@ public class PlayerManager : MonoBehaviour
         player.transform.position = Vector3.zero;/*Add a spawn point*/
         player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
         _players.Add(player.GetComponent<PlayerController>());
+        OnPlayerConnected?.Invoke(player.GetComponent<PlayerController>());
     }
 
     private void OnPlayerDisconnect(PlayerController player)
@@ -90,6 +95,7 @@ public class PlayerManager : MonoBehaviour
 
     public void OnReconnectionTimeOut()
     {
+        OnPlayerRemoved?.Invoke(_lastDisconnectPlayer);
         RemovePlayer(_lastDisconnectPlayer);
         CleanupDisconnectedPlayer();
     }

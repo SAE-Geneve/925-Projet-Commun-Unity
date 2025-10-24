@@ -16,7 +16,10 @@ public class PlayerController : Controller
     protected override void Start()
     {
         Input = GetComponent<PlayerInput>();
-        transform.parent = PlayerManager.Instance.transform;
+        
+        PlayerManager playerManager = PlayerManager.Instance;
+        if(playerManager) transform.parent = playerManager.transform;
+        
         base.Start();
     }
     

@@ -10,15 +10,16 @@ public class PlayerManager : MonoBehaviour
     [Header("References")]
     public List<PlayerController> Players => _players;
     
+    public event Action<PlayerController> OnPlayerConnected;
+    public event Action<PlayerController> OnReconnectTimerOut;
+    public event Action OnPlayerRemoved;
+    public int PlayerCount => _players.Count;
+    
     private readonly List<PlayerController> _players = new();
     private PlayerController _lastDisconnectPlayer;
     
     private GameManager _gameManager;
-    public int PlayerCount => _players.Count;
     public static PlayerManager Instance { get; private set; }
-    
-    public event Action<PlayerController> OnPlayerConnected;
-    public event Action<PlayerController> OnPlayerRemoved;
     
     [SerializeField] private Transform trackingTarget;
 
@@ -95,7 +96,7 @@ public class PlayerManager : MonoBehaviour
 
     public void OnReconnectionTimeOut()
     {
-        OnPlayerRemoved?.Invoke(_lastDisconnectPlayer);
+        OnReconnectTimerOut?.Invoke(_lastDisconnectPlayer);
         RemovePlayer(_lastDisconnectPlayer);
         CleanupDisconnectedPlayer();
     }
@@ -108,5 +109,7 @@ public class PlayerManager : MonoBehaviour
             Destroy(player.gameObject);
            _players.Remove(player);
         }
+        
+        OnPlayerRemoved?.Invoke();
     }
 }

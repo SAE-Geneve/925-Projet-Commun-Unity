@@ -30,7 +30,7 @@ public class CameraManager : MonoBehaviour
         }
 
         _playerManager.OnPlayerConnected += AddPlayerToTargetGroup;
-        _playerManager.OnPlayerRemoved += RemovePlayerFromTargetGroup;
+        _playerManager.OnReconnectTimerOut += RemovePlayerFromTargetGroup;
         
         // _targetPosition = _playerManager.TrackingTarget;
         //

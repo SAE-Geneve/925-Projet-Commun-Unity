@@ -6,42 +6,19 @@ using UnityEngine.SceneManagement;
 //[ExecuteInEditMode]
 public class ButtonPress : MonoBehaviour
 {
-    //Unoptimized way to load scenes but it works
-    private enum SceneList
-    {
-        UI_MainMenu, 
-        UI_OptionsMenu,
-        UI_ScenePause
-    };
-    [Header("Scene Changes")]
-    [SerializeField] SceneList sceneToLoad;
-    
     //Shouldn't be universal (Like main menu does not care about in-game canvas)
     [Header("Game Canvas")]
     [SerializeField] Canvas currentCanvas;
     [SerializeField] Canvas newCanvas;
     
-    //NEED TO BUILD BEFORE BEING ABLE TO USE SCENE COUNT
-    /*[SerializeField] public List<String> SceneList;
-
-    void Awake()
-    {
-        for (int i = 0; i<SceneManager.sceneCount; i++)
-        {
-            Debug.Log(SceneManager.GetSceneAt(i).name);
-            SceneList.Add(SceneManager.GetSceneAt(i).name);
-        }
-    }*/
-
-    public void ChangeScene()
-    {
-        SceneManager.LoadScene(sceneToLoad.ToString());
-    }
     public void ChangeCanvas()
     {
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
         currentCanvas.enabled = false;
+        currentCanvas.gameObject.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
         
+        newCanvas.gameObject.SetActive(true);
         newCanvas.enabled = true;
         BasicButtonSetup buttonSetup = newCanvas.transform.GetComponent<BasicButtonSetup>();
         if (buttonSetup != null)

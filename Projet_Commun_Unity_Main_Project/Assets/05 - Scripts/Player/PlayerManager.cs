@@ -1,26 +1,55 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform[] spawnPoints;
     public List<PlayerController> Players => _players;
     
     private readonly List<PlayerController> _players = new();
     private PlayerController _lastDisconnectPlayer;
     
     private GameManager _gameManager;
+    public int PlayerCount => _players.Count;
+    public static PlayerManager Instance { get; private set; }
+    
+    public event Action<PlayerController> OnPlayerConnected;
+    public event Action<PlayerController> OnPlayerRemoved;
+    
+    [SerializeField] private Transform trackingTarget;
+
+    public Transform TrackingTarget => trackingTarget;
+
+    private void Awake()
+    {
+        if (Instance && Instance != this) Destroy(gameObject);
+        else Instance = this;
+
+        SceneManager.sceneLoaded += SetPlayerToSpawnPoint;
+    }
     
     private void Start() => _gameManager = GameManager.Instance;
 
+    private void SetPlayerToSpawnPoint(Scene scene, LoadSceneMode mode)
+    {
+        GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawn");
+
+        for (int i = 0; i < PlayerCount; i++)
+        {
+            _players[i].transform.position = spawnPoints[i].transform.position;
+        }
+    }
+
     public void OnPlayerJoined(PlayerInput player)
     {
-        player.transform.position = spawnPoints[_players.Count].position;
+        player.transform.position = Vector3.zero;/*Add a spawn point*/
         player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
         _players.Add(player.GetComponent<PlayerController>());
+        OnPlayerConnected?.Invoke(player.GetComponent<PlayerController>());
     }
 
     private void OnPlayerDisconnect(PlayerController player)
@@ -66,6 +95,7 @@ public class PlayerManager : MonoBehaviour
 
     public void OnReconnectionTimeOut()
     {
+        OnPlayerRemoved?.Invoke(_lastDisconnectPlayer);
         RemovePlayer(_lastDisconnectPlayer);
         CleanupDisconnectedPlayer();
     }

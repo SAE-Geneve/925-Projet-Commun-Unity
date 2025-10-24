@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 5923875924765355855}
   - component: {fileID: 1267395708655629431}
   m_Layer: 5
-  m_Name: Conveyor UI
+  m_Name: Luggage UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,12 +257,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalScore: {fileID: 5366091890628828527}
-  totalCollected: {fileID: 1673116187972354007}
-  totalUnclaimed: {fileID: 3684232556249801766}
+  totalSubScore1: {fileID: 1673116187972354007}
+  totalSubScore2: {fileID: 3684232556249801766}
+  totalSubScore3: {fileID: 0}
+  totalSubScore4: {fileID: 0}
   scoreImageFade: {fileID: 4172283588300014333}
   scoreTextFade: {fileID: 6359696553062857196}
-  collectedScoreText: {fileID: 4602300724875777130}
-  unclaimedScoreText: {fileID: 8723414841336680767}
+  subScoreEffect1: {fileID: 4602300724875777130}
+  subScoreEffect2: {fileID: 8723414841336680767}
+  subScoreEffect3: {fileID: 0}
+  subScoreEffect4: {fileID: 0}
 --- !u!114 &1267395708655629431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +279,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e795b35e91237e249b9d69f923807eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  heightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.005342603
+      outSlope: 0.005342603
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.38144544
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.85
+      value: 0.2
+      inSlope: -1.0744437
+      outSlope: -1.0744437
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.1
+      inSlope: -0.6666668
+      outSlope: -0.6666668
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  colorCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   effectDuration: 2
 --- !u!1 &2152953595265689446
 GameObject:
@@ -477,9 +538,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Unclaimed
-
-'
+  m_text: Lost
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9150228dfb4d514092282595f398326, type: 2}
   m_sharedMaterial: {fileID: 7808387209675403653, guid: d9150228dfb4d514092282595f398326, type: 2}
@@ -488,8 +547,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4288717050
-  m_fontColor: {r: 0.98039216, g: 0.627451, b: 0.627451, a: 1}
+    rgba: 4284769527
+  m_fontColor: {r: 0.96862745, g: 0.39215687, b: 0.39215687, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -972,7 +1031,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4288717050
-  m_fontColor: {r: 0.98039216, g: 0.627451, b: 0.627451, a: 1}
+  m_fontColor: {r: 0.96862745, g: 0.39215687, b: 0.39215687, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2165,7 +2224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.98039216, g: 0.627451, b: 0.627451, a: 1}
+  m_Color: {r: 0.96862745, g: 0.39215687, b: 0.39215687, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

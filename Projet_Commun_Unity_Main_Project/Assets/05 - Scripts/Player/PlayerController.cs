@@ -8,6 +8,7 @@ public class PlayerController : Controller
     public UnityEvent OnEnterKart;
     public UnityEvent OnExitKart;
     
+    
     public PlayerInput Input { get; private set;}
     public KartController KartController { get; set; }
     public KartMovement KartMovement { get; set; }
@@ -15,6 +16,7 @@ public class PlayerController : Controller
     protected override void Start()
     {
         Input = GetComponent<PlayerInput>();
+        transform.parent = PlayerManager.Instance.transform;
         base.Start();
     }
     

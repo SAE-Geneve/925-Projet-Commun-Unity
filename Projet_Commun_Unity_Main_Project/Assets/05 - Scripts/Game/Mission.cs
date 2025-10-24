@@ -8,7 +8,9 @@ public class Mission : MonoBehaviour
     [SerializeField] protected MissionState _missionState = MissionState.Unlocked;
 
     [Header("Events")] 
+    [SerializeField] private UnityEvent _onMissionStarted;
     [SerializeField] private UnityEvent _onMissionFinished;
+    
     
     protected enum MissionState
     {
@@ -41,6 +43,7 @@ public class Mission : MonoBehaviour
         
         SwitchMissionState(MissionState.Playing);
         
+        _onMissionStarted?.Invoke();
         Debug.Log($"Mission {_name} began");
     }
     

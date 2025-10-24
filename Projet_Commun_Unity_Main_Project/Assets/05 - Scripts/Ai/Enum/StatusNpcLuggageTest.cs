@@ -5,5 +5,6 @@ public enum StatusNpcLuggageTest
 {
     Waiting,
 	WaitingButAngry,
-	Angry
+	Angry,
+	Happy
 }

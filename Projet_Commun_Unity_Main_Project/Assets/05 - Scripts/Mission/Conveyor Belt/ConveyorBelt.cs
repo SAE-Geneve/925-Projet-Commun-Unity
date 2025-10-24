@@ -4,7 +4,7 @@ using UnityEngine;
 public class ConveyorBelt : MonoBehaviour
 {
     [Header("Parameters")] 
-    [SerializeField] private Vector3 _direction = Vector3.forward;
+    [SerializeField] protected Vector3 _direction = Vector3.forward;
     [SerializeField] private float _speed = 7f;
     
     private readonly List<Prop> _props = new();

@@ -1,28 +1,46 @@
+using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class TriggerScene : MonoBehaviour
 {
     [Header("Parameters")]
     [SerializeField] string _sceneToLoad;
-    
-    
+
+    private Action<Ragdoll> _ragdollHandler;
     
     private int _playerNumber;
 
-    private void Start() => PlayerManager.Instance.OnPlayerRemoved += CheckPlayerNumber;
-    
+    private void Start()
+    {
+        PlayerManager.Instance.OnPlayerRemoved += CheckPlayerNumber;
+
+        _ragdollHandler = ragdoll =>
+        {
+            _playerNumber--;
+            ragdoll.OnRagdollSelf -= _ragdollHandler;
+        };
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("Player") || !other.TryGetComponent(out Ragdoll ragdoll)) return;
+
         _playerNumber++;
         CheckPlayerNumber();
+
+        ragdoll.OnRagdollSelf += _ragdollHandler;
+        
+        Debug.Log("Enter");
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.CompareTag("Player"))
-            _playerNumber--;
+        if (!other.CompareTag("Player") || !other.TryGetComponent(out Ragdoll ragdoll)) return;
+
+        ragdoll.OnRagdollSelf -= _ragdollHandler;
+        
+        _playerNumber--;
+        Debug.Log("Exit");
     }
 
     private void CheckPlayerNumber()

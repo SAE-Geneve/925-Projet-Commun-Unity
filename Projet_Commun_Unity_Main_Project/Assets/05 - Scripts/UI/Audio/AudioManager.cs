@@ -24,15 +24,8 @@ public class AudioManager : MonoBehaviour
     {
         musicSource.loop = true;
         
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     public void PlayBGM(AudioClip clip)

@@ -4,14 +4,19 @@ using UnityEngine;
 public class TriggerScene : MonoBehaviour
 {
     [Header("Parameters")]
-    [SerializeField] string _sceneToLoad;
-
+    [Tooltip("The linked mission")]
+    [SerializeField] private MissionID _missionID = MissionID.BorderControl;
+    
+    private Mission _mission;
+    
     private Action<Ragdoll> _ragdollHandler;
     
     private int _playerNumber;
 
     private void Start()
     {
+        _mission = GameManager.Instance.GetMission(_missionID);
+        
         PlayerManager.Instance.OnPlayerRemoved += CheckPlayerNumber;
 
         _ragdollHandler = ragdoll =>
@@ -46,6 +51,6 @@ public class TriggerScene : MonoBehaviour
     private void CheckPlayerNumber()
     {
         if(_playerNumber == PlayerManager.Instance.PlayerCount)
-            SceneLoader.Instance.LoadScene(_sceneToLoad);
+            _mission.StartMission();
     }
 }

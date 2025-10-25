@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -22,11 +23,7 @@ public class GameManager : MonoBehaviour
     // Events
     public event Action OnTimerUpdate;
     public event Action OnDisconnectionTimerUpdate;
-    
-    private PlayerManager _playerManager;
-
-    private int _missionIndex;
-    
+        
     // Getter/Setter
     public float Timer
     {
@@ -57,6 +54,13 @@ public class GameManager : MonoBehaviour
             OnDisconnectionTimerUpdate?.Invoke();
         }
     }
+    
+    public Mission CurrentMission { get; private set; }
+    
+    
+    private PlayerManager _playerManager;
+    
+    private Dictionary<MissionID, Mission> _missionMap;
 
     private void ReconnectionTimeOut()
     {
@@ -136,7 +140,7 @@ public class GameManager : MonoBehaviour
         Timer = _initialTimer;
         DisconnectionTimer = _initialDisconnectionTime;
         
-        //_currentMission = null;
+        BuildMissionMap();
         
         _context = GameContext.Hub;
     }
@@ -159,16 +163,28 @@ public class GameManager : MonoBehaviour
 
     #region Mission
 
-    public void StartMission()
+    private void BuildMissionMap()
+    {
+        _missionMap = new Dictionary<MissionID, Mission>();
+
+        foreach (Mission mission in _missions)
+        {
+            if (!mission) continue;
+
+            if (!_missionMap.TryAdd(mission.ID, mission))
+                Debug.LogWarning($"Can't add {mission.ID} mission");
+        }
+    }
+    
+    public void StartMission(Mission mission)
     {
         if (_state != GameState.Playing || _context != GameContext.Hub)
         {
             Debug.LogWarning("Mission can only be started when game is playing in the hub");
             return;
         }
-        
-        // _currentMission = mission;
-        // _currentMission.OnMissionBegin();
+
+        CurrentMission = mission;
 
         _context = GameContext.Mission;
     }
@@ -180,11 +196,19 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Mission can only be stopped when game is playing in a mission");
             return;
         }
-        
-        // _currentMission.Finish();
-        // _currentMission = null;
+
+        CurrentMission = null;
         
         _context = GameContext.Hub;
+    }
+
+    public Mission GetMission(MissionID id)
+    {
+        if (_missionMap.TryGetValue(id, out Mission mission))
+            return mission;
+
+        Debug.LogError($"MissionID {id} not found");
+        return null;
     }
 
     #endregion

@@ -43,6 +43,5 @@ public class PushPullProp : Prop
         movement.OnMove -= MoveProp;
         
         IsGrabbed = false;
-        Debug.Log("push pull prop dropped");
     }
 }

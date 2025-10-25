@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("References")]
+    [Tooltip("The missions that will be played in order")]
+    [SerializeField] private Mission[] _missions;
+    
     [Header("Parameters")] 
     [Tooltip("The global timer initial time")]
     [SerializeField] [Min(0)] private float _initialTimer = 90f;
@@ -15,11 +19,13 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
     
-    private PlayerManager _playerManager;
-
     // Events
     public event Action OnTimerUpdate;
     public event Action OnDisconnectionTimerUpdate;
+    
+    private PlayerManager _playerManager;
+
+    private int _missionIndex;
     
     // Getter/Setter
     public float Timer

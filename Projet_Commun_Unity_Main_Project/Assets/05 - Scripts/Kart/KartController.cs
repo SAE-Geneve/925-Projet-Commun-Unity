@@ -23,7 +23,7 @@ public class KartController : MonoBehaviour, IInteractable
 
     public void Exit(PlayerController playerController)
     {
-        playerController.transform.SetParent(null);
+        playerController.transform.SetParent(PlayerManager.Instance.transform);
         
         playerController.Input.SwitchCurrentActionMap("game");
         playerController.KartController = null;

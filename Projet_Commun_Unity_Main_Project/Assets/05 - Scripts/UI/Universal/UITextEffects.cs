@@ -1,10 +1,18 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class UITextEffects : MonoBehaviour
 {
+    [Tooltip("Curve of the height movement speed")]
+    [SerializeField] private AnimationCurve heightCurve;
+    
+    [Tooltip("Curve of the color graduation")]
+    [SerializeField] private AnimationCurve colorCurve;
+    
     [SerializeField] private float effectDuration=2.5f;
+    
     private TextMeshProUGUI TemporaryVariableMaker(TextMeshProUGUI textSample)
     {
         TextMeshProUGUI tempText=Instantiate(textSample, textSample.transform.parent);
@@ -19,9 +27,10 @@ public class UITextEffects : MonoBehaviour
         Color startcolor = tempText.color;
         Color endcolor = new Color(tempText.color.r, tempText.color.g, tempText.color.b, 0);
         float t = 0.0f;
+        
         while (tempText.color.a > 0)
         {
-            tempText.color = Color.Lerp(startcolor, endcolor, t);
+            tempText.color = Color.Lerp(startcolor, endcolor, colorCurve.Evaluate(t));
             if (t < 1)
             {
                 t += Time.deltaTime / effectDuration;
@@ -40,7 +49,7 @@ public class UITextEffects : MonoBehaviour
         
         while (t < effectDuration)
         { 
-            tempText.rectTransform.anchoredPosition += new Vector2(0f, -25f) * Time.deltaTime;
+            tempText.rectTransform.anchoredPosition += Vector2.down * heightCurve.Evaluate(t);
             t += Time.deltaTime;
             yield return null;
         }
@@ -58,9 +67,10 @@ public class UITextEffects : MonoBehaviour
         Color endcolor = new Color(tempText.color.r, tempText.color.g, tempText.color.b, 0);
         
         while(tempText.color.a > 0)
-        { 
-            tempText.rectTransform.anchoredPosition += new Vector2(0f, -25f) * Time.deltaTime;
-            tempText.color = Color.Lerp(startcolor, endcolor, t);
+        {
+            tempText.rectTransform.anchoredPosition += new Vector2(0f, -0.5f) * heightCurve.Evaluate(t);
+            tempText.color = Color.Lerp(startcolor, endcolor, colorCurve.Evaluate(t));
+            
             if (t < 1)
             {
                 t += Time.deltaTime / effectDuration;

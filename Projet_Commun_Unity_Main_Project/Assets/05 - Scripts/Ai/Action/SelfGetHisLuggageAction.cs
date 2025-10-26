@@ -11,7 +11,6 @@ public partial class SelfGetHisLuggageAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     [SerializeReference] public BlackboardVariable<GameObject> Luggage;
 
-
     protected override Status OnStart()
     {
         return Status.Running;
@@ -22,27 +21,29 @@ public partial class SelfGetHisLuggageAction : Action
         if (Self?.Value == null || Luggage?.Value == null)
             return Status.Failure;
 
-        // Vérifie que les deux GameObjects ont des colliders
         Collider selfCol = Self.Value.GetComponent<Collider>();
         Collider luggageCol = Luggage.Value.GetComponent<Collider>();
-
         if (selfCol == null || luggageCol == null)
-            return Status.Failure; // Impossible de détecter sans colliders
+            return Status.Failure;
 
-        // Vérifie si Self touche Luggage
+        // Vérifie la collision
         if (selfCol.bounds.Intersects(luggageCol.bounds))
         {
-           
+            Renderer selfRenderer = Self.Value.GetComponent<Renderer>();
+            Renderer luggageRenderer = Luggage.Value.GetComponent<Renderer>();
 
-            return Status.Success;
+            if (selfRenderer != null && luggageRenderer != null)
+            {
+                if (selfRenderer.material.color == luggageRenderer.material.color)
+                {
+                    Debug.Log($"{Self.Value.name} est content ! 🎉");
+                    return Status.Success;
+                }
+            }
         }
 
         return Status.Running;
     }
 
-    protected override void OnEnd()
-    {
-        // Pas d'action spécifique à la fin
-    }
+    protected override void OnEnd() { }
 }
-

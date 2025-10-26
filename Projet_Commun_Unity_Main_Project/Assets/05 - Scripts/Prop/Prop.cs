@@ -12,10 +12,10 @@ public class Prop: MonoBehaviour, IGrabbable
     public bool IsGrabbed { get; protected set; }
     
     protected Rigidbody _rb;
-    protected Controller Controller;
-    
-    protected Transform _originalParent;
     protected Collider _collider;
+    
+    private Controller Controller;
+    private Transform _originalParent;
 
     protected virtual void Start()
     {
@@ -35,8 +35,7 @@ public class Prop: MonoBehaviour, IGrabbable
         
         Controller = controller;
         
-        if (_rb != null) _rb.isKinematic = true;
-        Debug.Log("Grabbed object");
+        if (_rb) _rb.isKinematic = true;
     }
 
     public virtual void Dropped(Vector3 throwForce = default, Controller controller = null)

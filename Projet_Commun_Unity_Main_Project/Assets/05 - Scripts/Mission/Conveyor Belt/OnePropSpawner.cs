@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class ConveyorLuggageSpawner : MonoBehaviour
+public class OnePropSpawner : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private ConveyorProp[] _propsToSpawn;
@@ -14,7 +13,7 @@ public class ConveyorLuggageSpawner : MonoBehaviour
 
     void Start() => SpawnLuggage();
 
-    private void SpawnLuggage() => _conveyorProp = Instantiate(_propsToSpawn[Random.Range(0, _propsToSpawn.Length)], transform.position, Quaternion.identity);
+    private void SpawnLuggage() => _conveyorProp = Instantiate(_propsToSpawn[Random.Range(0, _propsToSpawn.Length)], transform.position, transform.rotation);
     
     private void OnTriggerExit(Collider other)
     {

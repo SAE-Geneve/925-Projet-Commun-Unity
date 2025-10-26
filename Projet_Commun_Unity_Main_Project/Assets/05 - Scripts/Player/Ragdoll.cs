@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,6 +13,9 @@ public class Ragdoll : MonoBehaviour
     [Header("Parameters")]
     [SerializeField] protected float ragdollTime = 3f;
     [SerializeField] private float _ragdollVelocityThreshold = 3f;
+    
+    public event Action OnRagdoll;
+    public event Action<Ragdoll> OnRagdollSelf;
 
     private Animator _animator;
     private Collider _mainCollider;
@@ -22,8 +26,6 @@ public class Ragdoll : MonoBehaviour
     private Rigidbody[] _ragdollRigidbodies;
     
     private Coroutine _ragdollCoroutine;
-
-    public event Action OnRagdoll;
 
     protected virtual void Start()
     {
@@ -46,8 +48,6 @@ public class Ragdoll : MonoBehaviour
 
     public virtual void RagdollOn()
     {
-        OnRagdoll?.Invoke();
-
         foreach (var col in _ragdollColliders)
             col.enabled = true;
 
@@ -61,9 +61,11 @@ public class Ragdoll : MonoBehaviour
         _mainCollider.enabled = false;
         _animator.enabled = false;
 
-        if (_playerInput != null)
-            _playerInput.currentActionMap.Disable();
-
+        if (_playerInput) _playerInput.currentActionMap.Disable();
+        
+        OnRagdoll?.Invoke();
+        OnRagdollSelf?.Invoke(this);
+        
         if (_ragdollCoroutine != null)
             StopCoroutine(_ragdollCoroutine);
         _ragdollCoroutine = StartCoroutine(RagdollTimer());

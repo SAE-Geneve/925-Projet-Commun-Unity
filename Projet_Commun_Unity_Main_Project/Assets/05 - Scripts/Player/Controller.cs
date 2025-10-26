@@ -53,10 +53,7 @@ public class Controller : MonoBehaviour, IGrabbable
     
     public void CatchCanceled()
     {
-        if (_isCharging)
-        {
-            Drop();
-        }
+        if (_isCharging) Drop();
     }
 
     public void CatchStart()
@@ -74,12 +71,7 @@ public class Controller : MonoBehaviour, IGrabbable
 
     private void Drop()
     {
-        if (_grabbed != null)
-        {
-            _grabbed.Dropped(ThrowDirection(), this);
-            _throwBar.gameObject.SetActive(false);
-            _isCharging = false;
-        }
+        if (_grabbed != null) _grabbed.Dropped(ThrowDirection(), this);
     }
 
     private void Update()
@@ -110,7 +102,6 @@ public class Controller : MonoBehaviour, IGrabbable
             if (!hit.TryGetComponent(out T component)) continue;
             onFound(component);
             break;
-            
         }
     }
     
@@ -122,9 +113,14 @@ public class Controller : MonoBehaviour, IGrabbable
             _grabbed = grabbable;
         });
     }
-    
-    public void Reset() => _grabbed = null;
-    
+
+    public void Reset()
+    {
+        _grabbed = null;
+        _throwBar.gameObject.SetActive(false);
+        _isCharging = false;
+    }
+
     private void OnDrawGizmos()
     {
         if (!CatchPoint) return;

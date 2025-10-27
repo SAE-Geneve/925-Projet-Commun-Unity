@@ -73,7 +73,7 @@ public class Mission : MonoBehaviour
         Debug.Log($"Mission {_name} began");
     }
     
-    protected void Finish()
+    public void Finish()
     {
         _missionState = MissionState.Finished;
         

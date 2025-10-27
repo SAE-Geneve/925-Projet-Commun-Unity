@@ -17,6 +17,7 @@ public class Mission : MonoBehaviour
     [SerializeField] private UnityEvent _onMissionFinished;
     
     public MissionID ID => _missionID;
+    public bool IsLocked => _missionState == MissionState.Locked;
     
     public float Timer
     {

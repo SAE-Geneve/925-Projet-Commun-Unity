@@ -12,6 +12,7 @@ public class PlayerManager : MonoBehaviour
     
     public event Action<PlayerController> OnPlayerConnected;
     public event Action<PlayerController> OnReconnectTimerOut;
+    public event Action OnPlayerAdded;
     public event Action OnPlayerRemoved;
     public int PlayerCount => _players.Count;
     
@@ -49,7 +50,10 @@ public class PlayerManager : MonoBehaviour
     {
         player.transform.position = Vector3.zero;/*Add a spawn point*/
         player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
+        
         _players.Add(player.GetComponent<PlayerController>());
+        
+        OnPlayerAdded?.Invoke();
         OnPlayerConnected?.Invoke(player.GetComponent<PlayerController>());
     }
 

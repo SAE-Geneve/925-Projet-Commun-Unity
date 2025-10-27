@@ -330,6 +330,7 @@ Transform:
   - {fileID: 985554536}
   - {fileID: 1270860888}
   - {fileID: 2069110209}
+  - {fileID: 1017527379}
   m_Father: {fileID: 221060949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &221060948
@@ -381,6 +382,7 @@ MonoBehaviour:
   - {fileID: 985554537}
   - {fileID: 1270860889}
   - {fileID: 2069110210}
+  - {fileID: 1017527380}
   _initialTimer: 90
   _initialDisconnectionTime: 4
   _maxSatisfaction: 100
@@ -1808,9 +1810,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Border Control
   _missionID: 0
-  _missionState: 1
-  _initialTimer: 60
-  _isTimerActive: 0
+  _missionState: 0
+  _initialTimer: 2
+  _isTimerActive: 1
   _onMissionStarted:
     m_PersistentCalls:
       m_Calls:
@@ -1829,7 +1831,7 @@ MonoBehaviour:
   _onMissionFinished:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 985554537}
+      - m_Target: {fileID: 1270860889}
         m_TargetAssemblyTypeName: Mission, Assembly-CSharp
         m_MethodName: Unlock
         m_Mode: 1
@@ -2114,6 +2116,85 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d217f1775a212fe499c62cb8897b32fe, type: 3}
+--- !u!1 &1017527378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1017527379}
+  - component: {fileID: 1017527380}
+  m_Layer: 0
+  m_Name: LostLuggage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1017527379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017527378}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 186790639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1017527380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017527378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01b899bc70e63b42b4c82c9147e9f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Lost Luggage
+  _missionID: 3
+  _missionState: 1
+  _initialTimer: 2
+  _isTimerActive: 1
+  _onMissionStarted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 602272373}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Lost Luggage
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onMissionFinished:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 602272373}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: HubScene
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1112408741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,8 +2457,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Conveyor Belt
   _missionID: 1
-  _missionState: 0
-  _initialTimer: 90
+  _missionState: 1
+  _initialTimer: 2
   _isTimerActive: 1
   _onMissionStarted:
     m_PersistentCalls:
@@ -3635,9 +3716,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Boarding
   _missionID: 2
-  _missionState: 0
-  _initialTimer: 60
-  _isTimerActive: 0
+  _missionState: 1
+  _initialTimer: 2
+  _isTimerActive: 1
   _onMissionStarted:
     m_PersistentCalls:
       m_Calls:
@@ -3656,6 +3737,18 @@ MonoBehaviour:
   _onMissionFinished:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1017527380}
+        m_TargetAssemblyTypeName: Mission, Assembly-CSharp
+        m_MethodName: Unlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 602272373}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadScene

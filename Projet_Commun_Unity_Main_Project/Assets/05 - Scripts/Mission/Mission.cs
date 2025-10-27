@@ -27,8 +27,6 @@ public class Mission : MonoBehaviour
             _timer = value;
         }
     }
-
-    private float _timer;
     
     protected enum MissionState
     {
@@ -37,6 +35,8 @@ public class Mission : MonoBehaviour
         Playing,
         Finished
     }
+
+    private float _timer;
     
     private GameManager _gameManager;
 
@@ -65,8 +65,6 @@ public class Mission : MonoBehaviour
 
     private void OnStartMission()
     {
-        SceneLoader.Instance.LoadScene(_name);
-        
         _gameManager.StartMission(this);
         
         SwitchMissionState(MissionState.Playing);

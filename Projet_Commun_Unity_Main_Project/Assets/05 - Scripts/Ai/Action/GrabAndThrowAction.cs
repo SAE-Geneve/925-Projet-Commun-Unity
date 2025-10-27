@@ -10,7 +10,7 @@ public partial class GrabAndThrowAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
 
-    private AIMovement aiMove;
+    private AIMovementTest aiMove;
     private Controller _controller;
     private Transform selfTransform;
     private IGrabbable targetGrabbable;
@@ -29,7 +29,7 @@ public partial class GrabAndThrowAction : Action
         if (Self?.Value == null)
             return Status.Failure;
 
-        aiMove = Self.Value.GetComponent<AIMovement>();
+        aiMove = Self.Value.GetComponent<AIMovementTest>();
         _controller = Self.Value.GetComponent<Controller>();
         selfTransform = Self.Value.transform;
 

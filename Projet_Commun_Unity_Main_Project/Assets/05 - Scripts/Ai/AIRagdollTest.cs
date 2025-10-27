@@ -1,7 +1,7 @@
 using UnityEngine;
 using Unity.Behavior;
 
-public class AIRagdoll : Ragdoll
+public class AIRagdollTest : Ragdoll
 {
     [Header("Behavior Graph")]
     [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;

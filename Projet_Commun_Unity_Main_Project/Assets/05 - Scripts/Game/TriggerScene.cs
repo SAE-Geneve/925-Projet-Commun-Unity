@@ -55,8 +55,6 @@ public class TriggerScene : MonoBehaviour
         UpdateTmpNumber();
 
         ragdoll.OnRagdollSelf += _ragdollHandler;
-        
-        Debug.Log("Enter");
     }
 
     private void OnTriggerExit(Collider other)
@@ -66,7 +64,6 @@ public class TriggerScene : MonoBehaviour
         ragdoll.OnRagdollSelf -= _ragdollHandler;
 
         Decrement();
-        Debug.Log("Exit");
     }
 
     private void CheckPlayerNumber()

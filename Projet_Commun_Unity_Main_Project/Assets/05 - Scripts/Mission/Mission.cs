@@ -24,7 +24,7 @@ public class Mission : MonoBehaviour
         get => _timer;
         private set
         {
-            if (_timer < 0) Finish();
+            if (value < 0) Finish();
             _timer = value;
         }
     }
@@ -46,8 +46,6 @@ public class Mission : MonoBehaviour
         _gameManager = GameManager.Instance;
         
         SwitchMissionState(_missionState);
-        
-        Timer = _initialTimer;
     }
 
     private void Update()
@@ -66,6 +64,8 @@ public class Mission : MonoBehaviour
 
     private void OnStartMission()
     {
+        Timer = _initialTimer;
+        
         _gameManager.StartMission(this);
         
         SwitchMissionState(MissionState.Playing);
@@ -76,8 +76,6 @@ public class Mission : MonoBehaviour
     
     public void Finish()
     {
-        _missionState = MissionState.Finished;
-        
         _gameManager.StopMission();
         
         SwitchMissionState(MissionState.Finished);

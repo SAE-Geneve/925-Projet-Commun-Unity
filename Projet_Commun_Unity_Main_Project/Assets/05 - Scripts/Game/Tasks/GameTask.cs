@@ -10,6 +10,8 @@ public abstract class GameTask : MonoBehaviour
 
     [Tooltip("Does this task can be done multiple times?")]
     [SerializeField] private bool _multiple;
+    [SerializeField] private int _multipleTaskLimit = -1;
+    private int _multipleTaskCounter = 0;
 
     [Header("Events")] 
     public UnityEvent OnStart;
@@ -19,13 +21,18 @@ public abstract class GameTask : MonoBehaviour
     public event Action OnSucceedAction;
     public event Action OnFailedAction;
 
-    protected bool Done;
-    
+    public bool Done { get; private set; }
+
     protected virtual void Start() => OnStart?.Invoke();
 
     protected virtual void Succeed()
     {
-        if(!_multiple) Done = true;
+        if (_multipleTaskLimit >= 0)
+        {
+            _multipleTaskCounter++;
+        }
+        
+        if(!_multiple || _multipleTaskCounter == _multipleTaskLimit) Done = true;
         
         OnSucceed?.Invoke();
         OnSucceedAction?.Invoke();

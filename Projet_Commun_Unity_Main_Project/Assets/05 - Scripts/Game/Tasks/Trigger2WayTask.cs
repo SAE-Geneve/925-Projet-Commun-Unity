@@ -15,7 +15,8 @@ public class Trigger2WayTask : TriggerTask
         
         if (prop.IsGrabbed)
             prop.Dropped();
-        
+
+
         Destroy(other.gameObject);
     }
 }

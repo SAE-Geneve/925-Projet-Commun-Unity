@@ -5,7 +5,7 @@ public class Boarding : MonoBehaviour
 {
     [SerializeField] StairKartCheck kartPort1;
     [SerializeField] StairKartCheck kartPort2;
-    [SerializeField] PropsSpawnerLimit propsSpawner;
+    [FormerlySerializedAs("propsSpawner")] [SerializeField] PropsLimit props;
     
     private bool _mission_done = false;
     
@@ -18,7 +18,7 @@ public class Boarding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (propsSpawner.IsDone())
+        if (props.IsDone())
         {
             if (kartPort1.IsDone() || kartPort2.IsDone())
             {

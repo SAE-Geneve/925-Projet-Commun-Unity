@@ -1,16 +1,21 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PropsSpawnerLimit : MonoBehaviour
+public class PropsLimit : MonoBehaviour
 {
 
     private int _luggageCounter = 0;
     [SerializeField] private int luggageLimit = 20;
     
+    private OnePropSpawner[] _spawners;
+    
     private bool _done = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        foreach (var propSpawner in GetComponentsInChildren<OnePropSpawner>())
+        _spawners = GetComponentsInChildren<OnePropSpawner>();
+        
+        foreach (var propSpawner in _spawners)
         {
             propSpawner.OnPropSpawned += PropSpawned;
         }
@@ -21,6 +26,11 @@ public class PropsSpawnerLimit : MonoBehaviour
     {
         if (_luggageCounter >= luggageLimit)
         {
+            foreach (var propSpawner in _spawners)
+            {
+                propSpawner.enabled = false;
+            }
+            
             _done = true;
         }
     }

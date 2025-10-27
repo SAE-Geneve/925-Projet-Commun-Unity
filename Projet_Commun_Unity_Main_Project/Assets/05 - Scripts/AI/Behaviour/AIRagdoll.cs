@@ -1,14 +1,17 @@
 using UnityEngine;
 using Unity.Behavior;
+using Unity.VisualScripting;
 
 public class AIRagdoll : Ragdoll
 {
     [Header("Behavior Graph")]
     [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;
+    [SerializeField] private GameObject bHips;
 
     [Header("Debug/Test")]
     [SerializeField] private bool testRagdoll = false;
-
+    
+    
     public bool IsRagdollState { get; private set; }
 
     void Update()
@@ -22,6 +25,7 @@ public class AIRagdoll : Ragdoll
 
     public override void RagdollOn()
     {
+        bHips.SetActive(true);
         if (IsRagdollState) return;
         IsRagdollState = true;
 
@@ -32,6 +36,7 @@ public class AIRagdoll : Ragdoll
 
     protected override void RagdollOff()
     {
+        bHips.SetActive(false);
         if (!IsRagdollState) return;
         IsRagdollState = false;
 

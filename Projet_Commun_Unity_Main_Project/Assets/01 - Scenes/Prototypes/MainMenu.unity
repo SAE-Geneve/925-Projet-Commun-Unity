@@ -329,8 +329,8 @@ Transform:
   m_Children:
   - {fileID: 985554536}
   - {fileID: 1270860888}
-  - {fileID: 2069110209}
   - {fileID: 1017527379}
+  - {fileID: 2069110209}
   m_Father: {fileID: 221060949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &221060948
@@ -2195,6 +2195,18 @@ MonoBehaviour:
           m_StringArgument: HubScene
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2069110210}
+        m_TargetAssemblyTypeName: Mission, Assembly-CSharp
+        m_MethodName: Unlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1112408741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2478,7 +2490,7 @@ MonoBehaviour:
   _onMissionFinished:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2069110210}
+      - m_Target: {fileID: 1017527380}
         m_TargetAssemblyTypeName: Mission, Assembly-CSharp
         m_MethodName: Unlock
         m_Mode: 1
@@ -3737,18 +3749,6 @@ MonoBehaviour:
   _onMissionFinished:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1017527380}
-        m_TargetAssemblyTypeName: Mission, Assembly-CSharp
-        m_MethodName: Unlock
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 602272373}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadScene

@@ -59,8 +59,6 @@ public partial class GrabTheNearestObjectAction : Action
     {
         Collider[] hits = Physics.OverlapSphere(selfTransform.position, 15f);
     
-        bool foundSomething = false;
-    
         foreach (var hit in hits)
         {
             if (hit.gameObject == Self.Value)
@@ -80,6 +78,8 @@ public partial class GrabTheNearestObjectAction : Action
                 GrabbedObject.Value = hit.gameObject;
                 phase = Phase.Moving;
                 return;
+            }
+        }
         phase = Phase.Done;
     }
     private void MoveToTarget()

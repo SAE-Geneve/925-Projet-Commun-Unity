@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class TimerUI : MonoBehaviour
 {
-    private int Minute;
-    private int Second;
+    private float Minute;
+    private float Second;
 
-    [SerializeField] private int givenTime;
+    private float givenTime;
     
     [SerializeField] private TextMeshProUGUI _timerText;
 
@@ -16,6 +16,7 @@ public class TimerUI : MonoBehaviour
     void Start()
     {
         //Intiliaze the timer
+        givenTime = GameManager.Instance.CurrentMission.Timer;
         Minute = givenTime / 60;
         Second = givenTime % 60;
     }

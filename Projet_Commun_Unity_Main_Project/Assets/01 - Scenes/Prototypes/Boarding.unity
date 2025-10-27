@@ -359,6 +359,21 @@ MonoBehaviour:
   _propsToSpawn:
   - {fileID: 7699608862005257477, guid: f2ec8bf5554a0f04db88f8327113e6b8, type: 3}
   _spawnDelay: 3
+--- !u!114 &433200521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972287452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66606bdce24fc24486f595229d5609f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kartPort1: {fileID: 1432980525}
+  kartPort2: {fileID: 1432980524}
+  propsSpawner: {fileID: 1898241782}
 --- !u!1 &543897427
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,6 +687,11 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &972287452 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 963791783468551755, guid: efc535c5a18bf164a9ba7e89ad54adb6, type: 3}
+  m_PrefabInstance: {fileID: 1432980517}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1207608149
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,6 +1029,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2101404965}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 963791783468551755, guid: efc535c5a18bf164a9ba7e89ad54adb6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 433200521}
     - targetCorrespondingSourceObject: {fileID: 794887940630509389, guid: efc535c5a18bf164a9ba7e89ad54adb6, type: 3}
       insertIndex: 1
       addedObject: {fileID: 1432980521}

@@ -7,6 +7,7 @@ public abstract class GameTask : MonoBehaviour
     [Header("Parameters")]
     [Tooltip("The name of the task")]
     [SerializeField] private string _taskName;
+    [SerializeField] private bool _finishedMission = false;
 
     [Tooltip("Does this task can be done multiple times?")]
     [SerializeField] private bool _multiple;
@@ -36,6 +37,9 @@ public abstract class GameTask : MonoBehaviour
         
         OnSucceed?.Invoke();
         OnSucceedAction?.Invoke();
+        
+        if (_finishedMission)
+            GameManager.Instance.CurrentMission.Finish();
         
         Debug.Log($"Task {_taskName} done!");
     }

@@ -87,7 +87,6 @@ public partial class ThrowObjectAction : Action
 
         if (t >= 1f && phase == Phase.Turning)
         {
-            // Lancer l'objet
             grabbedObject.Dropped(selfTransform.forward * ThrowForce.Value, _controller);
             phase = Phase.Done;
         }

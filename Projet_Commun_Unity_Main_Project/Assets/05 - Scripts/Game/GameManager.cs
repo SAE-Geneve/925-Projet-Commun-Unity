@@ -207,7 +207,7 @@ public class GameManager : MonoBehaviour
         if (_missionMap.TryGetValue(id, out Mission mission))
             return mission;
 
-        Debug.LogError($"MissionID {id} not found");
+        Debug.LogWarning($"MissionID {id} not found");
         return null;
     }
 

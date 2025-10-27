@@ -16,13 +16,13 @@ public partial class GoToPlayerAction : Action
 
     private Transform _player;
 
-    private AIMovement _aiMovement;
+    private AIMovementTest _aiMovementTest;
     private Vector3 lastDestination;
 
     protected override Status OnStart()
     {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
-        _aiMovement = Self.Value.GetComponent<AIMovement>();
+        _aiMovementTest = Self.Value.GetComponent<AIMovementTest>();
         
         if (AnyNull()) return Status.Failure;
 
@@ -38,7 +38,7 @@ public partial class GoToPlayerAction : Action
         float distanceToPlayer = Vector3.Distance(Self.Value.transform.position, _player.transform.position);
         if (distanceToPlayer <= StopDistance)
         {
-            _aiMovement.Stop();
+            _aiMovementTest.Stop();
             return Status.Success;
         }
         
@@ -48,7 +48,7 @@ public partial class GoToPlayerAction : Action
         return Status.Running;
     }
 
-    protected override void OnEnd() => _aiMovement?.Stop();
+    protected override void OnEnd() => _aiMovementTest?.Stop();
     
 
     private void UpdateDestination()
@@ -56,9 +56,9 @@ public partial class GoToPlayerAction : Action
         if (NavMesh.SamplePosition(_player.position, out NavMeshHit hit, 2f, NavMesh.AllAreas))
         {
             lastDestination = hit.position;
-            _aiMovement.SetDestination(lastDestination);
+            _aiMovementTest.SetDestination(lastDestination);
         }
     }
 
-    private bool AnyNull() => Self?.Value == null || !_player || !_aiMovement;
+    private bool AnyNull() => Self?.Value == null || !_player || !_aiMovementTest;
 }

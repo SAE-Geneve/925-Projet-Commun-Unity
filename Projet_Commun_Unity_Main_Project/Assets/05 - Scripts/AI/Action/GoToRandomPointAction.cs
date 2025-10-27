@@ -12,14 +12,14 @@ public partial class GoToRandomPointAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     public float RandomPointRadius = 10f;
 
-    private AIMovement aiMove;
+    private AIMovementTest aiMove;
     private Vector3 destination;
 
     protected override Status OnStart()
     {
         if (Self?.Value == null) return Status.Failure;
 
-        aiMove = Self.Value.GetComponent<AIMovement>();
+        aiMove = Self.Value.GetComponent<AIMovementTest>();
         if (aiMove == null) return Status.Failure;
 
         if (!GetRandomPointOnNavMesh(Self.Value.transform.position, RandomPointRadius, out destination))

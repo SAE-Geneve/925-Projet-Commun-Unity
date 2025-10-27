@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class AIMovement : CharacterMovement
+public class AIMovementTest : CharacterMovement
 {
     [Header("AI Navigation")]
     [SerializeField] private float stopDistance = 0.5f;
@@ -102,6 +102,8 @@ public class AIMovement : CharacterMovement
 
     public void Stop()
     {
+        if(Rb.isKinematic) return;
+        
         moving = false;
         Rb.linearVelocity = Vector3.zero;
         Rb.angularVelocity = Vector3.zero;

@@ -28,7 +28,7 @@ public class PropsLimit : MonoBehaviour
         {
             foreach (var propSpawner in _spawners)
             {
-                propSpawner.enabled = false;
+                propSpawner.gameObject.SetActive(false);
             }
             
             _done = true;

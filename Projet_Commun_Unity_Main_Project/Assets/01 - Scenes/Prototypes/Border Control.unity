@@ -426,7 +426,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _taskName: Bad Luggage
+  _finishedMission: 0
   _multiple: 1
+  _multipleTaskLimit: -1
   OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -437,6 +439,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _propType: 1
+  isDestroyed: 1
   _badPropType: 3
 --- !u!65 &738478351
 BoxCollider:
@@ -782,7 +785,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _taskName: Good Luggage
+  _finishedMission: 1
   _multiple: 1
+  _multipleTaskLimit: 5
   OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -793,6 +798,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _propType: 3
+  isDestroyed: 1
   _badPropType: 1
 --- !u!1001 &1884378664
 PrefabInstance:

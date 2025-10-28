@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TriggerTask : GameTask
 {
@@ -6,7 +7,7 @@ public class TriggerTask : GameTask
     [Tooltip("The prop type that needs to touch the task collider to succeed")]
     [SerializeField] protected PropType _propType = PropType.None;
     
-    [SerializeField] private bool destroy = true;
+    [SerializeField] protected bool isDestroyed = true;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,7 +17,7 @@ public class TriggerTask : GameTask
             prop.Dropped();
         
         Succeed();
-        if(destroy)
+        if(isDestroyed)
             Destroy(other.gameObject);
     }
 }

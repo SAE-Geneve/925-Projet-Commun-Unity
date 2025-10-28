@@ -33,12 +33,12 @@ public abstract class GameTask : MonoBehaviour
             _multipleTaskCounter++;
         }
         
-        if(!_multiple || _multipleTaskCounter == _multipleTaskLimit) Done = true;
+        if(!_multiple || _multipleTaskCounter >= _multipleTaskLimit) Done = true;
         
         OnSucceed?.Invoke();
         OnSucceedAction?.Invoke();
         
-        if (_finishedMission)
+        if (_finishedMission && Done)
             GameManager.Instance.CurrentMission.Finish();
         
         Debug.Log($"Task {_taskName} done!");

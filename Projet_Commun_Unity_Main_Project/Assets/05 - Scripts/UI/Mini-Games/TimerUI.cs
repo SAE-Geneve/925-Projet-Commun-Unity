@@ -11,7 +11,7 @@ public class TimerUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _timerText;
 
     private float _timer;
-    private bool _timeIncrease;
+    private bool _stopTimer;
     
     void Start()
     {
@@ -25,7 +25,7 @@ public class TimerUI : MonoBehaviour
     {
         _timer -= Time.deltaTime;
         
-        if (_timer <= 0)
+        if (_timer <= 0 && !_stopTimer)
         {
             Second--;
             if (Second <= 0)
@@ -33,15 +33,23 @@ public class TimerUI : MonoBehaviour
                 
                 if (Minute <= 0 && Second <= 0)
                 {
-                    Debug.Log("Game ended");
-                    //End scene
+                    _stopTimer = true;
+                    _timerText.text = "00:00";
+                    GameManager.Instance.CurrentMission.Finish();
                 }
-                Minute--;
-                Second = 59;
+                else
+                {
+                    Minute--;
+                    Second = 59;
+                }
                 
             }
             _timer=1;
         }
-        _timerText.text = $"{Minute:00}:{Second:00}";
+
+        if (!_stopTimer)
+        {
+            _timerText.text = $"{Minute:00}:{Second:00}";
+        }
     }
 }

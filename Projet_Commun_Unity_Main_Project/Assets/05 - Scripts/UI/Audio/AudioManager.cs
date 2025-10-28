@@ -7,9 +7,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sfxSource;
     
-    [Header("Music")]
-    [SerializeField] public AudioClip lobbyMusic;
+    [Header("Mini-Game Music")]
+    [SerializeField] public AudioClip conveyorBeltMusic;
     [SerializeField] public AudioClip minigameMusic;
+    
+    [Header("Other Musics")]
+    [SerializeField] public AudioClip lobbyMusic;
 
     [Header("Sounds")]
     [SerializeField] public AudioClip successSFX;
@@ -32,6 +35,12 @@ public class AudioManager : MonoBehaviour
         musicSource.clip = clip;
         musicSource.volume = 0.5f;
         musicSource.Play();
+    }
+    
+    public void StopBGM()
+    {
+        //Stops the background music
+        musicSource.Stop();
     }
 
     public void PlaySfx(AudioClip clip)

@@ -20,12 +20,18 @@ public class NPCFeedback : MonoBehaviour
     
     DebugConveyorTask _debugConveyorTask;
     private Coroutine _currentTimerCoroutine;
+    private AudioManager _audioManager;
 
     private void Awake()
     {
         _debugConveyorTask = transform.parent.GetComponent<DebugConveyorTask>();
     }
 
+    private void Start()
+    {
+        _audioManager = AudioManager.Instance;
+    }
+    
     public void StartUITimer()
     {
         if (_currentTimerCoroutine != null)
@@ -47,11 +53,13 @@ public class NPCFeedback : MonoBehaviour
     public void HappyResult()
     {
         happyImage.gameObject.SetActive(true);
+        _audioManager.PlaySfx(_audioManager.successSFX);
         StartCoroutine(ImageFade(happyImage));
     }
     public void UnhappyResult()
     {
         unhappyImage.gameObject.SetActive(true);
+        _audioManager.PlaySfx(_audioManager.failureSFX);
         StartCoroutine(ImageFade(unhappyImage));
     }
     

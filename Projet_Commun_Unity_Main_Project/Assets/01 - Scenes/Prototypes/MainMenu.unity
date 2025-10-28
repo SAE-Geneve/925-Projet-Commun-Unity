@@ -2470,7 +2470,7 @@ MonoBehaviour:
   _name: Conveyor Belt
   _missionID: 1
   _missionState: 1
-  _initialTimer: 2
+  _initialTimer: 10
   _isTimerActive: 1
   _onMissionStarted:
     m_PersistentCalls:
@@ -2485,6 +2485,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Conveyor Belt
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1346581915}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayBGM
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 200e77a8d2c22dc4f8af7cb126204b69, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   _onMissionFinished:
@@ -2512,6 +2524,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: HubScene
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1346581915}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: StopBGM
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &1315114773
@@ -2709,8 +2733,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 1346581916}
   sfxSource: {fileID: 1346581916}
-  lobbyMusic: {fileID: 8300000, guid: 97256054286c914459d7d64879927e27, type: 3}
+  conveyorBeltMusic: {fileID: 8300000, guid: 200e77a8d2c22dc4f8af7cb126204b69, type: 3}
   minigameMusic: {fileID: 8300000, guid: 823e42df3540c7647b4874fbe41bab28, type: 3}
+  lobbyMusic: {fileID: 8300000, guid: 97256054286c914459d7d64879927e27, type: 3}
   successSFX: {fileID: 8300000, guid: 98be4f3acec35ad4d8330f6a80340be5, type: 3}
   failureSFX: {fileID: 8300000, guid: 5a19254f6ca4d414baadd674a8d45a23, type: 3}
   buttonSFX: {fileID: 8300000, guid: 6a9efc0c5e24e7447ab15fdeb2a3ae7e, type: 3}

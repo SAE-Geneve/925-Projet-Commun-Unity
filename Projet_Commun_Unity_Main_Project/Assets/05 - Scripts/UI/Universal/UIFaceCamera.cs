@@ -8,7 +8,6 @@ public class UIFaceCamera : MonoBehaviour
 
     private void Update()
     {
-        Quaternion lookRotation = _cameraTransform.transform.rotation;
-        transform.rotation = lookRotation;
+        transform.rotation = _cameraTransform.transform.rotation;
     }
 }

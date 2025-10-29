@@ -12,19 +12,19 @@ public class ButtonEffect : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoreEffectText;
     
     
-    private UITextEffects _uiTextEffects;
+    private UIScreenEffects _uiScreenEffects;
 
     private void Start()
     {
-        if (TryGetComponent(out _uiTextEffects))
+        if (TryGetComponent(out _uiScreenEffects))
         {
             Debug.Log("Found UI Text Effects");
         }
     }
     public void ScoreEffect()
     {
-        StartCoroutine(UniversalUIFeedback.DoImageFade(scoreEffect));
-        StartCoroutine(_uiTextEffects.DoTextFadeMoveDown(scoreEffectText));
+        StartCoroutine(_uiScreenEffects.DoImageFade(scoreEffect));
+        StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreEffectText));
         _score += 150;
         totalScore.text = ""+_score.ToString("00000000");
     }

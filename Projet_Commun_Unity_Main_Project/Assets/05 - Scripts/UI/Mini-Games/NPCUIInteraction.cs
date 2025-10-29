@@ -19,7 +19,7 @@ public class NPCUIInteraction : MonoBehaviour
     [SerializeField] private Image criminalImage;
     [SerializeField] private Image arrestImage;
     
-    [SerializeField] private float effectDuration=2.5f;
+    [SerializeField] private float effectDuration=3f;
     
     //Bool values
     private bool _inRange = false;

@@ -17,11 +17,11 @@ public class AirplaneUI : MonoBehaviour
     [SerializeField] private Image scoreImageFade;
     [SerializeField] private TextMeshProUGUI scoreTextFade;
     
-    private UITextEffects _uiTextEffects;
+    private UIScreenEffects _uiScreenEffects;
     
     private void Start()
     {
-        if (TryGetComponent(out _uiTextEffects))
+        if (TryGetComponent(out _uiScreenEffects))
         {
             Debug.Log("Found UI Text Effects");
         }
@@ -29,8 +29,8 @@ public class AirplaneUI : MonoBehaviour
     
     public void TotalScoreIncrease()
     {
-        StartCoroutine(UniversalUIFeedback.DoImageFade(scoreImageFade));
-        StartCoroutine(_uiTextEffects.DoTextFadeMoveDown(scoreTextFade));
+        StartCoroutine(_uiScreenEffects.DoImageFade(scoreImageFade));
+        StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreTextFade));
         
         _totalScore += 150;
         totalScore.text = ""+_totalScore.ToString("00000000");

@@ -12,6 +12,8 @@ public class PlayerController : Controller
     public PlayerInput Input { get; private set;}
     public KartController KartController { get; set; }
     public KartMovement KartMovement { get; set; }
+    
+    public KartPhysic KartPhysic { get; set; }
 
     protected override void Start()
     {

@@ -38,9 +38,8 @@ public class KartPhysic : MonoBehaviour
     }
     
     
-    public void OnMove(InputValue value)
+    public void Move(Vector2 input)
     {
-        Vector2 input = value.Get<Vector2>();
         moveInput = input.y;
     }
 

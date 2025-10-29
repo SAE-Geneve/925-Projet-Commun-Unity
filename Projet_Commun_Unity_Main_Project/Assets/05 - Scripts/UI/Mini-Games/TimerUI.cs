@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System.Collections;
 
 public class TimerUI : MonoBehaviour
 {
@@ -11,44 +12,32 @@ public class TimerUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _timerText;
 
     private float _timer;
-    private bool _stopTimer;
+    // private bool _stopTimer;
     
     void Start()
     {
         //Intiliaze the timer
         givenTime = GameManager.Instance.CurrentMission.Timer;
+        
         Minute = givenTime / 60;
         Second = givenTime % 60;
+            
+        _timerText.text = $"{Minute:00}:{Second:00}";
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        _timer -= Time.deltaTime;
-        
-        if (_timer <= 0 && !_stopTimer)
+        if (givenTime > 0)
         {
-            Second--;
-            if (Second <= 0)
-            {
-                
-                if (Minute <= 0 && Second <= 0)
-                {
-                    _stopTimer = true;
-                    _timerText.text = "00:00";
-                    GameManager.Instance.CurrentMission.Finish();
-                }
-                else
-                {
-                    Minute--;
-                    Second = 59;
-                }
-                
-            }
-            _timer=1;
-        }
+            givenTime -= Time.deltaTime;
 
-        if (!_stopTimer)
-        {
+            // Divide the time by 60
+            Minute = Mathf.FloorToInt(givenTime / 60); 
+      
+            // Returns the remainder
+            Second = Mathf.FloorToInt(givenTime % 60);
+
+            //Set text string
             _timerText.text = $"{Minute:00}:{Second:00}";
         }
     }

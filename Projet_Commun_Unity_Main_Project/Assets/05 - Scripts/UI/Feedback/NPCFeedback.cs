@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +20,7 @@ public class NPCFeedback : MonoBehaviour
     DebugConveyorTask _debugConveyorTask;
     private Coroutine _currentTimerCoroutine;
     private AudioManager _audioManager;
+    private UIFeedback _uiFeedback;
 
     private void Awake()
     {
@@ -30,6 +30,7 @@ public class NPCFeedback : MonoBehaviour
     private void Start()
     {
         _audioManager = AudioManager.Instance;
+        _uiFeedback = transform.GetComponent<UIFeedback>();
     }
     
     public void StartUITimer()
@@ -52,15 +53,13 @@ public class NPCFeedback : MonoBehaviour
     
     public void HappyResult()
     {
-        happyImage.gameObject.SetActive(true);
         _audioManager.PlaySfx(_audioManager.successSFX);
-        StartCoroutine(ImageFade(happyImage));
+        StartCoroutine(_uiFeedback.ImageFade(happyImage, effectDuration));
     }
     public void UnhappyResult()
     {
-        unhappyImage.gameObject.SetActive(true);
         _audioManager.PlaySfx(_audioManager.failureSFX);
-        StartCoroutine(ImageFade(unhappyImage));
+        StartCoroutine(_uiFeedback.ImageFade(unhappyImage, effectDuration));
     }
     
     private IEnumerator Timer()
@@ -85,22 +84,22 @@ public class NPCFeedback : MonoBehaviour
         yield return null;
     }
     
-    private IEnumerator ImageFade(Image imageToFade)
-    {
-        Color startcolor = imageToFade.color;
-        Color endcolor = new Color(imageToFade.color.r, imageToFade.color.g, imageToFade.color.b, 0);
-        float t = 0.0f;
-        while (imageToFade.color.a > 0)
-        {
-            imageToFade.color = Color.Lerp(startcolor, endcolor, t);
-            if (t < 1)
-            {
-                t += Time.deltaTime / effectDuration;
-            }
-            yield return null;
-        }
-        imageToFade.gameObject.SetActive(false);
-        imageToFade.color = startcolor;
-        yield return null;
-    }
+    // private IEnumerator ImageFade(Image imageToFade)
+    // {
+    //     Color startcolor = imageToFade.color;
+    //     Color endcolor = new Color(imageToFade.color.r, imageToFade.color.g, imageToFade.color.b, 0);
+    //     float t = 0.0f;
+    //     while (imageToFade.color.a > 0)
+    //     {
+    //         imageToFade.color = Color.Lerp(startcolor, endcolor, t);
+    //         if (t < 1)
+    //         {
+    //             t += Time.deltaTime / effectDuration;
+    //         }
+    //         yield return null;
+    //     }
+    //     imageToFade.gameObject.SetActive(false);
+    //     imageToFade.color = startcolor;
+    //     yield return null;
+    // }
 }

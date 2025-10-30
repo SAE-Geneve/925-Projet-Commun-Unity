@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class NPCUIInteraction : MonoBehaviour
+public class BorderNPCUI : MonoBehaviour
 {
     [Header("NPC UI")]
     [SerializeField] GameObject triggerHud;

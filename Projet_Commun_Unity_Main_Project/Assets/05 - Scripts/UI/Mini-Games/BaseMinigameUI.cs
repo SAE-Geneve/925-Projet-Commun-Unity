@@ -29,11 +29,11 @@ public class BaseMinigameUI : MonoBehaviour
     [SerializeField] public TextMeshProUGUI subScoreEffect3;
     [SerializeField] public TextMeshProUGUI subScoreEffect4;
     
-    private UITextEffects _uiTextEffects;
+    private UIScreenEffects _uiScreenEffects;
     
     private void Start()
     {
-        if (TryGetComponent(out _uiTextEffects))
+        if (TryGetComponent(out _uiScreenEffects))
         {
             Debug.Log("Found UI Text Effects");
         }
@@ -41,8 +41,8 @@ public class BaseMinigameUI : MonoBehaviour
     
     public void TotalScoreIncrease()
     {
-        StartCoroutine(UniversalUIFeedback.DoImageFade(scoreImageFade));
-        StartCoroutine(_uiTextEffects.DoTextFadeMoveDown(scoreTextFade));
+        StartCoroutine(_uiScreenEffects.DoImageFade(scoreImageFade));
+        StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreTextFade));
         
         _totalScore += 150;
         totalScore.text = ""+_totalScore.ToString("00000000");
@@ -50,7 +50,7 @@ public class BaseMinigameUI : MonoBehaviour
     
     public void SubScore1Increase()
     {
-        StartCoroutine(_uiTextEffects.DoTextFade(subScoreEffect1));
+        StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect1));
         
         _subScore1 += 1;
         totalSubScore1.text = ""+_subScore1.ToString();
@@ -58,7 +58,7 @@ public class BaseMinigameUI : MonoBehaviour
     
     public void SubScore2Increase()
     {
-        StartCoroutine(_uiTextEffects.DoTextFade(subScoreEffect2));
+        StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect2));
         
         _subScore2 += 1;
         totalSubScore2.text = ""+_subScore2.ToString();
@@ -66,7 +66,7 @@ public class BaseMinigameUI : MonoBehaviour
     
     public void SubScore3Increase()
     {
-        StartCoroutine(_uiTextEffects.DoTextFade(subScoreEffect3));
+        StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect3));
         
         _subScore3 += 1;
         totalSubScore3.text = ""+_subScore3.ToString();
@@ -74,7 +74,7 @@ public class BaseMinigameUI : MonoBehaviour
     
     public void SubScore4Increase()
     {
-        StartCoroutine(_uiTextEffects.DoTextFade(subScoreEffect4));
+        StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect4));
         
         _subScore4 += 1;
         totalSubScore4.text = ""+_subScore4.ToString();

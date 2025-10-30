@@ -21,11 +21,11 @@ public class LuggageFeedback : MonoBehaviour
     public void HappyResult()
     {
         _audioManager.PlaySfx(_audioManager.successSFX);
-        StartCoroutine(_uiFeedback.ImageFade(happyImage, effectDuration));
+        StartCoroutine(_uiFeedback.ImageUpFade(happyImage, effectDuration));
     }
     public void UnhappyResult()
     {
         _audioManager.PlaySfx(_audioManager.failureSFX);
-        StartCoroutine(_uiFeedback.ImageFade(unhappyImage, effectDuration));
+        StartCoroutine(_uiFeedback.ImageUpFade(unhappyImage, effectDuration));
     }
 }

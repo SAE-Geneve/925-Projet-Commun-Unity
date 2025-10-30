@@ -2,8 +2,9 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
-public class UITextEffects : MonoBehaviour
+public class UIScreenEffects : MonoBehaviour
 {
     [Tooltip("Curve of the height movement speed")]
     [SerializeField] private AnimationCurve heightCurve;
@@ -11,13 +12,43 @@ public class UITextEffects : MonoBehaviour
     [Tooltip("Curve of the color graduation")]
     [SerializeField] private AnimationCurve colorCurve;
     
-    [SerializeField] private float effectDuration=2.5f;
+    [FormerlySerializedAs("effectDuration")]
+    [Header("Effects")]
+    [SerializeField] private float textEffectDuration=2.5f;
+    [SerializeField] private float imageEffectDuration=2f;
     
     private TextMeshProUGUI TemporaryVariableMaker(TextMeshProUGUI textSample)
     {
         TextMeshProUGUI tempText=Instantiate(textSample, textSample.transform.parent);
         tempText.gameObject.SetActive(true);
         return tempText;
+    }
+    
+    private Image TemporaryVariableMaker(Image imageSample)
+    {
+        Image tempImage=Instantiate(imageSample, imageSample.transform.parent);
+        tempImage.gameObject.SetActive(true);
+        return tempImage;
+    }
+    
+    public IEnumerator DoImageFade(Image fadeImage)
+    {
+        var tempImage = TemporaryVariableMaker(fadeImage);
+        
+        Color startcolor = tempImage.color;
+        Color endcolor = new Color(tempImage.color.r, tempImage.color.g, tempImage.color.b, 0);
+        float t = 0.0f;
+        while (tempImage.color.a > 0)
+        {
+            tempImage.color = Color.Lerp(startcolor, endcolor, t);
+            if (t < 1)
+            {
+                t += Time.deltaTime / imageEffectDuration;
+            }
+            yield return null;
+        }
+        Destroy(tempImage.gameObject);
+        yield return null;
     }
     
     public IEnumerator DoTextFade(TextMeshProUGUI fadeText)
@@ -33,7 +64,7 @@ public class UITextEffects : MonoBehaviour
             tempText.color = Color.Lerp(startcolor, endcolor, colorCurve.Evaluate(t));
             if (t < 1)
             {
-                t += Time.deltaTime / effectDuration;
+                t += Time.deltaTime / textEffectDuration;
             }
             yield return null;
         }
@@ -47,7 +78,7 @@ public class UITextEffects : MonoBehaviour
         
         float t = 0.0f;
         
-        while (t < effectDuration)
+        while (t < textEffectDuration)
         { 
             tempText.rectTransform.anchoredPosition += Vector2.down * heightCurve.Evaluate(t);
             t += Time.deltaTime;
@@ -73,7 +104,7 @@ public class UITextEffects : MonoBehaviour
             
             if (t < 1)
             {
-                t += Time.deltaTime / effectDuration;
+                t += Time.deltaTime / textEffectDuration;
             }
             yield return null;
         }

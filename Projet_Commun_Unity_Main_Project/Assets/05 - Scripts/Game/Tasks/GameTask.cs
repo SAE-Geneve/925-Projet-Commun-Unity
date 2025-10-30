@@ -29,11 +29,9 @@ public abstract class GameTask : MonoBehaviour
     protected virtual void Succeed()
     {
         if (_multipleTaskLimit >= 0)
-        {
             _multipleTaskCounter++;
-        }
         
-        if(!_multiple || _multipleTaskCounter >= _multipleTaskLimit) Done = true;
+        if(!_multiple || _multipleTaskCounter == _multipleTaskLimit) Done = true;
         
         OnSucceed?.Invoke();
         OnSucceedAction?.Invoke();

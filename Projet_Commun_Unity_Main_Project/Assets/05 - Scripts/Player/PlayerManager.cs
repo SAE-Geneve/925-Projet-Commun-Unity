@@ -41,9 +41,7 @@ public class PlayerManager : MonoBehaviour
         GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawn");
 
         for (int i = 0; i < PlayerCount; i++)
-        {
             _players[i].transform.position = spawnPoints[i].transform.position;
-        }
     }
 
     public void OnPlayerJoined(PlayerInput player)

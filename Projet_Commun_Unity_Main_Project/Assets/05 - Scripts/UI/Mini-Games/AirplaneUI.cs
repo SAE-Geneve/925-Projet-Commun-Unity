@@ -24,12 +24,13 @@ public class AirplaneUI : MonoBehaviour
         if (TryGetComponent(out _uiScreenEffects))
         {
             Debug.Log("Found UI Text Effects");
+            _uiScreenEffects.ImagePoolCreation(scoreImageFade);
         }
     }
     
     public void TotalScoreIncrease()
     {
-        StartCoroutine(_uiScreenEffects.DoImageFade(scoreImageFade));
+        StartCoroutine(_uiScreenEffects.DoImageFade());
         StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreTextFade));
         
         _totalScore += 150;

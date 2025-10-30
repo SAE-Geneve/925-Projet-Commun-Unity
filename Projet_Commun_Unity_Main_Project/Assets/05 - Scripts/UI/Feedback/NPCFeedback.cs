@@ -29,8 +29,12 @@ public class NPCFeedback : MonoBehaviour
 
     private void Start()
     {
+        if (TryGetComponent(out _uiFeedback))
+        {
+            Debug.Log("Found UI Text Effects");
+            _uiFeedback.ImagePoolCreation(happyImage);
+        }
         _audioManager = AudioManager.Instance;
-        _uiFeedback = transform.GetComponent<UIFeedback>();
     }
     
     public void StartUITimer()

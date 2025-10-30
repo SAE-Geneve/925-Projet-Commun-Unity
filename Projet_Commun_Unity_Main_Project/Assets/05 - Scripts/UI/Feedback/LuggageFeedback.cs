@@ -15,8 +15,13 @@ public class LuggageFeedback : MonoBehaviour
     
     private void Start()
     {
+        if (TryGetComponent(out _uiFeedback))
+        {
+            Debug.Log("Found UI Text Effects");
+            _uiFeedback.ImagePoolCreation(happyImage);
+        }
+        
         _audioManager = AudioManager.Instance;
-        _uiFeedback = GetComponent<UIFeedback>();
     }
     public void HappyResult()
     {

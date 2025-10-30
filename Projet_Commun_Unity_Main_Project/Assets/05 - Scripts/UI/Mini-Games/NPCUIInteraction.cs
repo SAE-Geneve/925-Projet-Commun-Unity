@@ -36,8 +36,12 @@ public class NPCUIInteraction : MonoBehaviour
 
     void Start()
     {
+        if (TryGetComponent(out _uiFeedback))
+        {
+            Debug.Log("Found UI Text Effects");
+            _uiFeedback.ImagePoolCreation(happyImage);
+        }
         _audioManager = AudioManager.Instance;
-        _uiFeedback = transform.GetComponent<UIFeedback>();
         _playerInput = FindAnyObjectByType<PlayerInput>();
         
         EvilNpcSetup();

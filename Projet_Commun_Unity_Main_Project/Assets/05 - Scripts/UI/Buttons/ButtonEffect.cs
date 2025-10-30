@@ -19,11 +19,12 @@ public class ButtonEffect : MonoBehaviour
         if (TryGetComponent(out _uiScreenEffects))
         {
             Debug.Log("Found UI Text Effects");
+            _uiScreenEffects.ImagePoolCreation(scoreEffect);
         }
     }
     public void ScoreEffect()
     {
-        StartCoroutine(_uiScreenEffects.DoImageFade(scoreEffect));
+        StartCoroutine(_uiScreenEffects.DoImageFade());
         StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreEffectText));
         _score += 150;
         totalScore.text = ""+_score.ToString("00000000");

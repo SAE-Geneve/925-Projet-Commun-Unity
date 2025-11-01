@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 28973431}
   - component: {fileID: 28973430}
   m_Layer: 0
-  m_Name: LuggageSpawner (4)
+  m_Name: LuggageSpawner (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,8 +145,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28973428}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.3, y: 1, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.29999983, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 46564806}
   - component: {fileID: 46564805}
   m_Layer: 0
-  m_Name: LuggageSpawner (3)
+  m_Name: LuggageSpawner (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 383412550}
   - component: {fileID: 383412549}
   m_Layer: 0
-  m_Name: LuggageSpawner (1)
+  m_Name: LuggageSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -746,7 +746,7 @@ GameObject:
   - component: {fileID: 1207608152}
   - component: {fileID: 1207608151}
   m_Layer: 0
-  m_Name: LuggageSpawner
+  m_Name: LuggageSpawner (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -992,7 +992,7 @@ MonoBehaviour:
   _taskName: Luggage
   _finishedMission: 0
   _multiple: 1
-  _multipleTaskLimit: 2
+  _multipleTaskLimit: 20
   OnStart:
     m_PersistentCalls:
       m_Calls: []
@@ -1003,7 +1003,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _propType: 2
-  destroy: 0
+  isDestroyed: 1
 --- !u!1001 &1444599995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1110,7 +1110,7 @@ GameObject:
   - component: {fileID: 1691440656}
   - component: {fileID: 1691440655}
   m_Layer: 0
-  m_Name: LuggageSpawner (5)
+  m_Name: LuggageSpawner (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1197,12 +1197,12 @@ Transform:
   m_LocalScale: {x: 1.1238096, y: 1.100246, z: 1.1324383}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1207608150}
   - {fileID: 383412548}
+  - {fileID: 1691440654}
+  - {fileID: 1207608150}
+  - {fileID: 28973429}
   - {fileID: 2018847099}
   - {fileID: 46564804}
-  - {fileID: 28973429}
-  - {fileID: 1691440654}
   m_Father: {fileID: 543897428}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1898241782
@@ -1217,7 +1217,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0343ef55fa319c948a98ec2794e9897f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  luggageLimit: 2
+  _luggageCounter: 0
+  luggageLimit: 20
 --- !u!1 &2018847098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,7 +1231,7 @@ GameObject:
   - component: {fileID: 2018847101}
   - component: {fileID: 2018847100}
   m_Layer: 0
-  m_Name: LuggageSpawner (2)
+  m_Name: LuggageSpawner (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2821,7 +2822,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _propType: 5
-  destroy: 0
+  isDestroyed: 0
 --- !u!23 &8022481100131001741
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2893,7 +2894,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _propType: 5
-  destroy: 0
+  isDestroyed: 0
 --- !u!4 &8154787018953281596
 Transform:
   m_ObjectHideFlags: 0

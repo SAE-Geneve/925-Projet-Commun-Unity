@@ -4,7 +4,7 @@ using UnityEngine;
 public class PropsLimit : MonoBehaviour
 {
 
-    private int _luggageCounter = 0;
+    [SerializeField] private int _luggageCounter = 0;
     [SerializeField] private int luggageLimit = 20;
     
     private OnePropSpawner[] _spawners;

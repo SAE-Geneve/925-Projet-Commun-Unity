@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AndTask : GameTask
 {
-    [SerializeField] private List<GameTask> tasks = new List<GameTask>();
+    [SerializeField] private List<GameTask> tasks = new();
     
     protected override void Start()
     {

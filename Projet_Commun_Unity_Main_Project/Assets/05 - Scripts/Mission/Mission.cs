@@ -76,11 +76,6 @@ public class Mission : MonoBehaviour
     
     public void Finish()
     {
-        var pushPullProps = FindObjectsByType<Prop>(FindObjectsSortMode.None);
-        foreach (var prop in pushPullProps)
-        {
-            prop.Dropped();
-        }
         GameManager.Instance.StopMission();
         
         SwitchMissionState(MissionState.Finished);

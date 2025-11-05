@@ -336,7 +336,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  effectDuration: 2
+  textEffectDuration: 2
+  imageEffectDuration: 2
 --- !u!1 &2152953595265689446
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,17 +363,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2152953595265689446}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 784303061980314306}
+  m_Father: {fileID: 4727011281696780794}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0.000026703, y: -6.1554}
+  m_SizeDelta: {x: 85, y: 72.6891}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8557198854060688300
 CanvasRenderer:
@@ -467,7 +468,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 210.01605, y: -42.07068, z: -92.74176, w: 0.99713135}
+  m_margin: {x: 1.2499962, y: -1.5455228, z: -0.6390305, w: 0.99713135}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -850,12 +851,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5405948772431083364}
+  m_Father: {fileID: 8806256382235794012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0.00002749, y: -6.771}
+  m_SizeDelta: {x: 85, y: 71.4579}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &932653846875379768
 CanvasRenderer:
@@ -950,7 +951,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 210.01605, y: -42.07068, z: -92.74176, w: 0.99713135}
+  m_margin: {x: -1.1167183, y: -0.82899624, z: 0.8214493, w: 0.99713135}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1371,7 +1372,6 @@ RectTransform:
   - {fileID: 5453113311667386999}
   - {fileID: 4727011281696780794}
   - {fileID: 8059325376092284569}
-  - {fileID: 5642355749706657433}
   - {fileID: 3286071525254286089}
   m_Father: {fileID: 4433476015076658476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2157,7 +2157,6 @@ RectTransform:
   - {fileID: 856674322895671117}
   - {fileID: 8806256382235794012}
   - {fileID: 7724540995724196569}
-  - {fileID: 4982515457024561182}
   - {fileID: 8024566445080345370}
   m_Father: {fileID: 4433476015076658476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2195,12 +2194,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5642355749706657433}
   m_Father: {fileID: 784303061980314306}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 152, y: 0}
   m_SizeDelta: {x: 85, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5869150736882719541
@@ -2308,12 +2308,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4982515457024561182}
   m_Father: {fileID: 5405948772431083364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 152, y: 0}
   m_SizeDelta: {x: 85, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8138573600564047416

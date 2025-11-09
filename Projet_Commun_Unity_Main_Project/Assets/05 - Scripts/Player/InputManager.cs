@@ -31,11 +31,6 @@ public class InputManager : MonoBehaviour
     {
         if(context.started) _playerController.TryInteract();
     }
-    
-    public void OnRagdoll(InputAction.CallbackContext context)
-    {
-        if (context.started) _ragdoll.RagdollOn();
-    }
 
     public void OnCatch(InputAction.CallbackContext context)
     {

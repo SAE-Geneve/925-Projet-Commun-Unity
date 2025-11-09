@@ -6,11 +6,12 @@ public class PushPullProp : Prop
 {
     [SerializeField] private float _moveForce;
     private readonly List<Controller> _playerControllers = new();
-    
+
     private void MoveProp(Vector3 direction) => _rb.AddForce(direction*_moveForce, ForceMode.Force);
     
     public override void Grabbed(Controller controller)
     {
+        _originalParent = controller.transform.parent;
         controller.transform.parent = transform;
         
         var playerRb = controller.Rb;
@@ -33,7 +34,7 @@ public class PushPullProp : Prop
         if(!_playerControllers.Contains(controller)) return;
         
         controller.Reset();
-        controller.transform.parent = null;
+        controller.transform.parent = _originalParent;
         controller.Rb.isKinematic = false;
         
         Physics.IgnoreCollision(controller.Collider, _collider, false);
@@ -42,6 +43,7 @@ public class PushPullProp : Prop
         movement.IsPushPull = false;
         movement.OnMove -= MoveProp;
         
-        IsGrabbed = false;
+        IsGrabbed = _playerControllers.Count > 0;
     }
+
 }

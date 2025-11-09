@@ -56,6 +56,13 @@ public class BorderNPCUI : MonoBehaviour
             triggerHud.SetActive(false);
             ArrestResult();
         }
+        else if (_inRange && _playerInput.actions["Grab"].triggered)
+        {
+            Debug.Log("Grab");
+            _resultTakenIn = true;
+            triggerHud.SetActive(false);
+            CriminalResult();
+        }
     }
 
     void EvilNpcSetup()

@@ -99,7 +99,7 @@ public class Controller : MonoBehaviour, IGrabbable
         Collider[] hits = Physics.OverlapSphere(CatchPoint.position, _sphereRadius);
         foreach (var hit in hits)
         {
-            if (!hit.TryGetComponent(out T component)) continue;
+            if (hit.gameObject == gameObject || !hit.TryGetComponent(out T component)) continue;
             onFound(component);
             break;
         }

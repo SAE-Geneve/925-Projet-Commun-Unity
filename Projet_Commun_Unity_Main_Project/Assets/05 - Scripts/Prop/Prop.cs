@@ -69,4 +69,5 @@ public enum PropType
     GreenLuggage,
     YellowLuggage,
     StairKart,
+    Trash
 }

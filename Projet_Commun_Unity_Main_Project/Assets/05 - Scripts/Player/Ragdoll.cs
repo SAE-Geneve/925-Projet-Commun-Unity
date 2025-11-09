@@ -57,14 +57,14 @@ public class Ragdoll : MonoBehaviour
             rb.linearVelocity = _mainRigidbody.linearVelocity;
         }
 
-        _mainRigidbody.isKinematic = true;
-        _mainCollider.enabled = false;
-        _animator.enabled = false;
-
         if (_playerInput) _playerInput.currentActionMap.Disable();
         
         OnRagdoll?.Invoke();
         OnRagdollSelf?.Invoke(this);
+        
+        _mainRigidbody.isKinematic = true;
+        _mainCollider.enabled = false;
+        _animator.enabled = false;
         
         if (_ragdollCoroutine != null)
             StopCoroutine(_ragdollCoroutine);

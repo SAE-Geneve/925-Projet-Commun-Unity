@@ -15,7 +15,7 @@ public class Prop: MonoBehaviour, IGrabbable
     protected Collider _collider;
     
     private Controller Controller;
-    private Transform _originalParent;
+    protected Transform _originalParent;
 
     protected virtual void Start()
     {
@@ -69,4 +69,5 @@ public enum PropType
     GreenLuggage,
     YellowLuggage,
     StairKart,
+    Trash
 }

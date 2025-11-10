@@ -7,7 +7,6 @@ public class InputManager : MonoBehaviour
     private PlayerMovement _playerMovement;
     private PlayerController _playerController;
     private KartController _kartController;
-    private Ragdoll _ragdoll;
     
     public event Action<PlayerController> OnControllerDisconnected;
     
@@ -15,7 +14,6 @@ public class InputManager : MonoBehaviour
     {
         _playerMovement = GetComponent<PlayerMovement>();
         _playerController = GetComponent<PlayerController>();
-        _ragdoll = GetComponent<Ragdoll>();
     }
 
     #region Player Input Events
@@ -30,11 +28,7 @@ public class InputManager : MonoBehaviour
     public void OnInteract(InputAction.CallbackContext context)
     {
         if(context.started) _playerController.TryInteract();
-    }
-    
-    public void OnRagdoll(InputAction.CallbackContext context)
-    {
-        if (context.started) _ragdoll.RagdollOn();
+        else if(context.canceled) _playerController.TryEndInteract();
     }
 
     public void OnCatch(InputAction.CallbackContext context)

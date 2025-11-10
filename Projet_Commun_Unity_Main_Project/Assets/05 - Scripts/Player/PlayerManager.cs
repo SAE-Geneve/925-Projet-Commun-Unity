@@ -50,6 +50,7 @@ public class PlayerManager : MonoBehaviour
         player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
         
         _players.Add(player.GetComponent<PlayerController>());
+        SetPlayerColors(player.GetComponentInChildren<ParticleSystem>());
         
         OnPlayerAdded?.Invoke();
         OnPlayerConnected?.Invoke(player.GetComponent<PlayerController>());
@@ -113,5 +114,44 @@ public class PlayerManager : MonoBehaviour
         }
         
         OnPlayerRemoved?.Invoke();
+    }
+
+    private void SetPlayerColors(ParticleSystem particleSystem)
+    {
+        var colt = particleSystem.colorOverLifetime;
+        Gradient grad = new Gradient();
+        grad.mode = GradientMode.Fixed;
+        
+        var colors = new GradientColorKey[2];
+        
+        switch (_players.Count)
+        {
+            case 1:
+                colors[0] = new GradientColorKey(new Color(255,0,0,1), 0.5f);
+                colors[1] = new GradientColorKey(new Color(128,0,0,1), 1.0f);
+                break;            
+            case 2:
+                colors[0] = new GradientColorKey(new Color(0,255,0,1), 0.5f);
+                colors[1] = new GradientColorKey(new Color(0,128,0,1), 1.0f);
+                break;            
+            case 3:
+                colors[0] = new GradientColorKey(new Color(0,0,255,1), 0.5f);
+                colors[1] = new GradientColorKey(new Color(0,0,128,1), 1.0f);
+                break;            
+            case 4:
+                colors[0] = new GradientColorKey(new Color(255,255,0,1), 0.5f);
+                colors[1] = new GradientColorKey(new Color(128,128,0,1), 1.0f);
+                break;            
+            default:
+                colors[0] = new GradientColorKey(new Color(0,0,0,1), 0.5f);
+                colors[1] = new GradientColorKey(new Color(128,128,128,1), 1.0f);
+                break;
+        }
+        
+        var alphas = new GradientAlphaKey[1];
+        alphas[0] = new GradientAlphaKey(1, 0);
+        grad.SetKeys(colors, alphas);
+        
+        colt.color = grad;
     }
 }

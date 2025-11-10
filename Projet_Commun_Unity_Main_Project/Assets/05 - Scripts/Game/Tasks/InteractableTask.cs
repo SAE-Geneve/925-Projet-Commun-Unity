@@ -6,4 +6,6 @@ public class InteractableTask : GameTask, IInteractable
         
         Succeed();
     }
+
+    public void InteractEnd() { }
 }

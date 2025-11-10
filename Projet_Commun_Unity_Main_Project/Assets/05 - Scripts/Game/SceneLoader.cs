@@ -10,6 +10,12 @@ public class SceneLoader : MonoBehaviour
         if(Instance && Instance != this) Destroy(gameObject);
         else Instance = this;
     }
-    
-    public void LoadScene(string sceneName) => SceneManager.LoadScene(sceneName);
+
+    public void LoadScene(string sceneName)
+    {
+        foreach (var player in PlayerManager.Instance.Players)
+            player.Drop();
+
+        SceneManager.LoadScene(sceneName);
+    }
 }

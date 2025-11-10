@@ -39,7 +39,7 @@ public class Controller : MonoBehaviour, IGrabbable
     
     private bool _isCharging;
     
-    protected Transform _originalParent;
+    private Transform _originalParent;
 
     protected virtual void Start()
     {
@@ -69,7 +69,7 @@ public class Controller : MonoBehaviour, IGrabbable
         }
     }
 
-    private void Drop()
+    public void Drop()
     {
         if (_grabbed != null) _grabbed.Dropped(ThrowDirection(), this);
     }
@@ -99,7 +99,7 @@ public class Controller : MonoBehaviour, IGrabbable
         Collider[] hits = Physics.OverlapSphere(CatchPoint.position, _sphereRadius);
         foreach (var hit in hits)
         {
-            if (!hit.TryGetComponent(out T component)) continue;
+            if (hit.gameObject == gameObject || !hit.TryGetComponent(out T component)) continue;
             onFound(component);
             break;
         }

@@ -26,6 +26,8 @@ public class KartController : MonoBehaviour, IInteractable
         
         playerController.OnEnterKart?.Invoke();
     }
+    
+    public void InteractEnd(){}
 
     public void Exit(PlayerController playerController)
     {

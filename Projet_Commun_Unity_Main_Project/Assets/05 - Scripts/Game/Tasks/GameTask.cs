@@ -18,6 +18,7 @@ public abstract class GameTask : MonoBehaviour
     public UnityEvent OnStart;
     public UnityEvent OnSucceed;
     public UnityEvent OnFailed;
+    public UnityEvent OnFinished;
 
     public event Action OnSucceedAction;
     public event Action OnFailedAction;
@@ -35,11 +36,13 @@ public abstract class GameTask : MonoBehaviour
         
         OnSucceed?.Invoke();
         OnSucceedAction?.Invoke();
-        
-        if (_finishedMission && Done)
-            GameManager.Instance.CurrentMission.Finish();
-        
-        Debug.Log($"Task {_taskName} done!");
+
+        if (Done)
+        {
+            if(_finishedMission) GameManager.Instance.CurrentMission.Finish();
+            OnFinished?.Invoke();
+            Debug.Log($"Task {_taskName} done!");
+        }
     }
 
     protected void Failed()

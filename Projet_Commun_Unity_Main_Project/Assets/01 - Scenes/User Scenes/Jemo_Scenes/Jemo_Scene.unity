@@ -1838,13 +1838,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 942805131}
-  - component: {fileID: 942805132}
   - component: {fileID: 942805130}
   - component: {fileID: 942805129}
+  - component: {fileID: 942805132}
   - component: {fileID: 942805128}
   - component: {fileID: 942805127}
   m_Layer: 0
-  m_Name: CustomInteractableProp
+  m_Name: Mop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1964,7 +1964,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 1, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1843981720}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &942805132
 MonoBehaviour:
@@ -1975,13 +1975,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 942805125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44908a97eac3ee5498e405fdb4534295, type: 3}
+  m_Script: {fileID: 11500000, guid: 2105a54227835054ea704d70aa7076ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
   _speedCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -3163,7 +3181,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1006314606}
-  - {fileID: 942805131}
   - {fileID: 25108841}
   m_Father: {fileID: 237925076}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3933,6 +3950,7 @@ SceneRoots:
   - {fileID: 2085098159}
   - {fileID: 8923680995987303512}
   - {fileID: 721516111}
+  - {fileID: 942805131}
   - {fileID: 1882484934}
   - {fileID: 855230499005161389}
   - {fileID: 3570976925347469948}

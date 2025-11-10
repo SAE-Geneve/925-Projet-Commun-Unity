@@ -38,4 +38,10 @@ public class PlayerController : Controller
             interactable.Interact(this);
         });
     }
+
+    public void TryEndInteract()
+    {
+        if (InteractableGrabbed != null)
+            InteractableGrabbed.InteractEnd();
+    }
 }

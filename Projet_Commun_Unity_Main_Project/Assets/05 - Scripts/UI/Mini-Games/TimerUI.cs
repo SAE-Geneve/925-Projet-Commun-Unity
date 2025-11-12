@@ -10,8 +10,10 @@ public class TimerUI : MonoBehaviour
     private float givenTime;
 
     [SerializeField] private TextMeshProUGUI _timerText;
+    [SerializeField] private TextMeshProUGUI _timeRemainingText;
 
     private float _timer;
+    private UIScreenEffects _uiScreenEffects;
     // private bool _stopTimer;
 
     void Start()
@@ -23,6 +25,8 @@ public class TimerUI : MonoBehaviour
         Second = givenTime % 60;
 
         _timerText.text = $"{Minute:00}:{Second:00}";
+        
+        _uiScreenEffects=transform.parent.GetComponent<UIScreenEffects>();
     }
 
     void FixedUpdate()
@@ -40,5 +44,16 @@ public class TimerUI : MonoBehaviour
             //Set text string
             _timerText.text = $"{Minute:00}:{Second:00}";
         }
+
+        if (Minute == 0 && Second == 30)
+        {
+            TimeRemaining(30);
+        }
+    }
+
+    void TimeRemaining(int time)
+    {
+        _timeRemainingText.text = $"{time} seconds remaining.";
+        StartCoroutine(_uiScreenEffects.DoTextFade(_timeRemainingText));
     }
 }

@@ -3,17 +3,15 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private Canvas pauseCanvas;
-    private bool _isPaused;
-    private Canvas HUDCanvas;
 
     void Start()
     {
-        TryGetComponent(out HUDCanvas);
+        GameManager.Instance.SwitchState(GameState.Playing);
     }
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && GameManager.Instance.State == GameState.Playing)
         {
             PauseGame();
         }
@@ -22,14 +20,12 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame()
     {
         pauseCanvas.enabled = true;
-        GameManager.Instance.SwitchState(GameState.Paused);
-        _isPaused = true;
+        GameManager.Instance.PauseTrigger();
     }
 
     public void ResumeGame()
     {
         pauseCanvas.enabled = false;
-        GameManager.Instance.SwitchState(GameState.Playing);
-        _isPaused = false;
+        GameManager.Instance.PauseTrigger();
     }
 }

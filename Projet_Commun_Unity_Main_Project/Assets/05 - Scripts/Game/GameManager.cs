@@ -232,12 +232,24 @@ public class GameManager : MonoBehaviour
     {
         _lastState = _state;
         _state = GameState.Paused;
+        Time.timeScale = 0;
+        foreach (var pl in _playerManager.Players)
+        {
+            pl.InputManager.active = false;
+        }
+        UiManager.Instance.ShowPauseCanvas(true);
         Debug.Log($"Game paused (from {_lastState})");
     }
 
     private void Unpause()
     {
         _state = _lastState;
+        Time.timeScale = 1;
+        foreach (var pl in _playerManager.Players)
+        {
+            pl.InputManager.active = true;
+        }
+        UiManager.Instance.ShowPauseCanvas(false);
         Debug.Log($"Game unpaused (back to {_state})");
     }
 

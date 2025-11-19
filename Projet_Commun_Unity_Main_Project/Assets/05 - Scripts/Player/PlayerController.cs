@@ -10,6 +10,7 @@ public class PlayerController : Controller
     
     
     public PlayerInput Input { get; private set;}
+    public InputManager InputManager { get; private set;}
     public KartController KartController { get; set; }
     public KartMovement KartMovement { get; set; }
     
@@ -18,6 +19,7 @@ public class PlayerController : Controller
     protected override void Start()
     {
         Input = GetComponent<PlayerInput>();
+        InputManager = GetComponent<InputManager>();
         
         PlayerManager playerManager = PlayerManager.Instance;
         if(playerManager) transform.parent = playerManager.transform;

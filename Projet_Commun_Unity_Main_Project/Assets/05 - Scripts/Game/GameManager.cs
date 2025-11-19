@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
     }
 
     public GameState State => _state;
+    public GameContext Context => _context;
     
     public int ClientSatisfaction
     {
@@ -100,6 +102,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _playerManager = FindFirstObjectByType<PlayerManager>();
+        _playerManager.PlayerInputManager.DisableJoining();
         
         ResetGame();
         Debug.Log($"Game State: {_state}");
@@ -123,6 +126,10 @@ public class GameManager : MonoBehaviour
             return;
         }
         
+        if (newState == GameState.Lobby || _context == GameContext.Hub)
+        {
+            _playerManager.PlayerInputManager.EnableJoining();
+        }
         _state = newState;
         Debug.Log($"Game State: {_state}");
     }
@@ -185,7 +192,7 @@ public class GameManager : MonoBehaviour
         }
 
         CurrentMission = mission;
-
+        _playerManager.PlayerInputManager.DisableJoining();
         _context = GameContext.Mission;
     }
 
@@ -198,7 +205,7 @@ public class GameManager : MonoBehaviour
         }
 
         CurrentMission = null;
-        
+        _playerManager.PlayerInputManager.EnableJoining();
         _context = GameContext.Hub;
     }
 
@@ -231,7 +238,7 @@ public class GameManager : MonoBehaviour
     private void Pause()
     {
         _lastState = _state;
-        _state = GameState.Paused;
+        SwitchState(GameState.Paused);
         Time.timeScale = 0;
         foreach (var pl in _playerManager.Players)
         {
@@ -243,7 +250,7 @@ public class GameManager : MonoBehaviour
 
     private void Unpause()
     {
-        _state = _lastState;
+        SwitchState(_lastState);
         Time.timeScale = 1;
         foreach (var pl in _playerManager.Players)
         {

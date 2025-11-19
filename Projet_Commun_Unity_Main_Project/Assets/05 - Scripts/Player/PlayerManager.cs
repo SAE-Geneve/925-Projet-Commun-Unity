@@ -23,18 +23,27 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance { get; private set; }
     
     [SerializeField] private Transform trackingTarget;
-
+    
+    private PlayerInputManager playerInputManager;
+    
+    public PlayerInputManager PlayerInputManager => playerInputManager;
+    
     public Transform TrackingTarget => trackingTarget;
 
     private void Awake()
     {
         if (Instance && Instance != this) Destroy(gameObject);
         else Instance = this;
-
+        
+        playerInputManager = GetComponent<PlayerInputManager>();
+        
         SceneManager.sceneLoaded += SetPlayerToSpawnPoint;
     }
-    
-    private void Start() => _gameManager = GameManager.Instance;
+
+    private void Start()
+    {
+        _gameManager = GameManager.Instance;
+    }
 
     private void SetPlayerToSpawnPoint(Scene scene, LoadSceneMode mode)
     {
@@ -48,10 +57,10 @@ public class PlayerManager : MonoBehaviour
     {
         player.transform.position = Vector3.zero;/*Add a spawn point*/
         player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
-        
+    
         _players.Add(player.GetComponent<PlayerController>());
         SetPlayerColors(player.GetComponentInChildren<ParticleSystem>());
-        
+    
         OnPlayerAdded?.Invoke();
         OnPlayerConnected?.Invoke(player.GetComponent<PlayerController>());
     }

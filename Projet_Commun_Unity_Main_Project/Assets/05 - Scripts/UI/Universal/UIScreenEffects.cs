@@ -70,8 +70,14 @@ public class UIScreenEffects : MonoBehaviour
         tempText.gameObject.SetActive(true);
         return tempText;
     }
+    private Image TemporaryVariableMaker(Image imageSample)
+    {
+        Image tempImage = Instantiate(imageSample, imageSample.transform.parent);
+        tempImage.gameObject.SetActive(true);
+        return tempImage;
+    }
 
-    public IEnumerator DoImageFade()
+    public IEnumerator DoImagePoolFade()
     {
         var tempImage=_imagePool.Get();
 
@@ -90,6 +96,28 @@ public class UIScreenEffects : MonoBehaviour
         }
 
         _imagePool.Release(tempImage);
+        yield return null;
+    }
+    
+    public IEnumerator DoImageFade(Image fadeImage)
+    {
+        var tempImage = TemporaryVariableMaker(fadeImage);
+
+        Color startcolor = tempImage.color;
+        Color endcolor = new Color(tempImage.color.r, tempImage.color.g, tempImage.color.b, 0);
+        float t = 0.0f;
+        while (tempImage.color.a > 0)
+        {
+            tempImage.color = Color.Lerp(startcolor, endcolor, t);
+            if (t < 1)
+            {
+                t += Time.deltaTime / imageEffectDuration;
+            }
+
+            yield return null;
+        }
+
+        Destroy(tempImage);
         yield return null;
     }
 

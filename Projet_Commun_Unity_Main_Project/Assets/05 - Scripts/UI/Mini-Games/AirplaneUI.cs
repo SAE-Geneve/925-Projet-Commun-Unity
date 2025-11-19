@@ -30,7 +30,7 @@ public class AirplaneUI : MonoBehaviour
     
     public void TotalScoreIncrease()
     {
-        StartCoroutine(_uiScreenEffects.DoImageFade());
+        StartCoroutine(_uiScreenEffects.DoImagePoolFade());
         StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreTextFade));
         
         _totalScore += 150;

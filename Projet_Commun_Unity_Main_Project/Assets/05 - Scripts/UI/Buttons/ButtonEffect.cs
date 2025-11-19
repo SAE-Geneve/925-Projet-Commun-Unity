@@ -24,7 +24,7 @@ public class ButtonEffect : MonoBehaviour
     }
     public void ScoreEffect()
     {
-        StartCoroutine(_uiScreenEffects.DoImageFade());
+        StartCoroutine(_uiScreenEffects.DoImagePoolFade());
         StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreEffectText));
         _score += 150;
         totalScore.text = ""+_score.ToString("00000000");

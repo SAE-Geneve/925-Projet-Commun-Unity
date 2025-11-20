@@ -11,7 +11,7 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneWindows64
-          - Switch
+          #- Switch
     steps:
       # Checkout (without LFS)
       - name: Checkout repository
@@ -42,7 +42,18 @@ jobs:
           restore-keys: |
             Library-
 
-      # Build Window
+      # Unity Test Runner
+      - name: Unity Test Runner
+        uses: game-ci/unity-test-runner@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          projectPath: 'Projet_Commun_Unity_Main_Project/'
+
+      # Build
       - name: Build project
         uses: game-ci/unity-builder@v4
         env:
@@ -51,7 +62,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
-          projectpath: 'Projet_Commun_Unity_Main_Project/'
+          projectPath: 'Projet_Commun_Unity_Main_Project/'
 
       # Output
       - uses: actions/upload-artifact@v4

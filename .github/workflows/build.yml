@@ -3,7 +3,7 @@ name: Build 😎
 on: 
   workflow_dispatch:
   schedule:
-    - cron: '35 13 * * *'
+    - cron: '38 13 * * *'
 
 jobs:
   test_schedule:
@@ -53,7 +53,7 @@ jobs:
 
   build:
     name: Build my project for ${{ matrix.targetPlatform }}
-    needs: test
+    needs: test_schedule
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

@@ -24,12 +24,17 @@ public class PlayerManager : MonoBehaviour
     
     [SerializeField] private Transform trackingTarget;
 
+    private PlayerInputManager _playerInputManager;
+    
+    public PlayerInputManager PlayerInputManager => _playerInputManager;
     public Transform TrackingTarget => trackingTarget;
 
     private void Awake()
     {
         if (Instance && Instance != this) Destroy(gameObject);
         else Instance = this;
+        
+        _playerInputManager = GetComponent<PlayerInputManager>();
 
         SceneManager.sceneLoaded += SetPlayerToSpawnPoint;
     }

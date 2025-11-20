@@ -20,7 +20,6 @@ MonoBehaviour:
   - rid: 1911685237881438494
   - rid: 1911685239610802417
   - rid: 1911685239610802959
-  - rid: 7650010005725249557
   - rid: 7650010006690726018
   m_VersionTimestamp: 638971799944969855
   m_CommandBuffer:
@@ -69,16 +68,6 @@ MonoBehaviour:
         IsExposed: 0
         m_IsShared: 0
         m_Value: 0
-    - rid: 7650010005725249557
-      type: {class: 'TypedVariableModel`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        ID:
-          m_Value0: 706588328466319458
-          m_Value1: 8589079216913138478
-        Name: New StatusNpcKaren
-        IsExposed: 0
-        m_IsShared: 0
-        m_Value: 0
     - rid: 7650010006690726018
       type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -103,15 +92,136 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Graphs:
   - rid: 7650010006690726268
-  RootGraph:
-    rid: 7650010006690726268
   m_DebugInfo: {fileID: -402374416128112643}
+  m_WasCompileWithPlaceholderNode: 0
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 7650010006690726244
+    - rid: 4226854117889278075
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 12670508433504503497
+          m_Value1: 2418118367619910327
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: -2
+        m_Child:
+          rid: 4226854117889278076
+        Repeat: 1
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 4226854117889278076
+      type: {class: BranchingConditionComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 14633816045348113129
+          m_Value1: 15470074972422543255
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278075
+        m_Children:
+        - rid: 4226854117889278077
+        - rid: 4226854117889278078
+        m_Conditions:
+        - rid: 4226854117889278079
+        m_RequiresAllConditions: 0
+        True:
+          rid: 4226854117889278077
+        False:
+          rid: 4226854117889278078
+        m_CurrentChild:
+          rid: -2
+    - rid: 4226854117889278077
+      type: {class: SwitchComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 13710106175844956519
+          m_Value1: 7258782102694662231
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278076
+        m_Children:
+        - rid: 4226854117889278080
+        - rid: 4226854117889278081
+        - rid: 4226854117889278082
+        EnumVariable:
+          rid: 4226854117889278083
+    - rid: 4226854117889278078
+      type: {class: WaitAction, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 8945802535639857721
+          m_Value1: 7705136519205954920
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278076
+        SecondsToWait:
+          rid: 4226854117889278084
+    - rid: 4226854117889278079
+      type: {class: VariableComparisonCondition, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        Graph:
+          rid: 7650010006690726268
+        Variable:
+          rid: 7650010006690726278
+        Operator:
+          rid: 4226854117889278085
+        ComparisonValue:
+          rid: 4226854117889278086
+    - rid: 4226854117889278080
+      type: {class: RandomComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 16607688855120594696
+          m_Value1: 3950246800762617670
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278077
+        m_Children:
+        - rid: 4226854117889278087
+        - rid: 4226854117889278088
+        - rid: 4226854117889278089
+    - rid: 4226854117889278081
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 1368780958543505671
+          m_Value1: 299521166236798623
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278077
+        m_Children:
+        - rid: 4226854117889278090
+        - rid: 4226854117889278091
+    - rid: 4226854117889278082
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 17358969056991491863
+          m_Value1: 15813196732954711497
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278077
+        m_Children:
+        - rid: 4226854117889278092
+        - rid: 4226854117889278093
+    - rid: 4226854117889278083
+      type: {class: 'BlackboardVariable`1[[System.Enum, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+    - rid: 4226854117889278084
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -119,7 +229,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 0
-    - rid: 7650010006690726245
+    - rid: 4226854117889278085
       type: {class: 'BlackboardVariable`1[[Unity.Behavior.ConditionOperator, Unity.Behavior]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -127,7 +237,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 0
-    - rid: 7650010006690726246
+    - rid: 4226854117889278086
       type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -135,15 +245,161 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 0
-    - rid: 7650010006690726250
-      type: {class: 'BlackboardVariable`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+    - rid: 4226854117889278087
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 2
-    - rid: 7650010006690726257
+        ID:
+          m_Value0: 805902194688151788
+          m_Value1: 13665335769783306741
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278080
+        m_Children:
+        - rid: 4226854117889278094
+        - rid: 4226854117889278095
+    - rid: 4226854117889278088
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 3371115093239606765
+          m_Value1: 16768329322178499010
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278080
+        m_Children:
+        - rid: 4226854117889278096
+        - rid: 4226854117889278097
+    - rid: 4226854117889278089
+      type: {class: WaitRangeAction, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 14662168794558509832
+          m_Value1: 3531998766239175825
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278080
+        Min:
+          rid: 4226854117889278098
+        Max:
+          rid: 4226854117889278099
+    - rid: 4226854117889278090
+      type: {class: GrabTheNearestObjectAction, ns: , asm: Scripts}
+      data:
+        ID:
+          m_Value0: 8648562765671451663
+          m_Value1: 3444636241959391516
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278081
+        Self:
+          rid: 7650010006690726275
+        GrabbedObject:
+          rid: 7650010006690726280
+    - rid: 4226854117889278091
+      type: {class: SetVariableValueAction, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 3399531227283525821
+          m_Value1: 210860353096562023
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278081
+        Variable:
+          rid: -2
+        Value:
+          rid: -2
+    - rid: 4226854117889278092
+      type: {class: ThrowObjectAction, ns: , asm: Scripts}
+      data:
+        ID:
+          m_Value0: 9576968038973166159
+          m_Value1: 9816206453767611392
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278082
+        Self:
+          rid: 7650010006690726275
+        GrabbedObjectGO:
+          rid: 7650010006690726280
+        ThrowRange:
+          rid: 4226854117889278100
+        ThrowForce:
+          rid: 4226854117889278101
+        TurnDuration:
+          rid: 4226854117889278102
+    - rid: 4226854117889278093
+      type: {class: SetVariableValueAction, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 8952167058270224060
+          m_Value1: 385552188744174087
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278082
+        Variable:
+          rid: -2
+        Value:
+          rid: -2
+    - rid: 4226854117889278094
+      type: {class: WaitAction, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 17208633455088750225
+          m_Value1: 3327373903232361517
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278087
+        SecondsToWait:
+          rid: 4226854117889278103
+    - rid: 4226854117889278095
+      type: {class: SetVariableValueAction, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 10440696690697557459
+          m_Value1: 7536783200444175037
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278087
+        Variable:
+          rid: -2
+        Value:
+          rid: -2
+    - rid: 4226854117889278096
+      type: {class: WaitAction, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 18024618211820245395
+          m_Value1: 7519099381790069117
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278088
+        SecondsToWait:
+          rid: 4226854117889278104
+    - rid: 4226854117889278097
+      type: {class: PatrolRandomPointsAction, ns: , asm: Scripts}
+      data:
+        ID:
+          m_Value0: 16980163677095992233
+          m_Value1: 6901186956280263633
+        Graph:
+          rid: 7650010006690726268
+        m_Parent:
+          rid: 4226854117889278088
+        Agent:
+          rid: 7650010006690726275
+        Points:
+          rid: 7650010006690726277
+    - rid: 4226854117889278098
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -151,7 +407,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 1
-    - rid: 7650010006690726258
+    - rid: 4226854117889278099
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -159,7 +415,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 3
-    - rid: 7650010006690726259
+    - rid: 4226854117889278100
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -167,7 +423,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 5
-    - rid: 7650010006690726260
+    - rid: 4226854117889278101
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -175,15 +431,15 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 10
-    - rid: 7650010006690726261
-      type: {class: 'BlackboardVariable`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+    - rid: 4226854117889278102
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
           m_Value1: 0
         Name: 
-        m_Value: 0
-    - rid: 7650010006690726262
+        m_Value: 0.8
+    - rid: 4226854117889278103
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -191,15 +447,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 1
-    - rid: 7650010006690726263
-      type: {class: 'BlackboardVariable`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 1
-    - rid: 7650010006690726264
+    - rid: 4226854117889278104
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -218,34 +466,20 @@ MonoBehaviour:
           rid: 7650010006690726269
         BlackboardGroupReferences: []
         Root:
-          rid: 7650010006690726270
+          rid: 4226854117889278075
         m_ActiveNodes: []
         m_NodesToTick: []
         m_NodesToEnd:
           rid: 7650010006690726271
         m_EndedNodes:
           rid: 7650010006690726272
-        m_VersionTimestamp: 638971823240640383
+        m_VersionTimestamp: 638992534048172068
     - rid: 7650010006690726269
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         m_Blackboard:
           rid: 7650010006690726273
         m_Source: {fileID: 3503146425319601092}
-    - rid: 7650010006690726270
-      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 12670508433504503497
-          m_Value1: 2418118367619910327
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: -2
-        m_Child:
-          rid: 7650010006690726274
-        Repeat: 1
-        AllowMultipleRepeatsPerTick: 0
     - rid: 7650010006690726271
       type: {class: 'Stack`1[[Unity.Behavior.Node, Unity.Behavior]]', ns: System.Collections.Generic, asm: mscorlib}
       data: 
@@ -260,30 +494,8 @@ MonoBehaviour:
         - rid: 7650010006690726276
         - rid: 7650010006690726277
         - rid: 7650010006690726278
-        - rid: 7650010006690726279
+        - rid: -2
         - rid: 7650010006690726280
-    - rid: 7650010006690726274
-      type: {class: BranchingConditionComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 14633816045348113129
-          m_Value1: 15470074972422543255
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726270
-        m_Children:
-        - rid: 7650010006690726281
-        - rid: 7650010006690726282
-        m_Conditions:
-        - rid: 7650010006690726283
-        m_RequiresAllConditions: 0
-        True:
-          rid: 7650010006690726281
-        False:
-          rid: 7650010006690726282
-        m_CurrentChild:
-          rid: -2
     - rid: 7650010006690726275
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -316,14 +528,6 @@ MonoBehaviour:
           m_Value1: 8001892696076834730
         Name: IsRagdoll
         m_Value: 0
-    - rid: 7650010006690726279
-      type: {class: 'BlackboardVariable`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 706588328466319458
-          m_Value1: 8589079216913138478
-        Name: New StatusNpcKaren
-        m_Value: 0
     - rid: 7650010006690726280
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -332,247 +536,6 @@ MonoBehaviour:
           m_Value1: 113877094212145817
         Name: GrabbedObject
         m_Value: {fileID: 0}
-    - rid: 7650010006690726281
-      type: {class: SwitchComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 13710106175844956519
-          m_Value1: 7258782102694662231
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726274
-        m_Children:
-        - rid: 7650010006690726284
-        - rid: 7650010006690726285
-        - rid: 7650010006690726286
-        EnumVariable:
-          rid: 7650010006690726279
-    - rid: 7650010006690726282
-      type: {class: WaitAction, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 8945802535639857721
-          m_Value1: 7705136519205954920
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726274
-        SecondsToWait:
-          rid: 7650010006690726244
-    - rid: 7650010006690726283
-      type: {class: VariableComparisonCondition, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        Graph:
-          rid: 7650010006690726268
-        Variable:
-          rid: 7650010006690726278
-        Operator:
-          rid: 7650010006690726245
-        ComparisonValue:
-          rid: 7650010006690726246
-    - rid: 7650010006690726284
-      type: {class: RandomComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 16607688855120594696
-          m_Value1: 3950246800762617670
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726281
-        m_Children:
-        - rid: 7650010006690726287
-        - rid: 7650010006690726288
-        - rid: 7650010006690726289
-    - rid: 7650010006690726285
-      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 1368780958543505671
-          m_Value1: 299521166236798623
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726281
-        m_Children:
-        - rid: 7650010006690726290
-        - rid: 7650010006690726291
-    - rid: 7650010006690726286
-      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 17358969056991491863
-          m_Value1: 15813196732954711497
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726281
-        m_Children:
-        - rid: 7650010006690726292
-        - rid: 7650010006690726293
-    - rid: 7650010006690726287
-      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 805902194688151788
-          m_Value1: 13665335769783306741
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726284
-        m_Children:
-        - rid: 7650010006690726294
-        - rid: 7650010006690726295
-    - rid: 7650010006690726288
-      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 3371115093239606765
-          m_Value1: 16768329322178499010
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726284
-        m_Children:
-        - rid: 7650010006690726296
-        - rid: 7650010006690726297
-    - rid: 7650010006690726289
-      type: {class: WaitRangeAction, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 14662168794558509832
-          m_Value1: 3531998766239175825
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726284
-        Min:
-          rid: 7650010006690726257
-        Max:
-          rid: 7650010006690726258
-    - rid: 7650010006690726290
-      type: {class: GrabTheNearestObjectAction, ns: , asm: Assembly-CSharp}
-      data:
-        ID:
-          m_Value0: 8648562765671451663
-          m_Value1: 3444636241959391516
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726285
-        Self:
-          rid: 7650010006690726275
-        GrabbedObject:
-          rid: 7650010006690726280
-    - rid: 7650010006690726291
-      type: {class: SetVariableValueAction, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 3399531227283525821
-          m_Value1: 210860353096562023
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726285
-        Variable:
-          rid: 7650010006690726279
-        Value:
-          rid: 7650010006690726250
-    - rid: 7650010006690726292
-      type: {class: ThrowObjectAction, ns: , asm: Assembly-CSharp}
-      data:
-        ID:
-          m_Value0: 9576968038973166159
-          m_Value1: 9816206453767611392
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726286
-        Self:
-          rid: 7650010006690726275
-        GrabbedObjectGO:
-          rid: 7650010006690726280
-        ThrowRange:
-          rid: 7650010006690726259
-        ThrowForce:
-          rid: 7650010006690726260
-        TurnDuration:
-          rid: 7650010006690726298
-    - rid: 7650010006690726293
-      type: {class: SetVariableValueAction, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 8952167058270224060
-          m_Value1: 385552188744174087
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726286
-        Variable:
-          rid: 7650010006690726279
-        Value:
-          rid: 7650010006690726261
-    - rid: 7650010006690726294
-      type: {class: WaitAction, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 17208633455088750225
-          m_Value1: 3327373903232361517
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726287
-        SecondsToWait:
-          rid: 7650010006690726262
-    - rid: 7650010006690726295
-      type: {class: SetVariableValueAction, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 10440696690697557459
-          m_Value1: 7536783200444175037
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726287
-        Variable:
-          rid: 7650010006690726279
-        Value:
-          rid: 7650010006690726263
-    - rid: 7650010006690726296
-      type: {class: WaitAction, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 18024618211820245395
-          m_Value1: 7519099381790069117
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726288
-        SecondsToWait:
-          rid: 7650010006690726264
-    - rid: 7650010006690726297
-      type: {class: PatrolRandomPointsAction, ns: , asm: Assembly-CSharp}
-      data:
-        ID:
-          m_Value0: 16980163677095992233
-          m_Value1: 6901186956280263633
-        Graph:
-          rid: 7650010006690726268
-        m_Parent:
-          rid: 7650010006690726288
-        Agent:
-          rid: 7650010006690726275
-        Points:
-          rid: 7650010006690726277
-    - rid: 7650010006690726298
-      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 0.8
 --- !u!114 &-402374416128112643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -624,7 +587,8 @@ MonoBehaviour:
   - rid: 7650010006690725956
   - rid: 7650010006690726216
   - rid: 7650010006690726265
-  m_VersionTimestamp: 638971823240640383
+  m_VersionTimestamp: 638992534048172068
+  m_SerializedVersion: 1
   m_DebugInfo: {fileID: -402374416128112643}
   m_RuntimeGraph: {fileID: -7067439787621656969}
   AssetID:
@@ -637,13 +601,18 @@ MonoBehaviour:
   m_NodeModelsInfo:
   - Name: Random
     Story: 
+    RuntimeTypeString: Unity.Behavior.RandomComposite, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 15586748977048568638
       m_Value1: 1886799870276249994
     Variables: []
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: PatrolRandomPoints
     Story: '[Agent] moves randomly to a point'
+    RuntimeTypeString: PatrolRandomPointsAction, Scripts, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 58722717026746528
       m_Value1: 176883933118464
@@ -660,8 +629,11 @@ MonoBehaviour:
           mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Switch
     Story: 
+    RuntimeTypeString: Unity.Behavior.SwitchComposite, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 7697158487413557231
       m_Value1: 14836087705204215232
@@ -672,15 +644,21 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: On Start
     Story: 
+    RuntimeTypeString: Unity.Behavior.Start, Unity.Behavior, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 3335272451348827663
       m_Value1: 11549843281177505721
     Variables: []
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Wait (Range) (Seconds)
     Story: Wait between [Min] and [Max] seconds
+    RuntimeTypeString: Unity.Behavior.WaitRangeAction, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 1357124955953561018
       m_Value1: 15647026721769409965
@@ -696,8 +674,11 @@ MonoBehaviour:
           PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Wait (Seconds)
     Story: Wait for [SecondsToWait] seconds
+    RuntimeTypeString: Unity.Behavior.WaitAction, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 7729581452106168333
       m_Value1: 8820302366443624372
@@ -708,8 +689,11 @@ MonoBehaviour:
           PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: Conditional Branch
     Story: 
+    RuntimeTypeString: Unity.Behavior.BranchingConditionComposite, Unity.Behavior,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 12334964803190848789
       m_Value1: 14608808926743427008
@@ -717,8 +701,11 @@ MonoBehaviour:
     NamedChildren:
     - True
     - False
+    IsPlaceholder: 0
   - Name: Set Variable Value
     Story: 'Set [Variable] value to [Value]'
+    RuntimeTypeString: Unity.Behavior.SetVariableValueAction, Unity.Behavior, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 5494721648866555964
       m_Value1: 18024545711220129068
@@ -734,9 +721,12 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: ThrowObject
     Story: '[Self] throws the grabbed object at a nearby player if any, otherwise
       randomly with turning'
+    RuntimeTypeString: ThrowObjectAction, Scripts, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 66621608550203552
       m_Value1: 3976203200
@@ -767,8 +757,11 @@ MonoBehaviour:
           PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
+    IsPlaceholder: 0
   - Name: GrabTheNearestObject
     Story: '[self] grab an object and assign [GrabbedObject]'
+    RuntimeTypeString: GrabTheNearestObjectAction, Scripts, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
     RuntimeTypeID:
       m_Value0: 58955792544
       m_Value1: 3338
@@ -784,453 +777,15 @@ MonoBehaviour:
           Culture=neutral, PublicKeyToken=null
       Tooltip: 
     NamedChildren: []
-  - Name: GrabClosestObject
-    Story: '[Self] grabs the closest object'
-    RuntimeTypeID:
-      m_Value0: 12682136610805689088
-      m_Value1: 236
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: GrabClosestObject
-    Story: '[Self] grabs the closest object'
-    RuntimeTypeID:
-      m_Value0: 63051222370353312
-      m_Value1: 0
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: ThrowObject
-    Story: '[Self] throws the grabbed object at a nearby player if any, otherwise
-      randomly'
-    RuntimeTypeID:
-      m_Value0: 6292718651414025021
-      m_Value1: 11541757505988860736
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: ThrowRandom
-    Story: '[Self] throws the grabbed object randomly'
-    RuntimeTypeID:
-      m_Value0: 58722717016260768
-      m_Value1: 0
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: ThrowAtPlayer
-    Story: '[Self] throws the grabbed object at the nearest player in range'
-    RuntimeTypeID:
-      m_Value0: 11529215089018142880
-      m_Value1: 224
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: ThrowRange
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: GoToRandomPoint
-    Story: '[self] move to a random point physically'
-    RuntimeTypeID:
-      m_Value0: 229385613344928
-      m_Value1: 0
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: ThrowRandom
-    Story: '[Self] throws the grabbed object randomly'
-    RuntimeTypeID:
-      m_Value0: 18180062318409774925
-      m_Value1: 15439365088490045731
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: ThrowAtPlayer
-    Story: '[Self] throws the grabbed object at the nearest player in range'
-    RuntimeTypeID:
-      m_Value0: 17610298758021066701
-      m_Value1: 17574970570034036137
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Run In Parallel Until Any Completes
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 17241237265361179876
-      m_Value1: 2160530408019457471
-    Variables: []
-    NamedChildren: []
-  - Name: Run In Parallel
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 6216542881172158703
-      m_Value1: 2191282456596108218
-    Variables: []
-    NamedChildren: []
-  - Name: SelfHitPlayer
-    Story: '[self] touches a player'
-    RuntimeTypeID:
-      m_Value0: 3951644790230798
-      m_Value1: 0
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Talk
-    Story: '[Agent] says [Sentence]'
-    RuntimeTypeID:
-      m_Value0: 6506253839917648583
-      m_Value1: 12389220537528099718
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Sentence
-      Type:
-        m_SerializableType: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: Duration
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: PatrolRandomPoints
-    Story: '[Agent] moves randomly between points'
-    RuntimeTypeID:
-      m_Value0: 58722717026746528
-      m_Value1: 0
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Points
-      Type:
-        m_SerializableType: System.Collections.Generic.List`1[[UnityEngine.GameObject,
-          UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: WaitTime
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: GoToRandomPoint (Hybrid)
-    Story: '[self] move to a random point physically'
-    RuntimeTypeID:
-      m_Value0: 15033015556163612672
-      m_Value1: 12744835101737615360
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: PatrolRandomPoints
-    Story: '[Agent] moves randomly between [points]'
-    RuntimeTypeID:
-      m_Value0: 2645949305076171525
-      m_Value1: 442290248969894791
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Points
-      Type:
-        m_SerializableType: System.Collections.Generic.List`1[[UnityEngine.GameObject,
-          UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: StopDistance
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: WaitTime
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: GoToRandomPoint (Hybrid)
-    Story: '[self] move to a random point physically'
-    RuntimeTypeID:
-      m_Value0: 15033015556163612672
-      m_Value1: 0
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: SelfHitPlayer
-    Story: '[self] hit player'
-    RuntimeTypeID:
-      m_Value0: 12682603929119690077
-      m_Value1: 5623865042080114534
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Wait for Event Message
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 15586893896841764598
-      m_Value1: 11910781537861691316
-    Variables:
-    - Name: ChannelVariable
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Send Event Message
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 9965463903622711961
-      m_Value1: 5344335246459382461
-    Variables:
-    - Name: ChannelVariable
-      Type:
-        m_SerializableType: Unity.Behavior.BlackboardVariable, Unity.Behavior, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Patrol
-    Story: '[Agent] patrols along [Waypoints]'
-    RuntimeTypeID:
-      m_Value0: 14152437374081355248
-      m_Value1: 10648518091965011058
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Waypoints
-      Type:
-        m_SerializableType: System.Collections.Generic.List`1[[UnityEngine.GameObject,
-          UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: Speed
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: WaypointWaitTime
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: DistanceThreshold
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: AnimatorSpeedParam
-      Type:
-        m_SerializableType: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: PreserveLatestPatrolPoint
-      Type:
-        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Patrol (Hybrid)
-    Story: '[Agent] patrols along [Waypoints]'
-    RuntimeTypeID:
-      m_Value0: 12393906861719269376
-      m_Value1: 0
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Waypoints
-      Type:
-        m_SerializableType: System.Collections.Generic.List`1[[UnityEngine.GameObject,
-          UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: Speed
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: WaypointWaitTime
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: DistanceThreshold
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: AnimatorSpeedParam
-      Type:
-        m_SerializableType: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: PatrolWithCharacterMovement
-    Story: '[Self] patrols along [Waypoints]'
-    RuntimeTypeID:
-      m_Value0: 9194934592910460903
-      m_Value1: 7476963678417885371
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Waypoints
-      Type:
-        m_SerializableType: System.Collections.Generic.List`1[[UnityEngine.GameObject,
-          UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-          mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: GoToRandomPoint
-    Story: '[self] go to a random point'
-    RuntimeTypeID:
-      m_Value0: 3903685706001598976
-      m_Value1: 9033280267259785606
-    Variables:
-    - Name: Self
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    NamedChildren: []
-  - Name: Run In Parallel Until Any Succeeds
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 3118052729764074030
-      m_Value1: 1388175790504016299
-    Variables: []
-    NamedChildren: []
-  - Name: Sequence
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 10181448252506100447
-      m_Value1: 8737116843063128493
-    Variables: []
-    NamedChildren: []
-  - Name: Succeeder
-    Story: 
-    RuntimeTypeID:
-      m_Value0: 11118427888463720234
-      m_Value1: 7099678123072538779
-    Variables: []
-    NamedChildren: []
-  - Name: Wait (Frames)
-    Story: Wait for [NumFrames] Frames
-    RuntimeTypeID:
-      m_Value0: 10685997693463007778
-      m_Value1: 2335648952198328602
-    Variables:
-    - Name: NumFrames
-      Type:
-        m_SerializableType: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
-  - Name: Navigate To Location
-    Story: '[Agent] navigates to [Location]'
-    RuntimeTypeID:
-      m_Value0: 5253906217568074950
-      m_Value1: 9497054098594320279
-    Variables:
-    - Name: Agent
-      Type:
-        m_SerializableType: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Location
-      Type:
-        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: Speed
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: DistanceThreshold
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: AnimatorSpeedParam
-      Type:
-        m_SerializableType: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    - Name: SlowDownDistance
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      Tooltip: 
-    NamedChildren: []
+    IsPlaceholder: 0
   m_Blackboards: []
   m_MainBlackboardAuthoringAsset: {fileID: -8426080546999329184}
   m_CommandBuffer:
     m_Commands: []
   m_SubgraphsInfo: []
+  m_BlackboardMissingManagedRef: 0
+  m_GraphMissingManagedRef: 0
+  m_HasMissingTypeInManagedRef: 0
   references:
     version: 2
     RefIds:
@@ -1346,7 +901,7 @@ MonoBehaviour:
         - rid: 7650009674374185259
         - rid: 7650009674374185260
         NodeType:
-          m_SerializableType: PatrolRandomPointsAction, Assembly-CSharp, Version=0.0.0.0,
+          m_SerializableType: PatrolRandomPointsAction, Scripts, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         NodeTypeID:
           m_Value0: 58722717026746528
@@ -1472,7 +1027,7 @@ MonoBehaviour:
         LocalValue:
           rid: 7650009674374185812
         LinkedVariable:
-          rid: 7650010005725249578
+          rid: -2
     - rid: 7650009674374185812
       type: {class: 'BlackboardVariable`1[[System.Enum, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -1879,16 +1434,6 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
         m_Value: 0
-    - rid: 7650010005725249578
-      type: {class: 'TypedVariableModel`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        ID:
-          m_Value0: 706588328466319458
-          m_Value1: 8589079216913138478
-        Name: New StatusNpcKaren
-        IsExposed: 1
-        m_IsShared: 0
-        m_Value: 0
     - rid: 7650010005725249594
       type: {class: FloatingPortNodeModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -1973,16 +1518,6 @@ MonoBehaviour:
         m_NodeModel:
           rid: 7650010005725249807
         m_Connections: []
-    - rid: 7650010005725249840
-      type: {class: 'TypedVariableModel`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        ID:
-          m_Value0: 706588328466319458
-          m_Value1: 8589079216913138478
-        Name: New StatusNpcKaren
-        IsExposed: 1
-        m_IsShared: 0
-        m_Value: 0
     - rid: 7650010005725249861
       type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -1991,9 +1526,9 @@ MonoBehaviour:
           m_SerializableType: StatusNpcKaren, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
             PublicKeyToken=null
         LocalValue:
-          rid: 7650010005725249863
+          rid: -2
         LinkedVariable:
-          rid: 7650010005725249840
+          rid: -2
     - rid: 7650010005725249862
       type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -2002,25 +1537,9 @@ MonoBehaviour:
           m_SerializableType: StatusNpcKaren, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
             PublicKeyToken=null
         LocalValue:
-          rid: 7650010005725249864
+          rid: -2
         LinkedVariable:
           rid: -2
-    - rid: 7650010005725249863
-      type: {class: 'BlackboardVariable`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 0
-    - rid: 7650010005725249864
-      type: {class: 'BlackboardVariable`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 1
     - rid: 7650010005725249967
       type: {class: FloatingPortNodeModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -2124,8 +1643,8 @@ MonoBehaviour:
         - rid: 7650010005725250101
         - rid: 7650010005725250102
         NodeType:
-          m_SerializableType: ThrowObjectAction, Assembly-CSharp, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
+          m_SerializableType: ThrowObjectAction, Scripts, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
         NodeTypeID:
           m_Value0: 66621608550203552
           m_Value1: 3976203200
@@ -2259,16 +1778,6 @@ MonoBehaviour:
         m_NodeModel:
           rid: 7650010005725250145
         m_Connections: []
-    - rid: 7650010005725250175
-      type: {class: 'TypedVariableModel`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        ID:
-          m_Value0: 706588328466319458
-          m_Value1: 8589079216913138478
-        Name: New StatusNpcKaren
-        IsExposed: 1
-        m_IsShared: 0
-        m_Value: 0
     - rid: 7650010005725250199
       type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -2277,9 +1786,9 @@ MonoBehaviour:
           m_SerializableType: StatusNpcKaren, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
             PublicKeyToken=null
         LocalValue:
-          rid: 7650010005725250201
+          rid: -2
         LinkedVariable:
-          rid: 7650010005725250175
+          rid: -2
     - rid: 7650010005725250200
       type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -2288,25 +1797,9 @@ MonoBehaviour:
           m_SerializableType: StatusNpcKaren, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
             PublicKeyToken=null
         LocalValue:
-          rid: 7650010005725250202
+          rid: -2
         LinkedVariable:
           rid: -2
-    - rid: 7650010005725250201
-      type: {class: 'BlackboardVariable`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 0
-    - rid: 7650010005725250202
-      type: {class: 'BlackboardVariable`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 2
     - rid: 7650010005725250252
       type: {class: SetValueNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -2354,9 +1847,9 @@ MonoBehaviour:
           m_SerializableType: StatusNpcKaren, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
             PublicKeyToken=null
         LocalValue:
-          rid: 7650010005725250311
+          rid: -2
         LinkedVariable:
-          rid: 7650010005725250175
+          rid: -2
     - rid: 7650010005725250310
       type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -2365,25 +1858,9 @@ MonoBehaviour:
           m_SerializableType: StatusNpcKaren, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
             PublicKeyToken=null
         LocalValue:
-          rid: 7650010005725250312
+          rid: -2
         LinkedVariable:
           rid: -2
-    - rid: 7650010005725250311
-      type: {class: 'BlackboardVariable`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 0
-    - rid: 7650010005725250312
-      type: {class: 'BlackboardVariable`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 0
-          m_Value1: 0
-        Name: 
-        m_Value: 0
     - rid: 7650010005725250313
       type: {class: SequenceNodeModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -2549,7 +2026,7 @@ MonoBehaviour:
         - rid: 7650010006690726217
         - rid: 7650010006690726218
         NodeType:
-          m_SerializableType: GrabTheNearestObjectAction, Assembly-CSharp, Version=0.0.0.0,
+          m_SerializableType: GrabTheNearestObjectAction, Scripts, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
         NodeTypeID:
           m_Value0: 58955792544
@@ -2707,7 +2184,6 @@ MonoBehaviour:
     - rid: 1911685237881438504
     - rid: 1911685239610802438
     - rid: 1911685239610802978
-    - rid: 7650010005725249577
     - rid: 7650010006690726050
   m_SharedBlackboardVariableGuids: []
   references:
@@ -2744,14 +2220,6 @@ MonoBehaviour:
           m_Value0: 10645781662606305424
           m_Value1: 8001892696076834730
         Name: IsRagdoll
-        m_Value: 0
-    - rid: 7650010005725249577
-      type: {class: 'BlackboardVariable`1[[StatusNpcKaren, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 706588328466319458
-          m_Value1: 8589079216913138478
-        Name: New StatusNpcKaren
         m_Value: 0
     - rid: 7650010006690726050
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}

@@ -1,9 +1,9 @@
 name: Actions 😎
 
 on: 
-  workflow_dispatch:
   schedule:
-    - cron: '28 13 * * *'
+    - cron: '31 13 * * *'
+  workflow_dispatch:
 
 jobs:
   test:

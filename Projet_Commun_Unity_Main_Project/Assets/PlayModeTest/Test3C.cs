@@ -9,13 +9,22 @@ public class Test3C
     [SetUp]
     public void Setup()
     {
-        SceneManager.LoadSceneAsync("Test3C");
+        SceneManager.LoadScene("Test3C");
     }
     
     [TearDown]
     public void TearDown()
     {
         SceneManager.UnloadSceneAsync("Test3C");
+    }
+    
+    [UnityTest]
+    public IEnumerator PlayerNotNull()
+    {
+        GameObject player = GameObject.Find("NewPlayer");
+        Assert.IsNotNull(player);
+        
+        yield return null;
     }
     
     [UnityTest]

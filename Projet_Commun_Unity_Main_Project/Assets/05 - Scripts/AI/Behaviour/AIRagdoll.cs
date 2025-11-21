@@ -48,9 +48,7 @@ public class AIRagdoll : Ragdoll
     {
         if (!behaviorGraphAgent) return;
 
-        if (behaviorGraphAgent.GetVariable<T>(variableName, out var variable))
-            variable.Value = value;
-        else
-            Debug.LogWarning($"Variable '{variableName}' introuvable dans le Blackboard !");
+        if (behaviorGraphAgent.GetVariable<T>(variableName, out var variable)) variable.Value = value;
+        else Debug.LogWarning($"Variable '{variableName}' introuvable dans le Blackboard !");
     }
 }

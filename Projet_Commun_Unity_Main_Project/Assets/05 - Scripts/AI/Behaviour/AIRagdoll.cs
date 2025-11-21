@@ -1,6 +1,5 @@
 using UnityEngine;
 using Unity.Behavior;
-using Unity.VisualScripting;
 
 public class AIRagdoll : Ragdoll
 {
@@ -8,8 +7,8 @@ public class AIRagdoll : Ragdoll
     [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;
     [SerializeField] private GameObject bHips;
 
-    [Header("Debug/Test")]
-    [SerializeField] private bool testRagdoll = false;
+    [Header("Debug/Test")] [SerializeField]
+    private bool testRagdoll;
     
     
     public bool IsRagdollState { get; private set; }
@@ -47,15 +46,11 @@ public class AIRagdoll : Ragdoll
 
     private void SetVariableInBlackboard<T>(T value, string variableName)
     {
-        if (behaviorGraphAgent == null) return;
+        if (!behaviorGraphAgent) return;
 
         if (behaviorGraphAgent.GetVariable<T>(variableName, out var variable))
-        {
             variable.Value = value;
-        }
         else
-        {
             Debug.LogWarning($"Variable '{variableName}' introuvable dans le Blackboard !");
-        }
     }
 }

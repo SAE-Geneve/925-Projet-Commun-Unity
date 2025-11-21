@@ -15,7 +15,7 @@ public class Test3C
     [TearDown]
     public void TearDown()
     {
-        SceneManager.UnloadSceneAsync("Test3C");
+        SceneManager.UnloadScene("Test3C");
     }
     
     [UnityTest]

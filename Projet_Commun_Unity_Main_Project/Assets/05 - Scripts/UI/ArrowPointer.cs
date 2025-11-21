@@ -37,7 +37,7 @@ public class ArrowPointer : MonoBehaviour
         {
             targetPosition.position = missionPositions[0].position;
         }
-        _pointerImage=gameObject.GetComponent<Image>();
+        _pointerImage = gameObject.GetComponent<Image>();
     }
 
     private void Update()

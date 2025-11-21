@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class UiManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     
-    public static UiManager Instance { get; private set; }
+    public static UIManager Instance { get; private set; }
     
     [SerializeField] private Canvas pauseCanvas;
 

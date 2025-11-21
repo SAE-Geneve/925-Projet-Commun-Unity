@@ -246,7 +246,7 @@ public class GameManager : MonoBehaviour
             pl.InputManager.active = false;
         }
 
-        UiManager.Instance.ShowPauseCanvas(true);
+        UIManager.Instance.ShowPauseCanvas(true);
         Debug.Log($"Game paused (from {_lastState})");
     }
 
@@ -259,7 +259,7 @@ public class GameManager : MonoBehaviour
             pl.InputManager.active = true;
         }
 
-        UiManager.Instance.ShowPauseCanvas(false);
+        UIManager.Instance.ShowPauseCanvas(false);
         Debug.Log($"Game unpaused (back to {_state})");
     }
 

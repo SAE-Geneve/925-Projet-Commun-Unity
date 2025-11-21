@@ -154,11 +154,9 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-
     public void StartGame()
     {
         SwitchState(GameState.Playing);
-        _context = GameContext.Hub;
         // TODO: Spawn players in the Hub
     }
 
@@ -240,11 +238,11 @@ public class GameManager : MonoBehaviour
     {
         _lastState = _state;
         SwitchState(GameState.Paused);
+        
         Time.timeScale = 0;
+        
         foreach (var pl in _playerManager.Players)
-        {
             pl.InputManager.active = false;
-        }
 
         UIManager.Instance.ShowPauseCanvas(true);
         Debug.Log($"Game paused (from {_lastState})");
@@ -253,11 +251,11 @@ public class GameManager : MonoBehaviour
     private void Unpause()
     {
         SwitchState(_lastState);
+        
         Time.timeScale = 1;
+        
         foreach (var pl in _playerManager.Players)
-        {
             pl.InputManager.active = true;
-        }
 
         UIManager.Instance.ShowPauseCanvas(false);
         Debug.Log($"Game unpaused (back to {_state})");

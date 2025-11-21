@@ -49,6 +49,7 @@ jobs:
       
       # Unity Test Runner
       - name: Unity Test Runner
+        id: tests
         uses: game-ci/unity-test-runner@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}

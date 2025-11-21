@@ -7,42 +7,34 @@ public class ArrowPointer : MonoBehaviour
 {
     [Header("Positioning")]
     public List<Transform> missionPositions;
-    [SerializeField] private Transform targetPosition;
     [SerializeField] private RectTransform canvasTransform;
     
     [Header("Images")]
     [SerializeField] private Sprite arrowSprite;
     [SerializeField] private Sprite crossSprite;
     
+    private Camera _mainCamera;
+    
     private Image _pointerImage;
     private RectTransform _pointerRectTransform;
+    
+    private Vector3 _targetPosition;
 
-    private void Awake()
+    private void Start()
     {
+        _mainCamera = Camera.main;
+        
         _pointerRectTransform = gameObject.GetComponent<RectTransform>();
-  
-        if (!GameManager.Instance.GetMission(MissionID.Boarding).IsLocked)
-        {
-            targetPosition.position = missionPositions[3].position;
-        }
-        else if (!GameManager.Instance.GetMission(MissionID.LostLuggage).IsLocked)
-        {
-            targetPosition.position = missionPositions[2].position;
-        }
-        else if (!GameManager.Instance.GetMission(MissionID.ConveyorBelt).IsLocked)
-        {
-            targetPosition.position = missionPositions[1].position;
-        }
-        else if (!GameManager.Instance.GetMission(MissionID.BorderControl).IsLocked)
-        {
-            targetPosition.position = missionPositions[0].position;
-        }
+        
+        MissionID missionID = UIManager.Instance.TargetMission;
+        _targetPosition = missionPositions[(int)missionID].position;
+        
         _pointerImage = gameObject.GetComponent<Image>();
     }
 
     private void Update()
     {
-        Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(targetPosition.position);
+        Vector3 targetPositionScreenPoint = _mainCamera.WorldToScreenPoint(_targetPosition);
         
         //Checks if the target is in the screen
         float borderSize = 100f;
@@ -87,7 +79,7 @@ public class ArrowPointer : MonoBehaviour
 
     private void RotatePointerTowardsTarget()
     {
-        Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(targetPosition.position);
+        Vector3 targetPositionScreenPoint = _mainCamera.WorldToScreenPoint(_targetPosition);
         
         Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
 

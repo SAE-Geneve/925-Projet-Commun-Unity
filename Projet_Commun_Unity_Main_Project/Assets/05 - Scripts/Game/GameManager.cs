@@ -158,14 +158,14 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         SwitchState(GameState.Playing);
-
+        _context = GameContext.Hub;
         // TODO: Spawn players in the Hub
     }
 
     public void StartCinematic()
     {
         if (_state != GameState.Playing)
-            Debug.LogWarning($"Can only start cinematic when the game is in playing state");
+            Debug.LogWarning("Can only start cinematic when the game is in playing state");
         else SwitchState(GameState.Cinematic);
     }
 

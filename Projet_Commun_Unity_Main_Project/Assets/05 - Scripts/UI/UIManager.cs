@@ -4,6 +4,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
     
+    public MissionID TargetMission { get; set; }
+    
     [SerializeField] private Canvas _pauseCanvas;
 
     public void ShowPauseCanvas(bool state) => _pauseCanvas.enabled = state;
@@ -14,6 +16,4 @@ public class UIManager : MonoBehaviour
         if (Instance && Instance != this) Destroy(gameObject);
         else Instance = this;
     }
-    
-    
 }

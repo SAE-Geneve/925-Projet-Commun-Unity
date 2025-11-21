@@ -8,53 +8,50 @@ public class AIMovementTest : CharacterMovement
     [SerializeField] private float stopDistance = 0.5f;
     [SerializeField] private float accelerationPower = 50f;
     
-    private NavMeshPath path;
-    private int currentCorner = 0;
-    private bool moving = false;
-    private Vector3 destination;
+    private NavMeshPath _path;
+    private int _currentCorner;
+    private bool _moving;
+    private Vector3 _destination;
 
     protected override void Start()
     {
         base.Start();
-        path = new NavMeshPath();
+        _path = new NavMeshPath();
         Rb.freezeRotation = true;
     }
 
     void FixedUpdate()
     {
-        if (!moving)
+        if (!_moving)
         {
-            if (_animator != null)
-                _animator.SetFloat("Speed", 0f);
+            if (_animator) _animator.SetFloat("Speed", 0f);
             return;
         }
 
-        if (path.corners.Length == 0 || currentCorner >= path.corners.Length)
+        if (_path.corners.Length == 0 || _currentCorner >= _path.corners.Length)
         {
             Stop();
-            if (_animator != null)
-                _animator.SetFloat("Speed", 0f);
+            if (_animator) _animator.SetFloat("Speed", 0f);
             return;
         }
 
         Vector3 agentPos = transform.position;
-        Vector3 nextCorner = path.corners[currentCorner];
+        Vector3 nextCorner = _path.corners[_currentCorner];
         Vector3 dirToCorner = nextCorner - agentPos;
         dirToCorner.y = 0f;
 
-        if (dirToCorner.magnitude <= 0.15f || (currentCorner == path.corners.Length - 1 && dirToCorner.magnitude <= stopDistance))
+        if (dirToCorner.magnitude <= 0.15f || (_currentCorner == _path.corners.Length - 1 && dirToCorner.magnitude <= stopDistance))
         {
-            currentCorner++;
+            _currentCorner++;
 
-            if (currentCorner >= path.corners.Length)
+            if (_currentCorner >= _path.corners.Length)
             {
                 Stop();
-                if (_animator != null)
-                    _animator.SetFloat("Speed", 0f);
+                if (_animator) _animator.SetFloat("Speed", 0f);
                 return;
             }
 
-            nextCorner = path.corners[currentCorner];
+            nextCorner = _path.corners[_currentCorner];
             dirToCorner = nextCorner - agentPos;
             dirToCorner.y = 0f;
         }
@@ -62,7 +59,7 @@ public class AIMovementTest : CharacterMovement
         dirToCorner.Normalize();
         MoveAI(dirToCorner);
 
-        if (_animator != null)
+        if (_animator)
         {
             Vector3 flatVelocity = new Vector3(Rb.linearVelocity.x, 0, Rb.linearVelocity.z);
             _animator.SetFloat("Speed", flatVelocity.magnitude / speed);
@@ -89,13 +86,13 @@ public class AIMovementTest : CharacterMovement
 
     public void SetDestination(Vector3 target)
     {
-        destination = target;
+        _destination = target;
         if (NavMesh.SamplePosition(target, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {
-            if (NavMesh.CalculatePath(transform.position, hit.position, NavMesh.AllAreas, path))
+            if (NavMesh.CalculatePath(transform.position, hit.position, NavMesh.AllAreas, _path))
             {
-                currentCorner = 0;
-                moving = true;
+                _currentCorner = 0;
+                _moving = true;
             }
         }
     }
@@ -104,28 +101,26 @@ public class AIMovementTest : CharacterMovement
     {
         if(Rb.isKinematic) return;
         
-        moving = false;
+        _moving = false;
         Rb.linearVelocity = Vector3.zero;
         Rb.angularVelocity = Vector3.zero;
     }
 
     public bool HasReachedDestination()
     {
-        return !moving;
+        return !_moving;
     }
 
     // Debug draw
     void OnDrawGizmos()
     {
-        if (path == null || path.corners.Length == 0) return;
+        if (_path == null || _path.corners.Length == 0) return;
 
         Gizmos.color = Color.green;
-        for (int i = 0; i < path.corners.Length - 1; i++)
-        {
-            Gizmos.DrawLine(path.corners[i], path.corners[i + 1]);
-        }
+        for (int i = 0; i < _path.corners.Length - 1; i++)
+            Gizmos.DrawLine(_path.corners[i], _path.corners[i + 1]);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(destination, 0.3f);
+        Gizmos.DrawSphere(_destination, 0.3f);
     }
 }

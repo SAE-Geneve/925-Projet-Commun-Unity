@@ -14,7 +14,7 @@ public class Prop: MonoBehaviour, IGrabbable
     protected Rigidbody _rb;
     protected Collider _collider;
     
-    private Controller Controller;
+    protected Controller Controller;
     protected Transform _originalParent;
 
     protected virtual void Start()
@@ -45,8 +45,8 @@ public class Prop: MonoBehaviour, IGrabbable
 
         if (Controller)
         {
+            Controller.Reset();
             Controller = null;
-            controller.Reset();
         }
 
         if (throwForce != Vector3.zero)

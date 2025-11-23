@@ -12,14 +12,14 @@ public class InteractableProp : Prop, IInteractable
 
     public override void Grabbed(Controller controller)
     {
-        base.Grabbed(controller);
         controller.InteractableGrabbed = this;
+        base.Grabbed(controller);
     }
 
     public override void Dropped(Vector3 throwForce = default, Controller controller = null)
     {
+        if (Controller) Controller.InteractableGrabbed = null;
         base.Dropped(throwForce, controller);
         InteractEnd();
-        controller.InteractableGrabbed = null;
     }
 }

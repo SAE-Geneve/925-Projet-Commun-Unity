@@ -100,4 +100,37 @@ public class Test3C
 
     #endregion
 
+    #region Movement
+
+    [UnityTest]
+    public IEnumerator MoveAndDesstroyGrab()
+    {
+        GameObject box = GameObject.Find("PropMove");
+        GameObject player = GameObject.Find("CharacterMove");
+        GameObject catchPoint = player.transform.Find("CatchPoint").gameObject;
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+        
+        Assert.IsNotNull(box);
+        Assert.IsNotNull(player);
+        Assert.IsNotNull(catchPoint);
+        Assert.IsNotNull(playerController);
+        Assert.IsNotNull(playerMovement);
+        
+        yield return new WaitForSeconds(1f);
+        
+        playerController.CatchStart();
+
+        Assert.AreEqual(catchPoint, box.transform.parent.gameObject);
+        
+        playerMovement.SetMovement(Vector2.up);
+        
+        yield return new WaitForSeconds(2f);
+        
+        LogAssert.Expect(LogType.Log, "Task Move done!");
+        Assert.IsTrue(playerController.InteractableGrabbed == null);
+    }
+
+    #endregion
+
 }

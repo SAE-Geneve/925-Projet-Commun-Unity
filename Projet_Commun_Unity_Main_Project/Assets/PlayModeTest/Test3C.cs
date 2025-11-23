@@ -21,7 +21,7 @@ public class Test3C
     [UnityTest]
     public IEnumerator PlayerNotNull()
     {
-        GameObject player = GameObject.Find("PlayerGrab");
+        GameObject player = GameObject.Find("CharacterGrab");
         Assert.IsNotNull(player);
         
         yield return null;
@@ -32,22 +32,25 @@ public class Test3C
     [UnityTest]
     public IEnumerator TestGrab()
     {
-        GameObject box = GameObject.Find("White");
-        GameObject player = GameObject.Find("PlayerGrab");
+        GameObject box = GameObject.Find("PropGrab");
+        GameObject player = GameObject.Find("CharacterGrab");
+        GameObject catchPoint = GameObject.Find("CatchPoint");
         Controller controller = player.GetComponent<Controller>();
         
-        Assert.IsNotNull(player);
         Assert.IsNotNull(box);
+        Assert.IsNotNull(player);
+        Assert.IsNotNull(catchPoint);
+        Assert.IsNotNull(controller);
         
         yield return new WaitForSeconds(1f);
         
         controller.CatchStart();
 
-        Assert.AreEqual(GameObject.Find("CatchPoint"), box.transform.parent.gameObject);
+        Assert.AreEqual(catchPoint, box.transform.parent.gameObject);
         
         controller.Drop();
         
-        Assert.IsNull(box.transform.parent);
+        Assert.AreNotEqual(catchPoint, box.transform.parent.gameObject);
     }
 
     #endregion

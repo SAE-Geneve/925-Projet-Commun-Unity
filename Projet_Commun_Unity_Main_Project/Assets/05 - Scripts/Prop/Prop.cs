@@ -41,13 +41,9 @@ public class Prop: MonoBehaviour, IGrabbable
     public virtual void Dropped(Vector3 throwForce = default, Controller controller = null)
     {
         transform.SetParent(_originalParent);
-        if(_rb != null) _rb.isKinematic = false;
+        if(_rb) _rb.isKinematic = false;
 
-        if (Controller)
-        {
-            Controller.Reset();
-            Controller = null;
-        }
+        if (Controller) Controller = null;
 
         if (throwForce != Vector3.zero)
         {

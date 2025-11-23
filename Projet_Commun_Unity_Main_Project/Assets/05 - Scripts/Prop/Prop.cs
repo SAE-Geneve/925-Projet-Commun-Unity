@@ -43,7 +43,11 @@ public class Prop: MonoBehaviour, IGrabbable
         transform.SetParent(_originalParent);
         if(_rb) _rb.isKinematic = false;
 
-        if (Controller) Controller = null;
+        if (Controller)
+        {
+            Controller = null;
+            controller.Reset();
+        }
 
         if (throwForce != Vector3.zero)
         {

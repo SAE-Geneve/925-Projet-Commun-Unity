@@ -107,6 +107,11 @@ public class PlayerManager : MonoBehaviour
         OnReconnectTimerOut?.Invoke(_lastDisconnectPlayer);
         RemovePlayer(_lastDisconnectPlayer);
         CleanupDisconnectedPlayer();
+
+        if (_players.Count < 2)
+        {
+            _gameManager.ReturnToMainMenu();
+        }
     }
 
     private void RemovePlayer(PlayerController player)

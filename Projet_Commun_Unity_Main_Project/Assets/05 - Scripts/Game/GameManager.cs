@@ -156,8 +156,10 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        if (_playerManager.PlayerCount < 2) return;
         SwitchState(GameState.Playing);
-        // TODO: Spawn players in the Hub
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
+        SceneLoader.Instance.LoadScene("HubScene");
     }
 
     public void StartCinematic()
@@ -165,6 +167,13 @@ public class GameManager : MonoBehaviour
         if (_state != GameState.Playing)
             Debug.LogWarning("Can only start cinematic when the game is in playing state");
         else SwitchState(GameState.Cinematic);
+    }
+    
+    public void ReturnToMainMenu()
+    {
+        SwitchState(GameState.Menu);
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
+        SceneLoader.Instance.LoadScene("MainMenu");
     }
 
     #region Mission

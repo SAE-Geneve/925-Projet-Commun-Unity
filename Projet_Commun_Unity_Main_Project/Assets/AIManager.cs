@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Behavior; // Assure-toi d'avoir le bon namespace
 
 public class AIManager : MonoBehaviour
 {
@@ -17,7 +16,7 @@ public class AIManager : MonoBehaviour
             Debug.LogWarning("AIManager: Aucun point de spawn ou prefab assigné !");
             return;
         }
-
+        
         StartCoroutine(SpawnRoutine());
     }
 
@@ -33,17 +32,8 @@ public class AIManager : MonoBehaviour
     private void SpawnNPC()
     {
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+        
         GameObject npc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
-
-        // 🔥 IMPORTANT : Cloner le Blackboard pour cette instance
-        var behaviorGraphAgent = npc.GetComponent<BehaviorGraphAgent>();
-        if (behaviorGraphAgent != null && behaviorGraphAgent.BlackboardReference != null)
-        {
-            // Crée une copie du Blackboard pour cet agent
-            var newBlackboard = Instantiate(behaviorGraphAgent.BlackboardReference);
-            behaviorGraphAgent.BlackboardReference = newBlackboard;
-            
-            Debug.Log($"NPC spawné avec Blackboard unique: {npc.name}");
-        }
+        
     }
 }

@@ -67,6 +67,18 @@ public class GameManager : MonoBehaviour
         _disconnectionTimer = _initialDisconnectionTime;
         _playerManager.OnReconnectionTimeOut();
         SwitchState(GameState.Playing);
+
+        
+        // if (_playerManager.PlayerCount < 2)
+        // {
+        //     SwitchState(GameState.Menu);
+        //     AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
+        //     SceneLoader.Instance.LoadScene("MainMenu");
+        // }
+        // else
+        // {
+        //     SwitchState(GameState.Playing);
+        // }
     }
 
     public GameState State => _state;
@@ -156,8 +168,10 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        SwitchState(GameState.Playing);
-        // TODO: Spawn players in the Hub
+        // if (_playerManager.PlayerCount < 2) return;
+        // SwitchState(GameState.Playing);
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
+        // SceneLoader.Instance.LoadScene("HubScene");
     }
 
     public void StartCinematic()

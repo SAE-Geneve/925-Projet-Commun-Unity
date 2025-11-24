@@ -5,10 +5,11 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "GrabTheNearestObject", story: "[self] grab an object and assign [GrabbedObject]", category: "Action", id: "ai_grabandthrow_random")]
+[NodeDescription(name: "GrabTheNearestObject", story: "[self] grab an [object] and assign [GrabbedObject]", category: "Action", id: "ai_grabandthrow_random")]
 public partial class GrabTheNearestObjectAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
+    [SerializeReference] public BlackboardVariable<string> Object;
     [SerializeReference] public BlackboardVariable<GameObject> GrabbedObject;
     private AIMovementTest aiMove;
     private Controller _controller;
@@ -66,7 +67,7 @@ public partial class GrabTheNearestObjectAction : Action
                 continue;
             }
     
-            if (!hit.CompareTag("AIProp"))
+            if (!hit.CompareTag(Object.Value))
             {
                 continue;
             }

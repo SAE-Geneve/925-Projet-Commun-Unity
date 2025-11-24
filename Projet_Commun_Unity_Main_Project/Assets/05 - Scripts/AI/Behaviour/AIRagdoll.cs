@@ -11,7 +11,7 @@ public class AIRagdoll : Ragdoll
     private bool testRagdoll;
     
     
-    public bool IsRagdollState { get; private set; }
+    private bool IsRagdollState { get; set; }
 
     void Update()
     {

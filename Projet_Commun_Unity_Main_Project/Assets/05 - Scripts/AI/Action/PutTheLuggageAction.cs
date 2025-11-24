@@ -39,8 +39,9 @@ public partial class PutTheLuggageAction : Action
         if (!Luggage.Value.TryGetComponent(out grabbable))
             return Status.Failure;
 
-        // direction vers le tapis
-        Vector3 dir = (Thing.Value.position - npcTransform.position).normalized;
+        // direction vers le tapis (ignorer la hauteur)
+        Vector3 dir = Thing.Value.position - npcTransform.position;
+        dir.y = 0f; // on bloque la rotation horizontale
         if (dir.sqrMagnitude < 0.01f) dir = npcTransform.forward;
 
         startRot = npcTransform.rotation;
@@ -50,6 +51,7 @@ public partial class PutTheLuggageAction : Action
 
         return Status.Running;
     }
+
 
     protected override Status OnUpdate()
     {

@@ -13,8 +13,7 @@ public class UIScreenEffects : MonoBehaviour
     [Tooltip("Curve of the color graduation")] [SerializeField]
     private AnimationCurve colorCurve;
 
-    [FormerlySerializedAs("effectDuration")] [Header("Effects")] [SerializeField]
-    private float textEffectDuration = 2.5f;
+    [Header("Effects")] [SerializeField] private float textEffectDuration = 2.5f;
 
     [SerializeField] private float imageEffectDuration = 2f;
 
@@ -71,9 +70,16 @@ public class UIScreenEffects : MonoBehaviour
         return tempText;
     }
 
-    public IEnumerator DoImageFade()
+    private Image TemporaryVariableMaker(Image imageSample)
     {
-        var tempImage=_imagePool.Get();
+        Image tempImage = Instantiate(imageSample, imageSample.transform.parent);
+        tempImage.gameObject.SetActive(true);
+        return tempImage;
+    }
+
+    public IEnumerator DoImagePoolFade()
+    {
+        var tempImage = _imagePool.Get();
 
         Color startcolor = tempImage.color;
         Color endcolor = new Color(tempImage.color.r, tempImage.color.g, tempImage.color.b, 0);
@@ -90,6 +96,28 @@ public class UIScreenEffects : MonoBehaviour
         }
 
         _imagePool.Release(tempImage);
+        yield return null;
+    }
+
+    public IEnumerator DoImageFade(Image fadeImage)
+    {
+        var tempImage = TemporaryVariableMaker(fadeImage);
+
+        Color startcolor = tempImage.color;
+        Color endcolor = new Color(tempImage.color.r, tempImage.color.g, tempImage.color.b, 0);
+        float t = 0.0f;
+        while (tempImage.color.a > 0)
+        {
+            tempImage.color = Color.Lerp(startcolor, endcolor, t);
+            if (t < 1)
+            {
+                t += Time.deltaTime / imageEffectDuration;
+            }
+
+            yield return null;
+        }
+
+        Destroy(tempImage);
         yield return null;
     }
 

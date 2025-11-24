@@ -2266,10 +2266,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 966cf25c8936c944f827ac9069bba472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ragdollTime: 3
   playerRig: {fileID: 0}
   hipsTransform: {fileID: 8060111836015033284}
+  ragdollTime: 3
+  _ragdollVelocityThreshold: 3
   behaviorGraphAgent: {fileID: 2759791066519186907}
+  bHips: {fileID: 0}
   testRagdoll: 0
 --- !u!195 &7125759346710093108
 NavMeshAgent:
@@ -2309,6 +2311,7 @@ MonoBehaviour:
   m_BlackboardVariableOverridesList:
   - rid: 7650009674374185207
   - rid: 7650009674374185208
+  m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
   references:

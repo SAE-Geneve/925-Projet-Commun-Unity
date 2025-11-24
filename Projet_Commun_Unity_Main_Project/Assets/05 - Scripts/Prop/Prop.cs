@@ -14,7 +14,7 @@ public class Prop: MonoBehaviour, IGrabbable
     protected Rigidbody _rb;
     protected Collider _collider;
     
-    private Controller Controller;
+    protected Controller Controller;
     protected Transform _originalParent;
 
     protected virtual void Start()
@@ -41,7 +41,7 @@ public class Prop: MonoBehaviour, IGrabbable
     public virtual void Dropped(Vector3 throwForce = default, Controller controller = null)
     {
         transform.SetParent(_originalParent);
-        if(_rb != null) _rb.isKinematic = false;
+        if(_rb) _rb.isKinematic = false;
 
         if (Controller)
         {

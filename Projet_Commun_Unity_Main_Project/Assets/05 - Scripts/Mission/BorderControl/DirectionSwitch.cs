@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class DirectionSwitch : ConveyorBelt
 {
-    [Header("Direction Switch")] 
-    [SerializeField] private List<MultipleDirection> _multipleDirections;
+    [Header("Direction Switch")] [SerializeField]
+    private List<MultipleDirection> _multipleDirections;
+
     [SerializeField] private float _switchDelay = 3f;
-    
+
     [Serializable]
     private struct MultipleDirection
     {
@@ -15,15 +16,21 @@ public class DirectionSwitch : ConveyorBelt
     }
 
     private List<Vector2> _directions;
-    
+
     private int _multipleDirectionIndex;
     private int _directionIndex;
 
     private void Start()
     {
         _directions = _multipleDirections[_multipleDirectionIndex].Directions;
-        
+
         InvokeRepeating(nameof(SwitchDirection), _switchDelay, _switchDelay);
+    }
+
+    public void SetDirection(int directionIndex)
+    {
+        _multipleDirectionIndex = directionIndex;
+        _directions = _multipleDirections[_multipleDirectionIndex].Directions;
     }
 
     private void SwitchDirection()

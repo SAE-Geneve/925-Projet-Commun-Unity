@@ -1830,9 +1830,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5774036932189983833}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8274003765300396968}
@@ -1911,6 +1911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 000c70b7213207d43900ede3c2e9b3e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 1
 --- !u!136 &4608237294674638917
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1930,10 +1931,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.45437515
-  m_Height: 2.8609352
+  m_Radius: 0.34078133
+  m_Height: 2.1457012
   m_Direction: 1
-  m_Center: {x: 0.0028089285, y: 1.4212847, z: 0}
+  m_Center: {x: 0.0028089285, y: 1.09, z: 0}
 --- !u!54 &7672415892060258040
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2088,22 +2089,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7948060877399390895}
         m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: OnRagdoll
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 419f090b-af8c-4729-8f9d-51a73e397c94
-    m_ActionName: 'Game/Ragdoll[/DualShock4GamepadHID/buttonNorth,/Keyboard/shift]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7948060877399390895}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
         m_MethodName: OnKartMove
         m_Mode: 0
         m_Arguments:
@@ -2132,6 +2117,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: eddbbd1b-6389-445e-b8a5-e2364ad6520c
     m_ActionName: 'Kart/Exit[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7948060877399390895}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2e3f7e8e-f9db-4173-a2c7-8afe7a0d8bfa
+    m_ActionName: 'Game/Pause[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game
@@ -2165,7 +2166,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4215541234901167773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2530,8 +2531,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 417329128717184314}
   m_Father: {fileID: 4215541234901167773}

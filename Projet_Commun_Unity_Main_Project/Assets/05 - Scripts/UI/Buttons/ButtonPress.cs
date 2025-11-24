@@ -15,15 +15,22 @@ public class ButtonPress : MonoBehaviour
     {
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
         currentCanvas.enabled = false;
-        currentCanvas.gameObject.SetActive(false);
+        // currentCanvas.gameObject.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
-        
-        newCanvas.gameObject.SetActive(true);
-        newCanvas.enabled = true;
-        BasicButtonSetup buttonSetup = newCanvas.transform.GetComponent<BasicButtonSetup>();
-        if (buttonSetup != null)
+
+        if (newCanvas != null)
         {
-            buttonSetup.ButtonChange();
+            newCanvas.gameObject.SetActive(true);
+            newCanvas.enabled = true;
+            BasicButtonSetup buttonSetup = newCanvas.transform.GetComponent<BasicButtonSetup>();
+            if (buttonSetup != null)
+            {
+                buttonSetup.ButtonChange();
+            }
+        }
+        else
+        {
+            GameManager.Instance.PauseTrigger();
         }
     }
 }

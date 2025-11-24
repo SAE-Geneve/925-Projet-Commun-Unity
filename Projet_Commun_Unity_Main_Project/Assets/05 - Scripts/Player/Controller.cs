@@ -71,7 +71,10 @@ public class Controller : MonoBehaviour, IGrabbable
 
     public void Drop()
     {
-        if (_grabbed != null) _grabbed.Dropped(ThrowDirection(), this);
+        if (_grabbed != null)
+        {
+            _grabbed.Dropped(ThrowDirection(), this);
+        }
     }
 
     private void Update()
@@ -141,7 +144,6 @@ public class Controller : MonoBehaviour, IGrabbable
 
     public void Dropped(Vector3 throwForce = default, Controller controller = null)
     {
-        Debug.Log("Dropped");
         transform.SetParent(_originalParent);
 
         Rb.isKinematic = false;
@@ -155,6 +157,8 @@ public class Controller : MonoBehaviour, IGrabbable
         StartCoroutine(DropRoutine());
         
         if (controller) controller.Reset();
+        
+        Debug.Log("Dropped controller");
     }
 
     private IEnumerator DropRoutine()

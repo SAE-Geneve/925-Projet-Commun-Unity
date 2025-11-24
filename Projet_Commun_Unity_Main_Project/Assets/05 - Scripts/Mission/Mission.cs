@@ -40,12 +40,15 @@ public class Mission : MonoBehaviour
     private float _timer;
     
     private GameManager _gameManager;
+    private UIManager _uiManager;
 
     protected virtual void Start()
     {
         _gameManager = GameManager.Instance;
+        _uiManager = UIManager.Instance;
         
         SwitchMissionState(_missionState);
+        if(_missionState == MissionState.Unlocked) UpdateTargetMission();
     }
 
     private void Update()
@@ -83,13 +86,19 @@ public class Mission : MonoBehaviour
     
         Debug.Log($"Mission {_name} finished");
     }
-    
-    public void Unlock() => SwitchMissionState(MissionState.Unlocked);
+
+    public void Unlock()
+    {
+        SwitchMissionState(MissionState.Unlocked);
+        UpdateTargetMission();
+    }
 
     protected virtual void SwitchMissionState(MissionState newState)
     {
         if(newState != _missionState) _missionState = newState;
     }
+
+    private void UpdateTargetMission() => _uiManager.TargetMission = _missionID;
 }
 
 public enum MissionID

@@ -67,6 +67,18 @@ public class GameManager : MonoBehaviour
         _disconnectionTimer = _initialDisconnectionTime;
         _playerManager.OnReconnectionTimeOut();
         SwitchState(GameState.Playing);
+
+        
+        // if (_playerManager.PlayerCount < 2)
+        // {
+        //     SwitchState(GameState.Menu);
+        //     AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
+        //     SceneLoader.Instance.LoadScene("MainMenu");
+        // }
+        // else
+        // {
+        //     SwitchState(GameState.Playing);
+        // }
     }
 
     public GameState State => _state;
@@ -156,10 +168,10 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        if (_playerManager.PlayerCount < 2) return;
-        SwitchState(GameState.Playing);
+        // if (_playerManager.PlayerCount < 2) return;
+        // SwitchState(GameState.Playing);
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
-        SceneLoader.Instance.LoadScene("HubScene");
+        // SceneLoader.Instance.LoadScene("HubScene");
     }
 
     public void StartCinematic()
@@ -167,13 +179,6 @@ public class GameManager : MonoBehaviour
         if (_state != GameState.Playing)
             Debug.LogWarning("Can only start cinematic when the game is in playing state");
         else SwitchState(GameState.Cinematic);
-    }
-    
-    public void ReturnToMainMenu()
-    {
-        SwitchState(GameState.Menu);
-        AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
-        SceneLoader.Instance.LoadScene("MainMenu");
     }
 
     #region Mission

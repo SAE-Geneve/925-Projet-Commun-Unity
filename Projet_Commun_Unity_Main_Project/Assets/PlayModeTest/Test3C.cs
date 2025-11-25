@@ -17,6 +17,30 @@ public class Test3C
     {
         SceneManager.UnloadSceneAsync("Test3C");
     }
+    
+    #region Movement
+    
+    [UnityTest]
+    public IEnumerator Move()
+    {
+        PlayerMovement playerMovement = GameObject.Find("CharacterMove").GetComponent<PlayerMovement>();
+        DebugTriggerController debugTriggerController = GameObject.Find("TargetMove").GetComponent<DebugTriggerController>();
+        
+        Assert.IsNotNull(playerMovement);
+        Assert.IsNotNull(debugTriggerController);
+        
+        yield return new WaitForSeconds(1f);
+        
+        playerMovement.SetMovement(Vector2.up);
+        
+        yield return new WaitForSeconds(2f);
+        
+        playerMovement.SetMovement(Vector2.zero);
+        
+        Assert.IsTrue(debugTriggerController.Success);
+    }
+
+    #endregion
 
     #region Controller
 
@@ -97,16 +121,12 @@ public class Test3C
         
         LogAssert.Expect(LogType.Log, "Interact with prop");
     }
-
-    #endregion
-
-    #region Movement
-
+    
     [UnityTest]
-    public IEnumerator MoveAndDesstroyGrab()
+    public IEnumerator DestroyGrab()
     {
-        GameObject box = GameObject.Find("PropMove");
-        GameObject player = GameObject.Find("CharacterMove");
+        GameObject box = GameObject.Find("PropDestroyGrab");
+        GameObject player = GameObject.Find("CharacterDestroyGrab");
         GameObject catchPoint = player.transform.Find("CatchPoint").gameObject;
         PlayerController playerController = player.GetComponent<PlayerController>();
         PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
@@ -132,5 +152,4 @@ public class Test3C
     }
 
     #endregion
-
 }

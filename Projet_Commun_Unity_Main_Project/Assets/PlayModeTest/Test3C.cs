@@ -39,6 +39,24 @@ public class Test3C
         
         Assert.IsTrue(debugTriggerController.Success);
     }
+    
+    [UnityTest]
+    public IEnumerator Dash()
+    {
+        PlayerMovement playerMovement = GameObject.Find("CharacterDash").GetComponent<PlayerMovement>();
+        DebugTriggerController debugTriggerController = GameObject.Find("TargetDash").GetComponent<DebugTriggerController>();
+        
+        Assert.IsNotNull(playerMovement);
+        Assert.IsNotNull(debugTriggerController);
+        
+        yield return new WaitForSeconds(1f);
+        
+        playerMovement.Dash();
+        
+        yield return new WaitForSeconds(2f);
+        
+        Assert.IsTrue(debugTriggerController.Success);
+    }
 
     #endregion
 

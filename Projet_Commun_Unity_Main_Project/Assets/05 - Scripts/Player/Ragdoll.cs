@@ -16,6 +16,8 @@ public class Ragdoll : MonoBehaviour
     
     public event Action OnRagdoll;
     public event Action<Ragdoll> OnRagdollSelf;
+    
+    public bool IsRagdoll { get; private set; }
 
     private Animator _animator;
     private Collider _mainCollider;
@@ -69,6 +71,8 @@ public class Ragdoll : MonoBehaviour
         if (_ragdollCoroutine != null)
             StopCoroutine(_ragdollCoroutine);
         _ragdollCoroutine = StartCoroutine(RagdollTimer());
+
+        IsRagdoll = true;
     }
 
     protected virtual void RagdollOff()
@@ -86,8 +90,9 @@ public class Ragdoll : MonoBehaviour
         _mainCollider.enabled = true;
         _animator.enabled = true;
 
-        if (_playerInput)
-            _playerInput.currentActionMap.Enable();
+        if (_playerInput) _playerInput.currentActionMap.Enable();
+
+        IsRagdoll = false;
     }
 
     private void OnCollisionEnter(Collision other)

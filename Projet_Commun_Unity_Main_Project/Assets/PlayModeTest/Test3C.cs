@@ -170,4 +170,22 @@ public class Test3C
     }
 
     #endregion
+
+    #region Ragdoll
+
+    [UnityTest]
+    public IEnumerator SimpleRagdoll()
+    {
+        Ragdoll ragdoll = GameObject.Find("CharacterSimpleRagdoll").GetComponent<Ragdoll>();
+        
+        Assert.IsNotNull(ragdoll);
+
+        yield return new WaitForSeconds(1f);
+        
+        ragdoll.RagdollOn();
+        
+        Assert.IsTrue(ragdoll.IsRagdoll);
+    }
+
+    #endregion
 }

@@ -168,6 +168,28 @@ public class Test3C
         LogAssert.Expect(LogType.Log, "Task Destroy done!");
         Assert.IsTrue(playerController.InteractableGrabbed == null);
     }
+    
+    [UnityTest]
+    public IEnumerator PushPull()
+    {
+        GameObject box = GameObject.Find("PushPullProp");
+        PlayerController controller = GameObject.Find("CharacterPushPull").GetComponent<PlayerController>();
+        
+        Assert.IsNotNull(box);
+        Assert.IsNotNull(controller);
+        
+        yield return new WaitForSeconds(1f);
+        
+        controller.CatchStart();
+        
+        Debug.Log(controller.transform.parent);
+
+        Assert.AreEqual(controller.transform.parent.gameObject, box.transform.gameObject);
+        
+        controller.Drop();
+        
+        Assert.AreNotEqual(controller.transform.parent, box.transform.gameObject);
+    }
 
     #endregion
 

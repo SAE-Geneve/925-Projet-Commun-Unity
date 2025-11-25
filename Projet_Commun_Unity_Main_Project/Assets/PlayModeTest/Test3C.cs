@@ -209,7 +209,6 @@ public class Test3C
         Assert.IsTrue(ragdoll.IsRagdoll);
     }
     
-    
     [UnityTest]
     public IEnumerator RagdollProp()
     {
@@ -235,6 +234,23 @@ public class Test3C
         
         Assert.IsTrue(ragdoll.IsRagdoll);
         Assert.AreNotEqual(catchPoint, box.transform.parent.gameObject);
+    }
+    
+    [UnityTest]
+    public IEnumerator InteractiveRagdoll()
+    {
+        Ragdoll ragdoll = GameObject.Find("CharacterInteractiveRagdoll").GetComponent<Ragdoll>();
+        Prop box = GameObject.Find("PropInteractiveRagdoll").GetComponent<Prop>();
+        
+        Assert.IsNotNull(ragdoll);
+
+        yield return new WaitForSeconds(1f);
+        
+        box.Rb.AddForce(-Vector3.forward * 10f + Vector3.up * 2f, ForceMode.Impulse);
+        
+        yield return new WaitForSeconds(0.5f);
+        
+        Assert.IsTrue(ragdoll.IsRagdoll);
     }
 
     #endregion

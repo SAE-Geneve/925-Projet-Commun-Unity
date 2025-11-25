@@ -103,10 +103,10 @@ public class Test3C
     #region Movement
 
     [UnityTest]
-    public IEnumerator MoveAndDesstroyGrab()
+    public IEnumerator MoveAndDestroyGrab()
     {
-        GameObject box = GameObject.Find("PropMove");
-        GameObject player = GameObject.Find("CharacterMove");
+        GameObject box = GameObject.Find("PropDestroyGrab");
+        GameObject player = GameObject.Find("CharacterDestroyGrab");
         GameObject catchPoint = player.transform.Find("CatchPoint").gameObject;
         PlayerController playerController = player.GetComponent<PlayerController>();
         PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();

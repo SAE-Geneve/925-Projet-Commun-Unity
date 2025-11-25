@@ -186,6 +186,34 @@ public class Test3C
         
         Assert.IsTrue(ragdoll.IsRagdoll);
     }
+    
+    
+    [UnityTest]
+    public IEnumerator RagdollProp()
+    {
+        GameObject player = GameObject.Find("CharacterRagdollProp");
+        Controller controller = player.GetComponent<Controller>();
+        Ragdoll ragdoll = player.GetComponent<Ragdoll>();
+        GameObject catchPoint = player.transform.Find("CatchPoint").gameObject;
+        GameObject box = GameObject.Find("PropRagdoll");
+        
+        Assert.IsNotNull(player);
+        Assert.IsNotNull(controller);
+        Assert.IsNotNull(ragdoll);
+        Assert.IsNotNull(catchPoint);
+        Assert.IsNotNull(box);
+
+        yield return new WaitForSeconds(1f);
+        
+        controller.CatchStart();
+
+        Assert.AreEqual(catchPoint, box.transform.parent.gameObject);
+        
+        ragdoll.RagdollOn();
+        
+        Assert.IsTrue(ragdoll.IsRagdoll);
+        Assert.AreNotEqual(catchPoint, box.transform.parent.gameObject);
+    }
 
     #endregion
 }

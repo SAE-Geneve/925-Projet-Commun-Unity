@@ -165,7 +165,7 @@ public class Test3C
         
         yield return new WaitForSeconds(2f);
         
-        LogAssert.Expect(LogType.Log, "Task Move done!");
+        LogAssert.Expect(LogType.Log, "Task Destroy done!");
         Assert.IsTrue(playerController.InteractableGrabbed == null);
     }
 

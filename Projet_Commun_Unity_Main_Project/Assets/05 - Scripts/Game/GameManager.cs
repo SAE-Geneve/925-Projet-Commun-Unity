@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("References")] [Tooltip("The missions that will be played in order")] [SerializeField]
-    private Mission[] _missions;
+    [Header("References")]
+    [Tooltip("The missions that will be played in order")] 
+    [SerializeField] private Mission[] _missions;
 
     [Header("Parameters")] [Tooltip("The global timer initial time")] [SerializeField] [Min(0)]
     private float _initialTimer = 90f;
@@ -57,7 +58,6 @@ public class GameManager : MonoBehaviour
 
     public Mission CurrentMission { get; private set; }
 
-
     private PlayerManager _playerManager;
 
     private Dictionary<MissionID, Mission> _missionMap;
@@ -101,8 +101,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _playerManager = FindFirstObjectByType<PlayerManager>();
-        _playerManager.PlayerInputManager.DisableJoining();
+        _playerManager = PlayerManager.Instance;
+        if(_playerManager) _playerManager.PlayerInputManager.DisableJoining();
         ResetGame();
         Debug.Log($"Game State: {_state}");
     }
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         
-        if (newState == GameState.Lobby || _context == GameContext.Hub)
+        if ((newState == GameState.Lobby || _context == GameContext.Hub) && _playerManager)
             _playerManager.PlayerInputManager.EnableJoining();
 
         _state = newState;
@@ -171,6 +171,8 @@ public class GameManager : MonoBehaviour
     private void BuildMissionMap()
     {
         _missionMap = new Dictionary<MissionID, Mission>();
+        
+        if(_missions == null || _missions.Length == 0) return;
 
         foreach (Mission mission in _missions)
         {
@@ -190,7 +192,7 @@ public class GameManager : MonoBehaviour
         }
 
         CurrentMission = mission;
-        _playerManager.PlayerInputManager.DisableJoining();
+        if(_playerManager) _playerManager.PlayerInputManager.DisableJoining();
         _context = GameContext.Mission;
     }
 
@@ -203,7 +205,7 @@ public class GameManager : MonoBehaviour
         }
 
         CurrentMission = null;
-        _playerManager.PlayerInputManager.EnableJoining();
+        if(_playerManager) _playerManager.PlayerInputManager.EnableJoining();
         _context = GameContext.Hub;
     }
 

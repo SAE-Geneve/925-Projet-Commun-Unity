@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 389787742097615275}
   - component: {fileID: 8131820044201778979}
   - component: {fileID: 4271833697639904814}
-  - component: {fileID: 6232881433728489371}
   - component: {fileID: 439636550793071269}
   m_Layer: 5
   m_Name: Main Menu
@@ -123,7 +122,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6232881433728489371}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 5
@@ -147,18 +146,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6232881433728489371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1467428754240780171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28b10375b97bab642989fb6dafe94b7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &439636550793071269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,7 +716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399f967e21d774440b98cae36e608152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCanvas: {fileID: 0}
+  currentCanvas: {fileID: 7291355748843282492}
   newCanvas: {fileID: 0}
 --- !u!1 &4153222084222235959
 GameObject:
@@ -1102,7 +1089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399f967e21d774440b98cae36e608152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCanvas: {fileID: 0}
+  currentCanvas: {fileID: 7291355748843282492}
   newCanvas: {fileID: 0}
 --- !u!1 &6600580770780615794
 GameObject:
@@ -1355,7 +1342,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7746799734334145172}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}

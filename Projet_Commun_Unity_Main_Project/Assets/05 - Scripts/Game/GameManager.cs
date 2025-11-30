@@ -242,10 +242,11 @@ public class GameManager : MonoBehaviour
         
         Time.timeScale = 0;
         
-        foreach (var pl in _playerManager.Players)
-            pl.InputManager.active = false;
+        if(_playerManager)
+            foreach (var pl in _playerManager.Players)
+                pl.InputManager.active = false;
 
-        UIManager.Instance.ShowPauseCanvas(true);
+        if(UIManager.Instance) UIManager.Instance.ShowPauseCanvas(true);
         Debug.Log($"Game paused (from {_lastState})");
     }
 
@@ -255,10 +256,11 @@ public class GameManager : MonoBehaviour
         
         Time.timeScale = 1;
         
-        foreach (var pl in _playerManager.Players)
-            pl.InputManager.active = true;
+        if(_playerManager)
+            foreach (var pl in _playerManager.Players)
+                pl.InputManager.active = true;
 
-        UIManager.Instance.ShowPauseCanvas(false);
+        if(UIManager.Instance) UIManager.Instance.ShowPauseCanvas(false);
         Debug.Log($"Game unpaused (back to {_state})");
     }
 

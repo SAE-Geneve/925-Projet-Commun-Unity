@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.Serialization;
+
 using UnityEngine.UI;
 
 public class UIScreenEffects : MonoBehaviour

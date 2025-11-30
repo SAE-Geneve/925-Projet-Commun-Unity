@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class TriggerScene : MonoBehaviour
+public class MissionTrigger : MonoBehaviour
 {
     [Header("References")] 
     [Tooltip("The tmp of the state of the mission")]

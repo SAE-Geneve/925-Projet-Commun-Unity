@@ -67,18 +67,6 @@ public class GameManager : MonoBehaviour
         _disconnectionTimer = _initialDisconnectionTime;
         _playerManager.OnReconnectionTimeOut();
         SwitchState(GameState.Playing);
-
-        
-        // if (_playerManager.PlayerCount < 2)
-        // {
-        //     SwitchState(GameState.Menu);
-        //     AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
-        //     SceneLoader.Instance.LoadScene("MainMenu");
-        // }
-        // else
-        // {
-        //     SwitchState(GameState.Playing);
-        // }
     }
 
     public GameState State => _state;
@@ -138,9 +126,7 @@ public class GameManager : MonoBehaviour
         }
         
         if (newState == GameState.Lobby || _context == GameContext.Hub)
-        {
             _playerManager.PlayerInputManager.EnableJoining();
-        }
 
         _state = newState;
         Debug.Log($"Game State: {_state}");
@@ -168,10 +154,9 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        // if (_playerManager.PlayerCount < 2) return;
-        // SwitchState(GameState.Playing);
+        SwitchState(GameState.Playing);
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
-        // SceneLoader.Instance.LoadScene("HubScene");
+        SceneLoader.Instance.LoadScene("HubScene");
     }
 
     public void StartCinematic()

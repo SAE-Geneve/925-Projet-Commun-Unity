@@ -3,6 +3,7 @@ using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Unity.Properties;
+using Random = UnityEngine.Random;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "GrabTheNearestObject", story: "[self] grab an [object] and assign [GrabbedObject]", category: "Action", id: "ai_grabandthrow_random")]
@@ -11,36 +12,52 @@ public partial class GrabTheNearestObjectAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     [SerializeReference] public BlackboardVariable<string> Object;
     [SerializeReference] public BlackboardVariable<GameObject> GrabbedObject;
-    private AIMovementTest aiMove;
-    private Controller _controller;
+    
+    private AIMovementTest aiMove; 
+    private Controller _controller; 
     private Transform selfTransform;
     private IGrabbable targetGrabbable;
-
+    
     private enum Phase { Searching, Moving, Done }
     private Phase phase;
+    
+    private bool searchFailed; 
 
     protected override Status OnStart()
     {
-        if (Self?.Value == null)
+        if (Self == null || Self.Value == null)
+        {
             return Status.Failure;
-
+        }
+        
         aiMove = Self.Value.GetComponent<AIMovementTest>();
         _controller = Self.Value.GetComponent<Controller>();
         selfTransform = Self.Value.transform;
 
         if (aiMove == null || _controller == null)
+        {
             return Status.Failure;
+        }
 
         phase = Phase.Searching;
         targetGrabbable = null;
+        searchFailed = false;
+        
 
         return Status.Running;
     }
 
     protected override Status OnUpdate()
     {
+        if (searchFailed)
+        {
+            return Status.Failure;
+        }
+        
         if (phase == Phase.Done)
+        {
             return Status.Success;
+        }
 
         switch (phase)
         {
@@ -58,7 +75,10 @@ public partial class GrabTheNearestObjectAction : Action
 
     private void SearchForGrabbable()
     {
-        Collider[] hits = Physics.OverlapSphere(selfTransform.position, 15f);
+        
+        Collider[] hits = Physics.OverlapSphere(selfTransform.position, 2f);
+        
+        targetGrabbable = null;
     
         foreach (var hit in hits)
         {
@@ -74,33 +94,45 @@ public partial class GrabTheNearestObjectAction : Action
     
             if (hit.TryGetComponent(out IGrabbable grabbable))
             {
+                // Cible trouvée
                 targetGrabbable = grabbable;
-                aiMove.SetDestination(hit.transform.position);
+                aiMove.SetDestination(hit.transform.position); 
                 GrabbedObject.Value = hit.gameObject;
-                phase = Phase.Moving;
-                return;
+                phase = Phase.Moving; 
+                
+                return; 
             }
         }
-        phase = Phase.Done;
+        searchFailed = true; 
     }
+    
     private void MoveToTarget()
     {
         if (targetGrabbable == null)
         {
-            phase = Phase.Done;
+            searchFailed = true;
             return;
         }
 
-        float distance =
-            Vector3.Distance(selfTransform.position, (targetGrabbable as MonoBehaviour).transform.position);
+        if (!(targetGrabbable is MonoBehaviour targetMono))
+        {
+             searchFailed = true;
+             return;
+        }
+
+        float distance = Vector3.Distance(selfTransform.position, targetMono.transform.position);
+     
+
 
         if (distance <= 1.5f)
         {
             targetGrabbable.Grabbed(_controller);
+            
             aiMove.Stop();
-            phase = Phase.Done;
-        }
+            
+            phase = Phase.Done; 
 
+        }
     }
 
     protected override void OnEnd()

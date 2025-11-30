@@ -1,28 +1,51 @@
-using System.Linq;
-using Unity.Behavior;
 using UnityEngine;
+using Unity.Behavior; // Assurez-vous d'avoir le bon namespace
 
 public class InitBorderNpc : MonoBehaviour
 {
-    public BehaviorGraphAgent behaviorAgent;
+    private BehaviorGraphAgent _behaviorAgent; 
 
-    private void Awake()
+    private void Start()
     {
-
-        if (behaviorAgent == null)
+        _behaviorAgent = GetComponent<BehaviorGraphAgent>();
+        if (_behaviorAgent == null)
         {
-            Debug.LogError("AIManager : BehaviorGraphAgent non assigné !");
             return;
         }
+        
         
         GameObject conveyor = GameObject.Find("ConvoyorBelt");
         GameObject detector = GameObject.Find("ScanZone");
         GameObject throwHere = GameObject.Find("ThrowHere");
         GameObject exitPoint = GameObject.Find("ExitPoint");
+        
+        if (conveyor != null)
+        {
+            _behaviorAgent.SetVariableValue("ConveyorBelt", conveyor.transform);
+        }
+        else
+        {
+            Debug.LogError("Objet 'ConvoyorBelt' non trouvé dans la scène pour l'initialisation de l'IA.", this);
+        }
+        
+        if (detector != null)
+        {
+            _behaviorAgent.SetVariableValue("Detector", detector.transform);
+        }
+        else
+        {
+            Debug.LogError("Objet 'ScanZone' non trouvé dans la scène pour l'initialisation de l'IA.", this);
+        }
 
-        behaviorAgent.SetVariableValue("ConveyorBelt", conveyor.transform );
-        behaviorAgent.SetVariableValue("Detector", detector.transform );
-        behaviorAgent.SetVariableValue("ThrowHere", throwHere.transform );
-        behaviorAgent.SetVariableValue("Exit", exitPoint.transform );
+        // Répéter les vérifications pour throwHere et exitPoint...
+        if (throwHere != null)
+        {
+            _behaviorAgent.SetVariableValue("ThrowHere", throwHere.transform);
+        }
+        
+        if (exitPoint != null)
+        {
+            _behaviorAgent.SetVariableValue("Exit", exitPoint.transform);
+        }
     }
 }

@@ -11,23 +11,49 @@ public partial class SpawnLuggageAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Npc;
     [SerializeReference] public BlackboardVariable<List<GameObject>> Prefabs;
+    
     protected override Status OnStart()
     {
-        if (Npc?.Value == null || Prefabs?.Value == null || Prefabs.Value.Count == 0)
+        if (Npc == null || Npc.Value == null)
+        {
+            Debug.LogWarning("SpawnLuggageAction: Npc variable est NULL ou sa valeur est NULL. Échec.", Npc?.Value);
             return Status.Failure;
+        }
+        
+        if (Prefabs == null || Prefabs.Value == null)
+        {
+            Debug.LogWarning($"SpawnLuggageAction sur {Npc.Value.name}: Prefabs variable est NULL. Échec.");
+            return Status.Failure;
+        }
+        
+        if (Prefabs.Value.Count == 0)
+        {
+            Debug.LogWarning($"SpawnLuggageAction sur {Npc.Value.name}: Liste de Prefabs est vide. Échec.");
+            return Status.Failure;
+        }
 
+        
         Transform npcTransform = Npc.Value.transform;
         
-        GameObject prefab = Prefabs.Value[UnityEngine.Random.Range(0, Prefabs.Value.Count)];
-        
+        int prefabIndex = UnityEngine.Random.Range(0, Prefabs.Value.Count);
+        GameObject prefab = Prefabs.Value[prefabIndex];
+
+        if (prefab == null)
+        {
+            return Status.Failure;
+        }
+
         Vector3 spawnPos = npcTransform.position + npcTransform.forward * 1.7f + Vector3.up * 0.5f;
         
-        GameObject.Instantiate(prefab, spawnPos, npcTransform.rotation);
+        GameObject newLuggage = GameObject.Instantiate(prefab, spawnPos, npcTransform.rotation);
         
-
+        if (newLuggage == null)
+        {
+            return Status.Failure;
+        }
+        
         return Status.Success;
     }
 
     protected override Status OnUpdate() => Status.Success;
 }
-

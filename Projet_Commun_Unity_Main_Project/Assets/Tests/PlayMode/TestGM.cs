@@ -120,6 +120,27 @@ public class TestGM
         Assert.AreEqual(GameState.Paused, gm.State);
         gm.PauseTrigger();
         Assert.AreEqual(GameState.Cinematic, gm.State);
+    }
+
+    [Test]
+    public void Disconnection()
+    {
+        GameObject go = new GameObject();
+        var gm = go.AddComponent<GameManager>();
+
+        gm.OnPlayerDisconnected();
+        LogAssert.Expect("Can only start the disconnection timer when the game is in playing/cinematic state");
+
+        gm.OnPlayerReconnected();
+        LogAssert.Expect("Can only reconnect when the game is in disconnected state");
         
+        gm.SwitchState(GameState.Cinematic);
+        gm.OnPlayerDisconnected();
+        
+        Assert.AreEqual(GameState.Disconnected, gm.State);
+        
+        gm.OnPlayerReconnected();
+        
+        Assert.AreEqual(GameState.Cinematic, gm.State);
     }
 }

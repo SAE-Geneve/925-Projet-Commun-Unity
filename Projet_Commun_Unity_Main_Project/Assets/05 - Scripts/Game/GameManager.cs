@@ -275,7 +275,7 @@ public class GameManager : MonoBehaviour
     {
         if (_state != GameState.Playing && _state != GameState.Cinematic)
         {
-            Debug.LogWarning($"Can only start the disconnection timer when the game is in playing/cinematic state");
+            Debug.LogWarning("Can only start the disconnection timer when the game is in playing/cinematic state");
             return;
         }
 

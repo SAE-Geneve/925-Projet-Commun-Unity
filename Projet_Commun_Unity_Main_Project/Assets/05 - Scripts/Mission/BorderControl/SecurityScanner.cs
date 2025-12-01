@@ -1,5 +1,6 @@
 using Unity.Behavior;
 using UnityEngine;
+
 public class SecurityScanner : MonoBehaviour
 {
     
@@ -21,6 +22,17 @@ public class SecurityScanner : MonoBehaviour
         if (other.gameObject.CompareTag("AI"))
         {
            //TODO: find a way to be able to access the BehaviorAgent Component
+           other.TryGetComponent(out BehaviorGraphAgent agent);
+
+           
+           if (agent.GetVariable("IsEnemy", out BlackboardVariable<bool> variableContainer))
+           {
+               bool isEnemy = variableContainer.Value;
+               if (isEnemy)
+               {
+                   Debug.Log("EnemyFound");
+               }
+           }
         }
     }
 }

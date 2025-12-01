@@ -13,7 +13,7 @@ public partial class GrabTheNearestObjectAction : Action
     [SerializeReference] public BlackboardVariable<string> Object;
     [SerializeReference] public BlackboardVariable<GameObject> GrabbedObject;
     
-    private AIMovementTest aiMove; 
+    private AIMovement aiMove; 
     private Controller _controller; 
     private Transform selfTransform;
     private IGrabbable targetGrabbable;
@@ -30,7 +30,7 @@ public partial class GrabTheNearestObjectAction : Action
             return Status.Failure;
         }
         
-        aiMove = Self.Value.GetComponent<AIMovementTest>();
+        aiMove = Self.Value.GetComponent<AIMovement>();
         _controller = Self.Value.GetComponent<Controller>();
         selfTransform = Self.Value.transform;
 

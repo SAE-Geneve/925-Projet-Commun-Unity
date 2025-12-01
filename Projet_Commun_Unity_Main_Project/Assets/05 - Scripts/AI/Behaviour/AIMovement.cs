@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class AIMovementTest : CharacterMovement
+public class AIMovement : CharacterMovement
 {
     [Header("AI Navigation")]
     [SerializeField] private float stopDistance = 0.5f;

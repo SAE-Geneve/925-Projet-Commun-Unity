@@ -6,9 +6,11 @@ public class AIManager : MonoBehaviour
 {
     [Header("NPC Spawn Settings")]
     [SerializeField] private List<Transform> spawnPoints;
-    [SerializeField] private GameObject npcPrefab;
-    [SerializeField] private float spawnInterval = 5f;
+    
+    [SerializeField] private AIMovement npcPrefab;
 
+    [SerializeField] private float spawnInterval = 5f;
+    
     private void Start()
     {
         if (spawnPoints.Count == 0 || npcPrefab == null)
@@ -16,7 +18,7 @@ public class AIManager : MonoBehaviour
             Debug.LogWarning("AIManager: Aucun point de spawn ou prefab assigné !");
             return;
         }
-        
+
         StartCoroutine(SpawnRoutine());
     }
 
@@ -32,8 +34,8 @@ public class AIManager : MonoBehaviour
     private void SpawnNPC()
     {
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-        
-        GameObject npc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
-        
+
+        // Pas besoin de "GameObject npc = "
+        Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 }

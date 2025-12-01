@@ -12,7 +12,7 @@ public partial class PatrolRandomPointsAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<List<GameObject>> Points;
 
-    private AIMovementTest aiMove;
+    private AIMovement aiMove;
     private GameObject currentTarget;
 
     protected override Status OnStart()
@@ -20,7 +20,7 @@ public partial class PatrolRandomPointsAction : Action
         if (Agent?.Value == null || Points?.Value == null || Points.Value.Count == 0)
             return Status.Failure;
 
-        aiMove = Agent.Value.GetComponent<AIMovementTest>();
+        aiMove = Agent.Value.GetComponent<AIMovement>();
         if (aiMove == null) return Status.Failure;
 
         PickNextTarget();

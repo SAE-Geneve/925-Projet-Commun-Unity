@@ -15,14 +15,14 @@ public partial class MoveToTargetAIMovementAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     [SerializeReference] public BlackboardVariable<GameObject> Target;
 
-    private AIMovementTest aiMove;
+    private AIMovement aiMove;
 
     protected override Status OnStart()
     {
         if (Self?.Value == null || Target?.Value == null)
             return Status.Failure;
 
-        aiMove = Self.Value.GetComponent<AIMovementTest>();
+        aiMove = Self.Value.GetComponent<AIMovement>();
         if (aiMove == null)
             return Status.Failure;
 

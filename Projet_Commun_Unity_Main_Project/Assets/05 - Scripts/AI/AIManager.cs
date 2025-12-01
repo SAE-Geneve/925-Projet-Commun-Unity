@@ -5,24 +5,40 @@ using UnityEngine;
 public class AIManager : MonoBehaviour
 {
     [Header("NPC Spawn Settings")]
-    [SerializeField] private List<Transform> spawnPoints;
-    
-    [SerializeField] private AIMovement npcPrefab;
+    [SerializeField] protected List<Transform> spawnPoints;
+    [SerializeField] protected AIController npcPrefab;
+    [SerializeField] protected float spawnInterval = 5f;
 
-    [SerializeField] private float spawnInterval = 5f;
-    
-    private void Start()
+    [Header("Debug / Test")]
+    [SerializeField] protected bool spawnEnabled = false;
+
+    private Coroutine spawnRoutine;
+
+    private void Update()
     {
-        if (spawnPoints.Count == 0 || npcPrefab == null)
-        {
-            Debug.LogWarning("AIManager: Aucun point de spawn ou prefab assigné !");
-            return;
-        }
-
-        StartCoroutine(SpawnRoutine());
+        // Détecte changement de checkbox
+        if (spawnEnabled && spawnRoutine == null)
+            StartSpawn();
+        else if (!spawnEnabled && spawnRoutine != null)
+            StopSpawn();
     }
 
-    private IEnumerator SpawnRoutine()
+    public void StartSpawn()
+    {
+        if (spawnRoutine != null) return;
+        spawnRoutine = StartCoroutine(SpawnLoop());
+    }
+
+    public void StopSpawn()
+    {
+        if (spawnRoutine != null)
+        {
+            StopCoroutine(spawnRoutine);
+            spawnRoutine = null;
+        }
+    }
+
+    private IEnumerator SpawnLoop()
     {
         while (true)
         {
@@ -31,11 +47,11 @@ public class AIManager : MonoBehaviour
         }
     }
 
-    private void SpawnNPC()
+    protected virtual void SpawnNPC()
     {
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+        if (spawnPoints == null || spawnPoints.Count == 0 || npcPrefab == null) return;
 
-        // Pas besoin de "GameObject npc = "
+        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
         Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 }

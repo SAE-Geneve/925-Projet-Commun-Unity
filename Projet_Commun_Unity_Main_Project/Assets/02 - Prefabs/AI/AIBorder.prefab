@@ -3230,7 +3230,6 @@ MonoBehaviour:
   _ragdollVelocityThreshold: 3
   behaviorGraphAgent: {fileID: 5793317089375339005}
   bHips: {fileID: 294954632999372767}
-  testRagdoll: 0
 --- !u!114 &5793317089375339005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3247,6 +3246,7 @@ MonoBehaviour:
   m_BlackboardVariableOverridesList:
   - rid: 7650009824613892814
   - rid: 999744700310618113
+  - rid: 7615853086645682249
   m_OriginalGraph: {fileID: -3882054839387187523, guid: 0f1f015c503caa548805a47294019565, type: 2}
   m_IsInitialised: 0
   m_IsStarted: 0
@@ -3266,6 +3266,14 @@ MonoBehaviour:
         - {fileID: 1838621322768625333, guid: 5104e97fdb4a3a3429cec840cfecd8cc, type: 3}
         - {fileID: 1838621322768625333, guid: 8d3d6ce270abe81479adf189af4bdb16, type: 3}
         - {fileID: 1838621322768625333, guid: 6e3ff8516cc29d2449ed6008ebc9298c, type: 3}
+    - rid: 7615853086645682249
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 13149969417145833413
+          m_Value1: 6912577510605416570
+        Name: IsEnemy
+        m_Value: 0
     - rid: 7650009824613892814
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:

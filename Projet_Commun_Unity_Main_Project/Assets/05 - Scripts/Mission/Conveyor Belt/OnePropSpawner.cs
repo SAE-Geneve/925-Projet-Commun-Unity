@@ -7,6 +7,9 @@ public class OnePropSpawner : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private ConveyorProp[] _propsToSpawn;
+    
+    [Tooltip("Does the props belongs to a PropManager")]
+    [SerializeField] private PropManager _propManager;
 
     [Header("Parameters")]
     [SerializeField] private float _spawnDelay = 2f;
@@ -26,6 +29,8 @@ public class OnePropSpawner : MonoBehaviour
             transform.rotation);
         
         OnPropSpawned?.Invoke();
+        
+        if(_propManager) _propManager.AddProp(_conveyorProp);
     }
 
     private void OnTriggerExit(Collider other)

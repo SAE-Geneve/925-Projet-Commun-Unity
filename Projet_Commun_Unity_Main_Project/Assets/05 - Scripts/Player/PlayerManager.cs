@@ -65,14 +65,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void OnDestroy()
+    public void Reset()
     {
-        Reset();
         SceneManager.sceneLoaded -= SetPlayersToSpawnPoints;
-    }
-
-    private void Reset()
-    {
         _players.Clear();
     }
     

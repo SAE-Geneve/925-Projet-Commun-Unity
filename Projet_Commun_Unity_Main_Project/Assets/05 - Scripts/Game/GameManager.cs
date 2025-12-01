@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -50,10 +49,7 @@ public class GameManager : MonoBehaviour
         get => _disconnectionTimer;
         private set
         {
-            if (value <= 0)
-            {
-                ReconnectionTimeOut();
-            }
+            if (value <= 0) ReconnectionTimeOut();
             else _disconnectionTimer = value;
 
             OnDisconnectionTimerUpdate?.Invoke();
@@ -65,19 +61,6 @@ public class GameManager : MonoBehaviour
     private PlayerManager _playerManager;
 
     private Dictionary<MissionID, Mission> _missionMap;
-
-    private void ReconnectionTimeOut()
-    {
-        _disconnectionTimer = _initialDisconnectionTime;
-        _playerManager.OnReconnectionTimeOut();
-        SwitchState(_lastState);
-        
-        if (_playerManager.Players.Count < _minPlayers)
-        {
-            SceneLoader.Instance.LoadScene("MainMenu");
-            Destroy(transform.parent.gameObject);
-        }
-    }
 
     public GameState State => _state;
     public GameContext Context => _context;
@@ -146,7 +129,7 @@ public class GameManager : MonoBehaviour
                 _playerManager.PlayerInputManager.DisableJoining();
             }
 
-            if (newState == GameState.Lobby || newState == GameState.Menu)
+            if (newState == GameState.Lobby || newState == GameState.Menu || newState == GameState.Paused)
             {
                 _playerManager.DisablePlayerControllers();
             }
@@ -162,10 +145,14 @@ public class GameManager : MonoBehaviour
 
     #region Reset
 
-    private void MenuReset()
+    public void MenuReset()
     {
+        if(_playerManager) _playerManager.Reset();
         SwitchState(GameState.Menu);
         ResetGame();
+        Time.timeScale = 1f;
+        SceneLoader.Instance.LoadScene("MainMenu");
+        Destroy(transform.parent.gameObject);
     }
 
     public void ResetGame()
@@ -271,9 +258,9 @@ public class GameManager : MonoBehaviour
         
         Time.timeScale = 0;
         
-        if(_playerManager)
-            foreach (var pl in _playerManager.Players)
-                pl.InputManager.active = false;
+        // if(_playerManager)
+        //     foreach (var pl in _playerManager.Players)
+        //         pl.InputManager.active = false;
 
         if(UIManager.Instance) UIManager.Instance.ShowPauseCanvas(true);
         Debug.Log($"Game paused (from {_lastState})");
@@ -283,11 +270,11 @@ public class GameManager : MonoBehaviour
     {
         SwitchState(_lastState);
         
-        Time.timeScale = 1;
+        Time.timeScale = 1f;
         
-        if(_playerManager)
-            foreach (var pl in _playerManager.Players)
-                pl.InputManager.active = true;
+        // if(_playerManager)
+        //     foreach (var pl in _playerManager.Players)
+        //         pl.InputManager.active = true;
 
         if(UIManager.Instance) UIManager.Instance.ShowPauseCanvas(false);
         Debug.Log($"Game unpaused (back to {_state})");
@@ -307,7 +294,6 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Can only start the disconnection timer when the game is in playing/cinematic state");
             return;
         }
-
 
         _lastState = _state;
         SwitchState(GameState.Disconnected);
@@ -332,6 +318,14 @@ public class GameManager : MonoBehaviour
         DisconnectionTimer = _initialDisconnectionTime;
 
         Debug.Log("All players have been reconnected");
+    }
+    
+    private void ReconnectionTimeOut()
+    {
+        _disconnectionTimer = _initialDisconnectionTime;
+        _playerManager.OnReconnectionTimeOut();
+        
+        if (_playerManager.Players.Count < _minPlayers) MenuReset();
     }
 
     #endregion

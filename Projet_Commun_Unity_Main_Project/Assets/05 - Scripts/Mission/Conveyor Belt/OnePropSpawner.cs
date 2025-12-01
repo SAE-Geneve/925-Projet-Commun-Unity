@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,7 +15,10 @@ public class OnePropSpawner : MonoBehaviour
     
     public event Action OnPropSpawned;
 
-    void Start() => SpawnLuggage();
+    private void OnEnable()
+    {
+        if(_conveyorProp == null) SpawnLuggage();
+    }
 
     private void SpawnLuggage()
     {
@@ -24,13 +28,18 @@ public class OnePropSpawner : MonoBehaviour
         OnPropSpawned?.Invoke();
     }
 
-
     private void OnTriggerExit(Collider other)
     {
         if (_conveyorProp && other.gameObject == _conveyorProp.gameObject)
         {
             _conveyorProp = null;
-            Invoke(nameof(SpawnLuggage), _spawnDelay);
+            StartCoroutine(SpawnCoroutine());
         }
+    }
+
+    private IEnumerator SpawnCoroutine()
+    {
+        yield return new WaitForSeconds(_spawnDelay);
+        SpawnLuggage();
     }
 }

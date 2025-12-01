@@ -124,9 +124,27 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning($"Already in {_state} state, cannot change");
             return;
         }
-        
-        if ((newState == GameState.Lobby || _context == GameContext.Hub) && _playerManager)
-            _playerManager.PlayerInputManager.EnableJoining();
+
+        if (_playerManager)
+        {
+            if (newState == GameState.Lobby || _context == GameContext.Hub)
+            {
+                _playerManager.PlayerInputManager.EnableJoining();
+            }
+            else
+            {
+                _playerManager.PlayerInputManager.DisableJoining();
+            }
+
+            if (newState == GameState.Lobby || newState == GameState.Menu)
+            {
+                _playerManager.DisablePlayerControllers();
+            }
+            else
+            {
+                _playerManager.EnablePlayerControllers();
+            }
+        }
 
         _state = newState;
         Debug.Log($"Game State: {_state}");
@@ -154,6 +172,11 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        if (_playerManager.Players.Count < 2)
+        {
+            return;
+        }
+
         SwitchState(GameState.Playing);
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
         SceneLoader.Instance.LoadScene("HubScene");
@@ -322,5 +345,5 @@ public enum GameContext
 {
     Hub,
     Mission,
-    LastMission
+    LastMission,
 }

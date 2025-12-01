@@ -29,6 +29,10 @@ public class PlayerManager : MonoBehaviour
     public PlayerInputManager PlayerInputManager => _playerInputManager;
     public Transform TrackingTarget => trackingTarget;
 
+    private GameObject[] _spawnPoints;
+
+    private bool _arePlayersActive;
+
     private void Awake()
     {
         if (Instance && Instance != this) Destroy(gameObject);
@@ -36,26 +40,52 @@ public class PlayerManager : MonoBehaviour
         
         _playerInputManager = GetComponent<PlayerInputManager>();
 
-        SceneManager.sceneLoaded += SetPlayerToSpawnPoint;
+        SceneManager.sceneLoaded += SetPlayersToSpawnPoints;
     }
     
     private void Start() => _gameManager = GameManager.Instance;
-
-    private void SetPlayerToSpawnPoint(Scene scene, LoadSceneMode mode)
+    
+    private void SetPlayersToSpawnPoints(Scene scene, LoadSceneMode mode)
     {
-        GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawn");
-
+        _spawnPoints = GameObject.FindGameObjectsWithTag("Spawn");
+        
         for (int i = 0; i < PlayerCount; i++)
-            _players[i].transform.position = spawnPoints[i].transform.position;
+            _players[i].transform.position = _spawnPoints[i].transform.position;
+    }
+    
+    public void EnablePlayerControllers()
+    {
+        _arePlayersActive = true;
+        foreach (var player in _players)
+        {
+            player.GetComponent<InputManager>().active = true;
+            player.GetComponentInChildren<ParticleSystem>().Play();
+        }
+    }
+    
+    public void DisablePlayerControllers()
+    {
+        _arePlayersActive = false;
+        foreach (var player in _players)
+        {
+            player.GetComponent<InputManager>().active = false;
+            player.GetComponentInChildren<ParticleSystem>().Stop();
+        }
     }
 
     public void OnPlayerJoined(PlayerInput player)
     {
-        player.transform.position = Vector3.zero;/*Add a spawn point*/
+        player.transform.position = _spawnPoints[_players.Count].transform.position;
         player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
         
         _players.Add(player.GetComponent<PlayerController>());
         SetPlayerColors(player.GetComponentInChildren<ParticleSystem>());
+
+        if (!_arePlayersActive)
+        {
+            player.GetComponent<InputManager>().active = false;
+            player.GetComponentInChildren<ParticleSystem>().Stop();
+        }
         
         OnPlayerAdded?.Invoke();
         OnPlayerConnected?.Invoke(player.GetComponent<PlayerController>());

@@ -7,40 +7,27 @@ public class AIRagdoll : Ragdoll
     [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;
     [SerializeField] private GameObject bHips;
 
-    [Header("Debug/Test")] [SerializeField]
-    private bool testRagdoll;
-    
-    
     private bool IsRagdollState { get; set; }
-
-    void Update()
-    {
-        if (testRagdoll)
-        {
-            testRagdoll = false;
-            RagdollOn();
-        }
-    }
 
     public override void RagdollOn()
     {
         bHips.SetActive(true);
+
         if (IsRagdollState) return;
         IsRagdollState = true;
 
         base.RagdollOn();
-        
         SetVariableInBlackboard(true, "IsRagdoll");
     }
 
     protected override void RagdollOff()
     {
         bHips.SetActive(false);
+
         if (!IsRagdollState) return;
         IsRagdollState = false;
 
         base.RagdollOff();
-        
         SetVariableInBlackboard(false, "IsRagdoll");
     }
 
@@ -48,7 +35,9 @@ public class AIRagdoll : Ragdoll
     {
         if (!behaviorGraphAgent) return;
 
-        if (behaviorGraphAgent.GetVariable<T>(variableName, out var variable)) variable.Value = value;
-        else Debug.LogWarning($"Variable '{variableName}' introuvable dans le Blackboard !");
+        if (behaviorGraphAgent.GetVariable<T>(variableName, out var variable))
+            variable.Value = value;
+        else
+            Debug.LogWarning($"Variable '{variableName}' introuvable dans le Blackboard !");
     }
 }

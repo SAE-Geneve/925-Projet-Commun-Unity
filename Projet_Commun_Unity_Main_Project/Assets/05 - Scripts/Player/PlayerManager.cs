@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] private Transform trackingTarget;
+    
     public List<PlayerController> Players => _players;
     
     public event Action<PlayerController> OnPlayerConnected;
@@ -22,15 +24,12 @@ public class PlayerManager : MonoBehaviour
     
     private GameManager _gameManager;
     public static PlayerManager Instance { get; private set; }
-    
-    [SerializeField] private Transform trackingTarget;
 
     private PlayerInputManager _playerInputManager;
     
-    public PlayerInputManager PlayerInputManager => _playerInputManager;
-    public Transform TrackingTarget => trackingTarget;
-
     private GameObject[] _spawnPoints;
+    
+    public PlayerInputManager PlayerInputManager => _playerInputManager;
 
     private bool _arePlayersActive;
 
@@ -40,50 +39,42 @@ public class PlayerManager : MonoBehaviour
         else Instance = this;
         
         _playerInputManager = GetComponent<PlayerInputManager>();
-
-        SceneManager.sceneLoaded += SetPlayersToSpawnPoints;
     }
-    
-    private void Start() => _gameManager = GameManager.Instance;
-    
-    private void SetPlayersToSpawnPoints(Scene scene, LoadSceneMode mode)
+
+    private void Start()
     {
+        _gameManager = GameManager.Instance;
+        
         _spawnPoints = GameObject.FindGameObjectsWithTag("Spawn");
         _spawnPoints = _spawnPoints.OrderBy(x => x.name).ToArray();
-        
-        for (int i = 0; i < PlayerCount; i++)
-            _players[i].transform.position = _spawnPoints[i].transform.position;
     }
-    
+
     public void EnablePlayerControllers()
     {
         _arePlayersActive = true;
+        
         foreach (var player in _players)
         {
-            player.GetComponent<InputManager>().active = true;
+            player.InputManager.active = true;
             player.GetComponentInChildren<ParticleSystem>().Play();
         }
     }
 
-    public void Reset()
-    {
-        SceneManager.sceneLoaded -= SetPlayersToSpawnPoints;
-        _players.Clear();
-    }
+    public void Reset() =>_players.Clear();
     
     public void DisablePlayerControllers()
     {
         _arePlayersActive = false;
         foreach (var player in _players)
         {
-            player.GetComponent<InputManager>().active = false;
+            player.InputManager.active = false;
             player.GetComponentInChildren<ParticleSystem>().Stop();
         }
     }
 
     public void OnPlayerJoined(PlayerInput player)
     {
-        player.transform.position = _spawnPoints[_players.Count].transform.position;
+        player.transform.position = _spawnPoints[Players.Count].transform.position;
         player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
         
         _players.Add(player.GetComponent<PlayerController>());

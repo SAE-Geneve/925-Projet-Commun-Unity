@@ -28875,7 +28875,6 @@ MonoBehaviour:
   _ragdollVelocityThreshold: 3
   behaviorGraphAgent: {fileID: 1590425150}
   bHips: {fileID: 1265560862}
-  testRagdoll: 0
 --- !u!114 &1590425152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29040,8 +29039,54 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3520684291621217138, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1649290308}
   m_SourcePrefab: {fileID: 100100000, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+--- !u!1 &1649290303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3520684291621217138, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+  m_PrefabInstance: {fileID: 1649290302}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1649290304 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8705733747116576505, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+  m_PrefabInstance: {fileID: 1649290302}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1649290305 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3288715080420274774, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+  m_PrefabInstance: {fileID: 1649290302}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1649290306 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 822798434994856427, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+  m_PrefabInstance: {fileID: 1649290302}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1649290307 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5987991621458393111, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+  m_PrefabInstance: {fileID: 1649290302}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1649290308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649290303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a9032226fdf534997d58cbe9a07a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPoints:
+  - {fileID: 1649290307}
+  - {fileID: 1649290306}
+  - {fileID: 1649290305}
+  - {fileID: 1649290304}
+  _spawnOnStart: 1
 --- !u!1 &1651630454
 GameObject:
   m_ObjectHideFlags: 0

@@ -182,14 +182,10 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        if (_playerManager.Players.Count < _minPlayers)
-        {
-            return;
-        }
+        if (_playerManager.Players.Count < _minPlayers) return;
 
         SwitchState(GameState.Playing);
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
-        SceneLoader.Instance.LoadScene("HubScene");
     }
 
     public void StartCinematic()

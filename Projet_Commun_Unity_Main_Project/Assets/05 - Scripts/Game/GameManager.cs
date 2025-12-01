@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +17,9 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("The maximal client satisfaction point we can get")] [SerializeField] [Min(0)]
     private int _maxSatisfaction = 100;
+
+    [Tooltip("The minimum numbers of players needed to start the game")] [SerializeField] [Min(1)]
+    private int _minPlayers = 1;
 
     public static GameManager Instance { get; private set; }
 
@@ -172,7 +176,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        if (_playerManager.Players.Count < 2)
+        if (_playerManager.Players.Count < _minPlayers)
         {
             return;
         }

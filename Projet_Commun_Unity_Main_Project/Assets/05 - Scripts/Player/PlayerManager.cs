@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
@@ -48,6 +49,7 @@ public class PlayerManager : MonoBehaviour
     private void SetPlayersToSpawnPoints(Scene scene, LoadSceneMode mode)
     {
         _spawnPoints = GameObject.FindGameObjectsWithTag("Spawn");
+        _spawnPoints = _spawnPoints.OrderBy(x => x.name).ToArray();
         
         for (int i = 0; i < PlayerCount; i++)
             _players[i].transform.position = _spawnPoints[i].transform.position;
@@ -61,6 +63,17 @@ public class PlayerManager : MonoBehaviour
             player.GetComponent<InputManager>().active = true;
             player.GetComponentInChildren<ParticleSystem>().Play();
         }
+    }
+
+    public void OnDestroy()
+    {
+        Reset();
+        SceneManager.sceneLoaded -= SetPlayersToSpawnPoints;
+    }
+
+    private void Reset()
+    {
+        _players.Clear();
     }
     
     public void DisablePlayerControllers()
@@ -141,7 +154,6 @@ public class PlayerManager : MonoBehaviour
 
     private void RemovePlayer(PlayerController player)
     {
-        
         if (_players.Contains(player))
         {
             Destroy(player.gameObject);

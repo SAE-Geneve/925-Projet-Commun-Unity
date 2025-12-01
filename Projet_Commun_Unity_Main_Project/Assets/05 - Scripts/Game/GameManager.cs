@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("The maximal client satisfaction point we can get")] [SerializeField] [Min(0)]
     private int _maxSatisfaction = 100;
 
-    [Tooltip("The minimum numbers of players needed to start the game")] [SerializeField] [Min(1)]
+    [Tooltip("The minimum numbers of players needed to start the game")] [SerializeField] [UnityEngine.Range(1,4)]
     private int _minPlayers = 1;
 
     public static GameManager Instance { get; private set; }
@@ -70,7 +70,13 @@ public class GameManager : MonoBehaviour
     {
         _disconnectionTimer = _initialDisconnectionTime;
         _playerManager.OnReconnectionTimeOut();
-        SwitchState(GameState.Playing);
+        SwitchState(_lastState);
+        
+        if (_playerManager.Players.Count < _minPlayers)
+        {
+            SceneLoader.Instance.LoadScene("MainMenu");
+            Destroy(transform.parent.gameObject);
+        }
     }
 
     public GameState State => _state;

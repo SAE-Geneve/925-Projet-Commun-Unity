@@ -74,6 +74,7 @@ public class Mission : MonoBehaviour
         SwitchMissionState(MissionState.Playing);
         
         _onMissionStarted?.Invoke();
+
         Debug.Log($"Mission {_name} began");
     }
     

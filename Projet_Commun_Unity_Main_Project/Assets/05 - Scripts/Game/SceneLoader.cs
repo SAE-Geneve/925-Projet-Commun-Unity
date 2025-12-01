@@ -7,12 +7,17 @@ public class SceneLoader : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance && Instance != this) Destroy(gameObject);
+        if (Instance && Instance != this)
+        {
+            Debug.LogWarning(Instance.gameObject + " " + Instance.transform.parent);
+            Destroy(gameObject);
+        }
         else Instance = this;
     }
 
     public void LoadScene(string sceneName)
     {
+        Debug.LogError($"Loading scene {sceneName}");
         foreach (var player in PlayerManager.Instance.Players)
             player.Drop();
 

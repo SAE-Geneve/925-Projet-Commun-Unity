@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("References")] [Tooltip("The missions that will be played in order")] [SerializeField]
-    private Mission[] _missions;
+    [Header("References")]
+    [Tooltip("The missions that will be played in order")] 
+    [SerializeField] private Mission[] _missions;
 
     [Header("Parameters")] [Tooltip("The global timer initial time")] [SerializeField] [Min(0)]
     private float _initialTimer = 90f;
@@ -57,7 +58,6 @@ public class GameManager : MonoBehaviour
 
     public Mission CurrentMission { get; private set; }
 
-
     private PlayerManager _playerManager;
 
     private Dictionary<MissionID, Mission> _missionMap;
@@ -101,8 +101,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _playerManager = FindFirstObjectByType<PlayerManager>();
-        _playerManager.PlayerInputManager.DisableJoining();
+        _playerManager = PlayerManager.Instance;
+        if(_playerManager) _playerManager.PlayerInputManager.DisableJoining();
         ResetGame();
         Debug.Log($"Game State: {_state}");
     }
@@ -124,10 +124,26 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning($"Already in {_state} state, cannot change");
             return;
         }
-        
-        if (newState == GameState.Lobby || _context == GameContext.Hub)
+
+        if (_playerManager)
         {
-            _playerManager.PlayerInputManager.EnableJoining();
+            if (newState == GameState.Lobby || _context == GameContext.Hub)
+            {
+                _playerManager.PlayerInputManager.EnableJoining();
+            }
+            else
+            {
+                _playerManager.PlayerInputManager.DisableJoining();
+            }
+
+            if (newState == GameState.Lobby || newState == GameState.Menu)
+            {
+                _playerManager.DisablePlayerControllers();
+            }
+            else
+            {
+                _playerManager.EnablePlayerControllers();
+            }
         }
 
         _state = newState;
@@ -156,8 +172,14 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        if (_playerManager.Players.Count < 2)
+        {
+            return;
+        }
+
         SwitchState(GameState.Playing);
-        // TODO: Spawn players in the Hub
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
+        SceneLoader.Instance.LoadScene("HubScene");
     }
 
     public void StartCinematic()
@@ -172,6 +194,8 @@ public class GameManager : MonoBehaviour
     private void BuildMissionMap()
     {
         _missionMap = new Dictionary<MissionID, Mission>();
+        
+        if(_missions == null || _missions.Length == 0) return;
 
         foreach (Mission mission in _missions)
         {
@@ -191,7 +215,7 @@ public class GameManager : MonoBehaviour
         }
 
         CurrentMission = mission;
-        _playerManager.PlayerInputManager.DisableJoining();
+        if(_playerManager) _playerManager.PlayerInputManager.DisableJoining();
         _context = GameContext.Mission;
     }
 
@@ -204,7 +228,7 @@ public class GameManager : MonoBehaviour
         }
 
         CurrentMission = null;
-        _playerManager.PlayerInputManager.EnableJoining();
+        if(_playerManager) _playerManager.PlayerInputManager.EnableJoining();
         _context = GameContext.Hub;
     }
 
@@ -241,10 +265,11 @@ public class GameManager : MonoBehaviour
         
         Time.timeScale = 0;
         
-        foreach (var pl in _playerManager.Players)
-            pl.InputManager.active = false;
+        if(_playerManager)
+            foreach (var pl in _playerManager.Players)
+                pl.InputManager.active = false;
 
-        UIManager.Instance.ShowPauseCanvas(true);
+        if(UIManager.Instance) UIManager.Instance.ShowPauseCanvas(true);
         Debug.Log($"Game paused (from {_lastState})");
     }
 
@@ -254,10 +279,11 @@ public class GameManager : MonoBehaviour
         
         Time.timeScale = 1;
         
-        foreach (var pl in _playerManager.Players)
-            pl.InputManager.active = true;
+        if(_playerManager)
+            foreach (var pl in _playerManager.Players)
+                pl.InputManager.active = true;
 
-        UIManager.Instance.ShowPauseCanvas(false);
+        if(UIManager.Instance) UIManager.Instance.ShowPauseCanvas(false);
         Debug.Log($"Game unpaused (back to {_state})");
     }
 
@@ -272,7 +298,7 @@ public class GameManager : MonoBehaviour
     {
         if (_state != GameState.Playing && _state != GameState.Cinematic)
         {
-            Debug.LogWarning($"Can only start the disconnection timer when the game is in playing/cinematic state");
+            Debug.LogWarning("Can only start the disconnection timer when the game is in playing/cinematic state");
             return;
         }
 
@@ -319,5 +345,5 @@ public enum GameContext
 {
     Hub,
     Mission,
-    LastMission
+    LastMission,
 }

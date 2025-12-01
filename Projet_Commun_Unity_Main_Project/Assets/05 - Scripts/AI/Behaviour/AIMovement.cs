@@ -2,12 +2,12 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
-public class AIMovementTest : CharacterMovement
+public class AIMovement : CharacterMovement
 {
     [Header("AI Navigation")]
     [SerializeField] private float stopDistance = 0.5f;
     [SerializeField] private float accelerationPower = 50f;
-    
+
     private NavMeshPath _path;
     private int _currentCorner;
     private bool _moving;
@@ -24,14 +24,14 @@ public class AIMovementTest : CharacterMovement
     {
         if (!_moving)
         {
-            if (_animator) _animator.SetFloat("Speed", 0f);
+            SetAnimatorSpeed(0f);
             return;
         }
 
         if (_path.corners.Length == 0 || _currentCorner >= _path.corners.Length)
         {
             Stop();
-            if (_animator) _animator.SetFloat("Speed", 0f);
+            SetAnimatorSpeed(0f);
             return;
         }
 
@@ -43,11 +43,10 @@ public class AIMovementTest : CharacterMovement
         if (dirToCorner.magnitude <= 0.15f || (_currentCorner == _path.corners.Length - 1 && dirToCorner.magnitude <= stopDistance))
         {
             _currentCorner++;
-
             if (_currentCorner >= _path.corners.Length)
             {
                 Stop();
-                if (_animator) _animator.SetFloat("Speed", 0f);
+                SetAnimatorSpeed(0f);
                 return;
             }
 
@@ -59,11 +58,13 @@ public class AIMovementTest : CharacterMovement
         dirToCorner.Normalize();
         MoveAI(dirToCorner);
 
-        if (_animator)
-        {
-            Vector3 flatVelocity = new Vector3(Rb.linearVelocity.x, 0, Rb.linearVelocity.z);
-            _animator.SetFloat("Speed", flatVelocity.magnitude / speed);
-        }
+        SetAnimatorSpeed(new Vector3(Rb.linearVelocity.x, 0, Rb.linearVelocity.z).magnitude / speed);
+    }
+
+    private void SetAnimatorSpeed(float speedValue)
+    {
+        if (_animator != null)
+            _animator.SetFloat("Speed", speedValue);
     }
 
     private void MoveAI(Vector3 dir)
@@ -99,8 +100,8 @@ public class AIMovementTest : CharacterMovement
 
     public void Stop()
     {
-        if(Rb.isKinematic) return;
-        
+        if (Rb.isKinematic) return;
+
         _moving = false;
         Rb.linearVelocity = Vector3.zero;
         Rb.angularVelocity = Vector3.zero;
@@ -111,7 +112,6 @@ public class AIMovementTest : CharacterMovement
         return !_moving;
     }
 
-    // Debug draw
     void OnDrawGizmos()
     {
         if (_path == null || _path.corners.Length == 0) return;

@@ -1,8 +1,8 @@
 using System;
 using Unity.Behavior;
+using Unity.Properties;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
-using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "Self get his luggage", story: "[self] get his [luggage]", category: "Action", id: "f6b8f5f36e14609dea15563c8b444c9a")]
@@ -10,11 +10,6 @@ public partial class SelfGetHisLuggageAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     [SerializeReference] public BlackboardVariable<GameObject> Luggage;
-
-    protected override Status OnStart()
-    {
-        return Status.Running;
-    }
 
     protected override Status OnUpdate()
     {
@@ -25,25 +20,26 @@ public partial class SelfGetHisLuggageAction : Action
         Collider luggageCol = Luggage.Value.GetComponent<Collider>();
         if (selfCol == null || luggageCol == null)
             return Status.Failure;
+        
+        Collider[] hits = Physics.OverlapBox(
+            selfCol.bounds.center,
+            selfCol.bounds.extents,
+            Self.Value.transform.rotation
+        );
 
-        // Vérifie la collision
-        if (selfCol.bounds.Intersects(luggageCol.bounds))
+        foreach (var hit in hits)
         {
-            Renderer selfRenderer = Self.Value.GetComponent<Renderer>();
-            Renderer luggageRenderer = Luggage.Value.GetComponent<Renderer>();
+            if (hit.gameObject == Self.Value)
+                continue;
 
-            if (selfRenderer != null && luggageRenderer != null)
+            if (hit.gameObject == Luggage.Value)
             {
-                if (selfRenderer.material.color == luggageRenderer.material.color)
-                {
-                    Debug.Log($"{Self.Value.name} est content ! 🎉");
-                    return Status.Success;
-                }
+                return Status.Success;
             }
         }
 
         return Status.Running;
     }
-
+    
     protected override void OnEnd() { }
 }

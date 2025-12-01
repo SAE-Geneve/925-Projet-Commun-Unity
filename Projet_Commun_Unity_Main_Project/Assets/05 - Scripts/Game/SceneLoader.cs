@@ -17,7 +17,6 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        Debug.LogError($"Loading scene {sceneName}");
         foreach (var player in PlayerManager.Instance.Players)
             player.Drop();
 

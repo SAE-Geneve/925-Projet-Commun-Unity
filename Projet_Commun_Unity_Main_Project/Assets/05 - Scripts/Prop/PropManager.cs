@@ -22,6 +22,10 @@ public class PropManager : MonoBehaviour
         for (int i = _props.Count - 1; i >= 0; i--)
         {
             var prop = _props[i];
+            
+            if(prop.IsGrabbed)
+                prop.Dropped();
+            
             prop.OnDestroyed -= RemoveProp;
             Destroy(prop.gameObject);
         }

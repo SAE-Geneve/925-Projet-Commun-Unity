@@ -3,6 +3,9 @@ using UnityEngine.Events;
 
 public class Mission : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private Transform[] _missionSpawnPoints;
+    
     [Header("Parameters")] 
     [SerializeField] private string _name = "New Mission";
     [SerializeField] private MissionID _missionID = MissionID.BorderControl;
@@ -100,6 +103,12 @@ public class Mission : MonoBehaviour
     }
 
     private void UpdateTargetMission() => _uiManager.TargetMission = _missionID;
+
+    public void SpawnPlayers()
+    {
+        for (int i = 0; i < PlayerManager.Instance.Players.Count; i++)
+            PlayerManager.Instance.Players[i].transform.position = _missionSpawnPoints[i].position;
+    }
 }
 
 public enum MissionID

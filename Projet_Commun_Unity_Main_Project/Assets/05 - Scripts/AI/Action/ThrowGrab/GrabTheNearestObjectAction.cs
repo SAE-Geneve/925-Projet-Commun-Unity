@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 [NodeDescription(name: "GrabTheNearestObject", story: "[self] grab an [object] and assign [GrabbedObject]", category: "Action", id: "ai_grabandthrow_random")]
 public partial class GrabTheNearestObjectAction : Action
 {
+    [SerializeReference] public BlackboardVariable<float> radius = new BlackboardVariable<float>(2);
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     [SerializeReference] public BlackboardVariable<string> Object;
     [SerializeReference] public BlackboardVariable<GameObject> GrabbedObject;
@@ -76,7 +77,7 @@ public partial class GrabTheNearestObjectAction : Action
     private void SearchForGrabbable()
     {
         
-        Collider[] hits = Physics.OverlapSphere(selfTransform.position, 2f);
+        Collider[] hits = Physics.OverlapSphere(selfTransform.position, radius);
         
         targetGrabbable = null;
     

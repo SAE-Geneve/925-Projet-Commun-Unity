@@ -54,7 +54,7 @@ public class BaseMinigameUI : MonoBehaviour
         StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect1));
         
         _subScore1 += 1;
-        totalSubScore1.text = ""+_subScore1.ToString();
+        totalSubScore1.text = ""+_subScore1;
     }
     
     public void SubScore2Increase()
@@ -62,7 +62,7 @@ public class BaseMinigameUI : MonoBehaviour
         StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect2));
         
         _subScore2 += 1;
-        totalSubScore2.text = ""+_subScore2.ToString();
+        totalSubScore2.text = ""+_subScore2;
     }
     
     public void SubScore3Increase()
@@ -70,7 +70,7 @@ public class BaseMinigameUI : MonoBehaviour
         StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect3));
         
         _subScore3 += 1;
-        totalSubScore3.text = ""+_subScore3.ToString();
+        totalSubScore3.text = ""+_subScore3;
     }
     
     public void SubScore4Increase()
@@ -78,6 +78,6 @@ public class BaseMinigameUI : MonoBehaviour
         StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect4));
         
         _subScore4 += 1;
-        totalSubScore4.text = ""+_subScore4.ToString();
+        totalSubScore4.text = ""+_subScore4;
     }
 }

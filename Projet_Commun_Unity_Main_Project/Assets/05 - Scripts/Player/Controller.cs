@@ -100,13 +100,29 @@ public class Controller : MonoBehaviour, IGrabbable
     protected void TryAction<T>(Action<T> onFound) where T : class
     {
         Collider[] hits = Physics.OverlapSphere(CatchPoint.position, _sphereRadius);
+        
+        float nearestDistance = Mathf.Infinity;
+        T nearestComponent = null;
+        
         foreach (var hit in hits)
         {
             if (hit.gameObject == gameObject || !hit.TryGetComponent(out T component)) continue;
-            onFound(component);
-            break;
+            
+            float distance = Vector3.Distance(CatchPoint.position, hit.transform.position);
+
+            if (distance < nearestDistance)
+            {
+                nearestDistance = distance;
+                nearestComponent = component;
+            }
+        }
+
+        if (nearestComponent != null)
+        {
+            onFound(nearestComponent);
         }
     }
+    
     
     private void TryGrab()
     {

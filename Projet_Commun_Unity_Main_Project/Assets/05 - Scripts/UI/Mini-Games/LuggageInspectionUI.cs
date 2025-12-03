@@ -13,7 +13,7 @@ public class LuggageInspectionUI : MonoBehaviour
     public List<Image> slots;
     
     //Components
-    private AudioManager _audioManager;
+    private PropType _propType;
     
     //Randomness for slots setup
     private int _random;
@@ -21,9 +21,16 @@ public class LuggageInspectionUI : MonoBehaviour
     
     void Start()
     {
-        _audioManager = AudioManager.Instance;
-        
-        EvilLuggageSetup();
+        if(_propType == PropType.BadProp)
+        {
+            _propType = PropType.BadProp;
+            EvilLuggageSetup();
+        }
+        else
+        {
+            _propType = PropType.GoodProp;
+            GoodLuggageSetup();
+        }
     }
     
     void EvilLuggageSetup()

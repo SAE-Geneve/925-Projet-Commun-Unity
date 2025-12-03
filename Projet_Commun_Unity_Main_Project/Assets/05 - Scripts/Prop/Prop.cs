@@ -73,6 +73,8 @@ public enum PropType
     BlueLuggage,
     GreenLuggage,
     YellowLuggage,
+    GoodProp,
+    BadProp,
     StairKart,
     Trash
 }

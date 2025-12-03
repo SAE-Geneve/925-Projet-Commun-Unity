@@ -2275,13 +2275,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 419830930}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
-  m_LocalPosition: {x: 15.12, y: 20, z: -14.12}
-  m_LocalScale: {x: 1.6666666, y: 1.9956566, z: 2.337677}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 16, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 479126031}
-  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
+  m_Father: {fileID: 1939006977}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &419830932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2343,8 +2343,8 @@ Camera:
   m_GameObject: {fileID: 419830930}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2367,7 +2367,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 40
+  field of view: 50
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2502,9 +2502,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4215541234901167773, guid: af00567097e16ab4eaa227d82e6496a9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1018550072}
-    - targetCorrespondingSourceObject: {fileID: 4215541234901167773, guid: af00567097e16ab4eaa227d82e6496a9, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 419830931}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af00567097e16ab4eaa227d82e6496a9, type: 3}
 --- !u!4 &479126031 stripped
@@ -2612,6 +2609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _taskName: Bad Luggage
+  _destroyOnSucceed: 0
   _finishedMission: 0
   _multiple: 1
   _multipleTaskLimit: -1
@@ -7807,6 +7805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _taskName: Good Luggage
+  _destroyOnSucceed: 0
   _finishedMission: 0
   _multiple: 1
   _multipleTaskLimit: -1
@@ -8094,6 +8093,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4544671831582304987, guid: 39414d5c68795694197844ca6e9b9870, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544671831582304987, guid: 39414d5c68795694197844ca6e9b9870, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4683948562686091185, guid: 39414d5c68795694197844ca6e9b9870, type: 3}
       propertyPath: m_LocalScale.x
       value: 27.11
@@ -8127,6 +8134,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8139332361140888107, guid: 39414d5c68795694197844ca6e9b9870, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8224220194839316326, guid: 39414d5c68795694197844ca6e9b9870, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -8380,7 +8391,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1.6}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 419830931}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1958859950

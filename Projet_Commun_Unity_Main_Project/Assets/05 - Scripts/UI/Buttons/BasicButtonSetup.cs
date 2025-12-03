@@ -15,7 +15,7 @@ public class BasicButtonSetup : MonoBehaviour
 
     void Update()
     {
-        if (EventSystem.current.currentSelectedGameObject != null)
+        if (EventSystem.current.currentSelectedGameObject)
         {
             _lastSelected = EventSystem.current.currentSelectedGameObject;
         }

@@ -23,10 +23,10 @@ public class AudioManager : MonoBehaviour
     
     void Awake()
     {
-        musicSource.loop = true;
-        
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+        
+        if(musicSource) musicSource.loop = true;
     }
 
     public void PlayBGM(AudioClip clip)
@@ -46,6 +46,6 @@ public class AudioManager : MonoBehaviour
     public void PlaySfx(AudioClip clip)
     {
         //Allows for SFX to be played in other scripts
-        sfxSource.PlayOneShot(clip);
+        if(sfxSource) sfxSource.PlayOneShot(clip);
     }
 }

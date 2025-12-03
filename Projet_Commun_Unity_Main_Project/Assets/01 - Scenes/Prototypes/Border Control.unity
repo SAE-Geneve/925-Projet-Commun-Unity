@@ -923,11 +923,57 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3520684291621217138, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 548238026}
   m_SourcePrefab: {fileID: 100100000, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
 --- !u!4 &548238024 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5334608086958598036, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+  m_PrefabInstance: {fileID: 548238023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &548238025 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3520684291621217138, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+  m_PrefabInstance: {fileID: 548238023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &548238026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 548238025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a9032226fdf534997d58cbe9a07a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPoints:
+  - {fileID: 548238030}
+  - {fileID: 548238029}
+  - {fileID: 548238028}
+  - {fileID: 548238027}
+  _spawnOnStart: 1
+--- !u!4 &548238027 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8705733747116576505, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+  m_PrefabInstance: {fileID: 548238023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &548238028 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3288715080420274774, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+  m_PrefabInstance: {fileID: 548238023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &548238029 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 822798434994856427, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
+  m_PrefabInstance: {fileID: 548238023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &548238030 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5987991621458393111, guid: 55c3f1415bac92844bc2ea1a3436620a, type: 3}
   m_PrefabInstance: {fileID: 548238023}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &591755731
@@ -1425,7 +1471,7 @@ MonoBehaviour:
   - {fileID: 1847871815}
   npcPrefab: {fileID: 3926795012516432758, guid: 2e6c91202301e3b40a8566ffc273cd5c, type: 3}
   spawnInterval: 5
-  spawnEnabled: 0
+  spawnEnabled: 1
   conveyor: {fileID: 1440622465}
   scanZone: {fileID: 1593812254}
   throwHere: {fileID: 1007242290}

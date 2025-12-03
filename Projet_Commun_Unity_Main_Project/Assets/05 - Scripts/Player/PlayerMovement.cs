@@ -8,16 +8,15 @@ public class PlayerMovement : CharacterMovement
     
     private bool _isDashing;
     
+
+    
     protected override void HorizontalMovement()
     {
         if(FreeMovement) return;
         
-        Vector2 velocity = new Vector2(Rb.linearVelocity.x, Rb.linearVelocity.z);
         if (!_isDashing)
         {
             base.HorizontalMovement();
-            if (_animator)
-                _animator.SetFloat("Speed", Mathf.Abs(velocity.magnitude) > Mathf.Epsilon ? Mathf.Abs(velocity.magnitude) : 0);
         }
     }
 

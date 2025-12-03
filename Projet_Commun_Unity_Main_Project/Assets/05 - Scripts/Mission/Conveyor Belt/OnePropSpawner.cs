@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -6,6 +7,9 @@ public class OnePropSpawner : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private ConveyorProp[] _propsToSpawn;
+    
+    [Tooltip("Does the props belongs to a PropManager")]
+    [SerializeField] private PropManager _propManager;
 
     [Header("Parameters")]
     [SerializeField] private float _spawnDelay = 2f;
@@ -14,7 +18,10 @@ public class OnePropSpawner : MonoBehaviour
     
     public event Action OnPropSpawned;
 
-    void Start() => SpawnLuggage();
+    private void OnEnable()
+    {
+        if(_conveyorProp == null) SpawnLuggage();
+    }
 
     private void SpawnLuggage()
     {
@@ -22,15 +29,22 @@ public class OnePropSpawner : MonoBehaviour
             transform.rotation);
         
         OnPropSpawned?.Invoke();
+        
+        if(_propManager) _propManager.AddProp(_conveyorProp);
     }
-
 
     private void OnTriggerExit(Collider other)
     {
         if (_conveyorProp && other.gameObject == _conveyorProp.gameObject)
         {
             _conveyorProp = null;
-            Invoke(nameof(SpawnLuggage), _spawnDelay);
+            StartCoroutine(SpawnCoroutine());
         }
+    }
+
+    private IEnumerator SpawnCoroutine()
+    {
+        yield return new WaitForSeconds(_spawnDelay);
+        SpawnLuggage();
     }
 }

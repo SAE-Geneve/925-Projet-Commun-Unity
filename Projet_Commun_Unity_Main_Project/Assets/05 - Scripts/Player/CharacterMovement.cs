@@ -8,8 +8,8 @@ public class CharacterMovement : MonoBehaviour
     public event Action<Vector3> OnMove;
     
     protected Rigidbody Rb;
-    protected Animator _animator;
 
+    
     protected Vector2 Movement;
    
     // Camera Directions
@@ -20,10 +20,11 @@ public class CharacterMovement : MonoBehaviour
     
     public bool FreeMovement { get; set; }
     
+    public Vector2 Velocity => new (Rb.linearVelocity.x, Rb.linearVelocity.z);
+    
     protected virtual void Start()
     {
         Rb = GetComponent<Rigidbody>();
-        _animator = GetComponent<Animator>();
         GetCameraDirections();
     }
     

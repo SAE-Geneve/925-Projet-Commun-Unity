@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Prop: MonoBehaviour, IGrabbable
@@ -6,6 +7,8 @@ public class Prop: MonoBehaviour, IGrabbable
     [Tooltip("Define the prop type of the game object")]
     [SerializeField] private PropType _type = PropType.None;
     [SerializeField] private AnimationCurve _speedCurve;
+    
+    public event Action<Prop> OnDestroyed;
     
     public PropType Type => _type;
     public Rigidbody Rb => _rb;
@@ -59,6 +62,8 @@ public class Prop: MonoBehaviour, IGrabbable
     }
 
     #endregion
+
+    private void OnDestroy() => OnDestroyed?.Invoke(this);
 }
 
 public enum PropType

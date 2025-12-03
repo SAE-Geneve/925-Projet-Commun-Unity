@@ -24,14 +24,14 @@ public class AIMovement : CharacterMovement
     {
         if (!_moving)
         {
-            SetAnimatorSpeed(0f);
+            //SetAnimatorSpeed(0f);
             return;
         }
 
         if (_path.corners.Length == 0 || _currentCorner >= _path.corners.Length)
         {
             Stop();
-            SetAnimatorSpeed(0f);
+            //SetAnimatorSpeed(0f);
             return;
         }
 
@@ -46,7 +46,7 @@ public class AIMovement : CharacterMovement
             if (_currentCorner >= _path.corners.Length)
             {
                 Stop();
-                SetAnimatorSpeed(0f);
+                //SetAnimatorSpeed(0f);
                 return;
             }
 
@@ -58,14 +58,14 @@ public class AIMovement : CharacterMovement
         dirToCorner.Normalize();
         MoveAI(dirToCorner);
 
-        SetAnimatorSpeed(new Vector3(Rb.linearVelocity.x, 0, Rb.linearVelocity.z).magnitude / speed);
+        //SetAnimatorSpeed(new Vector3(Rb.linearVelocity.x, 0, Rb.linearVelocity.z).magnitude / speed);
     }
 
-    private void SetAnimatorSpeed(float speedValue)
-    {
-        if (_animator != null)
-            _animator.SetFloat("Speed", speedValue);
-    }
+    // private void SetAnimatorSpeed(float speedValue)
+    // {
+    //     if (_animator != null)
+    //         _animator.SetFloat("Speed", speedValue);
+    // }
 
     private void MoveAI(Vector3 dir)
     {

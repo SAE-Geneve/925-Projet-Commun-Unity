@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     
     [SerializeField] private Canvas _pauseCanvas;
 
-    public void ShowPauseCanvas(bool state) => _pauseCanvas.enabled = state;
+    public void ShowPauseCanvas(bool state) => _pauseCanvas.gameObject.SetActive(state);
     
     
     private void Awake()

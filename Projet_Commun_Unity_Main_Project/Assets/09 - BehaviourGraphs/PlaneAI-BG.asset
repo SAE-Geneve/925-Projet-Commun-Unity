@@ -20,7 +20,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: -2
-      type: {class: , ns: , asm: }
+      type: {class: '', ns: '', asm: ''}
     - rid: 999744632834752664
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -54,7 +54,8 @@ MonoBehaviour:
         Name: ObjectSpawnPosition
         m_Value: {fileID: 0}
     - rid: 999744632834752668
-      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
+          UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 17420105787276994499
@@ -304,7 +305,7 @@ MonoBehaviour:
         Max:
           rid: 999744833903919634
     - rid: 999744833903919617
-      type: {class: CreateTheObjectAction, ns: , asm: Scripts}
+      type: {class: CreateTheObjectAction, ns: '', asm: Scripts}
       data:
         ID:
           m_Value0: 17006118257472803215
@@ -436,7 +437,7 @@ MonoBehaviour:
         Value:
           rid: 999744833903919647
     - rid: 999744833903919626
-      type: {class: PlaneAiIsAngryAction, ns: , asm: Scripts}
+      type: {class: PlaneAiIsAngryAction, ns: '', asm: Scripts}
       data:
         ID:
           m_Value0: 2879215050772763511
@@ -565,7 +566,7 @@ MonoBehaviour:
         ComparisonValue:
           rid: 999744833903919653
     - rid: 999744833903919639
-      type: {class: SelfGetHisAction, ns: , asm: Scripts}
+      type: {class: SelfGetHisAction, ns: '', asm: Scripts}
       data:
         ID:
           m_Value0: 5269474192706659590
@@ -785,6 +786,25 @@ MonoBehaviour:
         m_EndedNodes:
           rid: 7650010050693693616
         m_VersionTimestamp: 639003657990730674
+    - rid: 7650010050693693612
+      type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        AuthoringAssetID:
+          m_Value0: 13006481821232797299
+          m_Value1: 5145035690301159705
+        m_DebugInfo: {fileID: 6659427806902154549}
+        BlackboardReference:
+          rid: 7650010050693693613
+        BlackboardGroupReferences: []
+        Root:
+          rid: 999744833903919601
+        m_ActiveNodes: []
+        m_NodesToTick: []
+        m_NodesToEnd:
+          rid: 7650010050693693615
+        m_EndedNodes:
+          rid: 7650010050693693616
+        m_VersionTimestamp: 639003717940342086
     - rid: 7650010050693693613
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -822,8 +842,8 @@ MonoBehaviour:
   m_Name: PlaneAI-BG Blackboard
   m_EditorClassIdentifier: 
   AssetID:
-    m_Value0: 8404923419736367758
-    m_Value1: 7826462876127951481
+    m_Value0: 13006481821232797299
+    m_Value1: 5145035690301159705
   m_Variables:
   - rid: 1911685240549277850
   - rid: 7650009516808340288
@@ -891,7 +911,8 @@ MonoBehaviour:
         m_IsShared: 0
         m_Value: {fileID: 0}
     - rid: 7650009937151000931
-      type: {class: 'TypedVariableModel`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      type: {class: 'TypedVariableModel`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
+          UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
         ID:
           m_Value0: 17420105787276994499
@@ -972,13 +993,13 @@ MonoBehaviour:
   - rid: 999744632834752643
   - rid: 999744632834752644
   - rid: 999744632834752645
-  m_VersionTimestamp: 639003657990730674
+  m_VersionTimestamp: 639003717940342086
   m_SerializedVersion: 1
   m_DebugInfo: {fileID: 6659427806902154549}
   m_RuntimeGraph: {fileID: -3882054839387187523}
   AssetID:
-    m_Value0: 8404923419736367758
-    m_Value1: 7826462876127951481
+    m_Value0: 13006481821232797299
+    m_Value1: 5145035690301159705
   Story:
     Story: 
     StoryVariableNames: []
@@ -1077,8 +1098,8 @@ MonoBehaviour:
     - False
     IsPlaceholder: 0
   - Name: Create the object
-    Story: 'Spawn [thing] from [Theses] at [Pos] using [ColorToSpawn] and change
-      the [Ground]'
+    Story: Spawn [thing] from [Theses] at [Pos] using [ColorToSpawn] and change the
+      [Ground]
     RuntimeTypeString: CreateTheObjectAction, Scripts, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
     RuntimeTypeID:
@@ -1135,7 +1156,7 @@ MonoBehaviour:
     NamedChildren: []
     IsPlaceholder: 0
   - Name: Set Variable Value
-    Story: 'Set [Variable] value to [Value]'
+    Story: Set [Variable] value to [Value]
     RuntimeTypeString: Unity.Behavior.SetVariableValueAction, Unity.Behavior, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
     RuntimeTypeID:
@@ -1206,7 +1227,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: -2
-      type: {class: , ns: , asm: }
+      type: {class: '', ns: '', asm: ''}
     - rid: 999744632834752641
       type: {class: FloatingPortNodeModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -2746,7 +2767,8 @@ MonoBehaviour:
         LinkedVariable:
           rid: 7650009937151001209
     - rid: 7650009937151001207
-      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
+          UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
@@ -2754,7 +2776,8 @@ MonoBehaviour:
         Name: 
         m_Value: []
     - rid: 7650009937151001209
-      type: {class: 'TypedVariableModel`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      type: {class: 'TypedVariableModel`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
+          UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
         ID:
           m_Value0: 17420105787276994499
@@ -3851,7 +3874,8 @@ MonoBehaviour:
         Name: ObjectSpawnPosition
         m_Value: {fileID: 0}
     - rid: 7650009937151000993
-      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
+          UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 17420105787276994499

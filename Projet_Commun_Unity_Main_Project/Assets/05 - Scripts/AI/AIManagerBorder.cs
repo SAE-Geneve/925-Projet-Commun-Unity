@@ -22,5 +22,4 @@ public class AIManagerBorder : AIManager
            borderAI.Initialize(conveyor, scanZone, throwHere, exitPoint);
        }
    }
-
 }

@@ -15,6 +15,10 @@ public class SecurityScanner : MonoBehaviour
                {
                    Debug.Log("EnemyFound");
                }
+               else
+               {
+                   Debug.Log("Is not enemy");
+               }
            }
         }
     }

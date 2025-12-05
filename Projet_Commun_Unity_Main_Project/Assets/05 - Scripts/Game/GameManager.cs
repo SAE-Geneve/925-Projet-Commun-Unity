@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
 
         SwitchState(GameState.Playing);
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
-        SceneLoader.Instance.LoadScene("HubScene");
+        if(SceneLoader.Instance) SceneLoader.Instance.LoadScene("HubScene");
     }
 
     public void StartCinematic()

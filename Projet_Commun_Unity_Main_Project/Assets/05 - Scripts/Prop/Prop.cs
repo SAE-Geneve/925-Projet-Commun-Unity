@@ -64,6 +64,8 @@ public class Prop: MonoBehaviour, IGrabbable
     #endregion
 
     private void OnDestroy() => OnDestroyed?.Invoke(this);
+    
+    public void SetType(PropType type) => _type = type;
 }
 
 public enum PropType

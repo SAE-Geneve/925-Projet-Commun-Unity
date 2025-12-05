@@ -12,6 +12,6 @@ public class LuggageScanner : MonoBehaviour
         if(!other.CompareTag("Prop") || !other.TryGetComponent(out Prop prop)) return;
         
         if (prop.Type == PropType.GoodProp) onGoodProp.Invoke();
-        else onBadProp.Invoke();
+        else if(prop.Type == PropType.BadProp) onBadProp.Invoke();
     }
 }

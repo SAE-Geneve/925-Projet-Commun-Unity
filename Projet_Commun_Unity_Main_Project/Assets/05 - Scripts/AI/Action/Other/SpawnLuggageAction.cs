@@ -46,12 +46,18 @@ public partial class SpawnLuggageAction : Action
         Vector3 spawnPos = npcTransform.position + npcTransform.forward * 1.7f + Vector3.up * 0.5f;
         
         GameObject newLuggage = GameObject.Instantiate(prefab, spawnPos, npcTransform.rotation);
-        
+
         if (newLuggage == null)
         {
             return Status.Failure;
         }
         
+        Prop prop = newLuggage.GetComponent<Prop>();
+        if (prop != null)
+        {
+            prop.SetType(UnityEngine.Random.value < 0.3f ? PropType.BadProp : PropType.GoodProp);
+        }
+
         return Status.Success;
     }
 

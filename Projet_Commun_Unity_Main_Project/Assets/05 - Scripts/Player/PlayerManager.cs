@@ -60,7 +60,14 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void Reset() =>_players.Clear();
+    public void Reset()
+    {
+        foreach (var pl in _players)
+        {
+            Destroy(pl.gameObject);
+        }
+        _players.Clear();
+    }
     
     public void DisablePlayerControllers()
     {

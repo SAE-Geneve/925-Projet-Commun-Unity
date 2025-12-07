@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        _lastState = _state;
         _state = newState;
         Debug.Log($"Game State: {_state}");
     }
@@ -162,7 +163,7 @@ public class GameManager : MonoBehaviour
 
         BuildMissionMap();
 
-        _context = GameContext.Hub;
+        _context = GameContext.Menu;
     }
 
     #endregion
@@ -172,6 +173,7 @@ public class GameManager : MonoBehaviour
         if (_playerManager.Players.Count < _minPlayers) return;
 
         SwitchState(GameState.Playing);
+        _context = GameContext.Hub;
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
         if(SceneLoader.Instance) SceneLoader.Instance.LoadScene("HubScene");
     }
@@ -349,4 +351,5 @@ public enum GameContext
     Hub,
     Mission,
     LastMission,
+    Menu,
 }

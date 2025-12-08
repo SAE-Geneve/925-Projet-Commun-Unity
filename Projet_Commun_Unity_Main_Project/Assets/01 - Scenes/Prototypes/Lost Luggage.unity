@@ -911,6 +911,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AILostLuggage
       objectReference: {fileID: 0}
+    - target: {fileID: 7465967378580255295, guid: 52ad5bab9aa231344bdc4be18268eaaf, type: 3}
+      propertyPath: isRagdollable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7851473146211718834, guid: 52ad5bab9aa231344bdc4be18268eaaf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.136
@@ -1058,8 +1062,8 @@ GameObject:
   - component: {fileID: 1937751026}
   - component: {fileID: 1937751025}
   - component: {fileID: 1937751024}
-  - component: {fileID: 1937751028}
   - component: {fileID: 1937751029}
+  - component: {fileID: 1937751030}
   m_Layer: 0
   m_Name: Lost luggage
   m_TagString: Prop
@@ -1156,25 +1160,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1937751028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937751023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec548a713c6a243408875a18381f13d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _type: 5
-  _speedCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!54 &1937751029
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1202,6 +1187,43 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1937751030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937751023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cae627ec9714754e8407ea6fcf3db60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 5
+  _speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

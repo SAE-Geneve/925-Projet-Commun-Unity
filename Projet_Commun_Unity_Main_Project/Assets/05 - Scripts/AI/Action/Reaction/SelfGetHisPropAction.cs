@@ -5,20 +5,19 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "SelfGetHisProp", story: "[Self] receives a Prop matching his [PreferredType] and frees its [Location]", category: "Action", id: "d1a7b6f2c9e347eaa1b2d3c4e5f67890")]
+[NodeDescription(name: "SelfGetHisProp", story: "[Self] receives a Prop in his [GrabZone] matching his [PreferredType] and frees its [Location]", category: "Action", id: "d1a7b6f2c9e347eaa1b2d3c4e5f67890")]
 public partial class SelfGetHisPropAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
+    [SerializeReference] public BlackboardVariable<GameObject> GrabZone;
     [SerializeReference] public BlackboardVariable<PropTypeBlackBoard> PreferredType;
     [SerializeReference] public BlackboardVariable<GameObject> Location;
-    
-
     protected override Status OnUpdate()
     {
         if (Self?.Value == null)
             return Status.Failure;
 
-        Collider selfCol = Self.Value.GetComponent<Collider>();
+        Collider selfCol = GrabZone.Value.GetComponent<Collider>();
         if (selfCol == null)
             return Status.Failure;
 
@@ -39,7 +38,7 @@ public partial class SelfGetHisPropAction : Action
             
             if (hit.gameObject.name.Contains("Clone"))
             {
-                Debug.Log($"Prop détecté : {prop.name}, Type = {prop.Type}, PreferredType = {PreferredType.Value}");
+              //  Debug.Log($"Prop détecté : {prop.name}, Type = {prop.Type}, PreferredType = {PreferredType.Value}");
             }
             
             if (IsMatchingPreferred(prop.Type, PreferredType.Value))

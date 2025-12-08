@@ -7,11 +7,25 @@ public class AIManagerConveyorBelt : AIManager
     [SerializeField] private List<LocationPoint> locations;
     [SerializeField] private Transform exitPoint;
 
+    private void Start()
+    {
+        int playerCount = PlayerManager.Instance.Players.Count;
+        int half = locations.Count / 2;
+        
+        if (playerCount >= 2)
+        {
+            for (int i = half; i < locations.Count; i++)
+            {
+                locations[i].available = true;
+            }
+        }
+    }
+
     protected override void SpawnNPC()
     {
         if (npcPrefab == null || locations == null || locations.Count == 0)
             return;
-        
+
         LocationPoint chosenLocation = null;
 
         foreach (var loc in locations)
@@ -22,13 +36,12 @@ public class AIManagerConveyorBelt : AIManager
                 break;
             }
         }
-        
+
         if (chosenLocation == null)
-        {
             return;
-        }
-        
+
         chosenLocation.available = false;
+
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
         AIConveyorBelt npc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation) as AIConveyorBelt;
 
@@ -37,8 +50,7 @@ public class AIManagerConveyorBelt : AIManager
             Debug.LogError("Le prefab n'est pas un AIConveyorBelt.");
             return;
         }
-        
+
         npc.Initialize(chosenLocation.locationObject, exitPoint);
-        
     }
 }

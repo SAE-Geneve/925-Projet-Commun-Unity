@@ -7,10 +7,15 @@ public class AIRagdoll : Ragdoll
     [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;
     [SerializeField] private GameObject bHips;
 
+    [Header("Ragdoll Settings")]
+    [SerializeField] private bool isRagdollable = true;
+
     private bool IsRagdollState { get; set; }
 
     public override void RagdollOn()
     {
+        if (!isRagdollable) return;
+
         bHips.SetActive(true);
 
         if (IsRagdollState) return;
@@ -40,4 +45,5 @@ public class AIRagdoll : Ragdoll
         else
             Debug.LogWarning($"Variable '{variableName}' introuvable dans le Blackboard !");
     }
+    
 }

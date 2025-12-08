@@ -2,9 +2,10 @@ using System;
 using Unity.Behavior;
 
 [BlackboardEnum]
-public enum StatusNpcLostLuggage
+public enum StatusNpcConveyorBelt
 {
-    Wating,
+    Spawning,
+	Waiting,
 	Happy,
 	Angry
 }

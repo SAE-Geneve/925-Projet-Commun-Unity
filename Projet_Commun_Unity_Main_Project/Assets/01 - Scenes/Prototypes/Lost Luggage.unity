@@ -913,15 +913,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7851473146211718834, guid: 52ad5bab9aa231344bdc4be18268eaaf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.83
+      value: -0.136
       objectReference: {fileID: 0}
     - target: {fileID: 7851473146211718834, guid: 52ad5bab9aa231344bdc4be18268eaaf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 26.36082
+      value: 0.004
       objectReference: {fileID: 0}
     - target: {fileID: 7851473146211718834, guid: 52ad5bab9aa231344bdc4be18268eaaf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.41
+      value: 0.119
       objectReference: {fileID: 0}
     - target: {fileID: 7851473146211718834, guid: 52ad5bab9aa231344bdc4be18268eaaf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -958,8 +958,94 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6200256347793253861, guid: 52ad5bab9aa231344bdc4be18268eaaf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1822639056}
+    - targetCorrespondingSourceObject: {fileID: 6200256347793253861, guid: 52ad5bab9aa231344bdc4be18268eaaf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1822639057}
   m_SourcePrefab: {fileID: 100100000, guid: 52ad5bab9aa231344bdc4be18268eaaf, type: 3}
+--- !u!1 &1822639054 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6200256347793253861, guid: 52ad5bab9aa231344bdc4be18268eaaf, type: 3}
+  m_PrefabInstance: {fileID: 1822639053}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1822639055 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3026652627009726816, guid: 52ad5bab9aa231344bdc4be18268eaaf, type: 3}
+  m_PrefabInstance: {fileID: 1822639053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822639054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1822639056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822639054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc2446cc96b482ea258e760673752a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _taskName: Ia get luggage
+  _destroyOnSucceed: 0
+  _finishedMission: 1
+  _multiple: 0
+  _multipleTaskLimit: -1
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSucceed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinished:
+    m_PersistentCalls:
+      m_Calls: []
+  agent: {fileID: 1822639055}
+  variableName: isHappy
+  expectedValue: 1
+--- !u!114 &1822639057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1822639054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc2446cc96b482ea258e760673752a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _taskName: 'time is 0 '
+  _destroyOnSucceed: 0
+  _finishedMission: 1
+  _multiple: 0
+  _multipleTaskLimit: -1
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSucceed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFinished:
+    m_PersistentCalls:
+      m_Calls: []
+  agent: {fileID: 1822639055}
+  variableName: isAngry
+  expectedValue: 1
 --- !u!1 &1937751023
 GameObject:
   m_ObjectHideFlags: 0
@@ -1064,7 +1150,7 @@ Transform:
   m_GameObject: {fileID: 1937751023}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 52.704365, y: 27.862478, z: 8.830258}
+  m_LocalPosition: {x: 2.28, y: 3.5, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1082,7 +1168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec548a713c6a243408875a18381f13d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 0
+  _type: 5
   _speedCurve:
     serializedVersion: 2
     m_Curve: []

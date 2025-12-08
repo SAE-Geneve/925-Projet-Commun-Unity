@@ -9,8 +9,7 @@ public class AILostLuggage : AIController
 
         _behaviorAgent = GetComponent<BehaviorGraphAgent>();
         if (_behaviorAgent == null) return;
-
-        // Cherche l'objet "Lost luggage" dans la scène
+        
         GameObject luggageObj = GameObject.Find("Lost luggage");
         if (luggageObj != null)
         {

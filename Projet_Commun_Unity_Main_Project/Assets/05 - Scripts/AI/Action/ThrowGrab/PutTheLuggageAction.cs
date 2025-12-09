@@ -15,6 +15,10 @@ public partial class PutTheLuggageAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Npc;
     [SerializeReference] public BlackboardVariable<GameObject> Luggage;
     [SerializeReference] public BlackboardVariable<Transform> Thing;
+    
+    [SerializeReference] public BlackboardVariable<float> turnDuration;
+    [SerializeReference] public BlackboardVariable<float> throwForce;
+
 
     private Controller controller;
     private Transform npcTransform;
@@ -26,8 +30,7 @@ public partial class PutTheLuggageAction : Action
     private Quaternion startRot;
     private Quaternion targetRot;
     private float turnTime = 0f;
-    private const float turnDuration = 0.5f;
-
+    
     protected override Status OnStart()
     {
         if (Npc?.Value == null || Luggage?.Value == null || Thing?.Value == null)
@@ -59,7 +62,7 @@ public partial class PutTheLuggageAction : Action
         {
             case Phase.Turning:
                 turnTime += Time.deltaTime;
-                float t = Mathf.Clamp01(turnTime / turnDuration);
+                float t = Mathf.Clamp01(turnTime / turnDuration.Value);
                 npcTransform.rotation = Quaternion.Slerp(startRot, targetRot, t);
 
                 if (t >= 1f)
@@ -70,7 +73,8 @@ public partial class PutTheLuggageAction : Action
                 break;
 
             case Phase.Throwing:
-                Vector3 force = npcTransform.forward * 10f;
+                Vector3 force = npcTransform.forward * throwForce.Value;
+
                 grabbable.Dropped(force, controller);
 
                 phase = Phase.Done;

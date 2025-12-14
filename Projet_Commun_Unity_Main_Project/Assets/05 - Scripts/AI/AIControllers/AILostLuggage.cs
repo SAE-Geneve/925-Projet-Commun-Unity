@@ -7,13 +7,13 @@ public class AILostLuggage : AIController
     {
         base.Awake();
 
-        _behaviorAgent = GetComponent<BehaviorGraphAgent>();
-        if (_behaviorAgent == null) return;
+        BehaviorAgent = GetComponent<BehaviorGraphAgent>();
+        if (BehaviorAgent == null) return;
         
         GameObject luggageObj = GameObject.Find("Lost luggage");
         if (luggageObj != null)
         {
-            _behaviorAgent.SetVariableValue("LostLuggage", luggageObj);
+            BehaviorAgent.SetVariableValue("LostLuggage", luggageObj);
         }
         else
         {

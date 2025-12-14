@@ -13,8 +13,8 @@ public class AIConveyorBelt : AIController
     }
     private void ApplyBlackboardValues()
     {
-        if (_behaviorAgent == null) return;
-        if (exitPoint != null) _behaviorAgent.SetVariableValue("Exit", exitPoint);
-        if (location != null) _behaviorAgent.SetVariableValue("Location", location);
+        if (BehaviorAgent == null) return;
+        if (exitPoint != null) BehaviorAgent.SetVariableValue("Exit", exitPoint);
+        if (location != null) BehaviorAgent.SetVariableValue("Location", location);
     }
 }

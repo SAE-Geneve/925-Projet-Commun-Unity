@@ -64,8 +64,12 @@ public class DebugMissionTrigger : MonoBehaviour
 
     private void CheckPlayerNumber()
     {
-        if(_playerNumber == _playerManager.PlayerCount)
+        if (_playerNumber == _playerManager.PlayerCount)
+        {
+            _playerNumber = 0;
+            UpdateTmpNumber();
             _mission.StartMission();
+        }
     }
 
     private void Decrement()

@@ -85,6 +85,7 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
     public void SetType(PropType type) => _type = type;
     public void Respawn()
     {
+        if(IsGrabbed) Dropped();
         transform.position = _respawnPosition;
         transform.rotation = _respawnRotation;
         transform.localScale = _respawnScale;

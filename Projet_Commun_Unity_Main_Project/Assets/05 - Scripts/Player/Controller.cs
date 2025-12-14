@@ -160,7 +160,7 @@ public class Controller : MonoBehaviour, IGrabbable
 
     public void Dropped(Vector3 throwForce = default, Controller controller = null)
     {
-        transform.SetParent(_originalParent);
+        ResetParent();
 
         Rb.isKinematic = false;
         
@@ -176,6 +176,8 @@ public class Controller : MonoBehaviour, IGrabbable
         
         Debug.Log("Dropped controller");
     }
+
+    public void ResetParent() => transform.SetParent(_originalParent);
 
     private IEnumerator DropRoutine()
     {

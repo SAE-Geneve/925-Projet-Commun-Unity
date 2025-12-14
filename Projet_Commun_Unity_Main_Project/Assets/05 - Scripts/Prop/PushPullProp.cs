@@ -11,7 +11,6 @@ public class PushPullProp : Prop
     
     public override void Grabbed(Controller controller)
     {
-        _originalParent = controller.transform.parent;
         controller.transform.parent = transform;
         
         var playerRb = controller.Rb;
@@ -31,10 +30,19 @@ public class PushPullProp : Prop
     
     public override void Dropped(Vector3 throwForce = default, Controller controller = null)
     {
+        if(controller) ResetController(controller);
+        else foreach (var c in _playerControllers)
+                ResetController(c);
+        
+        IsGrabbed = _playerControllers.Count > 0;
+    }
+
+    private void ResetController(Controller controller)
+    {
         if(!_playerControllers.Contains(controller)) return;
         
         controller.Reset();
-        controller.transform.parent = _originalParent;
+        controller.ResetParent();
         controller.Rb.isKinematic = false;
         
         Physics.IgnoreCollision(controller.Collider, _collider, false);
@@ -42,8 +50,5 @@ public class PushPullProp : Prop
         CharacterMovement movement = controller.Movement;
         movement.IsPushPull = false;
         movement.OnMove -= MoveProp;
-        
-        IsGrabbed = _playerControllers.Count > 0;
     }
-
 }

@@ -39,6 +39,8 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
 
     public virtual void Grabbed(Controller controller)
     {
+        if(IsGrabbed) Dropped();
+        
         IsGrabbed = true;
         _originalParent = transform.parent;
         transform.SetParent(controller.CatchPoint);

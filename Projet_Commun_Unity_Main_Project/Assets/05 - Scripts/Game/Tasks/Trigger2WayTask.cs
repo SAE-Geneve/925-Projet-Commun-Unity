@@ -13,11 +13,8 @@ public class Trigger2WayTask : TriggerTask
         else if(prop.Type == _badPropType) Failed();
         else return;
         
-        prop.Destroy();
 
-        if (isDestroyed)
-        {
-            Destroy(other.gameObject);
-        }
+
+        if (isDestroyed) prop.Destroy();
     }
 }

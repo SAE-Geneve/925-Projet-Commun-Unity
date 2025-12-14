@@ -67,6 +67,8 @@ public class Prop: MonoBehaviour, IGrabbable
     {
         OnDestroyed?.Invoke(this);
         if(IsGrabbed) Dropped();
+        
+        Destroy(gameObject);
     }
 
     private void OnDestroy() => OnDestroyed?.Invoke(this);

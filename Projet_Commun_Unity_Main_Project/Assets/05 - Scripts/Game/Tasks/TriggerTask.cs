@@ -11,11 +11,8 @@ public class TriggerTask : GameTask
     private void OnTriggerEnter(Collider other)
     {
         if(Done || !other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
-
-        prop.Destroy();
         
         Succeed();
-        if(isDestroyed)
-            Destroy(other.gameObject);
+        if(isDestroyed) prop.Destroy();
     }
 }

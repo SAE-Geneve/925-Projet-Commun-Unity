@@ -9,6 +9,7 @@ public class PropManager : MonoBehaviour
     {
         prop.OnDestroyed += RemoveProp;
         _props.Add(prop);
+        Debug.Log("Prop added: " + prop.name);
     }
 
     private void RemoveProp(Prop prop)

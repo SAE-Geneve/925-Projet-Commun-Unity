@@ -8,6 +8,7 @@ public class AIManagerBorder : AIManager
     [SerializeField] private Transform scanZone;
     [SerializeField] private Transform throwHere;
     [SerializeField] private Transform exitPoint;
+    [SerializeField] private PropManager propManager;
 
    protected override void SpawnNPC()
    {
@@ -19,7 +20,7 @@ public class AIManagerBorder : AIManager
        AIBorder borderAI = npc.GetComponent<AIBorder>();
        if (borderAI != null)
        {
-           borderAI.Initialize(conveyor, scanZone, throwHere, exitPoint);
+           borderAI.Initialize(conveyor, scanZone, throwHere, exitPoint, propManager);
        }
    }
 }

@@ -12,6 +12,8 @@ public partial class SpawnLuggageAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Npc;
     [SerializeReference] public BlackboardVariable<List<GameObject>> Prefabs;
     [SerializeReference] public BlackboardVariable<float> EvilChance;
+    [SerializeReference] public BlackboardVariable<PropManager> propManager;
+
     
     protected override Status OnStart()
     {
@@ -57,6 +59,7 @@ public partial class SpawnLuggageAction : Action
         if (prop != null)
         {
             prop.SetType(UnityEngine.Random.value < (EvilChance.Value / 100) ? PropType.BadProp : PropType.GoodProp);
+            propManager.Value.AddProp(prop);
         }
 
         return Status.Success;

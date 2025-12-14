@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -20,6 +21,9 @@ public class DebugMissionTrigger : MonoBehaviour
     private PlayerManager _playerManager;
     
     private Action<Ragdoll> _ragdollHandler;
+    
+    private HashSet<Ragdoll> _ragdolls = new();
+    private bool _isMissionStarted;
     
     private int _playerNumber;
 
@@ -45,31 +49,45 @@ public class DebugMissionTrigger : MonoBehaviour
     {
         if (!other.CompareTag("Player") || !other.TryGetComponent(out Ragdoll ragdoll)) return;
 
-        _playerNumber++;
-        
-        CheckPlayerNumber();
-        UpdateTmpNumber();
-
-        ragdoll.OnRagdollSelf += _ragdollHandler;
+        if (_ragdolls.Add(ragdoll))
+        {
+            _playerNumber++;
+            
+            ragdoll.OnRagdollSelf += _ragdollHandler;
+            
+            UpdateTmpNumber();
+            CheckPlayerNumber();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player") || !other.TryGetComponent(out Ragdoll ragdoll)) return;
 
-        ragdoll.OnRagdollSelf -= _ragdollHandler;
-
-        Decrement();
+        if (_ragdolls.Remove(ragdoll))
+        {
+            ragdoll.OnRagdollSelf -= _ragdollHandler;
+            Decrement();
+        }
     }
 
     private void CheckPlayerNumber()
     {
         if (_playerNumber == _playerManager.PlayerCount)
-        {
-            _playerNumber = 0;
-            UpdateTmpNumber();
-            _mission.StartMission();
-        }
+            StartMission();
+    }
+
+    private void StartMission()
+    {
+        foreach (var ragdoll in _ragdolls)
+            if (ragdoll) ragdoll.OnRagdollSelf -= _ragdollHandler;
+
+        _ragdolls.Clear();
+            
+        _playerNumber = 0;
+        UpdateTmpNumber();
+            
+        _mission.StartMission();
     }
 
     private void Decrement()

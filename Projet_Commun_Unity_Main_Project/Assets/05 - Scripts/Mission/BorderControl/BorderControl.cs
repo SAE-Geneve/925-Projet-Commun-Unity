@@ -9,7 +9,7 @@ public class BorderControl : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        switch (1)
+        switch (PlayerManager.Instance.Players.Count)
         {
             case 3:
                 addedConveyor1.SetActive(true);

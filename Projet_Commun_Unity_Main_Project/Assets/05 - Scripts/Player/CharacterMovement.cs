@@ -10,11 +10,11 @@ public class CharacterMovement : MonoBehaviour
     protected Rigidbody Rb;
 
     
-    protected Vector2 Movement;
+    private Vector2 _movement;
    
     // Camera Directions
-    protected Vector3 CamForward;
-    protected Vector3 CamRight;
+    private Vector3 _camForward;
+    private Vector3 _camRight;
     
     public bool IsPushPull { get; set; }
     
@@ -22,14 +22,18 @@ public class CharacterMovement : MonoBehaviour
     
     public Vector2 Velocity => new (Rb.linearVelocity.x, Rb.linearVelocity.z);
     
+    private Transform _mainCameraTransform;
+    
     protected virtual void Start()
     {
         Rb = GetComponent<Rigidbody>();
-        GetCameraDirections();
+        
+        _mainCameraTransform = Camera.main.transform;
     }
     
     void Update()
     {
+        UpdateCameraDirection();
         RotateCharacter();
     }
     
@@ -42,7 +46,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if(FreeMovement) return;
         // Calculate the change in velocity needed and apply it (no acceleration or deceleration)
-        Vector3 moveDir = CamRight * Movement.x + CamForward * Movement.y;
+        Vector3 moveDir = _camRight * _movement.x + _camForward * _movement.y;
         
         Vector3 targetVelocity = moveDir * speed;
         Vector3 velocity = Rb.linearVelocity;
@@ -56,30 +60,31 @@ public class CharacterMovement : MonoBehaviour
     private void RotateCharacter()
     {
         if(IsPushPull) return;
+        
         // Rotate character to face move direction
-        Vector3 moveDir = CamRight * Movement.x + CamForward * Movement.y;
+        Vector3 moveDir = _camRight * _movement.x + _camForward * _movement.y;
         if (moveDir != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDir), 0.15f);
         }
     }
     
-    protected void GetCameraDirections()
+    private void UpdateCameraDirection()
     {
         // Calculate directions relative to the camera (static camera)
-        CamForward = Camera.main.transform.forward;
-        CamForward.y = 0;
-        CamForward.Normalize();
+        _camForward = _mainCameraTransform.forward;
+        _camForward.y = 0;
+        _camForward.Normalize();
 
-        CamRight = Camera.main.transform.right;
-        CamRight.y = 0;
-        CamRight.Normalize();
+        _camRight = _mainCameraTransform.right;
+        _camRight.y = 0;
+        _camRight.Normalize();
     }
 
 
     public void SetMovement(Vector2 move)
     {
-        Movement = move;
+        _movement = move;
     }
     
     public void SetSpeed(float newSpeed)

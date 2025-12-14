@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Prop: MonoBehaviour, IGrabbable
+public class Prop: MonoBehaviour, IGrabbable, IRespawnable
 {
     [Header("Parameters")]
     [Tooltip("Define the prop type of the game object")]
@@ -19,11 +19,20 @@ public class Prop: MonoBehaviour, IGrabbable
     
     protected Controller Controller;
     protected Transform _originalParent;
+    
+    // Respawn parameters
+    Vector3 _respawnPosition;
+    Quaternion _respawnRotation;
+    Vector3 _respawnScale;
 
     protected virtual void Start()
     {
         _collider = GetComponent<Collider>();
         _rb = GetComponent<Rigidbody>();
+        
+        _respawnPosition = transform.position;
+        _respawnRotation = transform.rotation;
+        _respawnScale = transform.localScale;
     }
 
     #region Grab
@@ -74,6 +83,12 @@ public class Prop: MonoBehaviour, IGrabbable
     private void OnDestroy() => OnDestroyed?.Invoke(this);
     
     public void SetType(PropType type) => _type = type;
+    public void Respawn()
+    {
+        transform.position = _respawnPosition;
+        transform.rotation = _respawnRotation;
+        transform.localScale = _respawnScale;
+    }
 }
 
 public enum PropType

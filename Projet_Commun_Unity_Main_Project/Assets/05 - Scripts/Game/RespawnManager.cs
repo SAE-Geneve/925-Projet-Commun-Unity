@@ -9,11 +9,8 @@ public class RespawnManager : MonoBehaviour
     {
         _respawnables = new List<IRespawnable>();
 
-        foreach (GameObject child in transform)
-        {
-            if (child.TryGetComponent<IRespawnable>(out var respawnable))
-                _respawnables.Add(respawnable);
-        }
+        foreach (var r in GetComponentsInChildren<IRespawnable>())
+            _respawnables.Add(r);
     }
 
     public void RespawnObjects()

@@ -73,7 +73,7 @@ public class Controller : MonoBehaviour, IGrabbable
     {
         if (_grabbed != null)
         {
-            _grabbed.Dropped(ThrowDirection(), this);
+            _grabbed.Dropped(ThrowDirection(), this); ;
         }
     }
 

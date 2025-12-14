@@ -63,6 +63,12 @@ public class Prop: MonoBehaviour, IGrabbable
 
     #endregion
 
+    public void Destroy()
+    {
+        OnDestroyed?.Invoke(this);
+        if(IsGrabbed) Dropped();
+    }
+
     private void OnDestroy() => OnDestroyed?.Invoke(this);
     
     public void SetType(PropType type) => _type = type;

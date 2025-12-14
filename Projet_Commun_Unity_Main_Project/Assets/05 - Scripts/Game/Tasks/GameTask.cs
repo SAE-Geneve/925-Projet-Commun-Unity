@@ -13,7 +13,7 @@ public abstract class GameTask : MonoBehaviour
     [Tooltip("Does this task can be done multiple times?")]
     [SerializeField] private bool _multiple;
     [SerializeField] private int _multipleTaskLimit = -1;
-    private int _multipleTaskCounter = 0;
+    private int _multipleTaskCounter;
 
     [Header("Events")] 
     public UnityEvent OnStart;

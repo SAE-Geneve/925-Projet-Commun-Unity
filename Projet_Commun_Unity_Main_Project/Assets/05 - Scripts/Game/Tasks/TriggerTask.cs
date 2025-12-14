@@ -12,8 +12,7 @@ public class TriggerTask : GameTask
     {
         if(Done || !other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
 
-        if (prop.IsGrabbed)
-            prop.Dropped();
+        prop.Destroy();
         
         Succeed();
         if(isDestroyed)

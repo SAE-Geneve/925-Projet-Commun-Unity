@@ -13,8 +13,7 @@ public class Trigger2WayTask : TriggerTask
         else if(prop.Type == _badPropType) Failed();
         else return;
         
-        if (prop.IsGrabbed)
-            prop.Dropped();
+        prop.Destroy();
 
         if (isDestroyed)
         {

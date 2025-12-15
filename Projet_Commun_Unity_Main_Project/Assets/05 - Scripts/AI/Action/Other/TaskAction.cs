@@ -1,14 +1,14 @@
 using System;
 using Unity.Behavior;
-using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Unity.Properties;
+using UnityEngine;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "Task", story: "[Agent] wait his task", category: "Action", id: "892481ea1819dffbd06ae2f4723f523a")]
+[NodeDescription(name: "Task", story: "Wait [task]", category: "Action", id: "892481ea1819dffbd06ae2f4723f523a")]
 public partial class TaskAction : Action
 {
-    [SerializeReference] public BlackboardVariable<GameObject> Agent;
+    [SerializeReference] public BlackboardVariable<GameTask> Task;
     
     private GameTask _task;
     
@@ -20,13 +20,13 @@ public partial class TaskAction : Action
 
     protected override Status OnStart()
     {
-        _task = Agent.Value.GetComponent<GameTask>();
+        _task = Task.Value;
         
         if(!_task) return Status.Failure;
         
         _onSucceedHandler = () => _succeed = true;
         _onFailedHandler = () => _failed = true;
-
+        
         _task.OnSucceedAction += _onSucceedHandler;
         _task.OnFailedAction += _onFailedHandler;
         

@@ -33,7 +33,7 @@ public class Controller : MonoBehaviour, IGrabbable
     
     private Vector3 throwDirection;
     
-    private IGrabbable _grabbed;
+    private IGrabbable _grabbedProp;
     
     private float _grabStartTime;
     private float _throwPower;
@@ -61,7 +61,7 @@ public class Controller : MonoBehaviour, IGrabbable
 
     public void CatchStart()
     {
-        if(_grabbed == null) TryGrab();
+        if(_grabbedProp == null) TryGrab();
         else
         {
             _isCharging = true;
@@ -74,10 +74,7 @@ public class Controller : MonoBehaviour, IGrabbable
 
     public void Drop()
     {
-        if (_grabbed != null)
-        {
-            _grabbed.Dropped(ThrowDirection(), this); ;
-        }
+        if (_grabbedProp != null) _grabbedProp.Dropped(ThrowDirection(), this);
     }
 
     private void Update()
@@ -132,13 +129,13 @@ public class Controller : MonoBehaviour, IGrabbable
         TryAction<IGrabbable>(grabbable =>
         {
             grabbable.Grabbed(this);
-            _grabbed = grabbable;
+            _grabbedProp = grabbable;
         });
     }
 
     public void Reset()
     {
-        _grabbed = null;
+        _grabbedProp = null;
         _throwBar.gameObject.SetActive(false);
         _isCharging = false;
     }
@@ -188,4 +185,12 @@ public class Controller : MonoBehaviour, IGrabbable
         _ragdoll.RagdollOn();
         Movement.FreeMovement = false;
     }
+
+    private void OnDestroy()
+    {
+        Drop();
+        Destroy(gameObject);
+    }
+
+    public void SetGrabbedProp(Prop prop) => _grabbedProp = prop;
 }

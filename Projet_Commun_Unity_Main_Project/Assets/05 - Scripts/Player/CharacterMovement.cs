@@ -27,8 +27,6 @@ public class CharacterMovement : MonoBehaviour
     protected virtual void Start()
     {
         Rb = GetComponent<Rigidbody>();
-        
-        _mainCameraTransform = Camera.main.transform;
     }
     
     void Update()
@@ -71,6 +69,7 @@ public class CharacterMovement : MonoBehaviour
     
     private void UpdateCameraDirection()
     {
+        if(!_mainCameraTransform) return;
         // Calculate directions relative to the camera (static camera)
         _camForward = _mainCameraTransform.forward;
         _camForward.y = 0;
@@ -81,6 +80,10 @@ public class CharacterMovement : MonoBehaviour
         _camRight.Normalize();
     }
 
+    public void SetupCamera()
+    {
+        _mainCameraTransform = Camera.main.transform;
+    }
 
     public void SetMovement(Vector2 move)
     {

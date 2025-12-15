@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,9 +18,14 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        foreach (var player in PlayerManager.Instance.Players)
+        List<PlayerController> playerControllers = PlayerManager.Instance.Players;
+        
+        foreach (var player in playerControllers)
             player.Drop();
 
         SceneManager.LoadScene(sceneName);
+
+        foreach (var player in playerControllers)
+            player.Movement.SetupCamera();
     }
 }

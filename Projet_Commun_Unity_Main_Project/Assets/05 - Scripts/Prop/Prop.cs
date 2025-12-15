@@ -44,7 +44,9 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
         if(IsGrabbed) Dropped();
         
         IsGrabbed = true;
+        
         _originalParent = transform.parent;
+        
         transform.SetParent(controller.CatchPoint);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;

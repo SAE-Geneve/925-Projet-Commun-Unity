@@ -8,12 +8,10 @@ public class PlayerController : Controller
     public UnityEvent OnEnterKart;
     public UnityEvent OnExitKart;
     
-    
     public PlayerInput Input { get; private set;}
     public InputManager InputManager { get; private set;}
     public KartController KartController { get; set; }
     public KartMovement KartMovement { get; set; }
-    
     public KartPhysic KartPhysic { get; set; }
 
     protected override void Start()

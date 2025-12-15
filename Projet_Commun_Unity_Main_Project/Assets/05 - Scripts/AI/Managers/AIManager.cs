@@ -10,19 +10,9 @@ public class AIManager : MonoBehaviour
     [SerializeField] protected float spawnInterval = 5f;
     [SerializeField] private bool _spawnOnStart;
 
-    // [Header("Debug / Test")]
-    // [SerializeField] protected bool spawnEnabled;
-
     private Coroutine _spawnRoutine;
-
-    private void Update()
-    {
-        // Détecte changement de checkbox
-        // if (spawnEnabled && _spawnRoutine == null)
-        //     StartSpawn();
-        // else if (!spawnEnabled && _spawnRoutine != null)
-        //     StopSpawn();
-    }
+    
+    protected readonly List<AIController> _spawnedAIs = new();
 
     protected virtual void Start()
     {
@@ -35,13 +25,23 @@ public class AIManager : MonoBehaviour
         _spawnRoutine = StartCoroutine(SpawnLoop());
     }
 
-    public void StopSpawn()
+    public virtual void StopSpawn()
     {
         if (_spawnRoutine != null)
         {
             StopCoroutine(_spawnRoutine);
             _spawnRoutine = null;
         }
+    }
+    
+    public void ClearAIs()
+    {
+        StopSpawn();
+        
+        foreach (var ai in _spawnedAIs)
+            if (ai) Destroy(ai.gameObject);
+        
+        _spawnedAIs.Clear();
     }
 
     private IEnumerator SpawnLoop()
@@ -55,9 +55,10 @@ public class AIManager : MonoBehaviour
 
     protected virtual void SpawnNPC()
     {
-        if (npcPrefab || spawnPoints == null || spawnPoints.Count == 0) return;
+        if (!npcPrefab || spawnPoints == null || spawnPoints.Count == 0) return;
 
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-        Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
+        AIController newNpc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
+        _spawnedAIs.Add(newNpc);
     }
 }

@@ -24,15 +24,16 @@ public class Controller : MonoBehaviour, IGrabbable
     public Rigidbody Rb => _rb;
     public Collider Collider => _collider;
     public Transform CatchPoint => _catchPoint;
-    public CharacterMovement Movement { get; private set; }
     
+    public CharacterMovement Movement { get; private set; }
+    public CharacterDisplay Display { get; private set; }
     public IInteractable InteractableGrabbed { get; set; }
     
     private Ragdoll _ragdoll;
     
     private Vector3 throwDirection;
     
-    private IGrabbable _grabbed;
+    private IGrabbable _grabbedProp;
     
     private float _grabStartTime;
     private float _throwPower;
@@ -44,6 +45,8 @@ public class Controller : MonoBehaviour, IGrabbable
     protected virtual void Start()
     {
         Movement = GetComponent<CharacterMovement>();
+        Display = GetComponent<CharacterDisplay>();
+
         _ragdoll = GetComponent<Ragdoll>();
 
         _ragdoll.OnRagdoll += Drop;
@@ -58,7 +61,7 @@ public class Controller : MonoBehaviour, IGrabbable
 
     public void CatchStart()
     {
-        if(_grabbed == null) TryGrab();
+        if(_grabbedProp == null) TryGrab();
         else
         {
             _isCharging = true;
@@ -71,10 +74,7 @@ public class Controller : MonoBehaviour, IGrabbable
 
     public void Drop()
     {
-        if (_grabbed != null)
-        {
-            _grabbed.Dropped(ThrowDirection(), this); ;
-        }
+        if (_grabbedProp != null) _grabbedProp.Dropped(ThrowDirection(), this);
     }
 
     private void Update()
@@ -129,13 +129,13 @@ public class Controller : MonoBehaviour, IGrabbable
         TryAction<IGrabbable>(grabbable =>
         {
             grabbable.Grabbed(this);
-            _grabbed = grabbable;
+            _grabbedProp = grabbable;
         });
     }
 
     public void Reset()
     {
-        _grabbed = null;
+        _grabbedProp = null;
         _throwBar.gameObject.SetActive(false);
         _isCharging = false;
     }
@@ -185,4 +185,12 @@ public class Controller : MonoBehaviour, IGrabbable
         _ragdoll.RagdollOn();
         Movement.FreeMovement = false;
     }
+
+    private void OnDestroy()
+    {
+        Drop();
+        Destroy(gameObject);
+    }
+
+    public void SetGrabbedProp(Prop prop) => _grabbedProp = prop;
 }

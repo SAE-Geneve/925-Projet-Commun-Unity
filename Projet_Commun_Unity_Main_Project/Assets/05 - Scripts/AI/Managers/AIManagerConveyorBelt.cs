@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Behavior;
 using UnityEngine;
 
 public class AIManagerConveyorBelt : AIManager
@@ -24,7 +25,7 @@ public class AIManagerConveyorBelt : AIManager
 
     protected override void SpawnNPC()
     {
-        if (npcPrefab == null || locations == null || locations.Count == 0)
+        if (!npcPrefab || locations == null || locations.Count == 0)
             return;
 
         LocationPoint chosenLocation = null;
@@ -44,14 +45,26 @@ public class AIManagerConveyorBelt : AIManager
         chosenLocation.available = false;
 
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-        AIConveyorBelt npc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation) as AIConveyorBelt;
-
-        if (npc == null)
+        AIController npc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
+        _spawnedAIs.Add(npc);
+        
+        if (!npc)
         {
             Debug.LogError("Le prefab n'est pas un AIConveyorBelt.");
             return;
         }
 
-        npc.Initialize(chosenLocation.locationObject, exitPoint);
+        BehaviorGraphAgent agent = npc.BehaviorAgent;
+        
+        if (!agent) return;
+        if (exitPoint) agent.SetVariableValue("Exit", exitPoint);
+        if (chosenLocation.locationObject) agent.SetVariableValue("Location", chosenLocation.locationObject);
+    }
+
+    public override void StopSpawn()
+    {
+        base.StopSpawn();
+        foreach (var location in locations)
+            location.available = true;
     }
 }

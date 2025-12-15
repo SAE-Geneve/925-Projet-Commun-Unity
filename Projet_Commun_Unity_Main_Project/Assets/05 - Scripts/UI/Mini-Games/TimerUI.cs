@@ -60,10 +60,12 @@ public class TimerUI : MonoBehaviour
 
     private void TimeRemaining(int time)
     {
-/*        timeRemainingText.text = $"{time} seconds remaining.";
-        StartCoroutine(_uiScreenEffects.DoTextFade(timeRemainingText));
-        StartCoroutine(_uiScreenEffects.DoImageFade(timeRemainingImage));
-        */
+        if (timeRemainingText != null)
+        {
+            timeRemainingText.text = $"{time} seconds remaining.";
+            StartCoroutine(_uiScreenEffects.DoTextFade(timeRemainingText));
+            StartCoroutine(_uiScreenEffects.DoImageFade(timeRemainingImage));
+        }
     }
 
     private void UpdateTimer()

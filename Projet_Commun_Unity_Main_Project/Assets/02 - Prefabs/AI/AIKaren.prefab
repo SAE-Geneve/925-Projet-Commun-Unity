@@ -619,8 +619,8 @@ GameObject:
   - component: {fileID: 1897036843368310122}
   - component: {fileID: 1619932447653948072}
   - component: {fileID: 8167762280191161200}
-  - component: {fileID: 2822452297145330830}
   - component: {fileID: 5959819634544028570}
+  - component: {fileID: 1508740695777885003}
   m_Layer: 0
   m_Name: AIKaren
   m_TagString: Untagged
@@ -774,6 +774,7 @@ MonoBehaviour:
   _ragdollVelocityThreshold: 3
   behaviorGraphAgent: {fileID: 8167762280191161200}
   bHips: {fileID: 1199218289345004864}
+  isRagdollable: 1
 --- !u!114 &8167762280191161200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,26 +820,6 @@ MonoBehaviour:
         - {fileID: 0}
         - {fileID: 0}
         - {fileID: 0}
---- !u!114 &2822452297145330830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2678946330661240581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c5aea5c2991b84689cbc87be3699d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _catchPoint: {fileID: 4604404989035834133}
-  _rb: {fileID: 5292629389394527939}
-  _throwBar: {fileID: 495662914710644000}
-  _collider: {fileID: 2190795343804893860}
-  _barSpeed: 2
-  _maxThrowForce: 10
-  _upForceMultiplier: 1
-  _sphereRadius: 0.2
 --- !u!114 &5959819634544028570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -851,6 +832,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e67495afef247bd44bd7190fbf459846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  halo: {fileID: 0}
+--- !u!114 &1508740695777885003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2678946330661240581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8c6be52c5d24c49b10f69e0921e2ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _catchPoint: {fileID: 4604404989035834133}
+  _rb: {fileID: 5292629389394527939}
+  _throwBar: {fileID: 495662914710644000}
+  _collider: {fileID: 2190795343804893860}
+  _barSpeed: 2
+  _maxThrowForce: 10
+  _upForceMultiplier: 1
+  _sphereRadius: 0.2
 --- !u!1 &3575685645977207665
 GameObject:
   m_ObjectHideFlags: 0

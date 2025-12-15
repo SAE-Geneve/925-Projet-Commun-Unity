@@ -17,8 +17,7 @@ public partial class SelfGetHisPropAction : Action
     {
         if (Self?.Value == null)
             return Status.Failure;
-
-        // 1. On récupère le Controller du NPC (nécessaire pour appeler Grabbed)
+        
         var controller = Self.Value.GetComponent<Controller>();
         if (controller == null)
         {
@@ -45,19 +44,15 @@ public partial class SelfGetHisPropAction : Action
             if (prop == null || prop.IsGrabbed)
                 continue;
             
-            // Si c'est le bon type de bagage
             if (IsMatchingPreferred(prop.Type, PreferredType.Value))
             {
-                // === ACTION DIRECTE ICI ===
-                // On dit à CE bagage précis de se faire attraper par le controller
                 prop.Grabbed(controller);
 
                 if (hit.gameObject.name.Contains("Clone"))
                 {
                     Debug.Log($"{Self.Value.name} a attrapé directement la bonne valise ({prop.Type})");
                 }
-
-                // Libération de la place (logique existante)
+                
                 if (Location?.Value != null)
                 {
                     var locationPoint = Location.Value.GetComponent<LocationPoint>();

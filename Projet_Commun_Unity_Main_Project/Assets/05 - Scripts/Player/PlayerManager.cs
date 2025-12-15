@@ -5,11 +5,18 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform trackingTarget;
+    
+    [Header("Parameters")]
+    [SerializeField] private Color _color1 = Color.red;
+    [SerializeField] private Color _color2 = Color.blue;
+    [SerializeField] private Color _color3 = Color.green;
+    [SerializeField] private Color _color4 = Color.yellow;
     
     public List<PlayerController> Players => _players;
     
@@ -56,16 +63,16 @@ public class PlayerManager : MonoBehaviour
         foreach (var player in _players)
         {
             player.InputManager.active = true;
-            player.GetComponentInChildren<ParticleSystem>().Play();
+            // player.GetComponentInChildren<ParticleSystem>().Play();
+            player.Display.ShowHalo(true);
         }
     }
 
     public void Reset()
     {
         foreach (var pl in _players)
-        {
             Destroy(pl.gameObject);
-        }
+        
         _players.Clear();
     }
     
@@ -75,7 +82,8 @@ public class PlayerManager : MonoBehaviour
         foreach (var player in _players)
         {
             player.InputManager.active = false;
-            player.GetComponentInChildren<ParticleSystem>().Stop();
+            // player.GetComponentInChildren<ParticleSystem>().Stop();
+            player.Display.ShowHalo(false);
         }
     }
 
@@ -85,12 +93,17 @@ public class PlayerManager : MonoBehaviour
         player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
         
         _players.Add(player.GetComponent<PlayerController>());
-        SetPlayerColors(player.GetComponentInChildren<ParticleSystem>());
+        // SetPlayerColors(player.GetComponentInChildren<ParticleSystem>());
+
+        CharacterDisplay display = player.GetComponent<CharacterDisplay>();
+        
+        SetHaloColors(display.Halo);
 
         if (!_arePlayersActive)
         {
             player.GetComponent<InputManager>().active = false;
-            player.GetComponentInChildren<ParticleSystem>().Stop();
+            // player.GetComponentInChildren<ParticleSystem>().Stop();
+            display.ShowHalo(false);
         }
         
         OnPlayerAdded?.Invoke();
@@ -159,9 +172,11 @@ public class PlayerManager : MonoBehaviour
     private void SetPlayerColors(ParticleSystem particleSystem)
     {
         var colt = particleSystem.colorOverLifetime;
-        Gradient grad = new Gradient();
-        grad.mode = GradientMode.Fixed;
-        
+        Gradient grad = new Gradient
+        {
+            mode = GradientMode.Fixed
+        };
+
         var colors = new GradientColorKey[2];
         
         switch (_players.Count)
@@ -193,5 +208,16 @@ public class PlayerManager : MonoBehaviour
         grad.SetKeys(colors, alphas);
         
         colt.color = grad;
+    }
+
+    private void SetHaloColors(Image halo)
+    {
+        switch (_players.Count)
+        {
+            case 1 : halo.color = _color1; break;
+            case 2 : halo.color = _color2; break;
+            case 3 : halo.color = _color3; break;
+            case 4 : halo.color = _color4; break;
+        }
     }
 }

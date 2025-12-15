@@ -24,8 +24,9 @@ public class Controller : MonoBehaviour, IGrabbable
     public Rigidbody Rb => _rb;
     public Collider Collider => _collider;
     public Transform CatchPoint => _catchPoint;
-    public CharacterMovement Movement { get; private set; }
     
+    public CharacterMovement Movement { get; private set; }
+    public CharacterDisplay Display { get; private set; }
     public IInteractable InteractableGrabbed { get; set; }
     
     private Ragdoll _ragdoll;
@@ -44,6 +45,8 @@ public class Controller : MonoBehaviour, IGrabbable
     protected virtual void Start()
     {
         Movement = GetComponent<CharacterMovement>();
+        Display = GetComponent<CharacterDisplay>();
+
         _ragdoll = GetComponent<Ragdoll>();
 
         _ragdoll.OnRagdoll += Drop;

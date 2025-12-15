@@ -7,8 +7,9 @@ public class AIManagerConveyorBelt : AIManager
     [SerializeField] private List<LocationPoint> locations;
     [SerializeField] private Transform exitPoint;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         int playerCount = PlayerManager.Instance.Players.Count;
         int half = locations.Count / 2;
         

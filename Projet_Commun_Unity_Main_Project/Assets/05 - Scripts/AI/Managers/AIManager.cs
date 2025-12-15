@@ -8,6 +8,7 @@ public class AIManager : MonoBehaviour
     [SerializeField] protected List<Transform> spawnPoints;
     [SerializeField] protected AIController npcPrefab;
     [SerializeField] protected float spawnInterval = 5f;
+    [SerializeField] private bool _spawnOnStart;
 
     // [Header("Debug / Test")]
     // [SerializeField] protected bool spawnEnabled;
@@ -21,6 +22,11 @@ public class AIManager : MonoBehaviour
         //     StartSpawn();
         // else if (!spawnEnabled && _spawnRoutine != null)
         //     StopSpawn();
+    }
+
+    protected virtual void Start()
+    {
+        if(_spawnOnStart) StartSpawn();
     }
 
     public void StartSpawn()

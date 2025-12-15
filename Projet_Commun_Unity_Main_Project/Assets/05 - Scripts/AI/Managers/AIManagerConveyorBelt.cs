@@ -58,7 +58,7 @@ public class AIManagerConveyorBelt : AIManager
         
         if (!agent) return;
         if (exitPoint) agent.SetVariableValue("Exit", exitPoint);
-        if (chosenLocation.locationObject) agent.SetVariableValue("Location", chosenLocation.locationObject);
+        if (chosenLocation.gameObject) agent.SetVariableValue("Location", chosenLocation.gameObject);
     }
 
     public override void StopSpawn()

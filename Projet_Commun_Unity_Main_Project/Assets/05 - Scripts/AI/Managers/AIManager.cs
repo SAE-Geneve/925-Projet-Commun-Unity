@@ -12,7 +12,7 @@ public class AIManager : MonoBehaviour
 
     private Coroutine _spawnRoutine;
     
-    private List<AIController> _spawnedAIs = new List<AIController>();
+    private readonly List<AIController> _spawnedAIs = new();
 
     protected virtual void Start()
     {

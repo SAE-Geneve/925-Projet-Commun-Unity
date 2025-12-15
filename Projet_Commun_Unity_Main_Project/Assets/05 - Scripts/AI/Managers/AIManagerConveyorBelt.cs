@@ -24,7 +24,7 @@ public class AIManagerConveyorBelt : AIManager
 
     protected override void SpawnNPC()
     {
-        if (npcPrefab == null || locations == null || locations.Count == 0)
+        if (!npcPrefab || locations == null || locations.Count == 0)
             return;
 
         LocationPoint chosenLocation = null;

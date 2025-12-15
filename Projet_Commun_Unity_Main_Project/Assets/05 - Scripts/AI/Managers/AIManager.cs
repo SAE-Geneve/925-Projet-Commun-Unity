@@ -12,7 +12,7 @@ public class AIManager : MonoBehaviour
 
     private Coroutine _spawnRoutine;
     
-    private readonly List<AIController> _spawnedAIs = new();
+    protected readonly List<AIController> _spawnedAIs = new();
 
     protected virtual void Start()
     {
@@ -25,7 +25,7 @@ public class AIManager : MonoBehaviour
         _spawnRoutine = StartCoroutine(SpawnLoop());
     }
 
-    public void StopSpawn()
+    public virtual void StopSpawn()
     {
         if (_spawnRoutine != null)
         {
@@ -39,12 +39,7 @@ public class AIManager : MonoBehaviour
         StopSpawn();
         
         foreach (var ai in _spawnedAIs)
-        {
-            if (ai != null)
-            {
-                Destroy(ai.gameObject);
-            }
-        }
+            if (ai) Destroy(ai.gameObject);
         
         _spawnedAIs.Clear();
     }

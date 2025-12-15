@@ -24,8 +24,5 @@ public class SceneLoader : MonoBehaviour
             player.Drop();
 
         SceneManager.LoadScene(sceneName);
-
-        foreach (var player in playerControllers)
-            player.Movement.SetupCamera();
     }
 }

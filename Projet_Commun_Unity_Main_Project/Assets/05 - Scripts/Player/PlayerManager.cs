@@ -17,13 +17,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private Color _color2 = Color.blue;
     [SerializeField] private Color _color3 = Color.green;
     [SerializeField] private Color _color4 = Color.yellow;
-    
-    public List<PlayerController> Players => _players;
-    
     public event Action<PlayerController> OnPlayerConnected;
     public event Action<PlayerController> OnReconnectTimerOut;
     public event Action OnPlayerAdded;
     public event Action OnPlayerRemoved;
+    
+    public List<PlayerController> Players => _players;
     public int PlayerCount => _players.Count;
     
     private readonly List<PlayerController> _players = new();
@@ -219,5 +218,21 @@ public class PlayerManager : MonoBehaviour
             case 3 : halo.color = _color3; break;
             case 4 : halo.color = _color4; break;
         }
+    }
+    
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        foreach (var player in _players)
+            player.Movement.SetupCamera();
     }
 }

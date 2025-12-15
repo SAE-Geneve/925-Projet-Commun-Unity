@@ -3746,7 +3746,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Lost Luggage
-  _missionID: 0
   _missionState: 0
   _initialTimer: 30
   _isTimerActive: 1
@@ -7775,6 +7774,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1243866488389540587}
     m_Modifications:
+    - target: {fileID: -5665336327890811607, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
+      propertyPath: _mission
+      value: 
+      objectReference: {fileID: 5492564153831218663}
     - target: {fileID: 2866567697952741961, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
       propertyPath: m_Name
       value: MissionTrigger
@@ -7823,60 +7826,18 @@ PrefabInstance:
     - {fileID: 3433541251997692796, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2866567697952741961, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 6497470182962412061}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
---- !u!114 &737825342507184480 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6442864967952123859, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
-  m_PrefabInstance: {fileID: 6004687742669403827}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &991104797140307203 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6815621066363796400, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
   m_PrefabInstance: {fileID: 6004687742669403827}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1821495187535626409 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5337802986273289754, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
-  m_PrefabInstance: {fileID: 6004687742669403827}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8402863211772554490 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2866567697952741961, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
   m_PrefabInstance: {fileID: 6004687742669403827}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6497470182962412061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8402863211772554490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5ef9c1e7bd8fc42ba78190c7484df4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mission: {fileID: 5492564153831218663}
-  _stateTmp: {fileID: 737825342507184480}
-  _numberTmp: {fileID: 1821495187535626409}
-  _unlockedMaterial: {fileID: 2100000, guid: 88880abc50455ad40b98a5bb50df3dad, type: 2}
-  _lockedMaterial: {fileID: 2100000, guid: 87f48315e3a71dc42b122ea81c4fc433, type: 2}
 --- !u!1001 &6005218868185213037
 PrefabInstance:
   m_ObjectHideFlags: 0

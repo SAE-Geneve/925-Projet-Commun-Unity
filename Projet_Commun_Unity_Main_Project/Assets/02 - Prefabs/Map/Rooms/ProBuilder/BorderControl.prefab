@@ -6177,7 +6177,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Border Control
-  _missionID: 0
   _missionState: 0
   _initialTimer: 60
   _isTimerActive: 1
@@ -7055,17 +7054,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 0}
   m_VersionIndex: 955
   m_IsSelectable: 1
-  m_SelectedFaces: 04000000
-  m_SelectedEdges:
-  - a: 16
-    b: 17
-  - a: 18
-    b: 16
-  - a: 17
-    b: 19
-  - a: 19
-    b: 18
-  m_SelectedVertices: 10000000110000001200000013000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!114 &8807028633845998014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8547,6 +8538,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8367339435087368837}
     m_Modifications:
+    - target: {fileID: -5665336327890811607, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
+      propertyPath: _mission
+      value: 
+      objectReference: {fileID: 8212421439985253618}
     - target: {fileID: 2866567697952741961, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
       propertyPath: m_Name
       value: MissionTrigger
@@ -8595,60 +8590,18 @@ PrefabInstance:
     - {fileID: 3433541251997692796, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2866567697952741961, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 3638332869428925325}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
---- !u!114 &1061951268242664097 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5337802986273289754, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
-  m_PrefabInstance: {fileID: 4949280642764872891}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1889985422419814155 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6815621066363796400, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
   m_PrefabInstance: {fileID: 4949280642764872891}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2145621113339632488 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6442864967952123859, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
-  m_PrefabInstance: {fileID: 4949280642764872891}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7162826393638831858 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2866567697952741961, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
   m_PrefabInstance: {fileID: 4949280642764872891}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3638332869428925325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7162826393638831858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5ef9c1e7bd8fc42ba78190c7484df4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mission: {fileID: 8212421439985253618}
-  _stateTmp: {fileID: 2145621113339632488}
-  _numberTmp: {fileID: 1061951268242664097}
-  _unlockedMaterial: {fileID: 2100000, guid: 88880abc50455ad40b98a5bb50df3dad, type: 2}
-  _lockedMaterial: {fileID: 2100000, guid: 87f48315e3a71dc42b122ea81c4fc433, type: 2}
 --- !u!1001 &5939452325411002465
 PrefabInstance:
   m_ObjectHideFlags: 0

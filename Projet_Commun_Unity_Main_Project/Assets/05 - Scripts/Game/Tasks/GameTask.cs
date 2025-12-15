@@ -33,10 +33,8 @@ public abstract class GameTask : MonoBehaviour
 
     protected virtual void Succeed()
     {
-        if(_failed) return;
-        
-        if (_multipleTaskLimit >= 0)
-            _multipleTaskCounter++;
+        if (_multipleTaskLimit >= 0) _multipleTaskCounter++;
+        else if(_failed) return;
         
         if(!_multiple || _multipleTaskCounter == _multipleTaskLimit) Done = true;
         

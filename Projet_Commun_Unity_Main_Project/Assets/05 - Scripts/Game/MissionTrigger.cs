@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class MissionTrigger : MonoBehaviour
 {
     [Header("References")] 
+    [Tooltip("The mission to trigger")]
+    [SerializeField] private Mission _mission;
     [Tooltip("The tmp of the state of the mission")]
     [SerializeField] private TextMeshProUGUI _stateTmp;
 
@@ -14,22 +17,19 @@ public class MissionTrigger : MonoBehaviour
     [SerializeField] private Material _unlockedMaterial;
     [SerializeField] private Material _lockedMaterial;
     
-    [Header("Parameters")]
-    [Tooltip("The linked mission")]
-    [SerializeField] private MissionID _missionID = MissionID.BorderControl;
-    
     private Renderer _renderer;
-    private Mission _mission;
     private PlayerManager _playerManager;
     
     private Action<Ragdoll> _ragdollHandler;
+    
+    private readonly HashSet<Ragdoll> _ragdolls = new();
+    private bool _isMissionStarted;
     
     private int _playerNumber;
 
     private void Start()
     {
         _renderer = GetComponentInChildren<Renderer>();
-        _mission = GameManager.Instance.GetMission(_missionID);
         _playerManager = PlayerManager.Instance;
 
         _playerManager.OnPlayerAdded += UpdateTmpNumber;
@@ -49,27 +49,45 @@ public class MissionTrigger : MonoBehaviour
     {
         if (!other.CompareTag("Player") || !other.TryGetComponent(out Ragdoll ragdoll)) return;
 
-        _playerNumber++;
-        
-        CheckPlayerNumber();
-        UpdateTmpNumber();
-
-        ragdoll.OnRagdollSelf += _ragdollHandler;
+        if (_ragdolls.Add(ragdoll))
+        {
+            _playerNumber++;
+            
+            ragdoll.OnRagdollSelf += _ragdollHandler;
+            
+            UpdateTmpNumber();
+            CheckPlayerNumber();
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player") || !other.TryGetComponent(out Ragdoll ragdoll)) return;
 
-        ragdoll.OnRagdollSelf -= _ragdollHandler;
-
-        Decrement();
+        if (_ragdolls.Remove(ragdoll))
+        {
+            ragdoll.OnRagdollSelf -= _ragdollHandler;
+            Decrement();
+        }
     }
 
     private void CheckPlayerNumber()
     {
-        if(_playerNumber == _playerManager.PlayerCount)
-            _mission.StartMission();
+        if (_playerNumber == _playerManager.PlayerCount)
+            StartMission();
+    }
+
+    private void StartMission()
+    {
+        foreach (var ragdoll in _ragdolls)
+            if (ragdoll) ragdoll.OnRagdollSelf -= _ragdollHandler;
+
+        _ragdolls.Clear();
+            
+        _playerNumber = 0;
+        UpdateTmpNumber();
+            
+        _mission.StartMission();
     }
 
     private void Decrement()

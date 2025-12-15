@@ -7180,7 +7180,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Conveyor Belt
-  _missionID: 1
   _missionState: 0
   _initialTimer: 10
   _isTimerActive: 1
@@ -8797,6 +8796,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5392376044224378138}
     m_Modifications:
+    - target: {fileID: -5665336327890811607, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
+      propertyPath: _mission
+      value: 
+      objectReference: {fileID: 4622458063150844112}
     - target: {fileID: 2866567697952741961, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
       propertyPath: m_Name
       value: MissionTrigger
@@ -8845,57 +8848,15 @@ PrefabInstance:
     - {fileID: 3433541251997692796, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2866567697952741961, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5735246238926109134}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
---- !u!114 &3249520543802717541 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5337802986273289754, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
-  m_PrefabInstance: {fileID: 7425083657794569087}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &4151968116289517775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6815621066363796400, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
   m_PrefabInstance: {fileID: 7425083657794569087}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4495319971097674924 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6442864967952123859, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
-  m_PrefabInstance: {fileID: 7425083657794569087}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4666619943120427318 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2866567697952741961, guid: 45e69559f78028c40a26502735bd3e45, type: 3}
   m_PrefabInstance: {fileID: 7425083657794569087}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5735246238926109134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4666619943120427318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5ef9c1e7bd8fc42ba78190c7484df4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mission: {fileID: 4622458063150844112}
-  _stateTmp: {fileID: 4495319971097674924}
-  _numberTmp: {fileID: 3249520543802717541}
-  _unlockedMaterial: {fileID: 2100000, guid: 88880abc50455ad40b98a5bb50df3dad, type: 2}
-  _lockedMaterial: {fileID: 2100000, guid: 87f48315e3a71dc42b122ea81c4fc433, type: 2}

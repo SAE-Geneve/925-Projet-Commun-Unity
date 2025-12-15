@@ -60,8 +60,6 @@ public class GameManager : MonoBehaviour
 
     private PlayerManager _playerManager;
 
-    private Dictionary<MissionID, Mission> _missionMap;
-
     public GameState State => _state;
     public GameContext Context => _context;
 
@@ -161,8 +159,6 @@ public class GameManager : MonoBehaviour
         Timer = _initialTimer;
         DisconnectionTimer = _initialDisconnectionTime;
 
-        BuildMissionMap();
-
         _context = GameContext.Menu;
     }
 
@@ -186,21 +182,6 @@ public class GameManager : MonoBehaviour
     }
 
     #region Mission
-
-    private void BuildMissionMap()
-    {
-        _missionMap = new Dictionary<MissionID, Mission>();
-        
-        if(_missions == null || _missions.Length == 0) return;
-
-        foreach (Mission mission in _missions)
-        {
-            if (!mission) continue;
-
-            if (!_missionMap.TryAdd(mission.ID, mission))
-                Debug.LogWarning($"Can't add {mission.ID} mission");
-        }
-    }
 
     public void StartMission(Mission mission)
     {
@@ -226,15 +207,6 @@ public class GameManager : MonoBehaviour
         CurrentMission = null;
         if(_playerManager) _playerManager.PlayerInputManager.EnableJoining();
         _context = GameContext.Hub;
-    }
-
-    public Mission GetMission(MissionID id)
-    {
-        if (_missionMap.TryGetValue(id, out Mission mission))
-            return mission;
-
-        Debug.LogWarning($"MissionID {id} not found");
-        return null;
     }
 
     #endregion

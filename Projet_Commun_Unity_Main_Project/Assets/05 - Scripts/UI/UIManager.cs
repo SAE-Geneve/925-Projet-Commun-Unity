@@ -4,7 +4,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
     
-    public MissionID TargetMission { get; set; }
+    // public MissionID TargetMission { get; set; }
     
     [SerializeField] private Canvas _pauseCanvas;
 

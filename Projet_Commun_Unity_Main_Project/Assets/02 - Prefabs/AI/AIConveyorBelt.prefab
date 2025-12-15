@@ -2073,7 +2073,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6969992119166505481}
-  - component: {fileID: 419446078490015782}
   - component: {fileID: 5643498754379875027}
   - component: {fileID: 8725163306907378512}
   - component: {fileID: -2994314217495520388}
@@ -2113,26 +2112,6 @@ Transform:
   - {fileID: 4900041238324737494}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &419446078490015782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6505405206070894942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c5aea5c2991b84689cbc87be3699d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _catchPoint: {fileID: 9154290331449279179}
-  _rb: {fileID: 2517995365003981990}
-  _throwBar: {fileID: 2732488125138097123}
-  _collider: {fileID: 8907375103779188310}
-  _barSpeed: 2
-  _maxThrowForce: 10
-  _upForceMultiplier: 1
-  _sphereRadius: 0.7
 --- !u!114 &5643498754379875027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2173,6 +2152,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b53aba3f244efc342851e251e6d100d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _catchPoint: {fileID: 9154290331449279179}
+  _rb: {fileID: 2517995365003981990}
+  _throwBar: {fileID: 2732488125138097123}
+  _collider: {fileID: 8907375103779188310}
+  _barSpeed: 2
+  _maxThrowForce: 10
+  _upForceMultiplier: 1
+  _sphereRadius: 0.7
 --- !u!195 &7125759346710093108
 NavMeshAgent:
   m_ObjectHideFlags: 0

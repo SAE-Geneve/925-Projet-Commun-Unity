@@ -1758,7 +1758,6 @@ GameObject:
   - component: {fileID: 3629287044770401527}
   - component: {fileID: 952381078670039192}
   - component: {fileID: 5793317089375339005}
-  - component: {fileID: 9124418509360910238}
   - component: {fileID: 3588627379863188608}
   m_Layer: 0
   m_Name: AIBorder
@@ -1798,6 +1797,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f8c6be52c5d24c49b10f69e0921e2ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _catchPoint: {fileID: 3781947405765445083}
+  _rb: {fileID: 2472924715813527613}
+  _throwBar: {fileID: 6690905353889918803}
+  _collider: {fileID: 6085307004471532297}
+  _barSpeed: 2
+  _maxThrowForce: 10
+  _upForceMultiplier: 1
+  _sphereRadius: 0.2
 --- !u!95 &5209733320431483726
 Animator:
   serializedVersion: 7
@@ -1978,26 +1985,6 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 7546026600645517724}
---- !u!114 &9124418509360910238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7546026600645517724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c5aea5c2991b84689cbc87be3699d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _catchPoint: {fileID: 3781947405765445083}
-  _rb: {fileID: 2472924715813527613}
-  _throwBar: {fileID: 6690905353889918803}
-  _collider: {fileID: 6085307004471532297}
-  _barSpeed: 2
-  _maxThrowForce: 10
-  _upForceMultiplier: 1
-  _sphereRadius: 0.2
 --- !u!114 &3588627379863188608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2010,6 +1997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e67495afef247bd44bd7190fbf459846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  halo: {fileID: 0}
 --- !u!1 &7610268071148934564
 GameObject:
   m_ObjectHideFlags: 0

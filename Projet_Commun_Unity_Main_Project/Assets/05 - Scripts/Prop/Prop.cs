@@ -7,8 +7,9 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
     [Tooltip("Define the prop type of the game object")]
     [SerializeField] private PropType _type = PropType.None;
     [SerializeField] private AnimationCurve _speedCurve;
+    [SerializeField] private float _minForceToThrow = 3.0f; 
     
-    private float _minForceToThrow = 3.0f;
+
     public event Action<Prop> OnDestroyed;
     
     public PropType Type => _type;

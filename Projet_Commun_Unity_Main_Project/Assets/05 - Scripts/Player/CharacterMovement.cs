@@ -27,6 +27,7 @@ public class CharacterMovement : MonoBehaviour
     protected virtual void Start()
     {
         Rb = GetComponent<Rigidbody>();
+        SetupCamera();
     }
     
     void Update()

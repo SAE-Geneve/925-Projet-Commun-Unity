@@ -8,6 +8,7 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
     [SerializeField] private PropType _type = PropType.None;
     [SerializeField] private AnimationCurve _speedCurve;
     
+    private float _minForceToThrow = 3.0f;
     public event Action<Prop> OnDestroyed;
     
     public PropType Type => _type;
@@ -63,6 +64,11 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
             Controller = null;
         }
 
+        if (throwForce.magnitude < _minForceToThrow)
+        {
+            throwForce = Vector3.zero;
+        }
+        
         if (throwForce != Vector3.zero)
         {
             float curveValue = _speedCurve.Evaluate(throwForce.magnitude);

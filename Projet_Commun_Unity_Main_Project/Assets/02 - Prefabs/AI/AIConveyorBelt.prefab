@@ -2073,20 +2073,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6969992119166505481}
-  - component: {fileID: 419446078490015782}
   - component: {fileID: 5643498754379875027}
   - component: {fileID: 8725163306907378512}
-  - component: {fileID: -2994314217495520388}
-  - component: {fileID: 7125759346710093108}
+  - component: {fileID: 828329704779097444}
+  - component: {fileID: 2518370483373668600}
+  - component: {fileID: 2114158343834923108}
   - component: {fileID: 2759791066519186907}
+  - component: {fileID: 7125759346710093108}
   - component: {fileID: 2517995365003981990}
   - component: {fileID: 8907375103779188310}
-  - component: {fileID: 2489492756858815155}
   - component: {fileID: 4192496116329325771}
-  - component: {fileID: 828329704779097444}
-  - component: {fileID: 5880685278265917032}
-  - component: {fileID: -5631500000923626306}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AIConveyorBelt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2114,26 +2111,6 @@ Transform:
   - {fileID: 4900041238324737494}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &419446078490015782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6505405206070894942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38c5aea5c2991b84689cbc87be3699d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _catchPoint: {fileID: 9154290331449279179}
-  _rb: {fileID: 2517995365003981990}
-  _throwBar: {fileID: 2732488125138097123}
-  _collider: {fileID: 8907375103779188310}
-  _barSpeed: 2
-  _maxThrowForce: 10
-  _upForceMultiplier: 1
-  _sphereRadius: 0.7
 --- !u!114 &5643498754379875027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2149,6 +2126,11 @@ MonoBehaviour:
   speed: 3.5
   stopDistance: 0.1
   accelerationPower: 50
+  avoidanceRadius: 2
+  avoidanceWeight: 1.5
+  avoidanceLayer:
+    serializedVersion: 2
+    m_Bits: 136
 --- !u!114 &8725163306907378512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2162,7 +2144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   halo: {fileID: 0}
---- !u!114 &-2994314217495520388
+--- !u!114 &828329704779097444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2171,31 +2153,91 @@ MonoBehaviour:
   m_GameObject: {fileID: 6505405206070894942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b53aba3f244efc342851e251e6d100d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 966cf25c8936c944f827ac9069bba472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!195 &7125759346710093108
-NavMeshAgent:
+  playerRig: {fileID: 5143800853426687623}
+  hipsTransform: {fileID: 8731321657740928128}
+  ragdollTime: 3
+  _ragdollVelocityThreshold: 3
+  behaviorGraphAgent: {fileID: 2759791066519186907}
+  bHips: {fileID: 3371690788066588864}
+  isRagdollable: 0
+--- !u!114 &2518370483373668600
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6505405206070894942}
   m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.2
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 0
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886f51ea07f9b2844b738045452330dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _taskName: Conveyor Belt AI Task
+  _destroyOnSucceed: 0
+  _finishedMission: 0
+  _multiple: 0
+  _multipleTaskLimit: -1
+  OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSucceed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8432562754913969577}
+        m_TargetAssemblyTypeName: NPCFeedback, Scripts
+        m_MethodName: HappyResult
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnFailed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8432562754913969577}
+        m_TargetAssemblyTypeName: NPCFeedback, Scripts
+        m_MethodName: UnhappyResult
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnFinished:
+    m_PersistentCalls:
+      m_Calls: []
+  _propType: 0
+  isDestroyed: 1
+--- !u!114 &2114158343834923108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505405206070894942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8c6be52c5d24c49b10f69e0921e2ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _catchPoint: {fileID: 9154290331449279179}
+  _rb: {fileID: 2517995365003981990}
+  _throwBar: {fileID: 2732488125138097123}
+  _collider: {fileID: 8907375103779188310}
+  _barSpeed: 2
+  _maxThrowForce: 10
+  _upForceMultiplier: 1
+  _sphereRadius: 0.2
 --- !u!114 &2759791066519186907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2214,6 +2256,8 @@ MonoBehaviour:
   - rid: 698872864854507638
   - rid: 698872864854507640
   - rid: 698872874123657648
+  - rid: 2804604928133956352
+  - rid: 2804604929087373748
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
@@ -2244,6 +2288,22 @@ MonoBehaviour:
           m_Value1: 5414625886140055005
         Name: GrabZone
         m_Value: {fileID: 7526605416503019737}
+    - rid: 2804604928133956352
+      type: {class: 'BlackboardVariable`1[[AIController, Scripts]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 14337290931231266557
+          m_Value1: 12304907230116393242
+        Name: AIController
+        m_Value: {fileID: 2114158343834923108}
+    - rid: 2804604929087373748
+      type: {class: 'BlackboardVariable`1[[TriggerTask, Scripts]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 8561133084734097833
+          m_Value1: 6620842366005157522
+        Name: TriggerTask
+        m_Value: {fileID: 2518370483373668600}
     - rid: 7650009674374185207
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -2252,6 +2312,28 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 6505405206070894942}
+--- !u!195 &7125759346710093108
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505405206070894942}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.2
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 0
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!54 &2517995365003981990
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2302,27 +2384,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!135 &2489492756858815155
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6505405206070894942}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.45
-  m_Center: {x: 0, y: 0.85, z: 1.3}
 --- !u!95 &4192496116329325771
 Animator:
   serializedVersion: 7
@@ -2345,113 +2406,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &828329704779097444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6505405206070894942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 966cf25c8936c944f827ac9069bba472, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerRig: {fileID: 5143800853426687623}
-  hipsTransform: {fileID: 8731321657740928128}
-  ragdollTime: 3
-  _ragdollVelocityThreshold: 3
-  behaviorGraphAgent: {fileID: 2759791066519186907}
-  bHips: {fileID: 3371690788066588864}
-  isRagdollable: 0
---- !u!114 &5880685278265917032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6505405206070894942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fc2446cc96b482ea258e760673752a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _taskName: get his luggage
-  _destroyOnSucceed: 0
-  _finishedMission: 0
-  _multiple: 0
-  _multipleTaskLimit: -1
-  OnStart:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSucceed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8432562754913969577}
-        m_TargetAssemblyTypeName: NPCFeedback, Scripts
-        m_MethodName: HappyResult
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnFailed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFinished:
-    m_PersistentCalls:
-      m_Calls: []
-  agent: {fileID: 2759791066519186907}
-  variableName: isHappy
-  expectedValue: 1
---- !u!114 &-5631500000923626306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6505405206070894942}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fc2446cc96b482ea258e760673752a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _taskName: Conveyor
-  _destroyOnSucceed: 0
-  _finishedMission: 0
-  _multiple: 1
-  _multipleTaskLimit: -1
-  OnStart:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSucceed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8432562754913969577}
-        m_TargetAssemblyTypeName: NPCFeedback, Scripts
-        m_MethodName: UnhappyResult
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnFailed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFinished:
-    m_PersistentCalls:
-      m_Calls: []
-  agent: {fileID: 2759791066519186907}
-  variableName: isAngry
-  expectedValue: 1
 --- !u!1 &6689037420118688329
 GameObject:
   m_ObjectHideFlags: 0
@@ -2578,7 +2532,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.45
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7822212136359748667
 GameObject:

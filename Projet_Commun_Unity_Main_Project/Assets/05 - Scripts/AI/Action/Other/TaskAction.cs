@@ -35,10 +35,8 @@ public partial class TaskAction : Action
 
     protected override Status OnUpdate()
     {
-        
-        if(_succeed ) return Status.Success;
-        
-        return _failed ? Status.Failure : Status.Running;
+        if(_succeed || _failed) return Status.Success;
+        return Status.Running;
     }
 
     protected override void OnEnd()

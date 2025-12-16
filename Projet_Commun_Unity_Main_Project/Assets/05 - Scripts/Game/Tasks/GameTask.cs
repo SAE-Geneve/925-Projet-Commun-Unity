@@ -27,14 +27,12 @@ public abstract class GameTask : MonoBehaviour
     
     private int _multipleTaskCounter;
 
-    private bool _failed;
-
     protected virtual void Start() => OnStart?.Invoke();
 
     protected virtual void Succeed()
     {
         if (_multipleTaskLimit >= 0) _multipleTaskCounter++;
-        else if(_failed) return;
+        else if(Done) return;
         
         if(!_multiple || _multipleTaskCounter == _multipleTaskLimit) Done = true;
         
@@ -55,7 +53,7 @@ public abstract class GameTask : MonoBehaviour
 
     public void Failed()
     {
-        _failed = true;
+        if (_multipleTaskLimit < 0) Done = true;
         
         OnFailed?.Invoke();
         OnFailedAction?.Invoke();
@@ -66,8 +64,6 @@ public abstract class GameTask : MonoBehaviour
     public void ResetTask()
     {
         Done = false;
-        
-        _failed = false;
         _multipleTaskCounter = 0;
     }
 }

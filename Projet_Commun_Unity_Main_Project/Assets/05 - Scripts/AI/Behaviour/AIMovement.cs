@@ -39,8 +39,7 @@ public class AIMovement : CharacterMovement
     void FixedUpdate()
     {
         if (!_moving) return;
-
-        // --- 1. Vérification Path vide ---
+        
         if (_path.corners.Length == 0 || _currentCorner >= _path.corners.Length)
         {
             Stop();
@@ -51,24 +50,18 @@ public class AIMovement : CharacterMovement
         Vector3 nextCorner = _path.corners[_currentCorner];
         Vector3 dirToCorner = nextCorner - agentPos;
         dirToCorner.y = 0f;
-
-        // --- 2. NOUVEAU : Vérification de trajectoire ---
-        // On vérifie si le chemin vers le prochain point est bloqué par un mur (suite à une poussette)
+        
         if (Time.time >= _nextPathCheckTime)
         {
             _nextPathCheckTime = Time.time + checkPathInterval;
             
-            // On lance un rayon vers le prochain coin
-            // Si on touche un mur (ObstacleLayer), c'est qu'on a été décalé et qu'on ne peut plus passer tout droit.
             if (Physics.Raycast(agentPos + Vector3.up * 0.5f, dirToCorner.normalized, dirToCorner.magnitude, obstacleLayer))
             {
-                // MUR DÉTECTÉ ! On recalcule le chemin depuis notre nouvelle position.
                 SetDestination(_destination);
-                return; // On attend la prochaine frame pour le nouveau chemin
+                return;
             }
         }
-
-        // --- 3. Passage au point suivant ---
+        
         if (dirToCorner.magnitude <= 0.2f || (_currentCorner == _path.corners.Length - 1 && dirToCorner.magnitude <= stopDistance))
         {
             _currentCorner++;
@@ -83,11 +76,9 @@ public class AIMovement : CharacterMovement
         }
 
         dirToCorner.Normalize();
-
-        // --- 4. Evitement simple (Boids) ---
+        
         Vector3 avoidanceVector = GetSeparationVector();
         
-        // --- 5. Mouvement Final ---
         Vector3 finalDirection = (dirToCorner + (avoidanceVector * avoidanceWeight)).normalized;
         MoveAI(finalDirection);
     }
@@ -143,13 +134,11 @@ public class AIMovement : CharacterMovement
     public void SetDestination(Vector3 target)
     {
         _destination = target;
-        // On recalcul le chemin depuis la position ACTUELLE
         if (NavMesh.SamplePosition(target, out NavMeshHit hit, 2.0f, NavMesh.AllAreas))
         {
             if (NavMesh.CalculatePath(transform.position, hit.position, NavMesh.AllAreas, _path))
             {
                 _currentCorner = 0;
-                // Petite astuce : si le point 0 est très proche (notre position), on vise direct le 1
                 if (_path.corners.Length > 1 && Vector3.Distance(transform.position, _path.corners[0]) < 0.5f)
                 {
                     _currentCorner = 1;
@@ -171,18 +160,15 @@ public class AIMovement : CharacterMovement
 
     void OnDrawGizmosSelected()
     {
-        // Visualisation de l'évitement
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, avoidanceRadius);
-
-        // Visualisation du chemin
+        
         if (_path != null && _path.corners.Length > 0)
         {
             Gizmos.color = Color.green;
             for (int i = 0; i < _path.corners.Length - 1; i++)
                 Gizmos.DrawLine(_path.corners[i], _path.corners[i + 1]);
             
-            // Visualisation de la direction actuelle
             if (_currentCorner < _path.corners.Length)
             {
                 Gizmos.color = Color.red;

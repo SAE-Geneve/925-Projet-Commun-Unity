@@ -2126,11 +2126,15 @@ MonoBehaviour:
   speed: 3.5
   stopDistance: 0.1
   accelerationPower: 50
-  avoidanceRadius: 2
-  avoidanceWeight: 1.5
+  avoidanceRadius: 1.5
+  avoidanceWeight: 2
   avoidanceLayer:
     serializedVersion: 2
     m_Bits: 136
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  checkPathInterval: 0.2
 --- !u!114 &8725163306907378512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2368,7 +2372,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6505405206070894942}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 86b85d35989fa0e4ba6f05bf254b3db2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

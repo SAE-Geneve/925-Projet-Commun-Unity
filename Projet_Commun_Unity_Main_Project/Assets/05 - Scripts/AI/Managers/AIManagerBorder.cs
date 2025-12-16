@@ -16,6 +16,7 @@ public class AIManagerBorder : AIManager
    
        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
        AIController npc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
+       _spawnedAIs.Add(npc);
 
        BehaviorGraphAgent agent = npc.BehaviorAgent;
 

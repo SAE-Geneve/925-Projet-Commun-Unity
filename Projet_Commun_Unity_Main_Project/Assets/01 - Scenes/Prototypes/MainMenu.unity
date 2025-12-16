@@ -1167,7 +1167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &274889939
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2513,7 +2513,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 1315114776}
     m_SelectOnDown: {fileID: 681588142}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnRight: {fileID: 591345561}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2679,7 +2679,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Border Control
-  _missionID: 0
   _missionState: 0
   _initialTimer: 60
   _isTimerActive: 1
@@ -3035,7 +3034,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Plane
-  _missionID: 4
   _missionState: 1
   _initialTimer: 60
   _isTimerActive: 1
@@ -3114,7 +3112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Lost Luggage
-  _missionID: 3
   _missionState: 1
   _initialTimer: 60
   _isTimerActive: 1
@@ -3190,6 +3187,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1931102312}
   - {fileID: 57395508}
   - {fileID: 1458002291}
   m_Father: {fileID: 1125649141}
@@ -3333,7 +3331,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Conveyor Belt
-  _missionID: 1
   _missionState: 1
   _initialTimer: 60
   _isTimerActive: 1
@@ -3482,7 +3479,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 681588142}
     m_SelectOnDown: {fileID: 924989945}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 274889940}
+    m_SelectOnRight: {fileID: 591345561}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -5342,7 +5339,7 @@ Transform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2088560705}
+  m_Father: {fileID: 1058811457}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1931102313
 MonoBehaviour:
@@ -5435,7 +5432,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Boarding
-  _missionID: 2
   _missionState: 1
   _initialTimer: 60
   _isTimerActive: 1
@@ -5502,7 +5498,6 @@ Transform:
   - {fileID: 261422952}
   - {fileID: 1628294790}
   - {fileID: 917825358}
-  - {fileID: 1931102312}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2094235344

@@ -5,7 +5,7 @@ public class Trigger2WayTask : TriggerTask
     [Header("Trigger 2 Way Task")]
     [SerializeField] private PropType _badPropType = PropType.None;
     
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         if(Done || !other.TryGetComponent(out Prop prop)) return;
         

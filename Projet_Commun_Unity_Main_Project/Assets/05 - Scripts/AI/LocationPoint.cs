@@ -1,19 +1,16 @@
-using System;
 using UnityEngine;
 
 public class LocationPoint : MonoBehaviour
 {
-    public GameObject locationObject;
+    [Header("Parameters")]
     public bool available = true;
+    [SerializeField] private Vector3 forward;
 
     [Header("Gizmo Settings")]
-    public Color gizmoColor = Color.green;
-    public float gizmoSize = 0.5f;
-
-    private void Start()
-    {
-        locationObject = gameObject;
-    }
+    [SerializeField] private Color gizmoColor = Color.green;
+    [SerializeField] private float gizmoSize = 0.5f;
+    
+    public Vector3 Forward => forward;
     
     private void OnDrawGizmos()
     {

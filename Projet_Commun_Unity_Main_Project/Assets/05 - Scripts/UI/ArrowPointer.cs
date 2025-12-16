@@ -26,8 +26,8 @@ public class ArrowPointer : MonoBehaviour
         
         _pointerRectTransform = gameObject.GetComponent<RectTransform>();
         
-        MissionID missionID = UIManager.Instance.TargetMission;
-        _targetPosition = missionPositions[(int)missionID].position;
+        // MissionID missionID = UIManager.Instance.TargetMission;
+        // _targetPosition = missionPositions[(int)missionID].position;
         
         _pointerImage = gameObject.GetComponent<Image>();
     }

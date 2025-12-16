@@ -5,7 +5,6 @@ public class Mission : MonoBehaviour
 {
     [Header("Parameters")] 
     [SerializeField] private string _name = "New Mission";
-    [SerializeField] private MissionID _missionID = MissionID.BorderControl;
     [SerializeField] protected MissionState _missionState = MissionState.Unlocked;
 
     [Header("Timer")] 
@@ -16,7 +15,6 @@ public class Mission : MonoBehaviour
     [SerializeField] private UnityEvent _onMissionStarted;
     [SerializeField] private UnityEvent _onMissionFinished;
     
-    public MissionID ID => _missionID;
     public bool IsLocked => _missionState == MissionState.Locked;
     
     public float Timer
@@ -48,7 +46,7 @@ public class Mission : MonoBehaviour
         _uiManager = UIManager.Instance;
         
         SwitchMissionState(_missionState);
-        if(_missionState == MissionState.Unlocked) UpdateTargetMission();
+        // if(_missionState == MissionState.Unlocked) UpdateTargetMission();
     }
 
     private void Update()
@@ -88,25 +86,10 @@ public class Mission : MonoBehaviour
         Debug.Log($"Mission {_name} finished");
     }
 
-    public void Unlock()
-    {
-        SwitchMissionState(MissionState.Unlocked);
-        UpdateTargetMission();
-    }
+    public void Unlock() => SwitchMissionState(MissionState.Unlocked);
 
     protected virtual void SwitchMissionState(MissionState newState)
     {
         if(newState != _missionState) _missionState = newState;
     }
-
-    private void UpdateTargetMission() => _uiManager.TargetMission = _missionID;
-}
-
-public enum MissionID
-{
-    BorderControl,
-    ConveyorBelt,
-    Boarding,
-    LostLuggage,
-    Plane
 }

@@ -1248,7 +1248,7 @@ GameObject:
   - component: {fileID: 2517995365003981990}
   - component: {fileID: 8907375103779188310}
   - component: {fileID: 4192496116329325771}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1287,6 +1287,11 @@ MonoBehaviour:
   speed: 3.5
   stopDistance: 1
   accelerationPower: 50
+  avoidanceRadius: 2
+  avoidanceWeight: 1.5
+  avoidanceLayer:
+    serializedVersion: 2
+    m_Bits: 136
 --- !u!114 &7768738062051899012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1305,6 +1310,7 @@ MonoBehaviour:
   _ragdollVelocityThreshold: 3
   behaviorGraphAgent: {fileID: 2759791066519186907}
   bHips: {fileID: 3371690788066588864}
+  isRagdollable: 1
 --- !u!114 &8725163306907378512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1317,6 +1323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e67495afef247bd44bd7190fbf459846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  halo: {fileID: 0}
 --- !u!195 &7125759346710093108
 NavMeshAgent:
   m_ObjectHideFlags: 0

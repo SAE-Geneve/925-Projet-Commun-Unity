@@ -2083,7 +2083,7 @@ GameObject:
   - component: {fileID: 2517995365003981990}
   - component: {fileID: 8907375103779188310}
   - component: {fileID: 4192496116329325771}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AIConveyorBelt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2126,6 +2126,11 @@ MonoBehaviour:
   speed: 3.5
   stopDistance: 0.1
   accelerationPower: 50
+  avoidanceRadius: 2
+  avoidanceWeight: 1.5
+  avoidanceLayer:
+    serializedVersion: 2
+    m_Bits: 136
 --- !u!114 &8725163306907378512
 MonoBehaviour:
   m_ObjectHideFlags: 0

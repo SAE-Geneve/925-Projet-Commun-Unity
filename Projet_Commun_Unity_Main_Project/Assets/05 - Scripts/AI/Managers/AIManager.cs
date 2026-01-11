@@ -37,10 +37,15 @@ public class AIManager : MonoBehaviour
     public void ClearAIs()
     {
         StopSpawn();
-        
-        foreach (var ai in _spawnedAIs)
-            if (ai) Destroy(ai.gameObject);
-        
+
+        for (int i = _spawnedAIs.Count - 1; i >= 0; i--)
+        {
+            var ai = _spawnedAIs[i];
+            if (!ai) continue;
+            
+            ai.DestroyAI();
+        }
+
         _spawnedAIs.Clear();
     }
 
@@ -59,6 +64,15 @@ public class AIManager : MonoBehaviour
 
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
         AIController newNpc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
+        
+        newNpc.OnDestroyed += RemoveAI;
+        
         _spawnedAIs.Add(newNpc);
+    }
+    
+    protected virtual void RemoveAI(AIController ai)
+    {
+        ai.OnDestroyed -= RemoveAI;
+        _spawnedAIs.Remove(ai);
     }
 }

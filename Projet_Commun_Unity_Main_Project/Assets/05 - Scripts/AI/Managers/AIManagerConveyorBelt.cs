@@ -1,12 +1,17 @@
 using System.Collections.Generic;
 using Unity.Behavior;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AIManagerConveyorBelt : AIManager
 {
     [Header("Conveyor Belt Settings")]
     [SerializeField] private List<LocationPoint> locations;
     [SerializeField] private Transform exitPoint;
+
+    [Header("Events")]
+    [SerializeField] private UnityEvent onSucceed;
+    [SerializeField] private UnityEvent onFailed;
 
     protected override void Start()
     {
@@ -15,12 +20,8 @@ public class AIManagerConveyorBelt : AIManager
         int half = locations.Count / 2;
         
         if (playerCount >= 2)
-        {
             for (int i = half; i < locations.Count; i++)
-            {
                 locations[i].available = true;
-            }
-        }
     }
 
     protected override void SpawnNPC()
@@ -39,8 +40,7 @@ public class AIManagerConveyorBelt : AIManager
             }
         }
 
-        if (chosenLocation == null)
-            return;
+        if (!chosenLocation) return;
 
         chosenLocation.available = false;
 
@@ -53,7 +53,13 @@ public class AIManagerConveyorBelt : AIManager
             Debug.LogError("Le prefab n'est pas un AIConveyorBelt.");
             return;
         }
+        
+        if(!npc.GameTask) return;
 
+        npc.GameTask.OnSucceedAction += Succeed;
+        npc.GameTask.OnFailedAction += Failed;
+        npc.OnDestroyed += RemoveAI;
+        
         BehaviorGraphAgent agent = npc.BehaviorAgent;
         
         if (!agent) return;
@@ -67,4 +73,14 @@ public class AIManagerConveyorBelt : AIManager
         foreach (var location in locations)
             location.available = true;
     }
+
+    protected override void RemoveAI(AIController ai)
+    {
+        ai.GameTask.OnSucceedAction -= Succeed;
+        ai.GameTask.OnFailedAction -= Failed;
+        base.RemoveAI(ai);
+    }
+    
+    private void Succeed() => onSucceed.Invoke();
+    private void Failed() => onFailed.Invoke();
 }

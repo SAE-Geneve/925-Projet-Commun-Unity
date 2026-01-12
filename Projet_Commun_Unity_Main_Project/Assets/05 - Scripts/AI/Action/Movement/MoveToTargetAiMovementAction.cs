@@ -7,7 +7,7 @@ using Unity.Properties;
 [Serializable, GeneratePropertyBag]
 [NodeDescription(
     name: "Move To Target (AIMovement)",
-    story: "[self] moves physically to [target] using AIMovementTest",
+    story: "[self] moves physically to [target]",
     category: "Action/Navigation",
     id: "ai_movetarget_aimovement")]
 public partial class MoveToTargetAIMovementAction : Action

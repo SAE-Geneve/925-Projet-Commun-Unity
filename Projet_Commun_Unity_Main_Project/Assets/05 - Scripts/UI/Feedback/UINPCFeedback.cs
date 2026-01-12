@@ -1,11 +1,12 @@
 using System.Collections;
+using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class NPCFeedback : MonoBehaviour
 {
     [SerializeField] private float effectDuration=2.5f;
-    private float _timerDuration=10f;
+    private float _timerDuration=20f;
     
     [Header("Reaction Images")]
     [SerializeField] private Image happyImage;
@@ -17,15 +18,10 @@ public class NPCFeedback : MonoBehaviour
     [SerializeField] private Color startColor;
     [SerializeField] private Color endColor;
     
-    DebugConveyorTask _debugConveyorTask;
     private Coroutine _currentTimerCoroutine;
     private AudioManager _audioManager;
     private UIFeedback _uiFeedback;
-
-    private void Awake()
-    {
-        _debugConveyorTask = transform.parent.GetComponent<DebugConveyorTask>();
-    }
+    private BehaviorGraphAgent behaviorGraphAgent;
 
     private void Start()
     {
@@ -34,7 +30,22 @@ public class NPCFeedback : MonoBehaviour
             Debug.Log("Found UI Text Effects");
             _uiFeedback.ImagePoolCreation(happyImage);
         }
+
+        if (gameObject.transform.parent.TryGetComponent(out BehaviorGraphAgent agent))
+        {
+            if (agent.GetVariable("WaitingTime", out BlackboardVariable<float> variableContainer))
+            {
+                _timerDuration = variableContainer.Value;
+        
+                Debug.Log($"Collected time : {_timerDuration}");
+            }
+            else
+            {
+                Debug.LogWarning("Unable to find agent variable");
+            }
+        }
         _audioManager = AudioManager.Instance;
+        StartUITimer();
     }
     
     public void StartUITimer()
@@ -45,8 +56,6 @@ public class NPCFeedback : MonoBehaviour
         }
 
         _currentTimerCoroutine = StartCoroutine(Timer());
-        
-        _timerDuration = _debugConveyorTask.Timer;
     }
 
     public void StopUITimer()

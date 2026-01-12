@@ -8,8 +8,10 @@ public class ScoreSystem : MonoBehaviour
 
     //Resets after every mini-game
     public static int TotalMinigameScore = 0;
+    //Positive scores 1-2
     public static int Subscore1 = 0;
     public static int Subscore2 = 0;
+    //Negative scores 3-4
     public static int Subscore3 = 0;
     public static int Subscore4 = 0;
 

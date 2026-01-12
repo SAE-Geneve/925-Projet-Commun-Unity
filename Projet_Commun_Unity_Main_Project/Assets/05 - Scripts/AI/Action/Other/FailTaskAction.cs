@@ -14,6 +14,7 @@ public partial class FailTaskAction : Action
     {
         if(Task.Value == null) return Status.Failure;
         
+        ScoreSystem.IncreaseScore(3);
         Task.Value.Failed();
         return Status.Success;
     }

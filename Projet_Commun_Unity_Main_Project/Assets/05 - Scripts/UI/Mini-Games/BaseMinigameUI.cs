@@ -1,6 +1,8 @@
+using System;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class BaseMinigameUI : MonoBehaviour
@@ -39,45 +41,69 @@ public class BaseMinigameUI : MonoBehaviour
             _uiScreenEffects.ImagePoolCreation(scoreImageFade);
         }
     }
+
+    private void Update()
+    {
+        if (_subScore1 != ScoreSystem.Subscore1)
+        {
+            SubScore1Increase();
+        }
+        else if (_subScore2 != ScoreSystem.Subscore2)
+        {
+            SubScore2Increase();
+        }
+        else if (_subScore3 != ScoreSystem.Subscore3)
+        {
+            SubScore3Increase();
+        }
+        else if (_subScore4 != ScoreSystem.Subscore4)
+        {
+            SubScore4Increase();
+        }
+        if (_totalScore != ScoreSystem.TotalMinigameScore)
+        {
+            TotalScoreIncrease();
+        }
+    }
     
-    public void TotalScoreIncrease()
+    private void TotalScoreIncrease()
     {
         StartCoroutine(_uiScreenEffects.DoImagePoolFade());
         StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreTextFade));
         
-        _totalScore += 150;
+        _totalScore = ScoreSystem.TotalMinigameScore;
         totalScore.text = ""+_totalScore.ToString("00000000");
     }
     
-    public void SubScore1Increase()
+    private void SubScore1Increase()
     {
         StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect1));
         
-        _subScore1 += 1;
-        totalSubScore1.text = ""+_subScore1;
+        _subScore1 = ScoreSystem.Subscore1;
+        totalSubScore1.text = ""+ScoreSystem.Subscore1;
     }
     
-    public void SubScore2Increase()
+    private void SubScore2Increase()
     {
         StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect2));
         
-        _subScore2 += 1;
-        totalSubScore2.text = ""+_subScore2;
+        _subScore2 = ScoreSystem.Subscore2;
+        totalSubScore2.text = ""+ScoreSystem.Subscore2;
     }
     
-    public void SubScore3Increase()
+    private void SubScore3Increase()
     {
         StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect3));
         
-        _subScore3 += 1;
-        totalSubScore3.text = ""+_subScore3;
+        _subScore3 = ScoreSystem.Subscore3;
+        totalSubScore3.text = ""+ScoreSystem.Subscore3;
     }
     
-    public void SubScore4Increase()
+    private void SubScore4Increase()
     {
         StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect4));
         
-        _subScore4 += 1;
-        totalSubScore4.text = ""+_subScore4;
+        _subScore4 = ScoreSystem.Subscore4;
+        totalSubScore4.text = ""+ScoreSystem.Subscore4;
     }
 }

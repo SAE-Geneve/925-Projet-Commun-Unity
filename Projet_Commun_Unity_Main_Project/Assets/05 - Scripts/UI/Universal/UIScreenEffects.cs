@@ -65,6 +65,12 @@ public class UIScreenEffects : MonoBehaviour
 
     private TextMeshProUGUI TemporaryVariableMaker(TextMeshProUGUI textSample)
     {
+        if (textSample == null)
+        {
+            Debug.LogWarning("UIScreenEffects: Le 'textSample' est NULL. Vérifiez que le champ TextMeshProUGUI est bien assigné dans l'Inspecteur du script appelant.");
+            return null;
+        }
+        
         TextMeshProUGUI tempText = Instantiate(textSample, textSample.transform.parent);
         tempText.gameObject.SetActive(true);
         return tempText;
@@ -125,6 +131,8 @@ public class UIScreenEffects : MonoBehaviour
     {
         var tempText = TemporaryVariableMaker(fadeText);
 
+        if (tempText == null) yield break;
+        
         Color startcolor = tempText.color;
         Color endcolor = new Color(tempText.color.r, tempText.color.g, tempText.color.b, 0);
         float t = 0.0f;

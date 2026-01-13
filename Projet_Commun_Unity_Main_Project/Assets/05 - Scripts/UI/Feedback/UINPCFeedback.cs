@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class NPCFeedback : MonoBehaviour
 {
-    [SerializeField] private float effectDuration=2.5f;
-    private float _timerDuration=20f;
+    [SerializeField] private float effectDuration = 2.5f;
+    private float _timerDuration = 20f;
     
     [Header("Reaction Images")]
     [SerializeField] private Image happyImage;
@@ -21,7 +21,9 @@ public class NPCFeedback : MonoBehaviour
     private Coroutine _currentTimerCoroutine;
     private AudioManager _audioManager;
     private UIFeedback _uiFeedback;
-    private BehaviorGraphAgent behaviorGraphAgent;
+    private BehaviorGraphAgent _agent;
+    
+    private bool _hasTimerStarted; 
 
     private void Start()
     {
@@ -30,26 +32,45 @@ public class NPCFeedback : MonoBehaviour
             Debug.Log("Found UI Text Effects");
             _uiFeedback.ImagePoolCreation(happyImage);
         }
-
-        if (gameObject.transform.parent.TryGetComponent(out BehaviorGraphAgent agent))
+        
+        if (transform.parent.TryGetComponent(out _agent))
         {
-            if (agent.GetVariable("WaitingTime", out BlackboardVariable<float> variableContainer))
+            if (_agent.GetVariable("WaitingTime", out BlackboardVariable<float> variableContainer))
             {
                 _timerDuration = variableContainer.Value;
-        
                 Debug.Log($"Collected time : {_timerDuration}");
             }
             else
             {
-                Debug.LogWarning("Unable to find agent variable");
+                Debug.LogWarning("Unable to find agent variable 'WaitingTime'");
             }
         }
+        else
+        {
+            Debug.LogError("NPCFeedback: Impossible de trouver le BehaviorGraphAgent sur le parent !");
+        }
+
         _audioManager = AudioManager.Instance;
-        StartUITimer();
+    }
+
+    private void Update()
+    {
+        if (_hasTimerStarted || _agent == null) return;
+        
+        if (_agent.GetVariable("TimerStarted", out BlackboardVariable<bool> isTimerStarted))
+        {
+            if (isTimerStarted.Value)
+            {
+                _hasTimerStarted = true;
+                StartUITimer();
+            }
+        }
     }
     
     public void StartUITimer()
     {
+        if(timerBackdropImage != null) timerBackdropImage.gameObject.SetActive(true);
+
         if (_currentTimerCoroutine != null)
         {
             StopCoroutine(_currentTimerCoroutine);
@@ -60,31 +81,35 @@ public class NPCFeedback : MonoBehaviour
 
     public void StopUITimer()
     {
-        timerBackdropImage.gameObject.SetActive(false);
-        StopCoroutine(_currentTimerCoroutine);
+        if(timerBackdropImage != null) timerBackdropImage.gameObject.SetActive(false);
+        
+        if (_currentTimerCoroutine != null) 
+            StopCoroutine(_currentTimerCoroutine);
     }
     
     public void HappyResult()
     {
         _audioManager.PlaySfx(_audioManager.successSFX);
         StartCoroutine(_uiFeedback.ImageFade(happyImage, effectDuration));
+        StopUITimer();
     }
+
     public void UnhappyResult()
     {
         _audioManager.PlaySfx(_audioManager.failureSFX);
         StartCoroutine(_uiFeedback.ImageFade(unhappyImage, effectDuration));
+        StopUITimer();
     }
     
     private IEnumerator Timer()
     {
         timerImage.fillAmount = 1.0f;
         timerImage.color = startColor;
-        timerBackdropImage.gameObject.SetActive(true);
+        
         float elapsedTime = 0.0f;
         
         while (timerImage.fillAmount > 0)
         {
-            
             float progress = Mathf.Clamp01(elapsedTime / _timerDuration);
             
             timerImage.color = Color.Lerp(startColor, endColor, progress);
@@ -93,6 +118,7 @@ public class NPCFeedback : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        
         timerBackdropImage.gameObject.SetActive(false);
         yield return null;
     }

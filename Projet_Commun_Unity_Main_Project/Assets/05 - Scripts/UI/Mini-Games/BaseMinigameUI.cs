@@ -1,8 +1,6 @@
 using System;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class BaseMinigameUI : MonoBehaviour
@@ -12,12 +10,16 @@ public class BaseMinigameUI : MonoBehaviour
     [Header("Score Texts")]
     [SerializeField] private TextMeshProUGUI totalScore;
     private int _totalScore;
+    
     [SerializeField] private TextMeshProUGUI totalSubScore1;
     private int _subScore1;
+    
     [SerializeField] private TextMeshProUGUI totalSubScore2;
     private int _subScore2;
+    
     [SerializeField] public TMP_Text totalSubScore3;
     private int _subScore3;
+    
     [SerializeField] public TMP_Text totalSubScore4;
     private int _subScore4;
     
@@ -38,7 +40,18 @@ public class BaseMinigameUI : MonoBehaviour
         if (TryGetComponent(out _uiScreenEffects))
         {
             Debug.Log("Found UI Text Effects");
-            _uiScreenEffects.ImagePoolCreation(scoreImageFade);
+            if (scoreImageFade != null)
+            {
+                _uiScreenEffects.ImagePoolCreation(scoreImageFade);
+            }
+            else
+            {
+                Debug.LogWarning($"[{name}] BaseMinigameUI : 'scoreImageFade' est manquant !");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"[{name}] BaseMinigameUI : Composant 'UIScreenEffects' manquant sur cet objet !");
         }
     }
 
@@ -60,6 +73,7 @@ public class BaseMinigameUI : MonoBehaviour
         {
             SubScore4Increase();
         }
+        
         if (_totalScore != ScoreSystem.TotalMinigameScore)
         {
             TotalScoreIncrease();
@@ -68,42 +82,63 @@ public class BaseMinigameUI : MonoBehaviour
     
     private void TotalScoreIncrease()
     {
-        StartCoroutine(_uiScreenEffects.DoImagePoolFade());
-        StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreTextFade));
-        
         _totalScore = ScoreSystem.TotalMinigameScore;
-        totalScore.text = ""+_totalScore.ToString("00000000");
+        
+        if (_uiScreenEffects != null)
+        {
+            StartCoroutine(_uiScreenEffects.DoImagePoolFade());
+            
+            if (scoreTextFade != null)
+                StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreTextFade));
+        }
+        
+        if (totalScore != null)
+        {
+            totalScore.text = _totalScore.ToString("00000000");
+        }
     }
     
     private void SubScore1Increase()
     {
-        StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect1));
-        
         _subScore1 = ScoreSystem.Subscore1;
-        totalSubScore1.text = ""+ScoreSystem.Subscore1;
+
+        if (_uiScreenEffects != null && subScoreEffect1 != null)
+            StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect1));
+        
+        if (totalSubScore1 != null)
+            totalSubScore1.text = _subScore1.ToString();
     }
     
     private void SubScore2Increase()
     {
-        StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect2));
-        
         _subScore2 = ScoreSystem.Subscore2;
-        totalSubScore2.text = ""+ScoreSystem.Subscore2;
+
+        if (_uiScreenEffects != null && subScoreEffect2 != null)
+            StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect2));
+        
+        if (totalSubScore2 != null)
+            totalSubScore2.text = _subScore2.ToString();
     }
     
     private void SubScore3Increase()
     {
-        StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect3));
-        
         _subScore3 = ScoreSystem.Subscore3;
-        totalSubScore3.text = ""+ScoreSystem.Subscore3;
+
+        if (_uiScreenEffects != null && subScoreEffect3 != null)
+            StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect3));
+        
+        if (totalSubScore3 != null)
+            totalSubScore3.text = _subScore3.ToString();
     }
     
     private void SubScore4Increase()
     {
-        StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect4));
-        
         _subScore4 = ScoreSystem.Subscore4;
-        totalSubScore4.text = ""+ScoreSystem.Subscore4;
+
+        if (_uiScreenEffects != null && subScoreEffect4 != null)
+            StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect4));
+        
+        if (totalSubScore4 != null)
+            totalSubScore4.text = _subScore4.ToString();
     }
 }

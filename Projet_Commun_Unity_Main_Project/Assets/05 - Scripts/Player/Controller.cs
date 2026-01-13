@@ -29,6 +29,8 @@ public class Controller : MonoBehaviour, IGrabbable
     public CharacterDisplay Display { get; private set; }
     public IInteractable InteractableGrabbed { get; set; }
     
+    public bool IsBeingHeld { get; private set; }
+    
     private Ragdoll _ragdoll;
     
     private Vector3 throwDirection;
@@ -40,7 +42,7 @@ public class Controller : MonoBehaviour, IGrabbable
     
     private bool _isCharging;
     
-    private Transform _originalParent;
+    //private Transform _originalParent;
 
     protected virtual void Start()
     {
@@ -109,7 +111,7 @@ public class Controller : MonoBehaviour, IGrabbable
             if (hit.gameObject == gameObject || !hit.TryGetComponent(out T component)) continue;
             
             float distance = Vector3.Distance(CatchPoint.position, hit.transform.position);
-
+            
             if (distance < nearestDistance)
             {
                 nearestDistance = distance;
@@ -126,6 +128,8 @@ public class Controller : MonoBehaviour, IGrabbable
     
     private void TryGrab()
     {
+        if (IsBeingHeld) return;
+        
         TryAction<IGrabbable>(grabbable =>
         {
             grabbable.Grabbed(this);
@@ -151,11 +155,19 @@ public class Controller : MonoBehaviour, IGrabbable
     public void Grabbed(Controller controller)
     {
         Debug.Log("Grabbed");
-        _originalParent = transform.parent;
+        
+        if (_grabbedProp != null)
+        {
+            Drop(); 
+        }
+        
+        //_originalParent = transform.parent;
+        
         transform.SetParent(controller.CatchPoint);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         Rb.isKinematic = true;
+        if(Movement) Movement.enabled = false;
     }
 
     public void Dropped(Vector3 throwForce = default, Controller controller = null)
@@ -163,6 +175,8 @@ public class Controller : MonoBehaviour, IGrabbable
         ResetParent();
 
         Rb.isKinematic = false;
+        
+        if(Movement) Movement.enabled = true;
         
         if (throwForce != Vector3.zero)
         {
@@ -177,8 +191,19 @@ public class Controller : MonoBehaviour, IGrabbable
         Debug.Log("Dropped controller");
     }
 
-    public void ResetParent() => transform.SetParent(_originalParent);
+    //public void ResetParent() => transform.SetParent(_originalParent);
 
+    public void ResetParent()
+    {
+        if (PlayerManager.Instance != null)
+        {
+            transform.SetParent(PlayerManager.Instance.transform);
+        }
+        else
+        {
+            transform.SetParent(null);
+        }
+    }
     private IEnumerator DropRoutine()
     {
         yield return new WaitForSeconds(0.1f);

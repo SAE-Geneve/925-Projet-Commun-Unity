@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class PropManager : MonoBehaviour
 {
+    [Header("Parameters")]
+    [Tooltip("The maximum props that can be spawned (set -1 for no limit)")]
+    [SerializeField] [Min(-1)] int limit = -1;
+    
+    public bool Limited => limit > -1 && _props.Count >= limit;
+    
     private readonly List<Prop> _props = new();
 
     public void AddProp(Prop prop)

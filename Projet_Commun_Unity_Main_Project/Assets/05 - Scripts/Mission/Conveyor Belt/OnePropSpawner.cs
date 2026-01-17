@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class OnePropSpawner : MonoBehaviour
@@ -13,11 +12,11 @@ public class OnePropSpawner : MonoBehaviour
     [SerializeField] private PropManager _propManager;
     
     [Header("Parameters")]
-    [SerializeField] private bool _spawnOnEnable = true;
-    [SerializeField] private bool _useRandomDelay;
+    // [SerializeField] private bool _spawnOnEnable = true;
+    // [SerializeField] private bool _useRandomDelay;
     [SerializeField] [Min(0.1f)] private float _spawnDelay = 2f;
-    [SerializeField] [Min(0.1f)] private float _minSpawnDelay = 2f;
-    [SerializeField] [Min(0.2f)] private float _maxSpawnDelay = 5f;
+    // [SerializeField] [Min(0.1f)] private float _minSpawnDelay = 2f;
+    // [SerializeField] [Min(0.2f)] private float _maxSpawnDelay = 5f;
     
     public event Action OnPropSpawned;
     
@@ -27,12 +26,12 @@ public class OnePropSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        if(_conveyorProp == null && _spawnOnEnable) StartSpawning();
+        if(_conveyorProp == null) SpawnLuggage();
     }
 
     private void SpawnLuggage()
     {
-        if(!_isSpawning || _conveyorProp || _propsToSpawn == null || _propsToSpawn.Length == 0) return;
+        // if(!_isSpawning || _conveyorProp || _propsToSpawn == null || _propsToSpawn.Length == 0) return;
         
         _conveyorProp = Instantiate(_propsToSpawn[Random.Range(0, _propsToSpawn.Length)], transform.position,
             transform.rotation);
@@ -44,34 +43,34 @@ public class OnePropSpawner : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!_isSpawning) return;
+        // if (!_isSpawning) return;
         
         if (_conveyorProp && other.gameObject == _conveyorProp.gameObject)
         {
             _conveyorProp = null;
 
-            StartSpawnRoutine();
+            StartCoroutine(SpawnCoroutine());
         }
     }
 
-    public void StartSpawning()
-    {
-        if (_isSpawning) return;
-        _isSpawning = true;
-
-        if (!_conveyorProp) StartSpawnRoutine();
-    }
-
-    public void StopSpawning()
-    {
-        if(_isSpawning) _isSpawning = false;
-
-        if (_spawnCoroutine != null)
-        {
-            StopCoroutine(_spawnCoroutine);
-            _spawnCoroutine = null;
-        }
-    }
+    // public void StartSpawning()
+    // {
+    //     if (_isSpawning) return;
+    //     _isSpawning = true;
+    //
+    //     if (!_conveyorProp) StartSpawnRoutine();
+    // }
+    //
+    // public void StopSpawning()
+    // {
+    //     if(_isSpawning) _isSpawning = false;
+    //
+    //     if (_spawnCoroutine != null)
+    //     {
+    //         StopCoroutine(_spawnCoroutine);
+    //         _spawnCoroutine = null;
+    //     }
+    // }
     
     private void StartSpawnRoutine()
     {
@@ -83,11 +82,7 @@ public class OnePropSpawner : MonoBehaviour
 
     private IEnumerator SpawnCoroutine()
     {
-        if(_useRandomDelay && _maxSpawnDelay > _minSpawnDelay)
-            yield return new WaitForSeconds(Random.Range(_minSpawnDelay, _maxSpawnDelay));
-        else
-            yield return new WaitForSeconds(_spawnDelay);
-
+        yield return new WaitForSeconds(_spawnDelay);
         SpawnLuggage();
     }
 }

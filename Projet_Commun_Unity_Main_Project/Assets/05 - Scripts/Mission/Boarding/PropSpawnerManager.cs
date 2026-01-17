@@ -36,15 +36,15 @@ public class PropSpawnerManager : MonoBehaviour
     //     _luggageCounter++;
     // }
 
-    public void StartSpawning()
-    {
-        foreach (var spawner in _spawners)
-            spawner.StartSpawning();
-    }
-
-    public void StopSpawning()
-    {
-        foreach (var spawner in _spawners)
-            spawner.StopSpawning();
-    }
+    // public void StartSpawning()
+    // {
+    //     foreach (var spawner in _spawners)
+    //         spawner.StartSpawning();
+    // }
+    //
+    // public void StopSpawning()
+    // {
+    //     foreach (var spawner in _spawners)
+    //         spawner.StopSpawning();
+    // }
 }

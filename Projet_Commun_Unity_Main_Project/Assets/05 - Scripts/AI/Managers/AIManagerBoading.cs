@@ -45,4 +45,13 @@ public class AIManagerBoarding : AIManager
             agent.SetVariableValue("TaskRejected", NoTask);
         }
     }
+
+    public void ResetLocations()
+    {
+        foreach (LocationPoint loc in waitPos)
+        {
+            loc.available = true;
+        }
+    }
+    
 }

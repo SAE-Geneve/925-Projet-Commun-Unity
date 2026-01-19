@@ -5,9 +5,12 @@ using UnityEngine.InputSystem;
 public class KartMovement : MonoBehaviour
 {
     [Header("Player Control")]
-    [SerializeField] private float maxForwardSpeed = 100f;
-    [SerializeField] private float acceleration = 25f;
-    [SerializeField] private float turnSpeed = 10f;
+    [SerializeField] private float maxForwardSpeed = 30f;
+    [SerializeField] private float acceleration = 60f;
+    [SerializeField] private float turnSpeed = 180f; // Vitesse de rotation en degrés par seconde
+    
+    [Header("Grip Settings")]
+    [SerializeField] private float tireGripFactor = 5f; 
     
     private Rigidbody _rb;
 
@@ -18,17 +21,45 @@ public class KartMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        
+        _rb.centerOfMass = new Vector3(0, -0.5f, 0); 
     }
     
     void FixedUpdate()
     {
-        Vector3 forwardVelocity = transform.forward * (_verticalInput * maxForwardSpeed);
-        Vector3 velocityChange = forwardVelocity - _rb.linearVelocity;
+        ApplyMovement();
+        ApplyRotation();
+        ApplyTireGrip();
+    }
 
-        Vector3 accelerationVector = Vector3.ClampMagnitude(velocityChange, acceleration * Time.fixedDeltaTime);
+    private void ApplyMovement()
+    {
+        _rb.AddForce(transform.forward * (_verticalInput * acceleration), ForceMode.Acceleration);
         
-        _rb.AddForce(accelerationVector, ForceMode.VelocityChange);
-        _rb.AddTorque(Vector3.up * (_horizontalInput * (turnSpeed * Time.fixedDeltaTime)), ForceMode.VelocityChange);
+        if(_rb.linearVelocity.magnitude > maxForwardSpeed)
+        {
+            _rb.linearVelocity = _rb.linearVelocity.normalized * maxForwardSpeed;
+        }
+    }
+
+    private void ApplyRotation()
+    {
+        float turnAmount = _horizontalInput * turnSpeed * Time.fixedDeltaTime;
+        Quaternion turnOffset = Quaternion.Euler(0f, turnAmount, 0f);
+        
+        _rb.MoveRotation(_rb.rotation * turnOffset);
+        
+        if (Mathf.Abs(_horizontalInput) < 0.1f)
+        {
+            _rb.angularVelocity = Vector3.zero;
+        }
+    }
+
+    private void ApplyTireGrip()
+    {
+        Vector3 localVelocity = transform.InverseTransformDirection(_rb.linearVelocity);
+        localVelocity.x = Mathf.Lerp(localVelocity.x, 0f, tireGripFactor * Time.fixedDeltaTime);
+        _rb.linearVelocity = transform.TransformDirection(localVelocity);
     }
     
     public void Move(Vector2 input)

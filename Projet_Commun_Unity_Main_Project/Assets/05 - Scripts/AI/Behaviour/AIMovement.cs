@@ -8,6 +8,10 @@ public class AIMovement : CharacterMovement
     [SerializeField] private float stopDistance = 0.5f;
     [SerializeField] private float accelerationPower = 50f;
 
+    [Header("Auto-Recalculate")]
+    [Tooltip("Recalcule le chemin périodiquement pour s'adapter si on est poussé")]
+    [SerializeField] private float repathInterval = 0.5f;
+
     [Header("Avoidance (Anti-Collision)")]
     [Tooltip("Rayon de détection des autres IA")]
     [SerializeField] private float avoidanceRadius = 2.0f; 
@@ -28,6 +32,7 @@ public class AIMovement : CharacterMovement
     private Vector3 _destination;
     
     private float _nextPathCheckTime;
+    private float _nextRepathTime;
 
     protected override void Start()
     {
@@ -40,9 +45,18 @@ public class AIMovement : CharacterMovement
     {
         if (!_moving) return;
         
-        if (_path.corners.Length == 0 || _currentCorner >= _path.corners.Length)
+        if (Time.time >= _nextRepathTime)
         {
-            Stop();
+            ForceRecalculatePath();
+            _nextRepathTime = Time.time + repathInterval;
+        }
+        
+        if (_path == null || _path.corners.Length == 0 || _currentCorner >= _path.corners.Length)
+        {
+            if (_currentCorner >= _path.corners.Length && _path.status == NavMeshPathStatus.PathComplete)
+            {
+                Stop();
+            }
             return;
         }
 
@@ -61,7 +75,6 @@ public class AIMovement : CharacterMovement
                 return;
             }
         }
-        
         if (dirToCorner.magnitude <= 0.2f || (_currentCorner == _path.corners.Length - 1 && dirToCorner.magnitude <= stopDistance))
         {
             _currentCorner++;
@@ -81,6 +94,19 @@ public class AIMovement : CharacterMovement
         
         Vector3 finalDirection = (dirToCorner + (avoidanceVector * avoidanceWeight)).normalized;
         MoveAI(finalDirection);
+    }
+    
+    private void ForceRecalculatePath()
+    {
+        NavMesh.CalculatePath(transform.position, _destination, NavMesh.AllAreas, _path);
+        if (_path.corners.Length > 1)
+        {
+            _currentCorner = 1;
+        }
+        else
+        {
+            _currentCorner = 0;
+        }
     }
 
     private Vector3 GetSeparationVector()
@@ -134,6 +160,8 @@ public class AIMovement : CharacterMovement
     public void SetDestination(Vector3 target)
     {
         _destination = target;
+        _nextRepathTime = Time.time + repathInterval;
+
         if (NavMesh.SamplePosition(target, out NavMeshHit hit, 2.0f, NavMesh.AllAreas))
         {
             if (NavMesh.CalculatePath(transform.position, hit.position, NavMesh.AllAreas, _path))

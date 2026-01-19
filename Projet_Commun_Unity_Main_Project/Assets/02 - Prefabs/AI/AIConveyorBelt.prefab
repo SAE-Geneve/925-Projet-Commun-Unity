@@ -2083,6 +2083,7 @@ GameObject:
   - component: {fileID: 2517995365003981990}
   - component: {fileID: 8907375103779188310}
   - component: {fileID: 4192496116329325771}
+  - component: {fileID: 594211206765096000}
   m_Layer: 7
   m_Name: AIConveyorBelt
   m_TagString: Untagged
@@ -2126,6 +2127,7 @@ MonoBehaviour:
   speed: 5
   stopDistance: 0.1
   accelerationPower: 50
+  repathInterval: 0.5
   avoidanceRadius: 1.5
   avoidanceWeight: 2
   avoidanceLayer:
@@ -2410,6 +2412,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &594211206765096000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505405206070894942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11974d4b1c4cc02469169b6940e44e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 9018633704576288329}
+  skins:
+  - mesh: {fileID: -4525352082279593871, guid: 07901938766f8154590e0e1781723182, type: 3}
+    material: {fileID: 4801135050385563417, guid: 07901938766f8154590e0e1781723182, type: 3}
+  - mesh: {fileID: -2105677214324881330, guid: c898f009c14ae244a95f34dbde982eaa, type: 3}
+    material: {fileID: 1344322224355039774, guid: c898f009c14ae244a95f34dbde982eaa, type: 3}
+  - mesh: {fileID: -3638002848694617913, guid: 6279057418318104ba1ae56fa20ae3e0, type: 3}
+    material: {fileID: 7456448285208411506, guid: 6279057418318104ba1ae56fa20ae3e0, type: 3}
+  - mesh: {fileID: 3110610503495508886, guid: 4c3b1f9da7de63043977134d130a541d, type: 3}
+    material: {fileID: 326836432639820245, guid: 4c3b1f9da7de63043977134d130a541d, type: 3}
+  - mesh: {fileID: 4468626722414152477, guid: 2897426ca7b789748a076f337bdba708, type: 3}
+    material: {fileID: -1050749074387320470, guid: 2897426ca7b789748a076f337bdba708, type: 3}
+  - mesh: {fileID: 6744289737733151351, guid: 2c63b7ce346a5b54b9ae1d3b6715b89b, type: 3}
+    material: {fileID: -8064458493723180572, guid: 2c63b7ce346a5b54b9ae1d3b6715b89b, type: 3}
+  - mesh: {fileID: 6744289737733151351, guid: 2c63b7ce346a5b54b9ae1d3b6715b89b, type: 3}
+    material: {fileID: -8064458493723180572, guid: 2c63b7ce346a5b54b9ae1d3b6715b89b, type: 3}
 --- !u!1 &6689037420118688329
 GameObject:
   m_ObjectHideFlags: 0

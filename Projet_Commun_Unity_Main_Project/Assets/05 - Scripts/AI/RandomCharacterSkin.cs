@@ -16,7 +16,9 @@ public class RandomCharacterSkin : MonoBehaviour
     [Header("Liste des Apparences Possibles")]
     public List<SkinOption> skins = new List<SkinOption>();
 
-    void Start()
+    public int randomIndex;
+
+    void Awake()
     {
         RandomizeAppearance();
     }
@@ -35,7 +37,7 @@ public class RandomCharacterSkin : MonoBehaviour
             return;
         }
         
-        int randomIndex = Random.Range(0, skins.Count);
+        randomIndex = Random.Range(0, skins.Count);
         SkinOption selectedSkin = skins[randomIndex];
         
         targetRenderer.sharedMesh = selectedSkin.mesh;

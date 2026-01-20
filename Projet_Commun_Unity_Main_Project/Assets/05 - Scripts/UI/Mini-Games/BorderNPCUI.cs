@@ -88,7 +88,7 @@ public class BorderNPCUI : MonoBehaviour
     
     public void HappyResult()
     {
-        _audioManager.PlaySfx(_audioManager.successSFX);
+        AudioManager.Instance.PlaySfx(_audioManager.successSFX);
         StartCoroutine(_uiFeedback.ImageFade(happyImage, effectDuration));
     }
     public void UnhappyResult()

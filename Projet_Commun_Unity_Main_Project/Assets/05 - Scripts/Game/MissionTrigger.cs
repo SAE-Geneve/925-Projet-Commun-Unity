@@ -35,8 +35,10 @@ public class MissionTrigger : MonoBehaviour
         _playerManager.OnPlayerAdded += UpdateTmpNumber;
         _playerManager.OnPlayerRemoved += UpdateTmpNumber;
         _playerManager.OnPlayerRemoved += CheckPlayerNumber;
+
+        _mission.OnSwitchState += UpdateState;
         
-        InitState();
+        UpdateState();
 
         _ragdollHandler = ragdoll =>
         {
@@ -98,7 +100,7 @@ public class MissionTrigger : MonoBehaviour
 
     private void UpdateTmpNumber() => _numberTmp.SetText($"{_playerNumber}/{_playerManager.PlayerCount}");
 
-    private void InitState()
+    private void UpdateState()
     {
         if (_mission.IsLocked)
         {

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,6 +15,8 @@ public class Mission : MonoBehaviour
     [Header("Events")] 
     [SerializeField] private UnityEvent _onMissionStarted;
     [SerializeField] private UnityEvent _onMissionFinished;
+
+    public event Action OnSwitchState;
     
     public bool IsLocked => _missionState == MissionState.Locked;
     
@@ -91,6 +94,10 @@ public class Mission : MonoBehaviour
 
     protected virtual void SwitchMissionState(MissionState newState)
     {
-        if(newState != _missionState) _missionState = newState;
+        if (newState != _missionState)
+        {
+            _missionState = newState;
+            OnSwitchState?.Invoke();
+        }
     }
 }

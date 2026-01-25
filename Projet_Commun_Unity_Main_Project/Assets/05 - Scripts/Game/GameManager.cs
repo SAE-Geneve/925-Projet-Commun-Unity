@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     public float Timer
     {
         get => _timer;
-        private set
+        set
         {
             if (value <= 0)
             {

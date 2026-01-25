@@ -78,7 +78,8 @@ public class Mission : MonoBehaviour
     
     public void Finish()
     {
-        GameManager.Instance.StopMission();
+        _gameManager.Timer += _initialTimer / 2f;
+        _gameManager.StopMission();
         
         SwitchMissionState(MissionState.Finished);
         _onMissionFinished?.Invoke();

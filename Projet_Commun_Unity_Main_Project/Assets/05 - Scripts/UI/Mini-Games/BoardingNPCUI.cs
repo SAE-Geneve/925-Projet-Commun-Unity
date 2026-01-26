@@ -1,154 +1,66 @@
 using System.Collections.Generic;
-using System.ComponentModel;
-using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class BoardingNPCUI : MonoBehaviour
 {
-    [Header("NPC UI")] [SerializeField] GameObject triggerHud;
+    [Header("UI Elements")]
+    [SerializeField] public GameObject triggerHud; 
+    [SerializeField] public Image passportSlot;
+    [SerializeField] public List<Sprite> passportPhotos;
 
-    [Header("UI Slot Element")] public List<Sprite> passportPhotos;
-    public Image passportSlot;
+    [Header("Feedbacks")]
+    [SerializeField] Image happyImage;
+    [SerializeField] Image unhappyImage;
+    [SerializeField] Image criminalImage;
+    [SerializeField] Image arrestImage;
+    [SerializeField] float effectDuration = 3f;
 
-    [Header("UI Effect Elements")] [SerializeField]
-    private Image happyImage;
-
-    [SerializeField] private Image unhappyImage;
-    [SerializeField] private Image criminalImage;
-    [SerializeField] private Image arrestImage;
-
-    //Bool values
-    private bool _inRange = false;
-    private bool _resultTakenIn = false;
-    public bool _isEvil = false;
-
-    //Components
-    private RandomCharacterSkin randomSkin;
-    private PlayerInput _playerInput;
-    private AudioManager _audioManager;
+    private RandomCharacterSkin _skin;
     private UIFeedback _uiFeedback;
+    private AudioManager _audioManager;
 
-    [SerializeField] private float effectDuration = 3f;
-
-    void Start()
+    void Awake()
     {
-        randomSkin = transform.parent.GetComponent<RandomCharacterSkin>();
-        if (TryGetComponent(out _uiFeedback))
-        {
-            Debug.Log("Found UI Text Effects");
-            _uiFeedback.ImagePoolCreation(happyImage);
-        }
-
+        _skin = GetComponentInParent<RandomCharacterSkin>();
         _audioManager = AudioManager.Instance;
-        _playerInput = FindAnyObjectByType<PlayerInput>();
+        if (TryGetComponent(out _uiFeedback)) _uiFeedback.ImagePoolCreation(happyImage);
         
-        if (_isEvil)
-        {
-            EvilNpcSetup();
-        }
-        else
-        {
-            GoodNpcSetup();
-        }
+        if(triggerHud) triggerHud.SetActive(false);
     }
-
-    void EvilNpcSetup()
+    
+    public void ShowPassport(bool isEvil)
     {
-        while (passportSlot.sprite == null)
+        if(triggerHud) triggerHud.SetActive(true);
+        
+        if (_skin == null || passportPhotos.Count == 0) return;
+        int realIndex = _skin.randomIndex;
+
+        if (isEvil && passportPhotos.Count > 1)
         {
-            int evilIndex = Random.Range(0, passportPhotos.Count);
-            if (randomSkin.randomIndex != evilIndex)
-            {
-                passportSlot.sprite = passportPhotos[evilIndex];
-            }
+            int fakeIndex = realIndex;
+            while (fakeIndex == realIndex) fakeIndex = Random.Range(0, passportPhotos.Count);
+            passportSlot.sprite = passportPhotos[fakeIndex];
         }
-    }
-
-    void GoodNpcSetup()
-    {
-        passportSlot.sprite = passportPhotos[randomSkin.randomIndex];
-    }
-
-    void Update()
-    {
-        if (_isEvil)
+        else if (realIndex < passportPhotos.Count)
         {
-            if (_inRange && _playerInput.actions["Interact"].triggered && !_resultTakenIn)
-            {
-                Debug.Log("Accepted");
-                _resultTakenIn = true;
-                triggerHud.SetActive(false);
-                CriminalResult();
-            }
-            else if (_inRange && _playerInput.actions["Grab"].triggered && !_resultTakenIn)
-            {
-                Debug.Log("Deny");
-                _resultTakenIn = true;
-                triggerHud.SetActive(false);
-                ArrestResult();
-            }
-        }
-        else
-        {
-            if (_inRange && _playerInput.actions["Interact"].triggered && !_resultTakenIn)
-            {
-                Debug.Log("Accepted");
-                _resultTakenIn = true;
-                triggerHud.SetActive(false);
-                HappyResult();
-            }
-            else if (_inRange && _playerInput.actions["Grab"].triggered && !_resultTakenIn)
-            {
-                Debug.Log("Deny");
-                _resultTakenIn = true;
-                triggerHud.SetActive(false);
-                UnhappyResult();
-            }
+            passportSlot.sprite = passportPhotos[realIndex];
         }
     }
-
-    public void HappyResult()
+    private void HidePassport()
     {
-        _audioManager.PlaySfx(_audioManager.successSFX);
-        StartCoroutine(_uiFeedback.ImageFade(happyImage, effectDuration));
+        if(triggerHud) triggerHud.SetActive(false);
     }
-
-    public void UnhappyResult()
+    public void PlayFeedback(bool success, bool isEvil, bool accepted)
     {
-        _audioManager.PlaySfx(_audioManager.failureSFX);
-        StartCoroutine(_uiFeedback.ImageFade(unhappyImage, effectDuration));
-    }
+        HidePassport();
+        
+        _audioManager?.PlaySfx(success ? _audioManager.successSFX : _audioManager.failureSFX);
+        
+        Image targetImage = accepted 
+            ? (isEvil ? criminalImage : happyImage) 
+            : (isEvil ? arrestImage : unhappyImage);
 
-    public void CriminalResult()
-    {
-        _audioManager.PlaySfx(_audioManager.failureSFX);
-        StartCoroutine(_uiFeedback.ImageFade(criminalImage, effectDuration));
-    }
-
-    public void ArrestResult()
-    {
-        _audioManager.PlaySfx(_audioManager.successSFX);
-        StartCoroutine(_uiFeedback.ImageFade(arrestImage, effectDuration));
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player" && !_resultTakenIn)
-        {
-            Debug.Log("Turning on trigger image");
-            _inRange = true;
-            triggerHud.SetActive(true);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player" && !_resultTakenIn)
-        {
-            Debug.Log("Turning off trigger image");
-            _inRange = false;
-            triggerHud.SetActive(false);
-        }
+        StartCoroutine(_uiFeedback.ImageFade(targetImage, effectDuration));
     }
 }

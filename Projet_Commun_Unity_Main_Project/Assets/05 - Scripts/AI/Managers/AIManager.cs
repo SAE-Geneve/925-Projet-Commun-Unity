@@ -10,6 +10,10 @@ public class AIManager : MonoBehaviour
     [SerializeField] protected float spawnInterval = 5f;
     [SerializeField] private bool _spawnOnStart;
 
+    [Header("Spawn Limit")]
+    [SerializeField] protected bool useSpawnLimit = false;
+    [SerializeField] protected int maxSpawnAmount = 10;
+
     private Coroutine _spawnRoutine;
     
     protected readonly List<AIController> _spawnedAIs = new();
@@ -53,7 +57,10 @@ public class AIManager : MonoBehaviour
     {
         while (true)
         {
-            SpawnNPC();
+            if (!useSpawnLimit || _spawnedAIs.Count < maxSpawnAmount)
+            {
+                SpawnNPC();
+            }
             yield return new WaitForSeconds(spawnInterval);
         }
     }

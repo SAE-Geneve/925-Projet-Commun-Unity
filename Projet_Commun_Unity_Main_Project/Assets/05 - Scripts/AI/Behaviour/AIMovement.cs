@@ -185,7 +185,10 @@ public class AIMovement : CharacterMovement
     }
 
     public bool HasReachedDestination() => !_moving;
-
+    public Vector3 GetDestination()
+    {
+        return _destination;
+    }
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

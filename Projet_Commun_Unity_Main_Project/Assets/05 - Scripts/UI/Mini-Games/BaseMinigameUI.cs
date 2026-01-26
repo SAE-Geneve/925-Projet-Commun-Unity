@@ -27,7 +27,13 @@ public class BaseMinigameUI : MonoBehaviour
     [SerializeField] private Image scoreImageFade;
     [SerializeField] private TextMeshProUGUI scoreTextFade;
     
-    [Header("Secondary Score Effects")]
+    [Header("Secondary Score Image Effects")]
+    [SerializeField] private Image subScoreImage1;
+    [SerializeField] private Image subScoreImage2;
+    [SerializeField] private Image subScoreImage3;
+    [SerializeField] private Image subScoreImage4;
+    
+    [Header("Secondary Score Text Effects")]
     [SerializeField] private TextMeshProUGUI subScoreEffect1;
     [SerializeField] private TextMeshProUGUI subScoreEffect2;
     [SerializeField] public TextMeshProUGUI subScoreEffect3;
@@ -104,6 +110,10 @@ public class BaseMinigameUI : MonoBehaviour
 
         if (_uiScreenEffects != null && subScoreEffect1 != null)
             StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect1));
+        if (subScoreImage1 != null)
+            StartCoroutine(_uiScreenEffects.DoImageFade(subScoreImage1));
+        if (subScoreImage2 != null)
+            StartCoroutine(_uiScreenEffects.DoImageFade(subScoreImage2));
         
         if (totalSubScore1 != null)
             totalSubScore1.text = _subScore1.ToString();
@@ -115,6 +125,8 @@ public class BaseMinigameUI : MonoBehaviour
 
         if (_uiScreenEffects != null && subScoreEffect2 != null)
             StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect2));
+        if (subScoreImage2 != null)
+            StartCoroutine(_uiScreenEffects.DoImageFade(subScoreImage2));
         
         if (totalSubScore2 != null)
             totalSubScore2.text = _subScore2.ToString();
@@ -127,6 +139,12 @@ public class BaseMinigameUI : MonoBehaviour
         if (_uiScreenEffects != null && subScoreEffect3 != null)
             StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect3));
         
+        
+        if (subScoreImage3 != null)
+            StartCoroutine(_uiScreenEffects.DoImageFade(subScoreImage3));
+        if (subScoreImage4 != null)
+            StartCoroutine(_uiScreenEffects.DoImageFade(subScoreImage4));
+        
         if (totalSubScore3 != null)
             totalSubScore3.text = _subScore3.ToString();
     }
@@ -137,6 +155,8 @@ public class BaseMinigameUI : MonoBehaviour
 
         if (_uiScreenEffects != null && subScoreEffect4 != null)
             StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect4));
+        if (subScoreImage4 != null)
+            StartCoroutine(_uiScreenEffects.DoImageFade(subScoreImage4));
         
         if (totalSubScore4 != null)
             totalSubScore4.text = _subScore4.ToString();

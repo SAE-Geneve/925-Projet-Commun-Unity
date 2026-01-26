@@ -35,11 +35,11 @@ public partial class ProcessBoardingResultAction : Action
             if (evil)
             {
                 success = true;
-                ScoreSystem.IncreaseScore(2);
+                ScoreSystem.IncreaseScore(1);
             }
             else
             {
-                ScoreSystem.IncreaseScore(4);
+                ScoreSystem.IncreaseScore(3);
             }
         }
         

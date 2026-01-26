@@ -15,6 +15,18 @@ public class ScoreSystem : MonoBehaviour
     public static int Subscore3 = 0;
     public static int Subscore4 = 0;
 
+    void Start()
+    {
+        //Insures reset occurs when game restarts
+        TotalMoneyScore = 0;
+        TotalTimeCollected = 0;
+        TotalMinigameScore = 0;
+        Subscore1 = 0;
+        Subscore2 = 0;
+        Subscore3 = 0;
+        Subscore4 = 0;
+    }
+    
     public static void MiniGameEnd()
     {
         //Converts score gained to general score
@@ -28,7 +40,7 @@ public class ScoreSystem : MonoBehaviour
         Subscore4 = 0;
         TotalMinigameScore = 0;
     }
-
+    
     public static void IncreaseScore(int category)
     {
         switch (category)
@@ -40,7 +52,6 @@ public class ScoreSystem : MonoBehaviour
             case 2:
                 Subscore2++;
                 TotalMinigameScore += 150;
-                Debug.Log(TotalMinigameScore);
                 break;
             case 3:
                 Subscore3++;

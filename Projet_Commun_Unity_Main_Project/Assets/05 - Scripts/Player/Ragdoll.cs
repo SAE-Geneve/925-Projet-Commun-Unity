@@ -13,11 +13,13 @@ public class Ragdoll : MonoBehaviour
     [Header("Parameters")]
     [SerializeField] protected float ragdollTime = 3f;
     [SerializeField] private float _ragdollVelocityThreshold = 3f;
+    [SerializeField] private float _ragdollImmunityDuration = 2f;
     
     public event Action OnRagdoll;
     public event Action<Ragdoll> OnRagdollSelf;
     
     public bool IsRagdoll { get; private set; }
+    public bool IsImmune { get; private set; }
 
     private Animator _animator;
     private Collider _mainCollider;
@@ -28,6 +30,7 @@ public class Ragdoll : MonoBehaviour
     private Rigidbody[] _ragdollRigidbodies;
     
     private Coroutine _ragdollCoroutine;
+    private Coroutine _immunityCoroutine;
 
     protected virtual void Start()
     {
@@ -50,6 +53,8 @@ public class Ragdoll : MonoBehaviour
 
     public virtual void RagdollOn()
     {
+        if (IsImmune) return;
+
         foreach (var col in _ragdollColliders)
             col.enabled = true;
 
@@ -93,10 +98,28 @@ public class Ragdoll : MonoBehaviour
         if (_playerInput) _playerInput.currentActionMap.Enable();
 
         IsRagdoll = false;
+        
+        StartImmunity();
+    }
+
+    private void StartImmunity()
+    {
+        if (_immunityCoroutine != null)
+            StopCoroutine(_immunityCoroutine);
+        _immunityCoroutine = StartCoroutine(ImmunityTimer());
+    }
+
+    private IEnumerator ImmunityTimer()
+    {
+        IsImmune = true;
+        yield return new WaitForSeconds(_ragdollImmunityDuration);
+        IsImmune = false;
     }
 
     private void OnCollisionEnter(Collision other)
     {
+        if (IsImmune) return;
+
         if (other.gameObject.TryGetComponent(out Rigidbody rb) && rb.linearVelocity.magnitude >= _ragdollVelocityThreshold)
             RagdollOn();
     }

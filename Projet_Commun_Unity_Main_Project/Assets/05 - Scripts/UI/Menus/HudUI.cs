@@ -8,7 +8,7 @@ public class HudUI : MonoBehaviour
 
     private GameManager _gameManager;
 
-    private void Start() => _gameManager = GameManager.Instance;
+    // private void Start() => _gameManager = GameManager.Instance;
 
     public void UpdateHUDUI()
     {
@@ -16,12 +16,12 @@ public class HudUI : MonoBehaviour
         // totalTimeScore.text = ScoreSystem.TotalTimeCollected+"s";
     }
 
-    private void Update()
-    {
-        int minutes = Mathf.FloorToInt(_gameManager.Timer / 60f);
-        int seconds = Mathf.FloorToInt(_gameManager.Timer % 60f);
-
-        totalTimeScore.SetText($"{minutes:00}:{seconds:00}");
-    }
+    // private void Update()
+    // {
+    //     int minutes = Mathf.FloorToInt(_gameManager.Timer / 60f);
+    //     int seconds = Mathf.FloorToInt(_gameManager.Timer % 60f);
+    //
+    //     totalTimeScore.SetText($"{minutes:00}:{seconds:00}");
+    // }
 
 }

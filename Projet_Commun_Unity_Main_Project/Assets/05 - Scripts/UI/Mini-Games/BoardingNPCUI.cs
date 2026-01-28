@@ -9,6 +9,12 @@ public class BoardingNPCUI : MonoBehaviour
     [SerializeField] public Image passportSlot;
     [SerializeField] public List<Sprite> passportPhotos;
 
+    [Header("Color")]
+    [SerializeField] Color activeAllowColor;
+    [SerializeField] Color inactiveAllowColor;
+    [SerializeField] Color activeArrestColor;
+    [SerializeField] Color inactiveArrestColor;
+    
     [Header("Feedbacks")]
     [SerializeField] Image happyImage;
     [SerializeField] Image unhappyImage;

@@ -37,7 +37,7 @@ public class AIMovement : CharacterMovement
     protected override void Start()
     {
         base.Start();
-        _path = new NavMeshPath();
+        if (_path == null) _path = new NavMeshPath();
         Rb.freezeRotation = true;
     }
 
@@ -53,7 +53,7 @@ public class AIMovement : CharacterMovement
         
         if (_path == null || _path.corners.Length == 0 || _currentCorner >= _path.corners.Length)
         {
-            if (_currentCorner >= _path.corners.Length && _path.status == NavMeshPathStatus.PathComplete)
+            if (_path != null && _currentCorner >= _path.corners.Length && _path.status == NavMeshPathStatus.PathComplete)
             {
                 Stop();
             }
@@ -75,6 +75,7 @@ public class AIMovement : CharacterMovement
                 return;
             }
         }
+
         if (dirToCorner.magnitude <= 0.2f || (_currentCorner == _path.corners.Length - 1 && dirToCorner.magnitude <= stopDistance))
         {
             _currentCorner++;
@@ -98,6 +99,8 @@ public class AIMovement : CharacterMovement
     
     private void ForceRecalculatePath()
     {
+        if (_path == null) _path = new NavMeshPath();
+
         NavMesh.CalculatePath(transform.position, _destination, NavMesh.AllAreas, _path);
         if (_path.corners.Length > 1)
         {
@@ -159,6 +162,8 @@ public class AIMovement : CharacterMovement
 
     public void SetDestination(Vector3 target)
     {
+        if (_path == null) _path = new NavMeshPath();
+
         _destination = target;
         _nextRepathTime = Time.time + repathInterval;
 
@@ -185,10 +190,12 @@ public class AIMovement : CharacterMovement
     }
 
     public bool HasReachedDestination() => !_moving;
+    
     public Vector3 GetDestination()
     {
         return _destination;
     }
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

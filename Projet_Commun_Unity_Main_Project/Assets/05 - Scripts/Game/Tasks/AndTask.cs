@@ -8,24 +8,36 @@ public class AndTask : GameTask
     
     protected override void Start()
     {
+        base.Start();
+        Subscribe();
+    }
+    
+    private void Subscribe()
+    {
         foreach (var task in tasks)
-        {
             task.OnSucceedAction += CheckTasks;
-        }
+    }
+
+    private void Unsubscribe()
+    {
+        foreach (var task in tasks)
+            task.OnSucceedAction -= CheckTasks;
     }
 
     private void CheckTasks()
     {
-        if (tasks.Any(task => !task.Done))
-        {
-            return;
-        }
+        if (tasks.Any(task => !task.Done)) return;
 
         Succeed();
+        Unsubscribe();
+    }
 
+    public override void ResetTask()
+    {
+        base.ResetTask();
         foreach (var task in tasks)
-        {
-            task.OnSucceedAction -= CheckTasks;
-        }
+            task.ResetTask();
+        
+        Subscribe();
     }
 }

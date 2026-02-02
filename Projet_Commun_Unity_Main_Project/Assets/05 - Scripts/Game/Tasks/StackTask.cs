@@ -1,33 +1,52 @@
+using TMPro;
 using UnityEngine;
 
-public class StackTask : GameTask
+public class StackTask : TriggerTask
 {
-    [Header("Stack Parameters")]
-    [Tooltip("The prop type that needs to touch the task collider to count")]
-    [SerializeField] protected PropType _propType = PropType.None;
-    [Tooltip("The number of props that need to be there to succeed")]
-    [SerializeField] protected int _propLimit = 20;
-    private int _propCount = 0;
+    [Header("Container")]
+    [SerializeField] [Min(2)] private int stackGoal = 5;
+    [SerializeField] private TextMeshProUGUI stackGoalTmp;
 
-    protected virtual void OnTriggerEnter(Collider other)
+    private int _currentStack;
+    
+    protected override void OnTriggerEnter(Collider other)
     {
-        if(Done || !other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
+        if(!other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
         
-        _propCount++;
-        Debug.Log($"Trigger Enter Prop {_propCount}");
+        _currentStack++;
+        Check();
+    }
 
-        if (_propCount >= _propLimit)
+    private void OnTriggerExit(Collider other)
+    {
+        if(!other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
+        
+        _currentStack--;
+        Check();
+    }
+
+    private void Check()
+    {
+        if (_currentStack >= stackGoal && !Done)
         {
             Succeed();
+            stackGoalTmp.color = Color.green;
         }
+        else if (_currentStack < stackGoal && Done)
+        {
+            Done = false;
+            stackGoalTmp.color = Color.white;
+        }
+        
+        stackGoalTmp.SetText($"{_currentStack}/{stackGoal}");
     }
-    
-    protected virtual void OnTriggerExit(Collider other)
+
+    public override void ResetTask()
     {
-        if(Done || !other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
-        _propCount--;
-        Debug.Log($"Trigger Exit Prop {_propCount}");
+        base.ResetTask();
+        _currentStack = 0;
+        
+        stackGoalTmp.color = Color.white;
+        stackGoalTmp.SetText($"{_currentStack}/{stackGoal}");
     }
-    
-    public void SetPropType(PropType propType) => _propType = propType;
 }

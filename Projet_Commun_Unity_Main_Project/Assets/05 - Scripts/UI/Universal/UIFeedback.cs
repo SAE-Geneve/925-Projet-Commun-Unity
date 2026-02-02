@@ -24,7 +24,6 @@ public class UIFeedback : MonoBehaviour
             defaultCapacity: 10,
             maxSize: 50
         );
-        Debug.Log("Image pool has been created");
     }
 
     private Image CreateItem()

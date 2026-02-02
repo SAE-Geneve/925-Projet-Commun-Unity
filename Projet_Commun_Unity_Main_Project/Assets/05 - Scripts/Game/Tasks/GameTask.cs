@@ -23,7 +23,7 @@ public abstract class GameTask : MonoBehaviour
     public event Action OnSucceedAction;
     public event Action OnFailedAction;
 
-    public bool Done { get; private set; }
+    public bool Done { get; protected set; }
     
     private int _multipleTaskCounter;
 
@@ -61,7 +61,7 @@ public abstract class GameTask : MonoBehaviour
         Debug.Log($"Task {_taskName} failed!");
     }
 
-    public void ResetTask()
+    public virtual void ResetTask()
     {
         Done = false;
         _multipleTaskCounter = 0;

@@ -208,7 +208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6091785833181401715
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6923,7 +6923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e67495afef247bd44bd7190fbf459846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  halo: {fileID: 2292505217562256839}
+  skinnedMeshRenderer: {fileID: 3173616928092559841}
 --- !u!114 &4434926863473674484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6940,6 +6940,7 @@ MonoBehaviour:
   hipsTransform: {fileID: 417329128717184314}
   ragdollTime: 1
   _ragdollVelocityThreshold: 3
+  _ragdollImmunityDuration: 2
 --- !u!114 &7948060877399390895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7231,7 +7232,7 @@ SkinnedMeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -1626832881785325698, guid: 009f4908644de3540875479e3e7064b0, type: 3}

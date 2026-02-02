@@ -184,10 +184,10 @@ public class PlayerManager : MonoBehaviour
         Debug.Log(skinnedMeshRenderer);
         switch (_players.Count)
         {
-            case 1 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline1"); break;
-            case 2 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline2"); break;
-            case 3 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline3"); break;
-            case 4 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline4"); break;
+            case 0 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline1"); break;
+            case 1 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline2"); break;
+            case 2 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline3"); break;
+            case 3 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline4"); break;
         }
     }
 }

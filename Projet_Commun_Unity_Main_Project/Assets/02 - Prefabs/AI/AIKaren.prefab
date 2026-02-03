@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 1508740695777885003}
   m_Layer: 7
   m_Name: AIKaren
-  m_TagString: Untagged
+  m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -756,6 +756,7 @@ MonoBehaviour:
   speed: 3.5
   stopDistance: 1
   accelerationPower: 50
+  repathInterval: 0.5
   avoidanceRadius: 1.5
   avoidanceWeight: 2
   avoidanceLayer:
@@ -781,6 +782,7 @@ MonoBehaviour:
   hipsTransform: {fileID: 8501180489117587318}
   ragdollTime: 3
   _ragdollVelocityThreshold: 3
+  _ragdollImmunityDuration: 2
   behaviorGraphAgent: {fileID: 8167762280191161200}
   bHips: {fileID: 1199218289345004864}
   isRagdollable: 1

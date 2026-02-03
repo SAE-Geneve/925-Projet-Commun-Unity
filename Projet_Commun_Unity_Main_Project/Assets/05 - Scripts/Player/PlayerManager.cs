@@ -11,12 +11,6 @@ public class PlayerManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform trackingTarget;
-    
-    [Header("Parameters")]
-    [SerializeField] private Color _color1 = Color.red;
-    [SerializeField] private Color _color2 = Color.blue;
-    [SerializeField] private Color _color3 = Color.green;
-    [SerializeField] private Color _color4 = Color.yellow;
     public event Action<PlayerController> OnPlayerConnected;
     public event Action<PlayerController> OnReconnectTimerOut;
     public event Action OnPlayerAdded;
@@ -63,7 +57,7 @@ public class PlayerManager : MonoBehaviour
         {
             player.InputManager.active = true;
             // player.GetComponentInChildren<ParticleSystem>().Play();
-            player.Display.ShowHalo(true);
+            // player.Display.ShowHalo(true);
         }
     }
 
@@ -82,7 +76,7 @@ public class PlayerManager : MonoBehaviour
         {
             player.InputManager.active = false;
             // player.GetComponentInChildren<ParticleSystem>().Stop();
-            player.Display.ShowHalo(false);
+            // player.Display.ShowHalo(false);
         }
     }
 
@@ -96,13 +90,13 @@ public class PlayerManager : MonoBehaviour
 
         CharacterDisplay display = player.GetComponent<CharacterDisplay>();
         
-        SetHaloColors(display.Halo);
+        SetOutline(display.SkinnedMeshRenderer);
 
         if (!_arePlayersActive)
         {
             player.GetComponent<InputManager>().active = false;
             // player.GetComponentInChildren<ParticleSystem>().Stop();
-            display.ShowHalo(false);
+            // display.ShowHalo(false);
         }
         
         OnPlayerAdded?.Invoke();
@@ -167,58 +161,7 @@ public class PlayerManager : MonoBehaviour
         
         OnPlayerRemoved?.Invoke();
     }
-
-    private void SetPlayerColors(ParticleSystem particleSystem)
-    {
-        var colt = particleSystem.colorOverLifetime;
-        Gradient grad = new Gradient
-        {
-            mode = GradientMode.Fixed
-        };
-
-        var colors = new GradientColorKey[2];
-        
-        switch (_players.Count)
-        {
-            case 1:
-                colors[0] = new GradientColorKey(new Color(255,0,0,1), 0.5f);
-                colors[1] = new GradientColorKey(new Color(128,0,0,1), 1.0f);
-                break;            
-            case 2:
-                colors[0] = new GradientColorKey(new Color(0,255,0,1), 0.5f);
-                colors[1] = new GradientColorKey(new Color(0,128,0,1), 1.0f);
-                break;            
-            case 3:
-                colors[0] = new GradientColorKey(new Color(0,0,255,1), 0.5f);
-                colors[1] = new GradientColorKey(new Color(0,0,128,1), 1.0f);
-                break;            
-            case 4:
-                colors[0] = new GradientColorKey(new Color(255,255,0,1), 0.5f);
-                colors[1] = new GradientColorKey(new Color(128,128,0,1), 1.0f);
-                break;            
-            default:
-                colors[0] = new GradientColorKey(new Color(0,0,0,1), 0.5f);
-                colors[1] = new GradientColorKey(new Color(128,128,128,1), 1.0f);
-                break;
-        }
-        
-        var alphas = new GradientAlphaKey[1];
-        alphas[0] = new GradientAlphaKey(1, 0);
-        grad.SetKeys(colors, alphas);
-        
-        colt.color = grad;
-    }
-
-    private void SetHaloColors(Image halo)
-    {
-        switch (_players.Count)
-        {
-            case 1 : halo.color = _color1; break;
-            case 2 : halo.color = _color2; break;
-            case 3 : halo.color = _color3; break;
-            case 4 : halo.color = _color4; break;
-        }
-    }
+    
     
     private void OnEnable()
     {
@@ -234,5 +177,17 @@ public class PlayerManager : MonoBehaviour
     {
         foreach (var player in _players)
             player.Movement.SetupCamera();
+    }
+
+    private void SetOutline(SkinnedMeshRenderer skinnedMeshRenderer)
+    {
+        Debug.Log(skinnedMeshRenderer);
+        switch (_players.Count)
+        {
+            case 0 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline1"); break;
+            case 1 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline2"); break;
+            case 2 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline3"); break;
+            case 3 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline4"); break;
+        }
     }
 }

@@ -91,7 +91,7 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
         Destroy(gameObject);
     }
 
-    private void OnDestroy() => OnDestroyed?.Invoke(this);
+    protected virtual void OnDestroy() => OnDestroyed?.Invoke(this);
     
     public void SetType(PropType type) => _type = type;
     public void Respawn()

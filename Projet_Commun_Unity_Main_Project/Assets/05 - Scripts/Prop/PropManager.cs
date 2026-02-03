@@ -30,6 +30,8 @@ public class PropManager : MonoBehaviour
         {
             var prop = _props[i];
             
+            if (prop == null) continue;
+            
             prop.OnDestroyed -= RemoveProp;
             
             prop.Destroy();

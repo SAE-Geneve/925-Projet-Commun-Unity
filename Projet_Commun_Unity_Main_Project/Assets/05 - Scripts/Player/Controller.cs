@@ -41,9 +41,6 @@ public class Controller : MonoBehaviour, IGrabbable
     private float _throwPower;
     
     private bool _isCharging;
-    
-    //private Transform _originalParent;
-
     protected virtual void Start()
     {
         Movement = GetComponent<CharacterMovement>();
@@ -76,6 +73,12 @@ public class Controller : MonoBehaviour, IGrabbable
 
     public void Drop()
     {
+        if (_grabbedProp is MonoBehaviour prop && prop == null)
+        {
+            _grabbedProp = null;
+            return;
+        }
+
         if (_grabbedProp != null) _grabbedProp.Dropped(ThrowDirection(), this);
     }
 
@@ -161,8 +164,6 @@ public class Controller : MonoBehaviour, IGrabbable
             Drop(); 
         }
         
-        //_originalParent = transform.parent;
-        
         transform.SetParent(controller.CatchPoint);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
@@ -191,8 +192,6 @@ public class Controller : MonoBehaviour, IGrabbable
         Debug.Log("Dropped controller");
     }
 
-    //public void ResetParent() => transform.SetParent(_originalParent);
-
     public void ResetParent()
     {
         if (PlayerManager.Instance != null)
@@ -214,7 +213,6 @@ public class Controller : MonoBehaviour, IGrabbable
     private void OnDestroy()
     {
         Drop();
-        Destroy(gameObject);
     }
 
     public void SetGrabbedProp(Prop prop) => _grabbedProp = prop;

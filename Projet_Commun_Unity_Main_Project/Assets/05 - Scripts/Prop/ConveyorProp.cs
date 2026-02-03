@@ -52,8 +52,10 @@ public class ConveyorProp : Prop
 
     #endregion
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+        
         foreach (ConveyorBelt conveyorBelt in _conveyorBelts)
             conveyorBelt.Remove(this);
     }

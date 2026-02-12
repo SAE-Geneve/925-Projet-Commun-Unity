@@ -34,6 +34,7 @@ public class PernamentTimerUI : MonoBehaviour
         int minutes = Mathf.FloorToInt(_gameManager.Timer / 60f);
         int seconds = Mathf.FloorToInt(_gameManager.Timer % 60f);
 
+        Debug.Log(minutes + " and " + seconds);
         timeText.SetText($"{minutes:00}:{seconds:00}");
 
         float t = 1f - Mathf.Clamp01(_gameManager.Timer / _totalTime);
@@ -56,7 +57,6 @@ public class PernamentTimerUI : MonoBehaviour
     {
         while (Vector3.Distance(timerObject.transform.position, newPosition.position) > 0.1f)
         {
-            Debug.Log(Vector3.Distance(timerObject.transform.position, newPosition.position));
             timerObject.gameObject.transform.position = Vector3.MoveTowards(timerObject.gameObject.transform.position,
                 newPosition.position, Time.deltaTime*100);
             yield return null;

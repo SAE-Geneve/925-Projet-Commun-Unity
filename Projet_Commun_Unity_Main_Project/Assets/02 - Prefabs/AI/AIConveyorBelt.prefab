@@ -822,8 +822,8 @@ GameObject:
   - component: {fileID: 1347307334760455481}
   - component: {fileID: 4545531599037759530}
   - component: {fileID: 8432562754913969577}
-  - component: {fileID: 8691149671696302461}
   - component: {fileID: 7038996394409267996}
+  - component: {fileID: 7989511660306410259}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -852,7 +852,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 3.1499999}
-  m_SizeDelta: {x: 40, y: 50}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1660543913632381565
 Canvas:
@@ -936,18 +936,6 @@ MonoBehaviour:
   timerBackdropImage: {fileID: 4549010523900704242}
   startColor: {r: 0.5137255, g: 0.6784314, b: 0.6784314, a: 1}
   endColor: {r: 0.96862745, g: 0.39215687, b: 0.39215687, a: 1}
---- !u!114 &8691149671696302461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3478695031655415012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1473a2ec60e4c7841a2b1e1a4d36b217, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7038996394409267996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -966,6 +954,18 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7989511660306410259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478695031655415012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a2a0dfffc4307242a49fedf58cfd892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3739884892332049693
 GameObject:
   m_ObjectHideFlags: 0
@@ -2149,7 +2149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e67495afef247bd44bd7190fbf459846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  halo: {fileID: 0}
+  skinnedMeshRenderer: {fileID: 0}
 --- !u!114 &828329704779097444
 MonoBehaviour:
   m_ObjectHideFlags: 0

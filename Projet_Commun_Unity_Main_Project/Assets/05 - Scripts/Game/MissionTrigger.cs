@@ -95,6 +95,7 @@ public class MissionTrigger : MonoBehaviour
     private void Decrement()
     {
         _playerNumber--;
+        if(_playerNumber < 0) _playerNumber = 0;
         UpdateTmpNumber();
     }
 

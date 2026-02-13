@@ -75,11 +75,9 @@ public class Controller : MonoBehaviour, IGrabbable
     {
         if (_grabbedObject != null)
         {
+            _grabbedObject.Dropped(ThrowDirection(), this);
             _grabbedObject = null;
-            return;
         }
-
-        if (_grabbedObject != null) _grabbedObject.Dropped(ThrowDirection(), this);
     }
 
     private void Update()

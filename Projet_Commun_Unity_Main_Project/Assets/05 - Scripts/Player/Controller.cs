@@ -32,10 +32,9 @@ public class Controller : MonoBehaviour, IGrabbable
     public bool IsBeingHeld { get; private set; }
     
     private Ragdoll _ragdoll;
-    
     private Vector3 throwDirection;
     
-    private IGrabbable _grabbedProp;
+    private IGrabbable _grabbedObject;
     
     private float _grabStartTime;
     private float _throwPower;
@@ -60,7 +59,7 @@ public class Controller : MonoBehaviour, IGrabbable
 
     public void CatchStart()
     {
-        if(_grabbedProp == null) TryGrab();
+        if(_grabbedObject as UnityEngine.Object == null) TryGrab();
         else
         {
             _isCharging = true;
@@ -68,18 +67,19 @@ public class Controller : MonoBehaviour, IGrabbable
             _throwPower = 0f;
             _throwBar.gameObject.SetActive(true);
             _throwBar.value = 0f;
+            Debug.Log(_grabbedObject);
         }
     }
 
     public void Drop()
     {
-        if (_grabbedProp is MonoBehaviour prop && prop == null)
+        if (_grabbedObject != null)
         {
-            _grabbedProp = null;
+            _grabbedObject = null;
             return;
         }
 
-        if (_grabbedProp != null) _grabbedProp.Dropped(ThrowDirection(), this);
+        if (_grabbedObject != null) _grabbedObject.Dropped(ThrowDirection(), this);
     }
 
     private void Update()
@@ -123,9 +123,7 @@ public class Controller : MonoBehaviour, IGrabbable
         }
 
         if (nearestComponent != null)
-        {
             onFound(nearestComponent);
-        }
     }
     
     
@@ -136,13 +134,13 @@ public class Controller : MonoBehaviour, IGrabbable
         TryAction<IGrabbable>(grabbable =>
         {
             grabbable.Grabbed(this);
-            _grabbedProp = grabbable;
+            _grabbedObject = grabbable;
         });
     }
 
     public void Reset()
     {
-        _grabbedProp = null;
+        _grabbedObject = null;
         _throwBar.gameObject.SetActive(false);
         _isCharging = false;
     }
@@ -159,7 +157,7 @@ public class Controller : MonoBehaviour, IGrabbable
     {
         Debug.Log("Grabbed");
         
-        if (_grabbedProp != null)
+        if (_grabbedObject != null)
         {
             Drop(); 
         }
@@ -192,17 +190,7 @@ public class Controller : MonoBehaviour, IGrabbable
         Debug.Log("Dropped controller");
     }
 
-    public void ResetParent()
-    {
-        if (PlayerManager.Instance != null)
-        {
-            transform.SetParent(PlayerManager.Instance.transform);
-        }
-        else
-        {
-            transform.SetParent(null);
-        }
-    }
+    public void ResetParent() => transform.SetParent(PlayerManager.Instance ? PlayerManager.Instance.transform : null);
     private IEnumerator DropRoutine()
     {
         yield return new WaitForSeconds(0.1f);
@@ -215,5 +203,5 @@ public class Controller : MonoBehaviour, IGrabbable
         Drop();
     }
 
-    public void SetGrabbedProp(Prop prop) => _grabbedProp = prop;
+    public void SetGrabbedProp(Prop prop) => _grabbedObject = prop;
 }

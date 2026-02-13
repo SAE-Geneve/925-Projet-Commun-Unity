@@ -18,6 +18,7 @@ public class AIController : Controller
 
     public void DestroyAI()
     {
+        if(IsBeingHeld) Dropped();
         OnDestroyed?.Invoke(this);
         Destroy(gameObject);
     }

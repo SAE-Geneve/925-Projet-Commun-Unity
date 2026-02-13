@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : Controller
 {
+    [Header("References")]
+    [SerializeField] private Transform cameraTarget;
+    
     [Header("Events")] 
     public UnityEvent OnEnterKart;
     public UnityEvent OnExitKart;
@@ -13,6 +16,8 @@ public class PlayerController : Controller
     public KartController KartController { get; set; }
     public KartMovement KartMovement { get; set; }
     public KartPhysic KartPhysic { get; set; }
+    
+    public Transform CameraTarget => cameraTarget;
 
     protected override void Start()
     {

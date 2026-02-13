@@ -41,13 +41,16 @@ public class CameraManager : MonoBehaviour
 
     void AddPlayerToTargetGroup(PlayerController player)
     {
-        CinemachineTargetGroup.Target target = new CinemachineTargetGroup.Target();
-        target.Object = player.transform;
+        CinemachineTargetGroup.Target target = new CinemachineTargetGroup.Target
+        {
+            Object = player.CameraTarget
+        };
+        
         _cineMachineTargetGroup.Targets.Add(target);
         
         if (soloCam.Follow == null)
         {
-            soloCam.Follow = player.transform;
+            soloCam.Follow = player.CameraTarget;
         }
 
         UpdateCamPriority();
@@ -57,14 +60,14 @@ public class CameraManager : MonoBehaviour
     {
         foreach (var target in _cineMachineTargetGroup.Targets)
         {
-            if (target.Object == player.transform)
+            if (target.Object == player.CameraTarget)
             {
                 _cineMachineTargetGroup.Targets.Remove(target);
                 break;
             }
         }
         
-        if (soloCam.Follow == player.transform)
+        if (soloCam.Follow == player.CameraTarget)
         {
             soloCam.Follow = _cineMachineTargetGroup.Targets[0].Object;
         }

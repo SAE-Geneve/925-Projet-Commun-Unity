@@ -181,13 +181,16 @@ public class PlayerManager : MonoBehaviour
 
     private void SetOutline(SkinnedMeshRenderer skinnedMeshRenderer)
     {
-        Debug.Log(skinnedMeshRenderer);
-        switch (_players.Count)
+        uint mask = 0;
+
+        switch (_players.Count - 1)
         {
-            case 0 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline1"); break;
-            case 1 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline2"); break;
-            case 2 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline3"); break;
-            case 3 : skinnedMeshRenderer.renderingLayerMask &= ~RenderingLayerMask.GetMask("Outline4"); break;
+            case 0: mask = RenderingLayerMask.GetMask("Outline1"); break;
+            case 1: mask = RenderingLayerMask.GetMask("Outline2"); break;
+            case 2: mask = RenderingLayerMask.GetMask("Outline3"); break;
+            case 3: mask = RenderingLayerMask.GetMask("Outline4"); break;
         }
+
+        skinnedMeshRenderer.renderingLayerMask = mask;
     }
 }

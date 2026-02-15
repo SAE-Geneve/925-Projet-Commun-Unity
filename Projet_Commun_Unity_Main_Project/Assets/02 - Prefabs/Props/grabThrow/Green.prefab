@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6102862168716977392}
   - component: {fileID: 4520767985199273727}
   - component: {fileID: 1471674605239466520}
+  - component: {fileID: 2411683478013981138}
   m_Layer: 0
   m_Name: Green
   m_TagString: Prop
@@ -73,6 +74,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _minForceToThrow: 3
   _conveyorLinearDamping: 10
   _conveyorAngularDamping: 10
 --- !u!33 &1237961105949444621
@@ -176,3 +178,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &2411683478013981138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838621322768625333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94fbe1c9bc3ea9408a88ea4ee7505c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMaskName: PropOutline

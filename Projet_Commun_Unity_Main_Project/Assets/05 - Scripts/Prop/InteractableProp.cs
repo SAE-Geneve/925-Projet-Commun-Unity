@@ -9,6 +9,9 @@ public class InteractableProp : Prop, IInteractable
     }
 
     public virtual void InteractEnd() {}
+    public void AreaEnter(){}
+
+    public void AreaExit(){}
 
     public override void Grabbed(Controller controller)
     {

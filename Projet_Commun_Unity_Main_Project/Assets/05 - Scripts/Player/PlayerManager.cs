@@ -193,7 +193,7 @@ public class PlayerManager : MonoBehaviour
             case 3: mask = RenderingLayerMask.GetMask("Outline4"); break;
         }
 
-        skinnedMeshRenderer.renderingLayerMask = mask;
+        skinnedMeshRenderer.renderingLayerMask |= mask;
     }
     
     private void SetPlayerText(TextMeshProUGUI playerNumberText)

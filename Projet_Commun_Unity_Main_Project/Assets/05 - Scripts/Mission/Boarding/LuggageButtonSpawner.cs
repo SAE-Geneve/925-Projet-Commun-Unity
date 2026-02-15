@@ -12,10 +12,15 @@ public class LuggageButtonSpawner : MonoBehaviour, IInteractable
     [SerializeField] private float buttonEffectTime = 0.2f;
     
     private Coroutine _colorCoroutine;
-    
     private Material _buttonUnpressedColor;
+    private ObjectOutline _outline;
 
-    private void Start() => _buttonUnpressedColor = buttonRenderer.material;
+    private void Start()
+    {
+        _outline = GetComponent<ObjectOutline>();
+        
+        _buttonUnpressedColor = buttonRenderer.material;
+    }
 
     public void Interact(PlayerController playerController)
     {
@@ -28,6 +33,10 @@ public class LuggageButtonSpawner : MonoBehaviour, IInteractable
     {
 
     }
+
+    public void AreaEnter() => _outline.EnableOutline();
+
+    public void AreaExit() => _outline.DisableOutline();
 
     private IEnumerator ButtonColorRoutine()
     {

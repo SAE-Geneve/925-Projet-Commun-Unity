@@ -23,7 +23,7 @@ MonoBehaviour:
   renderQueue: 0
   occlusion: 0
   maskingStrategy: 0
-  color: {r: 1, g: 0.65761673, b: 0, a: 1}
+  color: {r: 1, g: 0, b: 0.7197156, a: 1}
   enableOcclusion: 0
   occludedColor: {r: 1, g: 0, b: 0, a: 1}
   blendMode: 0
@@ -33,6 +33,42 @@ MonoBehaviour:
   minWidth: 0
   scaleWithResolution: 1
   referenceResolution: 2
+  customResolution: 0
+  materialType: 0
+  customMaterial: {fileID: 0}
+--- !u!114 &-5690515616884666738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2cb9e9790a941d3b51ae2615e6e1bd, type: 3}
+  m_Name: Outline
+  m_EditorClassIdentifier: 
+  material: {fileID: 0}
+  isActive: 1
+  RenderingLayer:
+    serializedVersion: 0
+    m_Bits: 4096
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  renderQueue: 0
+  occlusion: 0
+  maskingStrategy: 0
+  color: {r: 1, g: 0.9824052, b: 0, a: 1}
+  enableOcclusion: 0
+  occludedColor: {r: 1, g: 0, b: 0, a: 1}
+  blendMode: 0
+  extrusionMethod: 1
+  scaling: 0
+  width: 5
+  minWidth: 0
+  scaleWithResolution: 0
+  referenceResolution: 0
   customResolution: 0
   materialType: 0
   customMaterial: {fileID: 0}
@@ -91,6 +127,44 @@ MonoBehaviour:
   - {fileID: -3885803729743261995}
   - {fileID: 6736251453036965101}
   - {fileID: -6799749255943661599}
+  - {fileID: -5690515616884666738}
+  - {fileID: 2108615949338742678}
+--- !u!114 &2108615949338742678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2cb9e9790a941d3b51ae2615e6e1bd, type: 3}
+  m_Name: Outline
+  m_EditorClassIdentifier: 
+  material: {fileID: 0}
+  isActive: 1
+  RenderingLayer:
+    serializedVersion: 0
+    m_Bits: 8192
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  renderQueue: 0
+  occlusion: 0
+  maskingStrategy: 0
+  color: {r: 1, g: 1, b: 1, a: 1}
+  enableOcclusion: 0
+  occludedColor: {r: 1, g: 0, b: 0, a: 1}
+  blendMode: 0
+  extrusionMethod: 1
+  scaling: 0
+  width: 5
+  minWidth: 0
+  scaleWithResolution: 0
+  referenceResolution: 0
+  customResolution: 0
+  materialType: 0
+  customMaterial: {fileID: 0}
 --- !u!114 &3959618526758138693
 MonoBehaviour:
   m_ObjectHideFlags: 0

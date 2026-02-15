@@ -8,10 +8,7 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
     [SerializeField] private PropType _type = PropType.None;
     [SerializeField] private AnimationCurve _speedCurve;
     [SerializeField] private float _minForceToThrow = 3.0f; 
-    
-
     public event Action<Prop> OnDestroyed;
-    
     public PropType Type => _type;
     public Rigidbody Rb => _rb;
     public bool IsGrabbed { get; protected set; }
@@ -21,6 +18,8 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
     
     protected Controller Controller;
     protected Transform _originalParent;
+
+    private ObjectOutline _outline;
     
     // Respawn parameters
     Vector3 _respawnPosition;
@@ -31,6 +30,7 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
     {
         _collider = GetComponent<Collider>();
         _rb = GetComponent<Rigidbody>();
+        _outline = GetComponent<ObjectOutline>();
         
         _respawnPosition = transform.position;
         _respawnRotation = transform.rotation;
@@ -100,6 +100,18 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
         transform.position = _respawnPosition;
         transform.rotation = _respawnRotation;
         transform.localScale = _respawnScale;
+    }
+
+    public void AreaEnter()
+    {
+        if(_outline)
+            _outline.EnableOutline();
+    }
+
+    public void AreaExit()
+    {
+        if(_outline)
+            _outline.DisableOutline();
     }
 }
 

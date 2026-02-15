@@ -5,14 +5,20 @@ public class KartController : MonoBehaviour, IInteractable
     [Header("Settings")] 
     [SerializeField] private Transform seatPosition;
     
+    public int InteractNumber { get; set; }
+    
     private KartMovement _kartMovement;
     private KartPhysic _kartPhysic;
+    
+    private ObjectOutline _outline;
 
     private void Awake()
     {
         _kartMovement = GetComponent<KartMovement>();
         _kartPhysic = GetComponent<KartPhysic>();
-    } 
+        
+        _outline = GetComponent<ObjectOutline>();
+    }
 
     public void Interact(PlayerController playerController)
     {
@@ -43,6 +49,9 @@ public class KartController : MonoBehaviour, IInteractable
     }
     
     public void InteractEnd(){}
+    public void AreaEnter() => _outline.EnableOutline();
+
+    public void AreaExit() => _outline.DisableOutline();
 
     public void Exit(PlayerController playerController)
     {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
@@ -91,6 +92,7 @@ public class PlayerManager : MonoBehaviour
         CharacterDisplay display = player.GetComponent<CharacterDisplay>();
         
         SetOutline(display.SkinnedMeshRenderer);
+        SetPlayerText(player.GetComponent<PlayerController>().playerNumberText);
 
         if (!_arePlayersActive)
         {
@@ -192,5 +194,16 @@ public class PlayerManager : MonoBehaviour
         }
 
         skinnedMeshRenderer.renderingLayerMask = mask;
+    }
+    
+    private void SetPlayerText(TextMeshProUGUI playerNumberText)
+    {
+        switch (_players.Count - 1)
+        {
+            case 0: playerNumberText.text = "P1"; break;
+            case 1: playerNumberText.text = "P2"; break;
+            case 2: playerNumberText.text = "P3"; break;
+            case 3: playerNumberText.text = "P4"; break;
+        }
     }
 }

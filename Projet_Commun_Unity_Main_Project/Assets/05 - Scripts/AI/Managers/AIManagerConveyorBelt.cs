@@ -16,41 +16,45 @@ public class AIManagerConveyorBelt : AIManager
     protected override void Start()
     {
         base.Start();
-        int playerCount = PlayerManager.Instance.Players.Count;
-        int half = locations.Count / 2;
-        
-        if (playerCount >= 2)
-            for (int i = half; i < locations.Count; i++)
-                locations[i].available = true;
+        if (PlayerManager.Instance != null)
+        {
+            int playerCount = PlayerManager.Instance.Players.Count;
+            int half = locations.Count / 2;
+            
+            if (playerCount >= 2)
+            {
+                for (int i = half; i < locations.Count; i++)
+                    locations[i].available = true;
+            }
+        }
     }
 
     protected override void SpawnNPC()
     {
-        if (!npcPrefab || locations == null || locations.Count == 0)
+        if (npcPrefab == null || locations == null || locations.Count == 0)
             return;
-
-        LocationPoint chosenLocation = null;
+        
+        List<LocationPoint> availableSpots = new List<LocationPoint>();
 
         foreach (var loc in locations)
         {
             if (loc.available)
             {
-                chosenLocation = loc;
-                break;
+                availableSpots.Add(loc);
             }
         }
-
-        if (!chosenLocation) return;
-
+        
+        if (availableSpots.Count == 0) return;
+        LocationPoint chosenLocation = availableSpots[Random.Range(0, availableSpots.Count)];
         chosenLocation.available = false;
-
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
         AIController npc = Instantiate(npcPrefab, spawnPoint.position, spawnPoint.rotation);
+        
         _spawnedAIs.Add(npc);
         
         if (!npc)
         {
-            Debug.LogError("Le prefab n'est pas un AIConveyorBelt.");
+            Debug.LogError("L'IA instanciée est nulle.");
             return;
         }
         
@@ -76,11 +80,14 @@ public class AIManagerConveyorBelt : AIManager
 
     protected override void RemoveAI(AIController ai)
     {
-        ai.GameTask.OnSucceedAction -= Succeed;
-        ai.GameTask.OnFailedAction -= Failed;
+        if (ai && ai.GameTask)
+        {
+            ai.GameTask.OnSucceedAction -= Succeed;
+            ai.GameTask.OnFailedAction -= Failed;
+        }
         base.RemoveAI(ai);
     }
     
-    private void Succeed() => onSucceed.Invoke();
-    private void Failed() => onFailed.Invoke();
+    private void Succeed() => onSucceed?.Invoke();
+    private void Failed() => onFailed?.Invoke();
 }

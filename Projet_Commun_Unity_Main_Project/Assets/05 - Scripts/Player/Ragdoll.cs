@@ -120,8 +120,12 @@ public class Ragdoll : MonoBehaviour
     {
         if (IsImmune) return;
 
-        if (other.gameObject.TryGetComponent(out Rigidbody rb) && rb.linearVelocity.magnitude >= _ragdollVelocityThreshold)
+        if (other.gameObject.TryGetComponent(out Rigidbody rb) &&
+            rb.linearVelocity.magnitude >= _ragdollVelocityThreshold)
+        {
+            CameraShakeManager.Instance.Shake(0.7f, 0.7f, 0.2f);
             RagdollOn();
+        }
     }
 
     private IEnumerator RagdollTimer()

@@ -11,14 +11,16 @@ public class AIRagdoll : Ragdoll
     [SerializeField] private bool isRagdollable = true;
 
     private bool IsRagdollState { get; set; }
+    private float _lastRagdollOffTime; 
 
     public override void RagdollOn()
     {
-        if (!isRagdollable) return;
+        if (Time.time < _lastRagdollOffTime + 0.5f) return;
 
+        if (!isRagdollable || IsRagdollState) return;
+
+        Debug.LogWarning("REACTIVATE");
         bHips.SetActive(true);
-
-        if (IsRagdollState) return;
         IsRagdollState = true;
 
         base.RagdollOn();
@@ -27,12 +29,24 @@ public class AIRagdoll : Ragdoll
 
     protected override void RagdollOff()
     {
-        bHips.SetActive(false);
-
+        Debug.LogWarning("DESACTIVATE");
+        
         if (!IsRagdollState) return;
+        
+        bHips.SetActive(false);
         IsRagdollState = false;
+        
+        _lastRagdollOffTime = Time.time;
 
         base.RagdollOff();
+        
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
         SetVariableInBlackboard(false, "IsRagdoll");
     }
 
@@ -42,8 +56,5 @@ public class AIRagdoll : Ragdoll
 
         if (behaviorGraphAgent.GetVariable<T>(variableName, out var variable))
             variable.Value = value;
-        else
-            Debug.LogWarning($"Variable '{variableName}' introuvable dans le Blackboard !");
     }
-    
 }

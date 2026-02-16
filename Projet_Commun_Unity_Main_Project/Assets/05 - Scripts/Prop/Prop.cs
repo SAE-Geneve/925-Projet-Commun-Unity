@@ -21,6 +21,9 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
 
     private ObjectOutline _outline;
     
+    public int OwnerId { get; private set; }
+
+    
     // Respawn parameters
     Vector3 _respawnPosition;
     Quaternion _respawnRotation;
@@ -54,6 +57,11 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
         Controller = controller;
         
         if (_rb) _rb.isKinematic = true;
+        
+        if (controller is PlayerController pc)
+        {
+            OwnerId = pc.Id;
+        }
     }
 
     public virtual void Dropped(Vector3 throwForce = default, Controller controller = null)

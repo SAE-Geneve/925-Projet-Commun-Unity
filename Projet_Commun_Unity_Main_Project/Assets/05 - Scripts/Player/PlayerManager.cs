@@ -167,7 +167,14 @@ public class PlayerManager : MonoBehaviour
         
         OnPlayerRemoved?.Invoke();
     }
-    
+
+    public void DisablePlayerMovements()
+    {
+        foreach (var player in _players)
+        {
+            player.Movement.DisableMovement();
+        }
+    }
     
     private void OnEnable()
     {

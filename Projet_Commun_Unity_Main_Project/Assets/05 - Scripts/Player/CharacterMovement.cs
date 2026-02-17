@@ -99,4 +99,10 @@ public class CharacterMovement : MonoBehaviour
     {
         OnMove?.Invoke(moveDir);
     }
+
+    public void DisableMovement()
+    {
+        _movement = Vector2.zero;
+        Rb.linearVelocity = Vector2.zero;
+    }
 }

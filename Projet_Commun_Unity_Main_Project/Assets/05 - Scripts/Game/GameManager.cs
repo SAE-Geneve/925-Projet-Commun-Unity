@@ -37,8 +37,9 @@ public class GameManager : MonoBehaviour
             if (value <= 0)
             {
                 _timer = 0;
-                Debug.Log("Game ended! Back to menu for the moment");
-                MenuReset();
+                SwitchState(GameState.Menu);
+                SceneLoader.Instance.LoadScene("GameOver");
+                _playerManager.DisablePlayerMovements();
             }
             else _timer = value;
 

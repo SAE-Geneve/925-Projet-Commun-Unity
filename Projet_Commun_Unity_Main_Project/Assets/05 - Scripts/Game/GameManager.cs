@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
                 _playerManager.DisablePlayerControllers();
             }
             else
-            {
+             {
                 _playerManager.EnablePlayerControllers();
             }
         }

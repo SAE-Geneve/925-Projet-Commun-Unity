@@ -20,6 +20,8 @@ public class PlayerController : Controller
     public KartPhysic KartPhysic { get; set; }
     
     public Transform CameraTarget => cameraTarget;
+    
+    public int Id { get; set; }
 
     protected override void Start()
     {

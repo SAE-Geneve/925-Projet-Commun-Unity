@@ -85,14 +85,18 @@ public class PlayerManager : MonoBehaviour
     {
         player.transform.position = _spawnPoints[Players.Count].transform.position;
         player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
+
+        PlayerController pc = player.GetComponent<PlayerController>();
         
-        _players.Add(player.GetComponent<PlayerController>());
+        pc.Id = Players.Count;
+        
+        _players.Add(pc);
         // SetPlayerColors(player.GetComponentInChildren<ParticleSystem>());
 
         CharacterDisplay display = player.GetComponent<CharacterDisplay>();
         
         SetOutline(display.SkinnedMeshRenderer);
-        SetPlayerText(player.GetComponent<PlayerController>().playerNumberText);
+        SetPlayerText(pc.playerNumberText);
 
         if (!_arePlayersActive)
         {
@@ -102,7 +106,7 @@ public class PlayerManager : MonoBehaviour
         }
         
         OnPlayerAdded?.Invoke();
-        OnPlayerConnected?.Invoke(player.GetComponent<PlayerController>());
+        OnPlayerConnected?.Invoke(pc);
     }
 
     private void OnPlayerDisconnect(PlayerController player)
@@ -163,7 +167,14 @@ public class PlayerManager : MonoBehaviour
         
         OnPlayerRemoved?.Invoke();
     }
-    
+
+    public void DisablePlayerMovements()
+    {
+        foreach (var player in _players)
+        {
+            player.Movement.DisableMovement();
+        }
+    }
     
     private void OnEnable()
     {

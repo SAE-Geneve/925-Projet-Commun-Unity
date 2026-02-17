@@ -8,6 +8,10 @@ public class Mission : MonoBehaviour
     [SerializeField] private string _name = "New Mission";
     [SerializeField] protected MissionState _missionState = MissionState.Unlocked;
 
+    [Header("UI")]
+    [SerializeField] private GameObject _explanationPrefab; 
+    public GameObject ExplanationPrefab => _explanationPrefab;
+    
     [Header("Timer")] 
     [SerializeField] [Min(1f)] private float _initialTimer = 60f;
     [SerializeField] private bool _isTimerActive;
@@ -49,7 +53,6 @@ public class Mission : MonoBehaviour
         _uiManager = UIManager.Instance;
         
         SwitchMissionState(_missionState);
-        // if(_missionState == MissionState.Unlocked) UpdateTargetMission();
     }
 
     private void Update()
@@ -69,13 +72,9 @@ public class Mission : MonoBehaviour
     private void OnStartMission()
     {
         Timer = _initialTimer;
-        
         _gameManager.StartMission(this);
-        
         SwitchMissionState(MissionState.Playing);
-        
         _onMissionStarted?.Invoke();
-
         Debug.Log($"Mission {_name} began");
     }
     
@@ -83,10 +82,8 @@ public class Mission : MonoBehaviour
     {
         _gameManager.Timer += _initialTimer / 2f;
         _gameManager.StopMission();
-        
         SwitchMissionState(MissionState.Finished);
         _onMissionFinished?.Invoke();
-    
         Debug.Log($"Mission {_name} finished");
     }
 

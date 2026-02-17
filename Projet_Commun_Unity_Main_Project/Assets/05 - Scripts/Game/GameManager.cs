@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public event Action OnDisconnectionTimerUpdate;
 
     // Getter/Setter
+    public ScoreManager Scores { get; private set; }
+    
     public float Timer
     {
         get => _timer;
@@ -35,8 +37,9 @@ public class GameManager : MonoBehaviour
             if (value <= 0)
             {
                 _timer = 0;
-                Debug.Log("Game ended! Back to menu for the moment");
-                MenuReset();
+                SwitchState(GameState.Menu);
+                SceneLoader.Instance.LoadScene("GameOver");
+                _playerManager.DisablePlayerMovements();
             }
             else _timer = value;
 
@@ -93,6 +96,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _playerManager = PlayerManager.Instance;
+        Scores = new ScoreManager();
         if(_playerManager) _playerManager.PlayerInputManager.DisableJoining();
         ResetGame();
         Debug.Log($"Game State: {_state}");
@@ -118,7 +122,7 @@ public class GameManager : MonoBehaviour
 
         if (_playerManager)
         {
-            if (newState == GameState.Lobby || _context == GameContext.Hub)
+            if (newState == GameState.Lobby)
             {
                 _playerManager.PlayerInputManager.EnableJoining();
             }
@@ -132,7 +136,7 @@ public class GameManager : MonoBehaviour
                 _playerManager.DisablePlayerControllers();
             }
             else
-            {
+             {
                 _playerManager.EnablePlayerControllers();
             }
         }
@@ -204,6 +208,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if(Scores != null) Scores.EndMission();
         CurrentMission = null;
         if(_playerManager) _playerManager.PlayerInputManager.EnableJoining();
         _context = GameContext.Hub;

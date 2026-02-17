@@ -6,12 +6,14 @@ public class TriggerTask : GameTask
     [Tooltip("The prop type that needs to touch the task collider to succeed")]
     [SerializeField] protected PropType _propType = PropType.None;
     [SerializeField] protected bool isDestroyed = true;
+    [SerializeField] protected int score = 100;
 
     protected virtual void OnTriggerEnter(Collider other)
     {
         if(Done || !other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
         
         Succeed();
+        if(GameManager.Instance) GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
         if(isDestroyed) prop.Destroy();
     }
     

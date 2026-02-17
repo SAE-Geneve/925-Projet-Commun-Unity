@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,21 +11,20 @@ public class MissionTrigger : MonoBehaviour
     [SerializeField] private Mission _mission;
     [Tooltip("The tmp of the state of the mission")]
     [SerializeField] private TextMeshProUGUI _stateTmp;
-
-    [Tooltip("The tmp that shows the number of player in the trigger box")]
     [SerializeField] private TextMeshProUGUI _numberTmp;
     
     [SerializeField] private Material _unlockedMaterial;
     [SerializeField] private Material _lockedMaterial;
-    
+
+    [Header("Rules Display")]
+    [Tooltip("Temps d'affichage des règles en secondes")]
+    [SerializeField] private float _rulesDisplayTime = 10f;
+
     private Renderer _renderer;
     private PlayerManager _playerManager;
-    
     private Action<Ragdoll> _ragdollHandler;
-    
     private readonly HashSet<Ragdoll> _ragdolls = new();
-    private bool _isMissionStarted;
-    
+    private bool _isSequenceStarted = false;
     private int _playerNumber;
 
     private void Start()
@@ -32,13 +32,18 @@ public class MissionTrigger : MonoBehaviour
         _renderer = GetComponentInChildren<Renderer>();
         _playerManager = PlayerManager.Instance;
 
-        _playerManager.OnPlayerAdded += UpdateTmpNumber;
-        _playerManager.OnPlayerRemoved += UpdateTmpNumber;
-        _playerManager.OnPlayerRemoved += CheckPlayerNumber;
+        if (_playerManager)
+        {
+            _playerManager.OnPlayerAdded += UpdateTmpNumber;
+            _playerManager.OnPlayerRemoved += UpdateTmpNumber;
+            _playerManager.OnPlayerRemoved += CheckPlayerNumber;
+        }
 
-        _mission.OnSwitchState += UpdateState;
-        
-        UpdateState();
+        if (_mission)
+        {
+            _mission.OnSwitchState += UpdateState;
+            UpdateState();
+        }
 
         _ragdollHandler = ragdoll =>
         {
@@ -54,9 +59,7 @@ public class MissionTrigger : MonoBehaviour
         if (_ragdolls.Add(ragdoll))
         {
             _playerNumber++;
-            
             ragdoll.OnRagdollSelf += _ragdollHandler;
-            
             UpdateTmpNumber();
             CheckPlayerNumber();
         }
@@ -75,8 +78,33 @@ public class MissionTrigger : MonoBehaviour
 
     private void CheckPlayerNumber()
     {
-        if (_playerNumber == _playerManager.PlayerCount)
-            StartMission();
+        if (_playerManager && _playerNumber == _playerManager.PlayerCount && !_isSequenceStarted)
+        {
+            StartCoroutine(StartMissionSequence());
+        }
+    }
+
+    private IEnumerator StartMissionSequence()
+    {
+        _isSequenceStarted = true;
+        GameObject rulesInstance = null;
+
+        Time.timeScale = 0f;
+
+        if (_mission != null && _mission.ExplanationPrefab != null)
+        {
+            rulesInstance = Instantiate(_mission.ExplanationPrefab);
+        }
+
+        yield return new WaitForSecondsRealtime(_rulesDisplayTime);
+
+        if (rulesInstance != null)
+        {
+            Destroy(rulesInstance);
+        }
+
+        Time.timeScale = 1f;
+        StartMission();
     }
 
     private void StartMission()
@@ -85,11 +113,11 @@ public class MissionTrigger : MonoBehaviour
             if (ragdoll) ragdoll.OnRagdollSelf -= _ragdollHandler;
 
         _ragdolls.Clear();
-            
         _playerNumber = 0;
         UpdateTmpNumber();
             
         _mission.StartMission();
+        _isSequenceStarted = false;
     }
 
     private void Decrement()
@@ -99,7 +127,10 @@ public class MissionTrigger : MonoBehaviour
         UpdateTmpNumber();
     }
 
-    private void UpdateTmpNumber() => _numberTmp.SetText($"{_playerNumber}/{_playerManager.PlayerCount}");
+    private void UpdateTmpNumber()
+    {
+        if (_playerManager) _numberTmp.SetText($"{_playerNumber}/{_playerManager.PlayerCount}");
+    }
 
     private void UpdateState()
     {
@@ -108,7 +139,6 @@ public class MissionTrigger : MonoBehaviour
             _renderer.material = _lockedMaterial;
             _stateTmp.SetText("Locked");
             _stateTmp.color = Color.red;
-
         }
         else
         {
@@ -116,7 +146,6 @@ public class MissionTrigger : MonoBehaviour
             _stateTmp.SetText("Unlocked");
             _stateTmp.color = Color.green;
         }
-        
         UpdateTmpNumber();
     }
 }

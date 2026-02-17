@@ -14,6 +14,7 @@ public class ConveyorProp : Prop
     private float _originalLinearDamping;
     private float _originalAngularDamping;
     private bool _onConveyor;
+    
 
     protected override void Start()
     {

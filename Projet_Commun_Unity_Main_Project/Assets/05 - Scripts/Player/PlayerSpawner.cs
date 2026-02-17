@@ -7,6 +7,7 @@ public class PlayerSpawner : MonoBehaviour
     
     [Header("Parameters")]
     [SerializeField] private bool _spawnOnStart;
+    [SerializeField] private bool _useSpawnRotation;
 
     private void Start()
     {
@@ -16,6 +17,11 @@ public class PlayerSpawner : MonoBehaviour
     public void Spawn()
     {
         for (int i = 0; i < PlayerManager.Instance.Players.Count; i++)
-            PlayerManager.Instance.Players[i].transform.position = _spawnPoints[i].position;
+        {
+            Transform playerTransform = PlayerManager.Instance.Players[i].transform;
+            playerTransform.position = _spawnPoints[i].position;
+            if(_useSpawnRotation) playerTransform.rotation = _spawnPoints[i].rotation;
+            
+        }
     }
 }

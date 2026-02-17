@@ -117,6 +117,7 @@ public class MissionTrigger : MonoBehaviour
         UpdateTmpNumber();
             
         _mission.StartMission();
+        _isSequenceStarted = false;
     }
 
     private void Decrement()

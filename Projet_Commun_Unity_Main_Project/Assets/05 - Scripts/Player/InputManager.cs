@@ -1,10 +1,12 @@
 using System;
-using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
+    [Header("Parameters")] 
+    [SerializeField] private bool dive;
+    
     private PlayerMovement _playerMovement;
     private PlayerController _playerController;
     private KartController _kartController;
@@ -31,7 +33,11 @@ public class InputManager : MonoBehaviour
     public void OnDash(InputAction.CallbackContext context)
     {
 
-        if (context.started && active) _playerMovement.Dash();
+        if (context.started && active)
+        {
+            _playerMovement.Dash();
+            if(dive) StartCoroutine(_playerController.DropRoutine());
+        }
     }
 
     public void OnInteract(InputAction.CallbackContext context)

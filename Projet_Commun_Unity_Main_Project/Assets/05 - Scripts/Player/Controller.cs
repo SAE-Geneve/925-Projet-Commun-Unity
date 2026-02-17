@@ -189,7 +189,7 @@ public class Controller : MonoBehaviour, IGrabbable
     }
 
     public void ResetParent() => transform.SetParent(PlayerManager.Instance ? PlayerManager.Instance.transform : null);
-    private IEnumerator DropRoutine()
+    public IEnumerator DropRoutine()
     {
         yield return new WaitForSeconds(0.1f);
         _ragdoll.RagdollOn();

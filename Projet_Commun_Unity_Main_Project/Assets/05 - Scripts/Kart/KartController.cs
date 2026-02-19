@@ -18,6 +18,7 @@ public class KartController : MonoBehaviour, IInteractable
         _kartPhysic = GetComponent<KartPhysic>();
         
         _outline = GetComponent<ObjectOutline>();
+
     }
 
     public void Interact(PlayerController playerController)

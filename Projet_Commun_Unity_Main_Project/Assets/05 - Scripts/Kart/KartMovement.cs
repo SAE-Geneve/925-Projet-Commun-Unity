@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class KartMovement : MonoBehaviour
+public class KartMovement : MonoBehaviour,  IRespawnable
 {
     [Header("Player Control")]
     [SerializeField] private float maxForwardSpeed = 30f;
@@ -16,6 +16,10 @@ public class KartMovement : MonoBehaviour
 
     private float _verticalInput;
     private float _horizontalInput;
+    
+        
+    private Vector3 _startPosition;
+    private Vector3 _startRotation;
 
     void Start()
     {
@@ -23,6 +27,10 @@ public class KartMovement : MonoBehaviour
         _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         
         _rb.centerOfMass = new Vector3(0, -0.5f, 0); 
+        
+                
+        _startPosition = _rb.position;
+        _startRotation = _rb.rotation.eulerAngles;
     }
     
     void FixedUpdate()
@@ -72,5 +80,11 @@ public class KartMovement : MonoBehaviour
     {
         _verticalInput = 0f;
         _horizontalInput = 0f;
+    }
+    
+    public void Respawn()
+    {
+        _rb.position = _startPosition;
+        _rb.rotation = Quaternion.Euler(_startRotation);
     }
 }

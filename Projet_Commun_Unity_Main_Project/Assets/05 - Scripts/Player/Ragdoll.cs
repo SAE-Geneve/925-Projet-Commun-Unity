@@ -53,7 +53,7 @@ public class Ragdoll : MonoBehaviour
 
     public virtual void RagdollOn()
     {
-        if (IsImmune) return;
+        //if (IsImmune) return;
 
         foreach (var col in _ragdollColliders)
             col.enabled = true;

@@ -11,18 +11,13 @@ public class PersonalScoreDisplay : MonoBehaviour
     private void Start()
     {
         scoreManager = GameManager.Instance.Scores;
-    }
-
-    void OnEnable()
-    {
         for (int i = 0; i < PlayerManager.Instance.PlayerCount; i++)
         {
             scoreDisplay[i].SetActive(true);
         }
-        UpdateScoreDisplay();
     }
 
-    void UpdateScoreDisplay()
+    void OnEnable()
     {
         for (int i = 0; i < PlayerManager.Instance.PlayerCount; i++)
         {

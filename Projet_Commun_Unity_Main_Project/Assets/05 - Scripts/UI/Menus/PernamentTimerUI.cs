@@ -44,16 +44,16 @@ public class PernamentTimerUI : MonoBehaviour
 
     public void InMinigameVisual()
     {
-        scoreObject.SetActive(false);
+        //scoreObject.SetActive(false);
         playerScoresObject.SetActive(false);
-        StartCoroutine(MoveToPosition(timerInMinigame));
+        //StartCoroutine(MoveToPosition(timerInMinigame));
     }
 
     public void OutMinigameVisual()
     {
         playerScoresObject.SetActive(true);
-        moneyText.text = ScoreSystem.TotalMoneyScore + "$";
-        StartCoroutine(MoveToPosition(timerOutMinigame));
+        //moneyText.text = ScoreSystem.TotalMoneyScore + "$";
+        //StartCoroutine(MoveToPosition(timerOutMinigame));
     }
 
     private IEnumerator MoveToPosition(Transform newPosition)

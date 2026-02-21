@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.LowLevelPhysics2D;
 using Action = System.Action;
 
 public class Ragdoll : MonoBehaviour
@@ -123,8 +124,12 @@ public class Ragdoll : MonoBehaviour
         if (other.gameObject.TryGetComponent(out Rigidbody rb) &&
             rb.linearVelocity.magnitude >= _ragdollVelocityThreshold)
         {
-            if(CameraShakeManager.Instance) CameraShakeManager.Instance.Shake(0.7f, 0.7f, 0.2f);
             RagdollOn();
+            if (other.gameObject.CompareTag("Player") || gameObject.CompareTag("Player"))
+            {
+                Debug.Log($"{other.gameObject.name} collided with {gameObject.name} and activated camera shake");
+                if(CameraShakeManager.Instance) CameraShakeManager.Instance.Shake(0.7f, 0.7f, 0.2f);
+            }
         }
     }
 

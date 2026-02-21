@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -173,6 +174,24 @@ public class PlayerManager : MonoBehaviour
         foreach (var player in _players)
         {
             player.Movement.DisableMovement();
+        }
+    }
+
+    public IEnumerator PrepareSceneChange()
+    {
+        foreach (var player in _players)
+        {
+            if (player.KartController)
+            {
+                player.KartController.Exit(player);
+            }
+
+            Ragdoll rdl = player.GetComponent<Ragdoll>();
+            yield return new WaitUntil(() => !rdl.IsRagdoll);
+            
+            //that doesn't work because there are coroutine inside the drop routine 
+            //player.Drop();
+            //yield return new WaitForEndOfFrame();
         }
     }
     

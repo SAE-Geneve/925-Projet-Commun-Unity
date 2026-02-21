@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     // Getter/Setter
     public ScoreManager Scores { get; private set; }
+
+    private Coroutine _sceneChange;
     
     public float Timer
     {
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
             {
                 _timer = 0;
                 SwitchState(GameState.Menu);
+                _sceneChange = StartCoroutine(_playerManager.PrepareSceneChange());
                 SceneLoader.Instance.LoadScene("GameOver");
                 _playerManager.DisablePlayerMovements();
             }

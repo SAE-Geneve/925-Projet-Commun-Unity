@@ -211,7 +211,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if(Scores != null) Scores.EndMission();
+        if(Scores != null) Scores.FillTotalScores();
         CurrentMission = null;
         if(_playerManager) _playerManager.PlayerInputManager.EnableJoining();
         _context = GameContext.Hub;

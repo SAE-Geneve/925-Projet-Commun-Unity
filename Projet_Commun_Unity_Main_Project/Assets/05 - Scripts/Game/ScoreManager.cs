@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class ScoreManager
 {
-    public int[] TotalScores = new int[4];
-    public int[] MissionScores = new int[4];
+    public readonly int[] TotalScores = new int[4];
+    public readonly int[] MissionScores = new int[4];
 
-    public void EndMission()
+    public void FillTotalScores()
     {
         for (int i = 0; i < MissionScores.Length; i++)
         {
@@ -15,16 +15,10 @@ public class ScoreManager
         Debug.LogWarning("Score Reset");
     }
     
-    public void AddTotalScore(int score, int id)
+    private void AddTotalScore(int score, int id)
     {
         TotalScores[id] += score;
         Debug.Log("added " + score + " to " + id + " total");
-    }
-    
-    public void DecreaseTotalScore(int score, int id)
-    {
-        TotalScores[id] -= score;
-        Debug.Log("removed " + score + " to " + id + " total");
     }
     
     public void AddMissionScore(int score, int id)
@@ -33,7 +27,7 @@ public class ScoreManager
         Debug.Log("added " + score + " to " + id + " mission total");
     }
     
-    public void DecreaseMissionScore(int score, int id)
+    public void SubMissionScore(int score, int id)
     {
         MissionScores[id] -= score;
         Debug.Log("removed " + score + " to " + id + " mission total");

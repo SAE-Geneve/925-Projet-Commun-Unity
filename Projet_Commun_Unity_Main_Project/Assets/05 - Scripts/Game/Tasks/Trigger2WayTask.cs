@@ -18,7 +18,7 @@ public class Trigger2WayTask : TriggerTask
         else if (prop.Type == _badPropType)
         {
             Failed();
-            GameManager.Instance.Scores.DecreaseMissionScore(_badScore, prop.OwnerId);
+            GameManager.Instance.Scores.SubMissionScore(_badScore, prop.OwnerId);
         }
         else return;
         

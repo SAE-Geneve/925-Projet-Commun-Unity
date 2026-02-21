@@ -146,6 +146,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4671427243134634775}
+  - component: {fileID: 3751083294082497672}
   m_Layer: 5
   m_Name: PlayerSlot (2)
   m_TagString: Untagged
@@ -175,6 +176,20 @@ RectTransform:
   m_AnchoredPosition: {x: 750, y: -200}
   m_SizeDelta: {x: 1500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3751083294082497672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383087995717250020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56a95debaa84b04da3df94e29170ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::ScoreSlot
+  missionScoreTmp: {fileID: 2238168304672905792}
+  totalScoreTmp: {fileID: 1537814867399996202}
 --- !u!1 &591884837259429261
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,6 +625,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6455043444151711072}
+  - component: {fileID: 8292291237292688460}
   m_Layer: 5
   m_Name: PlayerSlot
   m_TagString: Untagged
@@ -639,6 +655,20 @@ RectTransform:
   m_AnchoredPosition: {x: 750, y: 200}
   m_SizeDelta: {x: 1500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8292291237292688460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3993341824056670256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56a95debaa84b04da3df94e29170ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::ScoreSlot
+  missionScoreTmp: {fileID: 7863831562291232036}
+  totalScoreTmp: {fileID: 4267882156843751887}
 --- !u!1 &4058071912924752946
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,6 +678,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1735252123733750311}
+  - component: {fileID: 2795586962631633898}
   m_Layer: 5
   m_Name: PlayerSlot (1)
   m_TagString: Untagged
@@ -677,6 +708,20 @@ RectTransform:
   m_AnchoredPosition: {x: 750, y: 0}
   m_SizeDelta: {x: 1500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2795586962631633898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4058071912924752946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56a95debaa84b04da3df94e29170ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::ScoreSlot
+  missionScoreTmp: {fileID: 6237799138488816485}
+  totalScoreTmp: {fileID: 6825804432303553381}
 --- !u!1 &4343083325172987722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,6 +1085,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1185418809390262146}
+  - component: {fileID: 964324881297678516}
   - component: {fileID: 5030164559034764750}
   - component: {fileID: 8998039750315762836}
   - component: {fileID: 68952842733170003}
@@ -1070,6 +1116,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &964324881297678516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5313651638410783719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45cdba3936fb3b7499ebbe652688e330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::ScoreBoard
+  scoreSlots:
+  - {fileID: 8292291237292688460}
+  - {fileID: 2795586962631633898}
+  - {fileID: 3751083294082497672}
+  - {fileID: 4313921270761741408}
 --- !u!223 &5030164559034764750
 Canvas:
   m_ObjectHideFlags: 0
@@ -1077,7 +1140,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5313651638410783719}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -1903,6 +1966,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 925168715419780299}
+  - component: {fileID: 4313921270761741408}
   m_Layer: 5
   m_Name: PlayerSlot (3)
   m_TagString: Untagged
@@ -1932,6 +1996,20 @@ RectTransform:
   m_AnchoredPosition: {x: 750, y: -400}
   m_SizeDelta: {x: 1500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4313921270761741408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854267682456829418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56a95debaa84b04da3df94e29170ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::ScoreSlot
+  missionScoreTmp: {fileID: 8765381875433574010}
+  totalScoreTmp: {fileID: 803823968405279276}
 --- !u!1 &8057921659004511226
 GameObject:
   m_ObjectHideFlags: 0

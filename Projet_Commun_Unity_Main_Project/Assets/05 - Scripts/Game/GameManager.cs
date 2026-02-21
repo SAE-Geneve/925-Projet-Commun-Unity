@@ -94,12 +94,14 @@ public class GameManager : MonoBehaviour
     {
         if (Instance && Instance != this) Destroy(gameObject);
         else Instance = this;
+        
+        Scores = new ScoreManager();
     }
 
     private void Start()
     {
         _playerManager = PlayerManager.Instance;
-        Scores = new ScoreManager();
+
         if(_playerManager) _playerManager.PlayerInputManager.DisableJoining();
         ResetGame();
         Debug.Log($"Game State: {_state}");
@@ -210,8 +212,17 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Mission can only be stopped when game is playing in a mission");
             return;
         }
+        
+        UIManager uiManager = UIManager.Instance;
 
-        if(Scores != null) Scores.FillTotalScores();
+        if (Scores != null && uiManager)
+        {
+            uiManager.SetupScoreBoard();
+            Scores.FillTotalScores();
+            uiManager.DisplayScoreBoard();
+            SwitchState(GameState.Cinematic);
+        }
+
         CurrentMission = null;
         if(_playerManager) _playerManager.PlayerInputManager.EnableJoining();
         _context = GameContext.Hub;

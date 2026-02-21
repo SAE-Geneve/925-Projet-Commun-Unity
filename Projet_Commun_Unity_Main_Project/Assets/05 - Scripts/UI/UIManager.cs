@@ -1,14 +1,10 @@
-using System.Collections;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Canvas _pauseCanvas;
-    [SerializeField] private Canvas _scoreBoardCanvas;
-
-    [Header("Parameters")] 
-    [SerializeField] private float scoreBoardTime = 5f;
+    [SerializeField] private ScoreBoard scoreboard;
     
     public static UIManager Instance { get; private set; }
     
@@ -25,18 +21,7 @@ public class UIManager : MonoBehaviour
 
     private void Start() => _gameManager = GameManager.Instance;
 
-    public void DisplayScoreBoard()
-    {
-        if(_gameManager.State != GameState.Playing) return;
-        StartCoroutine(ScoreBoardRoutine());
-    }
+    public void SetupScoreBoard() => scoreboard.SetScores();
 
-    private IEnumerator ScoreBoardRoutine()
-    {
-        _gameManager.SwitchState(GameState.Cinematic);
-        _scoreBoardCanvas.enabled = true;
-        yield return new WaitForSeconds(scoreBoardTime);
-        _scoreBoardCanvas.enabled = false;
-        _gameManager.SwitchState(GameState.Playing);
-    }
+    public void DisplayScoreBoard() => scoreboard.Show();
 }

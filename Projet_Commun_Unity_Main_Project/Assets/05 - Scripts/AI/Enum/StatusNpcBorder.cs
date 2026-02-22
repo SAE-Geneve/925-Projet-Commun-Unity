@@ -6,6 +6,6 @@ public enum StatusNpcBorder
 {
     Luggage,
 	Detector,
-	Flee,
+	Wait,
 	Leave
 }

@@ -101,12 +101,16 @@ public partial class SmartQueueMovementAction : Action
         }
 
         IsLast.Value = false;
+        
         int bestTargetIndex = currentIndex;
 
         for (int i = currentIndex + 1; i < list.Count; i++)
         {
             GameObject checkObj = list[i];
-            if (checkObj == null) break;
+            if (checkObj == null) 
+            {
+                break;
+            }
 
             LocationPoint checkPoint = checkObj.GetComponent<LocationPoint>();
             
@@ -134,8 +138,14 @@ public partial class SmartQueueMovementAction : Action
             
             Location.Value = newTargetObj; 
 
-            if (bestTargetIndex == list.Count - 1) IsLast.Value = true;
-            else IsLast.Value = false;
+            if (bestTargetIndex == list.Count - 1) 
+            {
+                IsLast.Value = true;
+            }
+            else 
+            {
+                IsLast.Value = false;
+            }
 
             return true;
         }

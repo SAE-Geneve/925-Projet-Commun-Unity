@@ -19,6 +19,8 @@ public class PersonalScoreDisplay : MonoBehaviour
 
     void OnEnable()
     {
+        if(scoreManager == null) return;
+        
         for (int i = 0; i < PlayerManager.Instance.PlayerCount; i++)
         {
             scoreText[i].SetText($"{scoreManager.TotalScores[i]:00000}");

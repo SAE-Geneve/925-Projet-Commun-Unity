@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
                 _playerManager.DisablePlayerControllers();
             }
             else
-             {
+            {
                 _playerManager.EnablePlayerControllers();
             }
         }
@@ -218,7 +218,6 @@ public class GameManager : MonoBehaviour
         if (Scores != null && uiManager)
         {
             uiManager.SetupScoreBoard();
-            Scores.FillTotalScores();
             uiManager.DisplayScoreBoard();
             SwitchState(GameState.Cinematic);
         }

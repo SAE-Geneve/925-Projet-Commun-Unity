@@ -30,6 +30,7 @@ public class ScoreBoard : MonoBehaviour
         {
             scoreSlots[i].gameObject.SetActive(true);
             scoreSlots[i].SetMissionScore(_scoreManager.MissionScores[i]);
+            scoreSlots[i].SetTotalScore(_scoreManager.TotalScores[i]);
         }
 
         for (int x = _playerManager.Players.Count; x < 4; x++)
@@ -55,6 +56,9 @@ public class ScoreBoard : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenPlayerScores);
         
         ScoreBoardCanvas.enabled = false;
-        GameManager.Instance.SwitchState(GameState.Playing);
+        
+        GameManager gm = GameManager.Instance;
+        gm.Scores.FillTotalScores();
+        gm.SwitchState(GameState.Playing);
     }
 }

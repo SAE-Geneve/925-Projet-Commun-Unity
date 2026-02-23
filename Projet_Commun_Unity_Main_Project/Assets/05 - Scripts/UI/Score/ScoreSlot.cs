@@ -27,6 +27,12 @@ public class ScoreSlot : MonoBehaviour
         }
     }
 
+    public void SetTotalScore(int score)
+    {
+        totalScoreDisplay = score;
+        if(totalScoreTmp) totalScoreTmp.SetText(totalScoreDisplay.ToString());
+    }
+
     public void DisabledAppearance()
     {
         missionScoreTmp.color = disabledColor;

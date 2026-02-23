@@ -1,6 +1,9 @@
+using System;
+
 public class InteractableTask : GameTask, IInteractable
 {
     private ObjectOutline _outline;
+    [NonSerialized]public PlayerController PlayerController;
     
     protected override void Start()
     {
@@ -12,7 +15,7 @@ public class InteractableTask : GameTask, IInteractable
     public void Interact(PlayerController playerController)
     {
         if (Done) return;
-        
+        PlayerController = playerController;
         Succeed();
     }
 

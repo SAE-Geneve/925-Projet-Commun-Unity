@@ -13,8 +13,8 @@ public partial class SpawnLuggageAction : Action
     [SerializeReference] public BlackboardVariable<List<GameObject>> Prefabs;
     [SerializeReference] public BlackboardVariable<float> EvilChance;
     [SerializeReference] public BlackboardVariable<PropManager> propManager;
+    [SerializeReference] public BlackboardVariable<Boolean> IsEnemy;
 
-    
     protected override Status OnStart()
     {
         if (Npc == null || Npc.Value == null)
@@ -35,7 +35,6 @@ public partial class SpawnLuggageAction : Action
             return Status.Failure;
         }
 
-        
         Transform npcTransform = Npc.Value.transform;
         
         int prefabIndex = UnityEngine.Random.Range(0, Prefabs.Value.Count);
@@ -58,7 +57,19 @@ public partial class SpawnLuggageAction : Action
         Prop prop = newLuggage.GetComponent<Prop>();
         if (prop != null)
         {
-            prop.SetType(UnityEngine.Random.value < (EvilChance.Value / 100) ? PropType.BadProp : PropType.GoodProp);
+            bool isBadProp = UnityEngine.Random.value < (EvilChance.Value / 100f);
+
+            if (isBadProp)
+            {
+                prop.SetType(PropType.BadProp);
+                IsEnemy.Value = true;
+            }
+            else
+            {
+                prop.SetType(PropType.GoodProp);
+                IsEnemy.Value = false;
+            }
+
             propManager.Value.AddProp(prop);
         }
 

@@ -1,15 +1,19 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreSlot : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private TextMeshProUGUI missionScoreTmp;
     [SerializeField] private TextMeshProUGUI totalScoreTmp;
+    [SerializeField] private TextMeshProUGUI playerNumberTmp;
+    [SerializeField] private Image scoreBackdrop;
 
     [Header("Parameters")] 
     [SerializeField] private float scoreFillTime = 0.01f;
+    [SerializeField] private Color disabledColor;
 
     private int totalScoreDisplay;
     private int missionScoreDisplay;
@@ -17,7 +21,17 @@ public class ScoreSlot : MonoBehaviour
     public void SetMissionScore(int score)
     {
         missionScoreDisplay = score;
-        missionScoreTmp.SetText(missionScoreDisplay.ToString());
+        if(missionScoreTmp)
+        {
+            missionScoreTmp.SetText(missionScoreDisplay.ToString());
+        }
+    }
+
+    public void DisabledAppearance()
+    {
+        missionScoreTmp.color = disabledColor;
+        scoreBackdrop.color = disabledColor;
+        playerNumberTmp.color = disabledColor;
     }
 
     public IEnumerator ScoreFillRoutine()
@@ -36,7 +50,10 @@ public class ScoreSlot : MonoBehaviour
             }
 
             totalScoreTmp.SetText(totalScoreDisplay.ToString());
-            missionScoreTmp.SetText(missionScoreDisplay.ToString());
+            if(missionScoreTmp)
+            {
+                missionScoreTmp.SetText(missionScoreDisplay.ToString());
+            }
             
             yield return new WaitForSeconds(scoreFillTime);
         }

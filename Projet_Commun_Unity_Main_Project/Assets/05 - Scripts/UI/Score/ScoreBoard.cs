@@ -5,6 +5,7 @@ public class ScoreBoard : MonoBehaviour
 {
     [Header("References")] 
     [SerializeField] private ScoreSlot[] scoreSlots;
+    [SerializeField] private ScoreSlot totalScoreSlot;
 
     [Header("Parameters")] 
     [SerializeField] private float timeBetweenPlayerScores = 1f;
@@ -30,6 +31,13 @@ public class ScoreBoard : MonoBehaviour
             scoreSlots[i].gameObject.SetActive(true);
             scoreSlots[i].SetMissionScore(_scoreManager.MissionScores[i]);
         }
+
+        for (int x = _playerManager.Players.Count; x < 4; x++)
+        {
+            scoreSlots[x].DisabledAppearance();
+            scoreSlots[x].gameObject.SetActive(true);
+        }
+        totalScoreSlot.SetMissionScore(_scoreManager.TotalMissionScore());
     }
 
     public void Show() => StartCoroutine(ScoreRoutine());

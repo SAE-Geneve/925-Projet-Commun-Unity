@@ -159,6 +159,7 @@ public class Controller : MonoBehaviour, IGrabbable
         {
             Drop(); 
         }
+        IsBeingHeld = true; 
         
         transform.SetParent(controller.CatchPoint);
         transform.localPosition = Vector3.zero;
@@ -169,6 +170,8 @@ public class Controller : MonoBehaviour, IGrabbable
 
     public void Dropped(Vector3 throwForce = default, Controller controller = null)
     {
+        IsBeingHeld = false;
+
         ResetParent();
 
         Rb.isKinematic = false;

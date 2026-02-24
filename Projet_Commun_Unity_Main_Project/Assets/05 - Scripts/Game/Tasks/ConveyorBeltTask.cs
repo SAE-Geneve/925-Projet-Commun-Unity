@@ -17,6 +17,7 @@ public class ConveyorBeltTask : TriggerTask
         if(prop.IsGrabbed) return;
         
         Succeed();
+        GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
         ScoreSystem.IncreaseScore(1);
         
         prop.Grabbed(_controller);

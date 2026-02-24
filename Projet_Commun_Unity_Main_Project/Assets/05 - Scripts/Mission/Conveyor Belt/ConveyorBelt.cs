@@ -8,9 +8,13 @@ public class ConveyorBelt : MonoBehaviour
     [SerializeField] private float _speed = 7f;
     
     private readonly List<Prop> _props = new();
+    
+    private bool _isRunning = true;
 
     private void FixedUpdate()
     {
+        if (!_isRunning) return;
+
         foreach (Prop prop in _props)
             prop.Rb.AddForce(_direction.normalized * _speed, ForceMode.Force);
     }
@@ -32,4 +36,8 @@ public class ConveyorBelt : MonoBehaviour
     }
     
     public void Remove(ConveyorProp prop) => _props.Remove(prop);
+
+    // NOUVEAU : Fonctions pour allumer et éteindre le tapis
+    public void StartBelt() => _isRunning = true;
+    public void StopBelt() => _isRunning = false;
 }

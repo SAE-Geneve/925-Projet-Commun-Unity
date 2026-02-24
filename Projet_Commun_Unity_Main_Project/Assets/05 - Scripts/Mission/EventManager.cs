@@ -4,21 +4,11 @@ using UnityEngine;
 public abstract class EventManager : MonoBehaviour
 {
     [Header("Global Event Settings")]
-    [Tooltip("Temps avant que le tout premier événement n'arrive")]
     [SerializeField] protected float _startDelay = 15f;
-
-    [Tooltip("Temps minimum à attendre avant le prochain événement")]
     [SerializeField] protected float _minEventInterval = 25f;
-
-    [Tooltip("Temps maximum à attendre avant le prochain événement")]
     [SerializeField] protected float _maxEventInterval = 45f;
 
     private Coroutine _eventRoutine;
-
-    protected virtual void Start()
-    {
-        StartEventLoop();
-    }
 
     public void StartEventLoop()
     {
@@ -34,7 +24,7 @@ public abstract class EventManager : MonoBehaviour
             _eventRoutine = null;
         }
     }
-    
+
     public virtual void ResetManager()
     {
         StopEventLoop();

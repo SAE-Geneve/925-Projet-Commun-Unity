@@ -10,9 +10,11 @@ public class NewMinigameUI : MonoBehaviour
     
     [Header("Score Texts")]
     [SerializeField] private TextMeshProUGUI totalScore;
+    private int _totalScore;
     
     [SerializeField] private GameObject[] scorePanel;
     [SerializeField] private TextMeshProUGUI[] playerScoreText;
+    [SerializeField] private TextMeshProUGUI[] subScoreEffectText;
     private int[] _playerScore;
     
     private ScoreManager _scoreManager;
@@ -20,16 +22,6 @@ public class NewMinigameUI : MonoBehaviour
     [Header("Total Score Effects")]
     [SerializeField] private Image scoreImageFade;
     [SerializeField] private TextMeshProUGUI scoreTextFade;
-    
-    [Header("Secondary Score Image Effects")]
-    [SerializeField] private Image leftSubScoreImage;
-    [SerializeField] private Image rightSubscoreImage;
-    
-    [Header("Secondary Score Text Effects")]
-    [SerializeField] private TextMeshProUGUI subScoreEffect1;
-    [SerializeField] private TextMeshProUGUI subScoreEffect2;
-    [SerializeField] public TextMeshProUGUI subScoreEffect3;
-    [SerializeField] public TextMeshProUGUI subScoreEffect4;
     
     private UIScreenEffects _uiScreenEffects;
     
@@ -42,22 +34,22 @@ public class NewMinigameUI : MonoBehaviour
         {
             _playerScore[i] = 0;
         }
-        // if (TryGetComponent(out _uiScreenEffects))
-        // {
-        //     Debug.Log("Found UI Text Effects");
-        //     if (scoreImageFade != null)
-        //     {
-        //         _uiScreenEffects.ImagePoolCreation(scoreImageFade);
-        //     }
-        //     else
-        //     {
-        //         Debug.LogWarning($"[{name}] BaseMinigameUI : 'scoreImageFade' est manquant !");
-        //     }
-        // }
-        // else
-        // {
-        //     Debug.LogWarning($"[{name}] BaseMinigameUI : Composant 'UIScreenEffects' manquant sur cet objet !");
-        // }
+        if (TryGetComponent(out _uiScreenEffects))
+        {
+            Debug.Log("Found UI Text Effects");
+            if (scoreImageFade != null)
+            {
+                _uiScreenEffects.ImagePoolCreation(scoreImageFade);
+            }
+            else
+            {
+                Debug.LogWarning($"[{name}] NewMinigameUI : 'scoreImageFade' est manquant !");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"[{name}] NewMinigameUI : Composant 'UIScreenEffects' manquant sur cet objet !");
+        }
     }
 
     private void OnEnable()
@@ -78,39 +70,57 @@ public class NewMinigameUI : MonoBehaviour
 
     private void Update()
     {
-        for (int x = 0; x < PlayerManager.Instance.Players.Count; x++)
+        for (int id = 0; id < PlayerManager.Instance.Players.Count; id++)
         {
-            if (_playerScore[x] != _scoreManager.MissionScores[x])
+            if (_playerScore[id] != _scoreManager.MissionScores[id])
             {
-                PlayerScoreIncrease(x, _scoreManager.MissionScores[x]);        
-                TotalScoreIncrease(_scoreManager.MissionScores[x]);
+                PlayerScoreIncrease(id, _scoreManager.MissionScores[id]);        
+                TotalScoreIncrease(_scoreManager.MissionScores[id]);
             }
         }
     }
     
     private void TotalScoreIncrease(int score)
     {
-        // if (_uiScreenEffects != null)
-        // {
-        //     StartCoroutine(_uiScreenEffects.DoImagePoolFade());
-        //     
-        //     if (scoreTextFade != null)
-        //         StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreTextFade));
-        // }
+        if (_uiScreenEffects != null)
+        {
+            StartCoroutine(_uiScreenEffects.DoImagePoolFade());
+            
+            if (scoreTextFade != null)
+            {
+                if(_totalScore < score)
+                {
+                    scoreTextFade.text = "+" + (score-_totalScore);
+                }
+                else if (_totalScore > score)
+                {
+                    scoreTextFade.text = "-" + (_totalScore-score);
+                }
+                StartCoroutine(_uiScreenEffects.DoTextFadeMoveDown(scoreTextFade));
+            }
+        }
         
         if (totalScore != null)
         {
-            totalScore.text = score.ToString("00000000");
+            totalScore.text = _scoreManager.TotalMissionScore().ToString("00000000");
         }
+        _totalScore = score;
     }
     
     private void PlayerScoreIncrease(int id, int score)
     {
-        _playerScore[id] = score;
         playerScoreText[id].text = score.ToString("00000");
-        // if (_uiScreenEffects != null && subScoreEffect1 != null)
-        //     StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffect1));
-        // if (leftSubScoreImage != null)
-        //     StartCoroutine(_uiScreenEffects.DoImageFade(leftSubScoreImage));
+        
+        if (_playerScore[id] < score)
+        {
+            subScoreEffectText[id].text = "+"+(score-_playerScore[id]);
+        }
+        else if (_playerScore[id] > score)
+        {
+            subScoreEffectText[id].text = "-"+(_playerScore[id]-score);
+        }
+        
+        StartCoroutine(_uiScreenEffects.DoTextFade(subScoreEffectText[id]));
+        _playerScore[id] = score;
     }
 }

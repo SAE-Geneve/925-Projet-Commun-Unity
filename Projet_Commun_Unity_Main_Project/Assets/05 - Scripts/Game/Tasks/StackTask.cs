@@ -12,6 +12,12 @@ public class StackTask : TriggerTask
     protected override void OnTriggerEnter(Collider other)
     {
         if(!other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
+
+        if (!prop.IsStacked)
+        {
+            prop.IsStacked = true;
+            GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
+        }
         
         _currentStack++;
         Check();

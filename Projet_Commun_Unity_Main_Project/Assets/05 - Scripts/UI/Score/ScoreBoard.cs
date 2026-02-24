@@ -38,7 +38,8 @@ public class ScoreBoard : MonoBehaviour
             scoreSlots[x].DisabledAppearance();
             scoreSlots[x].gameObject.SetActive(true);
         }
-        totalScoreSlot.SetMissionScore(_scoreManager.TotalMissionScore());
+        Debug.Log(_scoreManager.TotalMissionScore());
+        totalScoreSlot.SetTotalScore(_scoreManager.TotalMissionScore());
     }
 
     public void Show() => StartCoroutine(ScoreRoutine());

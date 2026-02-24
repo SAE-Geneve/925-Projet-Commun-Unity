@@ -17,7 +17,7 @@ public class PersonalScoreDisplay : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    void Update()
     {
         if(scoreManager == null) return;
         

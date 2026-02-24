@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 1148390928480695589}
   - component: {fileID: 8238702655044465357}
   - component: {fileID: 7959203813133063443}
+  - component: {fileID: 9079646471659145795}
   m_Layer: 5
   m_Name: EXP - Boarding
   m_TagString: Untagged
@@ -371,6 +372,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstButton: {fileID: 3651500595816565417}
+--- !u!114 &9079646471659145795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837384028578637076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60691cd6de5416a49904047116d4178b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::MissionExplanationUI
+  _continueButton: {fileID: 93286208892653658}
 --- !u!1 &1003492222393808189
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,7 +593,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5087574804653718390
 RectTransform:
   m_ObjectHideFlags: 0
@@ -682,13 +696,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5354550290679227704}
-        m_TargetAssemblyTypeName: ButtonPress, Assembly-CSharp
-        m_MethodName: ChangeCanvas
+      - m_Target: {fileID: 11500000, guid: 60691cd6de5416a49904047116d4178b, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

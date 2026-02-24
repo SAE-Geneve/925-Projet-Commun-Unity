@@ -3374,11 +3374,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1185418809390262146, guid: 468f48ec6bb76d744ac3c3f96a4a3aab, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 400.96875
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1185418809390262146, guid: 468f48ec6bb76d744ac3c3f96a4a3aab, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 380.4375
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1185418809390262146, guid: 468f48ec6bb76d744ac3c3f96a4a3aab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3861,7 +3861,7 @@ MonoBehaviour:
   sfxSource: {fileID: 1346581916}
   conveyorBeltMusic: {fileID: 8300000, guid: 200e77a8d2c22dc4f8af7cb126204b69, type: 3}
   minigameMusic: {fileID: 8300000, guid: 823e42df3540c7647b4874fbe41bab28, type: 3}
-  lobbyMusic: {fileID: 8300000, guid: 97256054286c914459d7d64879927e27, type: 3}
+  lobbyMusic: {fileID: 8300000, guid: e343198c65a33594f98d37844bc354ad, type: 3}
   successSFX: {fileID: 8300000, guid: 98be4f3acec35ad4d8330f6a80340be5, type: 3}
   failureSFX: {fileID: 8300000, guid: 5a19254f6ca4d414baadd674a8d45a23, type: 3}
   buttonSFX: {fileID: 8300000, guid: 6a9efc0c5e24e7447ab15fdeb2a3ae7e, type: 3}
@@ -5764,6 +5764,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5448913928545155030}
+  - component: {fileID: 5448913928545155031}
   m_Layer: 0
   m_Name: TrackingTarget
   m_TagString: Untagged
@@ -5804,6 +5805,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 34408509247572595}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &5448913928545155031
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2784661705949019267}
+  m_Enabled: 1
 --- !u!114 &5657632598064891933
 MonoBehaviour:
   m_ObjectHideFlags: 0

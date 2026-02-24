@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     
     [Header("Other Musics")]
     [SerializeField] public AudioClip lobbyMusic;
+    [SerializeField] public AudioClip gameMusic;
 
     [Header("Sounds")]
     [SerializeField] public AudioClip successSFX;

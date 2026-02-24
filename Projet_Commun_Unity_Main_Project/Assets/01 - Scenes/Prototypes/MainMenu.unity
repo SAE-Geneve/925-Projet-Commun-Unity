@@ -656,6 +656,7 @@ GameObject:
   - component: {fileID: 120939702}
   - component: {fileID: 120939705}
   - component: {fileID: 120939706}
+  - component: {fileID: 120939707}
   m_Layer: 5
   m_Name: Main Menu Canvas
   m_TagString: Untagged
@@ -775,6 +776,18 @@ MonoBehaviour:
   - {fileID: 1445281424}
   - {fileID: 2094235344}
   - {fileID: 1891046722}
+--- !u!114 &120939707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120939700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6f9ce859bde2742af0a59122c4880a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::StartMusicLobby
 --- !u!1 &186790638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,7 +1037,6 @@ GameObject:
   m_Component:
   - component: {fileID: 269624855}
   - component: {fileID: 269624854}
-  - component: {fileID: 269624853}
   - component: {fileID: 269624856}
   m_Layer: 0
   m_Name: Main Camera
@@ -1033,14 +1045,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &269624853
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 269624852}
-  m_Enabled: 1
 --- !u!20 &269624854
 Camera:
   m_ObjectHideFlags: 0
@@ -3862,6 +3866,7 @@ MonoBehaviour:
   conveyorBeltMusic: {fileID: 8300000, guid: 200e77a8d2c22dc4f8af7cb126204b69, type: 3}
   minigameMusic: {fileID: 8300000, guid: 823e42df3540c7647b4874fbe41bab28, type: 3}
   lobbyMusic: {fileID: 8300000, guid: e343198c65a33594f98d37844bc354ad, type: 3}
+  gameMusic: {fileID: 8300000, guid: f0744e2b7f4513d4392f86a52617497a, type: 3}
   successSFX: {fileID: 8300000, guid: 98be4f3acec35ad4d8330f6a80340be5, type: 3}
   failureSFX: {fileID: 8300000, guid: 5a19254f6ca4d414baadd674a8d45a23, type: 3}
   buttonSFX: {fileID: 8300000, guid: 6a9efc0c5e24e7447ab15fdeb2a3ae7e, type: 3}

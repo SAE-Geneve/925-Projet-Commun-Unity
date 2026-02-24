@@ -22,12 +22,10 @@ public partial class ProcessBorderResultAction : Action
         {
             if (evil)
             {
-                Debug.LogWarning("INCREASED 3");
                 ScoreSystem.IncreaseScore(3);
             }
             else
             {
-                Debug.LogWarning("INCREASED 1");
                 success = true;
                 ScoreSystem.IncreaseScore(1);
             }
@@ -36,13 +34,11 @@ public partial class ProcessBorderResultAction : Action
         {
             if (evil)
             {
-                Debug.LogWarning("DECREASED 3");
                 success = true;
                 ScoreSystem.IncreaseScore(1);
             }
             else
             {
-                Debug.LogWarning("DECREASED 1");
                 ScoreSystem.IncreaseScore(3);
             }
         }

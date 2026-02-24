@@ -22,11 +22,9 @@ public class MissionTrigger : MonoBehaviour
     private readonly HashSet<Ragdoll> _ragdolls = new();
     private bool _isSequenceStarted = false;
     private int _playerNumber;
-    private AudioManager _audioManager;
 
     private void Start()
     {
-        _audioManager = AudioManager.Instance;
         _renderer = GetComponentInChildren<Renderer>();
         _playerManager = PlayerManager.Instance;
 
@@ -120,8 +118,6 @@ public class MissionTrigger : MonoBehaviour
 
     private void StartMission()
     {
-        _audioManager.PlaySfx(_audioManager.StartMissionSFX);
-        
         foreach (var ragdoll in _ragdolls)
             if (ragdoll) ragdoll.OnRagdollSelf -= _ragdollHandler;
 

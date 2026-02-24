@@ -31,12 +31,24 @@ public class GameManager : MonoBehaviour
     public ScoreManager Scores { get; private set; }
 
     private Coroutine _sceneChange;
-    
+
+    private bool annonce1Min = false;
+    private bool annonce30Sec = false;
     public float Timer
     {
         get => _timer;
         set
         {
+            if (value <= 60 && !annonce1Min)
+            {
+                annonce1Min = true;
+                _audioManager.PlaySfx(_audioManager.Annonce1MinSFX);
+            }
+            if (value <= 30 && !annonce30Sec)
+            {
+                annonce30Sec = true;
+                _audioManager.PlaySfx(_audioManager.Annonce30SecSFX);
+            }
             if (value <= 0)
             {
                 _timer = 0;

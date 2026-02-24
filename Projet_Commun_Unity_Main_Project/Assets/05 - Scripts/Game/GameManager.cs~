@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("The minimum numbers of players needed to start the game")] [SerializeField] [UnityEngine.Range(1,4)]
     private int _minPlayers = 1;
 
+    private AudioManager _audioManager;
     public static GameManager Instance { get; private set; }
 
     // Events
@@ -30,12 +31,24 @@ public class GameManager : MonoBehaviour
     public ScoreManager Scores { get; private set; }
 
     private Coroutine _sceneChange;
-    
+
+    private bool annonce1Min = false;
+    private bool annonce30Sec = false;
     public float Timer
     {
         get => _timer;
         set
         {
+            if (value <= 60 && !annonce1Min)
+            {
+                annonce1Min = true;
+                _audioManager.PlaySfx(_audioManager.Annonce1MinSFX);
+            }
+            if (value <= 60 && !annonce30Sec)
+            {
+                annonce30Sec = true;
+                _audioManager.PlaySfx(_audioManager.Annonce30SecSFX);
+            }
             if (value <= 0)
             {
                 _timer = 0;
@@ -101,7 +114,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _playerManager = PlayerManager.Instance;
-
+        _audioManager = AudioManager.Instance;
         if(_playerManager) _playerManager.PlayerInputManager.DisableJoining();
         ResetGame();
         Debug.Log($"Game State: {_state}");
@@ -175,6 +188,8 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        _audioManager.StopBGM();
+        _audioManager.PlayBGM(_audioManager.gameMusic);
         if (_playerManager.Players.Count < _minPlayers) return;
 
         SwitchState(GameState.Playing);

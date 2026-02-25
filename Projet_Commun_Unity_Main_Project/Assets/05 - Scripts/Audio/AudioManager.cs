@@ -13,11 +13,23 @@ public class AudioManager : MonoBehaviour
     
     [Header("Other Musics")]
     [SerializeField] public AudioClip lobbyMusic;
+    [SerializeField] public AudioClip gameMusic;
 
     [Header("Sounds")]
     [SerializeField] public AudioClip successSFX;
     [SerializeField] public AudioClip failureSFX;
     [SerializeField] public AudioClip buttonSFX;
+    [SerializeField] public AudioClip StartMissionSFX;
+    [SerializeField] public AudioClip HitSFX;
+    [SerializeField] public AudioClip StepSFX;
+    [SerializeField] public AudioClip AnnonceEndMissionSFX;
+    [SerializeField] public AudioClip ScanBorderSFX;
+    [SerializeField] public AudioClip TapieRoulantSFX;
+    [SerializeField] public AudioClip VoitureSFX;
+    [SerializeField] public AudioClip LevierOnSFX;
+    [SerializeField] public AudioClip LevierOffSFX;
+    [SerializeField] public AudioClip Annonce1MinSFX;
+    [SerializeField] public AudioClip Annonce30SecSFX;
     
     public static AudioManager Instance;
     

@@ -5,7 +5,7 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "Process Boarding Result", story: "Feedback [ui] from [IsAccepted] and [IsEvil]", category: "Action", id: "ProcessResult")]
+[NodeDescription(name: "Process Boarding Result", story: "Feedback [ui] from [IsAccepted] and [IsEvil] (Boarding)", category: "Action", id: "ProcessResult")]
 public partial class ProcessBoardingResultAction : Action
 {
     [SerializeReference] public BlackboardVariable<BoardingNPCUI> Ui;

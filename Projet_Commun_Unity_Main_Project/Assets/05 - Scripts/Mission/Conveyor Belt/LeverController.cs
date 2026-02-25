@@ -14,15 +14,29 @@ public class LevierController : MonoBehaviour
 
     [NonSerialized]public string triggerOn = "Activate";
     [NonSerialized]public string triggerOff = "Desactivate";
+
+    private AudioManager _audioManager;
     
     private bool isActive = false;
     public bool IsActive => isActive; 
     
+    private void Start()
+    {
+        _audioManager = AudioManager.Instance;
+    }
     public void ChangeState()
     {
         if (!canInteract) return; 
 
         isActive = !isActive;
+        if (isActive)
+        {
+            _audioManager.PlaySfx(_audioManager.LevierOnSFX);
+        }
+        else
+        {
+            _audioManager.PlaySfx(_audioManager.LevierOffSFX);
+        }
         UpdateVisualsAndLogic();
     }
 

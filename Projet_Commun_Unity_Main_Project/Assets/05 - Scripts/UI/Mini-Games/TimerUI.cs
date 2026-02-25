@@ -18,7 +18,7 @@ public class TimerUI : MonoBehaviour
     
     private int _reminder;
 
-    void Start()
+    void OnEnable()
     {
         //Intiliaze the timer
         _mission = GameManager.Instance.CurrentMission;

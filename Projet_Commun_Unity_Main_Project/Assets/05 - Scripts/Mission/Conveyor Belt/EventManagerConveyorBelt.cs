@@ -23,7 +23,7 @@ public class EventManagerConveyor : EventManager
     private List<PuddleTask> _activePuddlesList = new();
     private bool _isConveyorBroken = false;
 
-    protected override void Start()
+    protected void Start()
     {
         _availableSpawnPoints.AddRange(_puddleSpawnPoints);
         
@@ -31,8 +31,6 @@ public class EventManagerConveyor : EventManager
         {
             if (buttonTask != null) buttonTask.OnSucceedAction += HandleButtonPressed;
         }
-
-        base.Start(); 
     }
 
     public override void ResetManager()
@@ -60,7 +58,6 @@ public class EventManagerConveyor : EventManager
             {
                 buttonTask.ResetTask();
 
-                // Coupe l'alarme au reset
                 if (buttonTask.TryGetComponent<Animator>(out Animator anim))
                 {
                     anim.SetBool("IsBroken", false);
@@ -128,7 +125,6 @@ public class EventManagerConveyor : EventManager
             {
                 buttonTask.ResetTask();
                 
-                // Allume l'alarme
                 if (buttonTask.TryGetComponent<Animator>(out Animator anim))
                 {
                     anim.SetBool("IsBroken", true); 
@@ -150,7 +146,6 @@ public class EventManagerConveyor : EventManager
 
             foreach (var buttonTask in _restartButtonTasks)
             {
-                // Éteint l'alarme
                 if (buttonTask != null && buttonTask.TryGetComponent<Animator>(out Animator anim))
                 {
                     anim.SetBool("IsBroken", false); 

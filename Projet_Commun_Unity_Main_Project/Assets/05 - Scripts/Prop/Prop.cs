@@ -12,6 +12,7 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
     public PropType Type => _type;
     public Rigidbody Rb => _rb;
     public bool IsGrabbed { get; protected set; }
+    public bool IsStacked { get; set; }
     
     protected Rigidbody _rb;
     protected Collider _collider;

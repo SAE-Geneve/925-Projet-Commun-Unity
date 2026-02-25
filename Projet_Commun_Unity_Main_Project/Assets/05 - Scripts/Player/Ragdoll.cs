@@ -32,9 +32,11 @@ public class Ragdoll : MonoBehaviour
     
     private Coroutine _ragdollCoroutine;
     private Coroutine _immunityCoroutine;
+    private AudioManager _audioManager;
 
     protected virtual void Start()
     {
+        _audioManager = AudioManager.Instance;
         _animator = GetComponent<Animator>();
         _mainCollider = GetComponent<Collider>();
         _mainRigidbody = GetComponent<Rigidbody>();
@@ -55,7 +57,7 @@ public class Ragdoll : MonoBehaviour
     public virtual void RagdollOn()
     {
         //if (IsImmune) return;
-
+        if(_audioManager) _audioManager.PlaySfx(_audioManager.HitSFX);
         foreach (var col in _ragdollColliders)
             col.enabled = true;
 

@@ -22,9 +22,13 @@ public class AIManagerBorder : AIManager
     
     private float _lastSpawnTime;
     private List<float> _npcInTransitTimes = new List<float>();
+    
+    [HideInInspector] public bool isSpawningPaused = false;
 
     protected override void SpawnNPC()
     {
+        if (isSpawningPaused) return;
+
         if (spawnPoints == null || spawnPoints.Count == 0 || !npcPrefab) return;
         if (waitPos == null || waitPos.Length == 0) return;
         

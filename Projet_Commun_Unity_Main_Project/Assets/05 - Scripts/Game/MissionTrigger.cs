@@ -16,19 +16,17 @@ public class MissionTrigger : MonoBehaviour
     [SerializeField] private Material _unlockedMaterial;
     [SerializeField] private Material _lockedMaterial;
 
-    [Header("Rules Display")]
-    [Tooltip("Temps d'affichage des règles en secondes")]
-    [SerializeField] private float _rulesDisplayTime = 10f;
-
     private Renderer _renderer;
     private PlayerManager _playerManager;
     private Action<Ragdoll> _ragdollHandler;
     private readonly HashSet<Ragdoll> _ragdolls = new();
     private bool _isSequenceStarted = false;
     private int _playerNumber;
+    private AudioManager _audioManager;
 
     private void Start()
     {
+        _audioManager = AudioManager.Instance;
         _renderer = GetComponentInChildren<Renderer>();
         _playerManager = PlayerManager.Instance;
 
@@ -80,35 +78,50 @@ public class MissionTrigger : MonoBehaviour
     {
         if (_playerManager && _playerNumber == _playerManager.PlayerCount && !_isSequenceStarted)
         {
-            StartCoroutine(StartMissionSequence());
+            StartMissionSequence();
         }
     }
 
-    private IEnumerator StartMissionSequence()
+    private void StartMissionSequence()
     {
         _isSequenceStarted = true;
-        GameObject rulesInstance = null;
-
+        
         Time.timeScale = 0f;
 
         if (_mission != null && _mission.ExplanationPrefab != null)
         {
-            rulesInstance = Instantiate(_mission.ExplanationPrefab);
+            GameObject rulesInstance = Instantiate(_mission.ExplanationPrefab);
+            
+            var uiScript = rulesInstance.GetComponent<MissionExplanationUI>();
+
+            if (uiScript != null)
+            {
+                uiScript.OnContinueClicked += () => 
+                {
+                    Destroy(rulesInstance);
+                    Time.timeScale = 1f;
+                    StartMission();
+                };
+            }
+            else
+            {
+                Debug.LogError("Le script MissionExplanationUI est manquant sur le prefab !");
+                Destroy(rulesInstance);
+                Time.timeScale = 1f;
+                StartMission();
+            }
         }
-
-        yield return new WaitForSecondsRealtime(_rulesDisplayTime);
-
-        if (rulesInstance != null)
+        else
         {
-            Destroy(rulesInstance);
+            Time.timeScale = 1f;
+            StartMission();
         }
-
-        Time.timeScale = 1f;
-        StartMission();
     }
 
     private void StartMission()
     {
+        _audioManager.PlaySfx(_audioManager.StartMissionSFX);
+        
         foreach (var ragdoll in _ragdolls)
             if (ragdoll) ragdoll.OnRagdollSelf -= _ragdollHandler;
 

@@ -23,38 +23,27 @@ public class TimerUI : MonoBehaviour
         //Intiliaze the timer
         _mission = GameManager.Instance.CurrentMission;
         
-        UpdateTimer();
-        
         _uiScreenEffects = transform.parent.parent.GetComponent<UIScreenEffects>();
+        
+        UpdateTimer();
     }
 
     void FixedUpdate()
     {
-        // if (_givenTime > 0 && GameManager.Instance.State != GameState.Paused)
-        // {
-        //     _givenTime -= Time.deltaTime;
-        //
-        //     // Divide the time by 60
-        //     _minute = Mathf.FloorToInt(_givenTime / 60);
-        //
-        //     // Returns the remainder
-        //     _second = Mathf.FloorToInt(_givenTime % 60);
-        //
-        //     //Set text string
-        //     timerText.text = $"{_minute:00}:{_second:00}";
-        // }
-        
-        UpdateTimer();
+        if (GameManager.Instance.Context == GameContext.Mission)
+        {
+            UpdateTimer();
 
-        if (_minute == 0 && _second == 30f && _reminder == 0)
-        {
-            TimeRemaining(30);
-            _reminder++;
-        }
-        else if (_minute == 0 && _second == 15f && _reminder == 1)
-        {
-            TimeRemaining(15);
-            _reminder++;
+            if (_minute == 0 && _second == 30f && _reminder == 0)
+            {
+                TimeRemaining(30);
+                _reminder++;
+            }
+            else if (_minute == 0 && _second == 15f && _reminder == 1)
+            {
+                TimeRemaining(15);
+                _reminder++;
+            }
         }
     }
 

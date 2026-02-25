@@ -17,7 +17,10 @@ public class NewMinigameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] subScoreEffectText;
     private int[] _playerScore;
     
+    private Canvas _canvas;
     private ScoreManager _scoreManager;
+    
+    [SerializeField] private GameObject timerPanel;
     
     [Header("Total Score Effects")]
     [SerializeField] private Image scoreImageFade;
@@ -33,6 +36,11 @@ public class NewMinigameUI : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             _playerScore[i] = 0;
+        }
+
+        if (TryGetComponent(out _canvas))
+        {
+            Debug.Log("Found canvas");
         }
         if (TryGetComponent(out _uiScreenEffects))
         {
@@ -52,30 +60,41 @@ public class NewMinigameUI : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    public void StartMinigame()
     {
+        _canvas.enabled = true;
+        timerPanel.SetActive(true);
         for (int i = 0; i < PlayerManager.Instance.Players.Count; i++)
         {
             scorePanel[i].SetActive(true);
         }
     }
 
-    private void OnDisable()
+    public void EndMinigame()
     {
+        _canvas.enabled = false;
+        timerPanel.SetActive(false);
         for (int i = 0; i < PlayerManager.Instance.Players.Count; i++)
         {
+            playerScoreText[i].text = 0.ToString("00000");
             scorePanel[i].SetActive(false);
+            _playerScore[i] = 0;
         }
+        totalScore.text = 0.ToString("00000000");
+        
     }
 
     private void Update()
     {
-        for (int id = 0; id < PlayerManager.Instance.Players.Count; id++)
+        if(GameManager.Instance.Context==GameContext.Mission)
         {
-            if (_playerScore[id] != _scoreManager.MissionScores[id])
+            for (int id = 0; id < PlayerManager.Instance.Players.Count; id++)
             {
-                PlayerScoreIncrease(id, _scoreManager.MissionScores[id]);        
-                TotalScoreIncrease(_scoreManager.MissionScores[id]);
+                if (_playerScore[id] != _scoreManager.MissionScores[id])
+                {
+                    PlayerScoreIncrease(id, _scoreManager.MissionScores[id]);
+                    TotalScoreIncrease(_scoreManager.MissionScores[id]);
+                }
             }
         }
     }

@@ -14,6 +14,16 @@ public class ScoreManager
         }
         Debug.LogWarning("Score Reset");
     }
+    
+    public int TotalGameScore()
+    {
+        int totalGameScore = 0;
+        for (int i = 0; i < TotalScores.Length; i++)
+        {
+            totalGameScore += TotalScores[i];
+        }
+        return totalGameScore;
+    }
 
     public int TotalMissionScore()
     {

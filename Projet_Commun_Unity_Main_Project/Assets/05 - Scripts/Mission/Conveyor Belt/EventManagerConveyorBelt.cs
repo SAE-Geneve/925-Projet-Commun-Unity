@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EventManagerConveyor : EventManager
 {
+    /*
     [Header("Event Weights")]
     [SerializeField] private float _puddleWeight = 70f;
     [SerializeField] private float _breakdownWeight = 30f;
@@ -162,4 +163,4 @@ public class EventManagerConveyor : EventManager
             if (buttonTask != null) buttonTask.OnSucceedAction -= HandleButtonPressed;
         }
     }
-}
+*/}

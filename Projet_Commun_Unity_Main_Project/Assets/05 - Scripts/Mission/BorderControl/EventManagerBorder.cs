@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EventManagerBorder : EventManager
 {
+    /*
     [Header("AI Manager Link")]
     [Tooltip("Glisse ici l'objet qui gère le spawn des IA pour le stopper pendant la panne")]
     [SerializeField] private AIManagerBorder _aiManagerBorder;
@@ -200,4 +201,5 @@ public class EventManagerBorder : EventManager
             if (buttonTask != null) buttonTask.OnSucceedAction -= HandleButtonPressed;
         }
     }
+    */
 }

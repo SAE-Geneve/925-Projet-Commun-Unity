@@ -35,7 +35,7 @@ public class PlayerMovement : CharacterMovement
         _isDashing = true;
         StartCoroutine(nameof(DashCoroutine));
     
-        Rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
+        Rb.AddForce(transform.forward * (dashForce + _player.PlayerBonus.Dive), ForceMode.Impulse);
     }
     
     private IEnumerator DashCoroutine()

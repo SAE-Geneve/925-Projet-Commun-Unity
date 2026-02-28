@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class ScoreManager
@@ -15,25 +16,10 @@ public class ScoreManager
         Debug.LogWarning("Score Reset");
     }
     
-    public int TotalGameScore()
-    {
-        int totalGameScore = 0;
-        for (int i = 0; i < TotalScores.Length; i++)
-        {
-            totalGameScore += TotalScores[i];
-        }
-        return totalGameScore;
-    }
+    public int TotalGameScore() => TotalScores.Sum();
 
-    public int TotalMissionScore()
-    {
-        int totalMissionScore = 0;
-        for (int i = 0; i < MissionScores.Length; i++)
-        {
-            totalMissionScore += MissionScores[i];
-        }
-        return totalMissionScore;
-    }
+    public int TotalMissionScore() => MissionScores.Sum();
+    
     private void AddTotalScore(int score, int id)
     {
         TotalScores[id] += score;

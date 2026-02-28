@@ -7,8 +7,17 @@ public class PlayerMovement : CharacterMovement
     [SerializeField] private float dashForce = 5f;
     [SerializeField] private float dashDuration = 5f;
     
-    private bool _isDashing;
+    private PlayerController _player;
     
+    private bool _isDashing;
+
+    protected override void Start()
+    {
+        base.Start();
+        
+        _player = GetComponent<PlayerController>();
+    }
+
     protected override void HorizontalMovement()
     {
         if(FreeMovement) return;
@@ -33,5 +42,10 @@ public class PlayerMovement : CharacterMovement
     {
         yield return new WaitForSeconds(dashDuration);
         _isDashing = false;
+    }
+
+    protected override Vector3 CalculateTargetVelocity(Vector3 direction)
+    {
+        return direction * (speed + _player.PlayerBonus.Speed);
     }
 }

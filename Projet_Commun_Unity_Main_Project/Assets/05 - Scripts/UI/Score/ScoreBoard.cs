@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ScoreBoard : MonoBehaviour
@@ -48,11 +49,16 @@ public class ScoreBoard : MonoBehaviour
     {
         ScoreBoardCanvas.enabled = true;
         
+        List<Coroutine> runningCoroutines = new List<Coroutine>();
+
         for (int i = 0; i < _playerManager.Players.Count; i++)
         {
-            yield return new WaitForSeconds(timeBetweenPlayerScores);
-            yield return StartCoroutine(scoreSlots[i].ScoreFillRoutine());
+            Coroutine c = StartCoroutine(scoreSlots[i].ScoreFillRoutine());
+            runningCoroutines.Add(c);
         }
+        
+        foreach (Coroutine c in runningCoroutines)
+            yield return c;
         
         yield return new WaitForSeconds(timeBetweenPlayerScores);
         

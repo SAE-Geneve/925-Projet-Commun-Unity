@@ -73,4 +73,9 @@ public class PlayerController : Controller
         if (InteractableGrabbed != null)
             InteractableGrabbed.InteractEnd();
     }
+
+    protected override float CalculateThrowForce()
+    {
+        return _throwPower * (_maxThrowForce + PlayerBonus.Strength);
+    }
 }

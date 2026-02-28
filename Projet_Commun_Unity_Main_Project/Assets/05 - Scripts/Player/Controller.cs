@@ -15,7 +15,7 @@ public class Controller : MonoBehaviour, IGrabbable
     [SerializeField] private float _barSpeed = 2f;
     
     [Header("Throw")]
-    [SerializeField] private float _maxThrowForce = 10f;
+    [SerializeField] protected float _maxThrowForce = 10f;
     [SerializeField] private float _upForceMultiplier = 1f;
     
     [Header("Catch/Interact")]
@@ -37,7 +37,7 @@ public class Controller : MonoBehaviour, IGrabbable
     private IGrabbable _grabbedObject;
     
     private float _grabStartTime;
-    private float _throwPower;
+    protected float _throwPower;
     
     private bool _isCharging;
     protected virtual void Start()
@@ -93,13 +93,17 @@ public class Controller : MonoBehaviour, IGrabbable
     {
         Vector3 forward = transform.forward;
         Vector3 upward = transform.up * _upForceMultiplier;
-        float force = _throwPower * _maxThrowForce;
-        throwDirection = (forward + upward).normalized * force;
+        throwDirection = (forward + upward).normalized * CalculateThrowForce();
         
         return throwDirection + _rb.linearVelocity;
     }
-   
-    
+
+    protected virtual float CalculateThrowForce()
+    {
+        return _throwPower * _maxThrowForce;
+    }
+
+
     protected void TryAction<T>(Action<T> onFound) where T : class
     {
         Collider[] hits = Physics.OverlapSphere(CatchPoint.position, _sphereRadius);

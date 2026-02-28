@@ -10,10 +10,12 @@ public abstract class Shop : MonoBehaviour, IInteractable
     [SerializeField] [Min(1)] private int price = 20;
     
     ObjectOutline _outline;
+    Animator _animator;
     
     private void Start()
     {
         _outline = GetComponent<ObjectOutline>();
+        _animator = GetComponent<Animator>();
         
         priceTmp.SetText($"{price}$");
     }
@@ -27,14 +29,11 @@ public abstract class Shop : MonoBehaviour, IInteractable
         
         if (scoreManager.TotalScores[playerId] >= price)
         {
-            Debug.Log("BUY");
             Buy(playerController);
             scoreManager.SubTotalScore(price, playerId);
+            _animator.SetTrigger("Buy");
         }
-        else
-        {
-            Debug.Log($"CAN'T BUY (price : {price} / total score : {scoreManager.TotalScores[playerId]})");
-        }
+        else _animator.SetTrigger("Fail");
     }
 
     public void InteractEnd() { }

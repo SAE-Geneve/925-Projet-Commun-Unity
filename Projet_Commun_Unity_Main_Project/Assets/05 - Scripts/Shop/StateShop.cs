@@ -5,7 +5,7 @@ public class StateShop :Shop
     [Header("State Parameters")] 
     [SerializeField] private PlayerBonus PlayerBonus;
     
-    public override void Interact(PlayerController playerController)
+    protected override void Buy(PlayerController playerController)
     {
         playerController.PlayerBonus += PlayerBonus;
     }

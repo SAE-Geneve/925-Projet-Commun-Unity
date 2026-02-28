@@ -17,8 +17,25 @@ public abstract class Shop : MonoBehaviour, IInteractable
         
         priceTmp.SetText($"{price}$");
     }
-    
-    public abstract void Interact(PlayerController playerController);
+
+    protected abstract void Buy(PlayerController playerController);
+
+    public void Interact(PlayerController playerController)
+    {
+        ScoreManager scoreManager = GameManager.Instance.Scores;
+        int playerId = playerController.Id;
+        
+        if (scoreManager.TotalScores[playerId] >= price)
+        {
+            Debug.Log("BUY");
+            Buy(playerController);
+            scoreManager.SubMissionScore(price, playerId);
+        }
+        else
+        {
+            Debug.Log("CAN'T BUY");
+        }
+    }
 
     public void InteractEnd() { }
 

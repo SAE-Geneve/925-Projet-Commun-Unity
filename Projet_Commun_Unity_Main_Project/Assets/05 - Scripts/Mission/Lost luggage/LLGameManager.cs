@@ -20,7 +20,7 @@ public class LLGameManager : MonoBehaviour
 
     private void Start()
     {
-        StartNewRound();
+        
     }
 
     public void StartNewRound()

@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class PlayerMovement : CharacterMovement
 {
+    [Header("Parameters")]
     [SerializeField] private float dashForce = 5f;
     [SerializeField] private float dashDuration = 5f;
     
     private bool _isDashing;
-    
-
     
     protected override void HorizontalMovement()
     {

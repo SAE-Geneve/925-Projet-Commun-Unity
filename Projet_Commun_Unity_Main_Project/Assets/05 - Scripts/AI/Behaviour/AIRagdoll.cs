@@ -17,7 +17,7 @@ public class AIRagdoll : Ragdoll
         _mainRb = GetComponent<Rigidbody>();
     }
 
-    public override void RagdollOn()
+    public override void RagdollOn(bool ignoreImmunity = false)
     {
         if (Time.time < _lastRagdollOffTime + 1.0f) return;
         if (!isRagdollable || IsRagdollState) return;

@@ -20,7 +20,7 @@ public class Ragdoll : MonoBehaviour
     public event Action<Ragdoll> OnRagdollSelf;
     
     public bool IsRagdoll { get; private set; }
-    public bool IsImmune { get; private set; }
+    public bool IsImmune { get; set; }
 
     private Animator _animator;
     private Collider _mainCollider;
@@ -54,9 +54,10 @@ public class Ragdoll : MonoBehaviour
         _ragdollRigidbodies = playerRig.GetComponentsInChildren<Rigidbody>();
     }
 
-    public virtual void RagdollOn()
+    public virtual void RagdollOn(bool ignoreImmunity = false)
     {
-        //if (IsImmune) return;
+        if (IsImmune && !ignoreImmunity) return;
+        
         if(_audioManager) _audioManager.PlaySfx(_audioManager.HitSFX);
         foreach (var col in _ragdollColliders)
             col.enabled = true;
@@ -102,22 +103,22 @@ public class Ragdoll : MonoBehaviour
 
         IsRagdoll = false;
         
-        StartImmunity();
+        // StartImmunity();
     }
 
-    private void StartImmunity()
-    {
-        if (_immunityCoroutine != null)
-            StopCoroutine(_immunityCoroutine);
-        _immunityCoroutine = StartCoroutine(ImmunityTimer());
-    }
+    // private void StartImmunity()
+    // {
+    //     if (_immunityCoroutine != null)
+    //         StopCoroutine(_immunityCoroutine);
+    //     _immunityCoroutine = StartCoroutine(ImmunityTimer());
+    // }
 
-    private IEnumerator ImmunityTimer()
-    {
-        IsImmune = true;
-        yield return new WaitForSeconds(_ragdollImmunityDuration);
-        IsImmune = false;
-    }
+    // private IEnumerator ImmunityTimer()
+    // {
+    //     IsImmune = true;
+    //     yield return new WaitForSeconds(_ragdollImmunityDuration);
+    //     IsImmune = false;
+    // }
 
     private void OnCollisionEnter(Collision other)
     {

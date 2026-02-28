@@ -27,7 +27,7 @@ public abstract class Shop : MonoBehaviour, IInteractable
         ScoreManager scoreManager = GameManager.Instance.Scores;
         int playerId = playerController.Id;
         
-        if (scoreManager.TotalScores[playerId] >= price)
+        if (BuyCondition(playerController) && scoreManager.TotalScores[playerId] >= price)
         {
             Buy(playerController);
             scoreManager.SubTotalScore(price, playerId);
@@ -41,4 +41,6 @@ public abstract class Shop : MonoBehaviour, IInteractable
     public void AreaEnter() => _outline.EnableOutline();
 
     public void AreaExit() => _outline.DisableOutline();
+    
+    protected virtual bool BuyCondition(PlayerController playerController) => true; 
 }

@@ -199,7 +199,7 @@ public class Controller : MonoBehaviour, IGrabbable
     public IEnumerator DropRoutine()
     {
         yield return new WaitForSeconds(0.1f);
-        _ragdoll.RagdollOn();
+        _ragdoll.RagdollOn(true);
         Movement.FreeMovement = false;
     }
 

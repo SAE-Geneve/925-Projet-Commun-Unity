@@ -38,6 +38,7 @@ public class PlayerController : Controller
     public KartMovement KartMovement { get; set; }
     public KartPhysic KartPhysic { get; set; }
     public PlayerBonus PlayerBonus { get; set; }
+    public Ragdoll Ragdoll { get; private set; }
     
     public Transform CameraTarget => cameraTarget;
     
@@ -47,6 +48,7 @@ public class PlayerController : Controller
     {
         Input = GetComponent<PlayerInput>();
         InputManager = GetComponent<InputManager>();
+        Ragdoll = GetComponent<Ragdoll>();
         
         PlayerManager playerManager = PlayerManager.Instance;
         if(playerManager) transform.parent = playerManager.transform;

@@ -13,29 +13,34 @@ public class ScoreManager
             AddTotalScore(MissionScores[i], i);
             MissionScores[i] = 0;
         }
-        Debug.LogWarning("Score Reset");
+        Debug.Log("Score Reset");
     }
     
     public int TotalGameScore() => TotalScores.Sum();
 
     public int TotalMissionScore() => MissionScores.Sum();
     
-    private void AddTotalScore(int score, int id)
+    public void AddTotalScore(int score, int id)
     {
         TotalScores[id] += score;
-        Debug.Log("added " + score + " to " + id + " total");
+        Debug.Log("added " + score + " to " + id + " total score");
+    }
+
+    public void SubTotalScore(int score, int id)
+    {
+        TotalScores[id] -= score;
+        Debug.Log("removed " + score + " to " + id + "total score");
     }
     
     public void AddMissionScore(int score, int id)
     {
         MissionScores[id] += score;
-        Debug.Log("added " + score + " to " + id + " mission total");
+        Debug.Log("added " + score + " to " + id + " mission score");
     }
     
     public void SubMissionScore(int score, int id)
     {
         MissionScores[id] -= score;
-        Debug.Log("removed " + score + " to " + id + " mission total");
+        Debug.Log("removed " + score + " to " + id + " mission score");
     }
-
 }

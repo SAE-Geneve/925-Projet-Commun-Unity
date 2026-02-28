@@ -29,11 +29,11 @@ public abstract class Shop : MonoBehaviour, IInteractable
         {
             Debug.Log("BUY");
             Buy(playerController);
-            scoreManager.SubMissionScore(price, playerId);
+            scoreManager.SubTotalScore(price, playerId);
         }
         else
         {
-            Debug.Log("CAN'T BUY");
+            Debug.Log($"CAN'T BUY (price : {price} / total score : {scoreManager.TotalScores[playerId]})");
         }
     }
 

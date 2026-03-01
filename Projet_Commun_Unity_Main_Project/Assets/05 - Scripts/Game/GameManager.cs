@@ -355,6 +355,5 @@ public enum GameContext
 {
     Hub,
     Mission,
-    LastMission,
     Menu,
 }

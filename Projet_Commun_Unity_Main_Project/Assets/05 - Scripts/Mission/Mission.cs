@@ -22,6 +22,7 @@ public class Mission : MonoBehaviour
 
     public event Action OnSwitchState;
     
+    public string Name => _name;
     public bool IsLocked => _missionState == MissionState.Locked;
     
     public float Timer

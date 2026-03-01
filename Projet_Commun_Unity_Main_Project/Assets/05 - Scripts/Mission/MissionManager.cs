@@ -27,7 +27,7 @@ public class MissionManager : MonoBehaviour
         
         missions[randomIndex].Unlock();
         
-        missionNameTmp.SetText(missions[randomIndex].name);
+        missionNameTmp.SetText(missions[randomIndex].Name);
         missionNameAnimator.SetTrigger("Display");
     }
 

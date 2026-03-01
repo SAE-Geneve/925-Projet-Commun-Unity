@@ -82,4 +82,9 @@ public class AIManager : MonoBehaviour
         ai.OnDestroyed -= RemoveAI;
         _spawnedAIs.Remove(ai);
     }
+
+    public void SetSpawnInterval(float interval)
+    {
+        spawnInterval = interval;
+    }
 }

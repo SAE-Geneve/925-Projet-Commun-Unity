@@ -14,7 +14,7 @@ public class Ragdoll : MonoBehaviour
     [Header("Parameters")]
     [SerializeField] protected float ragdollTime = 3f;
     [SerializeField] private float _ragdollVelocityThreshold = 3f;
-    [SerializeField] private float _ragdollImmunityDuration = 2f;
+    // [SerializeField] private float _ragdollImmunityDuration = 2f;
     
     public event Action OnRagdoll;
     public event Action<Ragdoll> OnRagdollSelf;

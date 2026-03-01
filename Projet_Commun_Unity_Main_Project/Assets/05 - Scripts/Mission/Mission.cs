@@ -88,6 +88,7 @@ public class Mission : MonoBehaviour
     }
 
     public void Unlock() => SwitchMissionState(MissionState.Unlocked);
+    public void Lock() => SwitchMissionState(MissionState.Locked);
 
     protected virtual void SwitchMissionState(MissionState newState)
     {

@@ -1,12 +1,16 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class MissionManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private List<Mission> missions;
-    [SerializeField] private Mission _finalMission;
+    
+    [Header("Parameters")]
+    [SerializeField] private float hubTime = 30f;
+
+    private void Start() => UnlockRandomMission();
 
     public void UnlockRandomMission()
     {
@@ -19,12 +23,13 @@ public class MissionManager : MonoBehaviour
         int randomIndex = Random.Range(0, missions.Count);
         
         missions[randomIndex].Unlock();
-        missions.RemoveAt(randomIndex);
     }
 
-    public void TryUnlockFinalMission()
+    public void OnMissionFinished() => StartCoroutine(HubTimeRoutine());
+
+    private IEnumerator HubTimeRoutine()
     {
-        if (missions.Count > 0) UnlockRandomMission();
-        else _finalMission.Unlock();
+        yield return new WaitForSeconds(hubTime);
+        UnlockRandomMission();
     }
 }

@@ -1,7 +1,26 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+
+[Serializable]
+public struct PlayerBonus
+{
+    public float Speed;
+    public float Dive;
+    public float Strength;
+    
+    public static PlayerBonus operator+(PlayerBonus a, PlayerBonus b)
+    {
+        return new PlayerBonus
+        {
+            Speed = a.Speed + b.Speed,
+            Dive = a.Dive + b.Dive,
+            Strength = a.Strength + b.Strength
+        };
+    }
+}
 
 public class PlayerController : Controller
 {
@@ -18,6 +37,8 @@ public class PlayerController : Controller
     public KartController KartController { get; set; }
     public KartMovement KartMovement { get; set; }
     public KartPhysic KartPhysic { get; set; }
+    public PlayerBonus PlayerBonus { get; set; }
+    public Ragdoll Ragdoll { get; private set; }
     
     public Transform CameraTarget => cameraTarget;
     
@@ -27,6 +48,7 @@ public class PlayerController : Controller
     {
         Input = GetComponent<PlayerInput>();
         InputManager = GetComponent<InputManager>();
+        Ragdoll = GetComponent<Ragdoll>();
         
         PlayerManager playerManager = PlayerManager.Instance;
         if(playerManager) transform.parent = playerManager.transform;
@@ -52,5 +74,10 @@ public class PlayerController : Controller
     {
         if (InteractableGrabbed != null)
             InteractableGrabbed.InteractEnd();
+    }
+
+    protected override float CalculateThrowForce()
+    {
+        return _throwPower * (_maxThrowForce + PlayerBonus.Strength);
     }
 }

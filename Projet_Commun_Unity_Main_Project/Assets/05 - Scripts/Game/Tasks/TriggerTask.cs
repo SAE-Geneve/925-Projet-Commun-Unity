@@ -13,8 +13,15 @@ public class TriggerTask : GameTask
         if(Done || !other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
         
         Succeed();
-        Debug.LogWarning("SDNJIO");
-        if(GameManager.Instance) GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
+        
+        GameManager gm = GameManager.Instance;
+        
+        if (gm)
+        {
+            if (gm.CurrentMission != null) gm.Scores.AddMissionScore(score, prop.OwnerId);
+            else gm.Scores.AddTotalScore(score, prop.OwnerId);
+        }
+        
         if(isDestroyed) prop.Destroy();
     }
     

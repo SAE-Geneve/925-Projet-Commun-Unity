@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -141,22 +140,14 @@ public class GameManager : MonoBehaviour
         if (_playerManager)
         {
             if (newState == GameState.Lobby)
-            {
                 _playerManager.PlayerInputManager.EnableJoining();
-            }
             else
-            {
                 _playerManager.PlayerInputManager.DisableJoining();
-            }
 
             if (newState == GameState.Lobby || newState == GameState.Menu || newState == GameState.Paused)
-            {
                 _playerManager.DisablePlayerControllers();
-            }
             else
-            {
                 _playerManager.EnablePlayerControllers();
-            }
         }
 
         _lastState = _state;
@@ -355,6 +346,5 @@ public enum GameContext
 {
     Hub,
     Mission,
-    LastMission,
     Menu,
 }

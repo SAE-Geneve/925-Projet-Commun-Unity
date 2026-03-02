@@ -43,6 +43,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayBGM(AudioClip clip)
     {
+        if(!musicSource) return;
         //Stops the previous background music
         musicSource.clip = clip;
         musicSource.volume = 0.5f;
@@ -52,7 +53,7 @@ public class AudioManager : MonoBehaviour
     public void StopBGM()
     {
         //Stops the background music
-        musicSource.Stop();
+        if(musicSource) musicSource.Stop();
     }
 
     public void PlaySfx(AudioClip clip)

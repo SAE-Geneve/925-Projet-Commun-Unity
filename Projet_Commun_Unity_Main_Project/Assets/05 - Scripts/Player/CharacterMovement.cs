@@ -47,10 +47,9 @@ public class CharacterMovement : MonoBehaviour
         // Calculate the change in velocity needed and apply it (no acceleration or deceleration)
         Vector3 moveDir = _camRight * _movement.x + _camForward * _movement.y;
         
-        Vector3 targetVelocity = moveDir * speed;
         Vector3 velocity = Rb.linearVelocity;
         
-        Vector3 velocityChange = targetVelocity - new Vector3(velocity.x, 0, velocity.z);
+        Vector3 velocityChange = CalculateTargetVelocity(moveDir) - new Vector3(velocity.x, 0, velocity.z);
         
         Rb.AddForce(velocityChange, ForceMode.VelocityChange);
         OnMove?.Invoke(moveDir);
@@ -80,6 +79,8 @@ public class CharacterMovement : MonoBehaviour
         _camRight.y = 0;
         _camRight.Normalize();
     }
+
+    protected virtual Vector3 CalculateTargetVelocity(Vector3 direction) => direction * speed;
 
     public void SetupCamera()
     {

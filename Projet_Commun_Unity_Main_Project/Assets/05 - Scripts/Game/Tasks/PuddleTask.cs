@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class PuddleTask : GameTask
 {
-    [Header("Parameters")] 
-    [SerializeField] private float _cleanTime = 2f;
-
     private MopProp _mop;
     private Material _puddleMaterial;
 
@@ -20,13 +17,15 @@ public class PuddleTask : GameTask
     private void Update()
     {
         if(!_isCleaning) return;
+
+        float cleanTime = _mop.CleanTime;
         
-        float ratio = Mathf.Clamp01(_cleanTimer / _cleanTime);
+        float ratio = Mathf.Clamp01(_cleanTimer / cleanTime);
         UpdateMaterial(ratio);
         
         _cleanTimer += Time.deltaTime;
 
-        if (_cleanTimer >= _cleanTime) CompleteTask();
+        if (_cleanTimer >= cleanTime) CompleteTask();
     }
     
     private void OnTriggerEnter(Collider other)

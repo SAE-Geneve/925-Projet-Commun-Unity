@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class MopProp : InteractableProp
 {
-    [Header("References")]
+    [Header("Mop References")]
     [SerializeField] private Material _interactMaterial;
+
+    [Header("Mop Parameters")]
+    [SerializeField] [Min(0.1f)] private float cleanTime = 3f;
 
     public event Action OnStartClean;
     public event Action OnStopClean;
+    
+    public float CleanTime => cleanTime;
     
     private Renderer _renderer;
     private Material _originalMaterial;

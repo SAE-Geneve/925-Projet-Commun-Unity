@@ -20,7 +20,26 @@ public class AIManager : MonoBehaviour
 
     protected virtual void Start()
     {
+        AdaptToPlayerCount();
         if(_spawnOnStart) StartSpawn();
+    }
+    
+    protected virtual void AdaptToPlayerCount()
+    {
+        if (PlayerManager.Instance == null) return;
+
+        int playerCount = PlayerManager.Instance.PlayerCount;
+        
+        float multiplier = 1f + (playerCount - 1) * 0.5f; 
+        
+        spawnInterval = spawnInterval / multiplier;
+        
+        if (useSpawnLimit)
+        {
+            maxSpawnAmount = Mathf.RoundToInt(maxSpawnAmount * multiplier);
+        }
+
+        Debug.Log($"[AIManager] Difficulté adaptée pour {playerCount} joueurs. Nouvel intervalle : {spawnInterval}s, Max IA : {maxSpawnAmount}");
     }
 
     public void StartSpawn()
@@ -81,5 +100,10 @@ public class AIManager : MonoBehaviour
     {
         ai.OnDestroyed -= RemoveAI;
         _spawnedAIs.Remove(ai);
+    }
+
+    public void SetSpawnInterval(float interval)
+    {
+        spawnInterval = interval;
     }
 }

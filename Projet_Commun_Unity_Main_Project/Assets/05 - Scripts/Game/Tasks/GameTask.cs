@@ -66,4 +66,9 @@ public abstract class GameTask : MonoBehaviour
         Done = false;
         _multipleTaskCounter = 0;
     }
+
+    public void SetMultipleTaskLimit(int limit)
+    {
+        _multipleTaskLimit = limit;
+    }
 }

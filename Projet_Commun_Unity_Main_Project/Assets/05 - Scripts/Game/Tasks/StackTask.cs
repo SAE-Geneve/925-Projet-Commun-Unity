@@ -55,4 +55,9 @@ public class StackTask : TriggerTask
         stackGoalTmp.color = Color.white;
         stackGoalTmp.SetText($"{_currentStack}/{stackGoal}");
     }
+
+    public void SetGoal(int goal)
+    {
+        stackGoal = goal;
+    }
 }

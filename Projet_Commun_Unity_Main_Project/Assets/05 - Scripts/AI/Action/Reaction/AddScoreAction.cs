@@ -1,4 +1,4 @@
-    using System;
+using System;
 using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
@@ -12,15 +12,21 @@ public partial class AddScoreAction : Action
     [SerializeReference] public BlackboardVariable<InteractableTask> Manager;
     [SerializeReference] public BlackboardVariable<bool> Enemy;
     [SerializeReference] public BlackboardVariable<bool> Good;
+
     protected override Status OnStart()
     {
         Debug.LogWarning(Enemy.Value == Good.Value);
+
         if (Enemy.Value == Good.Value)
         {
             GameManager.Instance.Scores.AddMissionScore(Score, Manager.Value.PlayerController.Id);
         }
+        else
+        {
+            int halfScore = Score.Value / 2;
+            GameManager.Instance.Scores.SubMissionScore(halfScore, Manager.Value.PlayerController.Id);
+        }
+
         return Status.Success;
-       
     }
 }
-

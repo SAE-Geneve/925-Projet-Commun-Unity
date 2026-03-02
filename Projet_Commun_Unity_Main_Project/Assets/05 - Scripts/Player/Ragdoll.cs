@@ -58,7 +58,7 @@ public class Ragdoll : MonoBehaviour
     {
         if (IsImmune && !ignoreImmunity) return;
         
-        if(_audioManager) _audioManager.PlaySfx(_audioManager.HitSFX);
+        //if(_audioManager) _audioManager.PlaySfx(_audioManager.HitSFX);
         foreach (var col in _ragdollColliders)
             col.enabled = true;
 

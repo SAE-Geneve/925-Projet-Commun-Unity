@@ -6,7 +6,11 @@ public class AIRagdoll : Ragdoll
     [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;
     [SerializeField] private GameObject bHips;
     [SerializeField] private bool isRagdollable = true;
-
+    
+    [Header("Score Penalty")]
+    [SerializeField] private bool losePointsOnRagdoll = true;
+    [SerializeField] private int ragdollPenalty = 10;
+    
     private bool IsRagdollState { get; set; }
     private float _lastRagdollOffTime;
     private Rigidbody _mainRb;
@@ -16,7 +20,28 @@ public class AIRagdoll : Ragdoll
         base.Start();
         _mainRb = GetComponent<Rigidbody>();
     }
-
+    
+    protected override void OnRagdolledBy(GameObject striker)
+    {
+        if (!losePointsOnRagdoll) return;
+        PlayerController playerController = striker.GetComponentInParent<PlayerController>();
+        if (playerController != null)
+        {
+            if (GameManager.Instance != null && GameManager.Instance.Scores != null)
+            {
+                if (GameManager.Instance.Context == GameContext.Hub)
+                {
+                    GameManager.Instance.Scores.SubTotalScore(ragdollPenalty, playerController.Id);
+                    Debug.Log($"Hub ! Le joueur {playerController.Id} perd {ragdollPenalty} points globaux.");
+                }
+                else if (GameManager.Instance.Context == GameContext.Mission)
+                {
+                    GameManager.Instance.Scores.SubMissionScore(ragdollPenalty, playerController.Id);
+                    Debug.Log($"Mission ! Le joueur {playerController.Id} perd {ragdollPenalty} points de mission.");
+                }
+            }
+        }
+    }
     public override void RagdollOn(bool ignoreImmunity = false)
     {
         if (Time.time < _lastRagdollOffTime + 1.0f) return;

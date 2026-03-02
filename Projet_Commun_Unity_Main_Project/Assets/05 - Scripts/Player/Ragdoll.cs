@@ -122,18 +122,27 @@ public class Ragdoll : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (IsImmune) return;
+        if (IsImmune || IsRagdoll) return; 
 
-        if (other.gameObject.TryGetComponent(out Rigidbody rb) &&
-            rb.linearVelocity.magnitude >= _ragdollVelocityThreshold)
+        if (!other.gameObject.TryGetComponent(out Rigidbody otherRb)) return;
+
+        if (other.relativeVelocity.magnitude >= _ragdollVelocityThreshold)
         {
+            OnRagdolledBy(other.gameObject); 
+
             RagdollOn();
-            if (other.gameObject.CompareTag("Player") || gameObject.CompareTag("Player"))
+            
+            PlayerController player = other.gameObject.GetComponentInParent<PlayerController>();
+            
+            if (other.gameObject.CompareTag("Player") || gameObject.CompareTag("Player") || player != null)
             {
                 Debug.Log($"{other.gameObject.name} collided with {gameObject.name} and activated camera shake");
                 if(CameraShakeManager.Instance) CameraShakeManager.Instance.Shake(0.7f, 0.7f, 0.2f);
             }
         }
+    }
+    protected virtual void OnRagdolledBy(GameObject striker)
+    {
     }
 
     private IEnumerator RagdollTimer()

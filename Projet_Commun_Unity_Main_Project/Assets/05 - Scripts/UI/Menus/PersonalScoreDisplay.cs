@@ -6,24 +6,41 @@ public class PersonalScoreDisplay : MonoBehaviour
 {
     [SerializeField] private GameObject[] scoreDisplay;
     [SerializeField] private TextMeshProUGUI[] scoreText;
-    private ScoreManager scoreManager;
+    private ScoreManager _scoreManager;
 
     private void Start()
     {
-        scoreManager = GameManager.Instance.Scores;
+        _scoreManager = GameManager.Instance.Scores;
+        
         for (int i = 0; i < PlayerManager.Instance.PlayerCount; i++)
         {
             scoreDisplay[i].SetActive(true);
         }
+        
+        if (_scoreManager != null)
+        {
+            _scoreManager.OnScoreUpdated += UpdateScoreUI;
+        }
+        
+        UpdateScoreUI();
     }
-
-    void Update()
+    
+    private void UpdateScoreUI()
     {
-        if(scoreManager == null) return;
+        if (_scoreManager == null) return;
         
         for (int i = 0; i < PlayerManager.Instance.PlayerCount; i++)
         {
-            scoreText[i].SetText($"{scoreManager.TotalScores[i]:00000}");
+            scoreText[i].SetText($"{_scoreManager.TotalScores[i]:00000}");
         }
     }
+    
+    private void OnDestroy()
+    {
+        if (_scoreManager != null)
+        {
+            _scoreManager.OnScoreUpdated -= UpdateScoreUI;
+        }
+    }
+    
 }

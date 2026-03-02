@@ -24,6 +24,21 @@ public class AIManagerBorder : AIManager
     private List<float> _npcInTransitTimes = new List<float>();
     
     [HideInInspector] public bool isSpawningPaused = false;
+    
+    protected override void AdaptToPlayerCount()
+    {
+        base.AdaptToPlayerCount(); 
+        
+        if (PlayerManager.Instance != null)
+        {
+            int playerCount = PlayerManager.Instance.PlayerCount;
+            float multiplier = 1f + (playerCount - 1) * 0.5f; 
+            
+            spawnCooldown = spawnCooldown / multiplier;
+            
+            Debug.Log($"[AIManagerBorder] Cooldown adapté : {spawnCooldown}s");
+        }
+    }
 
     protected override void SpawnNPC()
     {

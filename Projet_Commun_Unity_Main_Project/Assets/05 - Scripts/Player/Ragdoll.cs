@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.LowLevelPhysics2D;
-using Action = System.Action;
 
 public class Ragdoll : MonoBehaviour
 {
@@ -13,8 +11,7 @@ public class Ragdoll : MonoBehaviour
     
     [Header("Parameters")]
     [SerializeField] protected float ragdollTime = 3f;
-    [SerializeField] private float _ragdollVelocityThreshold = 3f;
-    // [SerializeField] private float _ragdollImmunityDuration = 2f;
+    [SerializeField] protected float ragdollVelocityThreshold = 7f;
     
     public event Action OnRagdoll;
     public event Action<Ragdoll> OnRagdollSelf;
@@ -31,7 +28,6 @@ public class Ragdoll : MonoBehaviour
     private Rigidbody[] _ragdollRigidbodies;
     
     private Coroutine _ragdollCoroutine;
-    private Coroutine _immunityCoroutine;
     private AudioManager _audioManager;
 
     protected virtual void Start()
@@ -58,7 +54,6 @@ public class Ragdoll : MonoBehaviour
     {
         if (IsImmune && !ignoreImmunity) return;
         
-        //if(_audioManager) _audioManager.PlaySfx(_audioManager.HitSFX);
         foreach (var col in _ragdollColliders)
             col.enabled = true;
 
@@ -79,6 +74,7 @@ public class Ragdoll : MonoBehaviour
         
         if (_ragdollCoroutine != null)
             StopCoroutine(_ragdollCoroutine);
+            
         _ragdollCoroutine = StartCoroutine(RagdollTimer());
 
         IsRagdoll = true;
@@ -102,7 +98,6 @@ public class Ragdoll : MonoBehaviour
         if (_playerInput) _playerInput.currentActionMap.Enable();
 
         IsRagdoll = false;
-        
         // StartImmunity();
     }
 
@@ -124,9 +119,7 @@ public class Ragdoll : MonoBehaviour
     {
         if (IsImmune || IsRagdoll) return; 
 
-        if (!other.gameObject.TryGetComponent(out Rigidbody otherRb)) return;
-
-        if (other.relativeVelocity.magnitude >= _ragdollVelocityThreshold)
+        if (other.relativeVelocity.magnitude >= ragdollVelocityThreshold)
         {
             OnRagdolledBy(other.gameObject); 
 
@@ -136,11 +129,12 @@ public class Ragdoll : MonoBehaviour
             
             if (other.gameObject.CompareTag("Player") || gameObject.CompareTag("Player") || player != null)
             {
-                Debug.Log($"{other.gameObject.name} collided with {gameObject.name} and activated camera shake");
-                if(CameraShakeManager.Instance) CameraShakeManager.Instance.Shake(0.7f, 0.7f, 0.2f);
+                if (CameraShakeManager.Instance) 
+                    CameraShakeManager.Instance.Shake(0.7f, 0.7f, 0.2f);
             }
         }
     }
+
     protected virtual void OnRagdolledBy(GameObject striker)
     {
     }

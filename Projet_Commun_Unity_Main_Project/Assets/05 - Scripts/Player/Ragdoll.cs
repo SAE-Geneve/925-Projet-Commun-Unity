@@ -11,7 +11,8 @@ public class Ragdoll : MonoBehaviour
     
     [Header("Parameters")]
     [SerializeField] protected float ragdollTime = 3f;
-    [SerializeField] protected float ragdollVelocityThreshold = 7f;
+    [SerializeField] protected float velocityThreshold = 5f;
+    [SerializeField] protected float impulseThreshold = 20f;
     
     public event Action OnRagdoll;
     public event Action<Ragdoll> OnRagdollSelf;
@@ -98,28 +99,37 @@ public class Ragdoll : MonoBehaviour
         if (_playerInput) _playerInput.currentActionMap.Enable();
 
         IsRagdoll = false;
-        // StartImmunity();
-    }
-
-    // private void StartImmunity()
-    // {
-    //     if (_immunityCoroutine != null)
-    //         StopCoroutine(_immunityCoroutine);
-    //     _immunityCoroutine = StartCoroutine(ImmunityTimer());
-    // }
-
-    // private IEnumerator ImmunityTimer()
-    // {
-    //     IsImmune = true;
-    //     yield return new WaitForSeconds(_ragdollImmunityDuration);
-    //     IsImmune = false;
-    // }
+         // StartImmunity();
+        }
+    
+        // private void StartImmunity()
+        // {
+        //     if (_immunityCoroutine != null)
+        //         StopCoroutine(_immunityCoroutine);
+        //     _immunityCoroutine = StartCoroutine(ImmunityTimer());
+        // }
+    
+        // private IEnumerator ImmunityTimer()
+        // {
+        //     IsImmune = true;
+        //     yield return new WaitForSeconds(_ragdollImmunityDuration);
+        //     IsImmune = false;
+        // }
 
     private void OnCollisionEnter(Collision other)
     {
         if (IsImmune || IsRagdoll) return; 
 
-        if (other.relativeVelocity.magnitude >= ragdollVelocityThreshold)
+        float currentRelativeVelocity = other.relativeVelocity.magnitude;
+        float currentImpulse = other.impulse.magnitude;
+        float strikerVelocity = 0f;
+
+        if (other.rigidbody != null)
+        {
+            strikerVelocity = other.rigidbody.linearVelocity.magnitude;
+        }
+
+        if (currentRelativeVelocity >= velocityThreshold || currentImpulse >= impulseThreshold || strikerVelocity >= velocityThreshold)
         {
             OnRagdolledBy(other.gameObject); 
 

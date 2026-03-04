@@ -11,7 +11,9 @@ public class Ragdoll : MonoBehaviour
     
     [Header("Parameters")]
     [SerializeField] protected float ragdollTime = 3f;
-    [SerializeField] protected float velocityThreshold = 5f;
+    // J'ai ajouté cette variable qui manquait pour ton système d'immunité
+    [SerializeField] protected float ragdollImmunityDuration = 1.5f; 
+    [SerializeField] protected float velocityThreshold = 10f; // J'ai augmenté un peu si ton joueur est rapide
     [SerializeField] protected float impulseThreshold = 20f;
     
     public event Action OnRagdoll;
@@ -29,6 +31,7 @@ public class Ragdoll : MonoBehaviour
     private Rigidbody[] _ragdollRigidbodies;
     
     private Coroutine _ragdollCoroutine;
+    private Coroutine _immunityCoroutine; // Ajouté pour gérer la coroutine d'immunité
     private AudioManager _audioManager;
 
     protected virtual void Start()
@@ -99,22 +102,24 @@ public class Ragdoll : MonoBehaviour
         if (_playerInput) _playerInput.currentActionMap.Enable();
 
         IsRagdoll = false;
-         // StartImmunity();
-        }
+        
+        // On réactive le système d'immunité !
+        StartImmunity();
+    }
     
-        // private void StartImmunity()
-        // {
-        //     if (_immunityCoroutine != null)
-        //         StopCoroutine(_immunityCoroutine);
-        //     _immunityCoroutine = StartCoroutine(ImmunityTimer());
-        // }
+    private void StartImmunity()
+    {
+        if (_immunityCoroutine != null)
+            StopCoroutine(_immunityCoroutine);
+        _immunityCoroutine = StartCoroutine(ImmunityTimer());
+    }
     
-        // private IEnumerator ImmunityTimer()
-        // {
-        //     IsImmune = true;
-        //     yield return new WaitForSeconds(_ragdollImmunityDuration);
-        //     IsImmune = false;
-        // }
+    private IEnumerator ImmunityTimer()
+    {
+        IsImmune = true;
+        yield return new WaitForSeconds(ragdollImmunityDuration);
+        IsImmune = false;
+    }
 
     private void OnCollisionEnter(Collision other)
     {

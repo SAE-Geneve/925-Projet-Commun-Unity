@@ -11,10 +11,9 @@ public class Ragdoll : MonoBehaviour
     
     [Header("Parameters")]
     [SerializeField] protected float ragdollTime = 3f;
-    // J'ai ajouté cette variable qui manquait pour ton système d'immunité
     [SerializeField] protected float ragdollImmunityDuration = 1.5f; 
-    [SerializeField] protected float velocityThreshold = 10f; // J'ai augmenté un peu si ton joueur est rapide
-    [SerializeField] protected float impulseThreshold = 20f;
+    [SerializeField] protected float velocityThreshold = 7f;
+    [SerializeField] protected float impulseThreshold = 6f;
     
     public event Action OnRagdoll;
     public event Action<Ragdoll> OnRagdollSelf;
@@ -31,7 +30,7 @@ public class Ragdoll : MonoBehaviour
     private Rigidbody[] _ragdollRigidbodies;
     
     private Coroutine _ragdollCoroutine;
-    private Coroutine _immunityCoroutine; // Ajouté pour gérer la coroutine d'immunité
+    private Coroutine _immunityCoroutine;
     private AudioManager _audioManager;
 
     protected virtual void Start()
@@ -103,7 +102,6 @@ public class Ragdoll : MonoBehaviour
 
         IsRagdoll = false;
         
-        // On réactive le système d'immunité !
         StartImmunity();
     }
     

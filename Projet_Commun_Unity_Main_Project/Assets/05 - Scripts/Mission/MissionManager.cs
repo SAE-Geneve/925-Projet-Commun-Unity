@@ -31,6 +31,12 @@ public class MissionManager : MonoBehaviour
         missionNameAnimator.SetTrigger("Display");
     }
 
+    public void UnlockAllMissions()
+    {
+        foreach (Mission mission in missions)
+            mission.Unlock();
+    }
+
     public void OnMissionFinished() => StartCoroutine(HubTimeRoutine());
 
     private IEnumerator HubTimeRoutine()

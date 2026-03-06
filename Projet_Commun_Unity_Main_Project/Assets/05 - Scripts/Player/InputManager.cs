@@ -68,7 +68,19 @@ public class InputManager : MonoBehaviour
         {
             GameManager.Instance.PauseTrigger();
         }
-        
+    }
+
+    public void OnDebug(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+
+        MissionManager missionManager = FindAnyObjectByType<MissionManager>();
+
+        if (missionManager)
+        {
+            missionManager.UnlockAllMissions();
+            Debug.LogWarning("All missions are unlocked");
+        }
     }
 
     #endregion

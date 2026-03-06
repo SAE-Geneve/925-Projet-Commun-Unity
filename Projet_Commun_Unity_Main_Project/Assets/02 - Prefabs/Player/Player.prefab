@@ -2230,6 +2230,7 @@ MonoBehaviour:
   playerRig: {fileID: 9183831874141667051}
   hipsTransform: {fileID: 417329128717184314}
   ragdollTime: 1
+  ragdollImmunityDuration: 1.5
   velocityThreshold: 7.5
   impulseThreshold: 6.5
 --- !u!114 &7948060877399390895
@@ -2395,6 +2396,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 2e3f7e8e-f9db-4173-a2c7-8afe7a0d8bfa
     m_ActionName: 'Game/Pause[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7948060877399390895}
+        m_TargetAssemblyTypeName: InputManager, Scripts
+        m_MethodName: OnDebug
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 35f08338-7cf3-4a68-afea-57120d96b45c
+    m_ActionName: 'Game/Debug[/Keyboard/f10]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game

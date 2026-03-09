@@ -7,6 +7,11 @@ public class ArrowPointer : MonoBehaviour
 {
     [Header("Positioning")]
     public List<Transform> missionPositions;
+    //1 - Border Control
+    //2 - Boarding
+    //3 - Conveyor Belt
+    //4 - Lost Luggage
+    //This is hard-coded so poorly :crying_emoji:
     [SerializeField] private RectTransform canvasTransform;
     
     [Header("Images")]
@@ -14,26 +19,37 @@ public class ArrowPointer : MonoBehaviour
     [SerializeField] private Sprite crossSprite;
     
     private Camera _mainCamera;
+    private MissionManager missionManager;
     
-    private Image _pointerImage;
-    private RectTransform _pointerRectTransform;
+    [SerializeField] private Image _pointerImage;
+    [FormerlySerializedAs("_pointerRectTransform")] [SerializeField] private RectTransform pointerRectTransform;
     
     private Vector3 _targetPosition;
 
     private void Start()
     {
         _mainCamera = Camera.main;
-        
-        _pointerRectTransform = gameObject.GetComponent<RectTransform>();
-        
-        // MissionID missionID = UIManager.Instance.TargetMission;
-        // _targetPosition = missionPositions[(int)missionID].position;
-        
-        _pointerImage = gameObject.GetComponent<Image>();
+        missionManager = FindObjectOfType<MissionManager>();
     }
 
     private void Update()
     {
+        switch (missionManager.missionIndex)
+        {
+            case 0:
+                _targetPosition = missionPositions[0].position;
+                break;
+            case 1:
+                _targetPosition = missionPositions[1].position;
+                break;
+            case 2:
+                _targetPosition = missionPositions[2].position;
+                break;
+            case 3:
+                _targetPosition = missionPositions[3].position;
+                break;
+        }
+        
         Vector3 targetPositionScreenPoint = _mainCamera.WorldToScreenPoint(_targetPosition);
         
         //Checks if the target is in the screen
@@ -60,7 +76,7 @@ public class ArrowPointer : MonoBehaviour
                 null,
                 out Vector2 localPos
             );
-            _pointerRectTransform.anchoredPosition = localPos;
+            pointerRectTransform.anchoredPosition = localPos;
         }
         else
         {
@@ -72,8 +88,8 @@ public class ArrowPointer : MonoBehaviour
                 null,
                 out Vector2 localPos
             );
-            _pointerRectTransform.anchoredPosition = localPos;
-            _pointerRectTransform.localEulerAngles = Vector3.zero;
+            pointerRectTransform.anchoredPosition = localPos;
+            pointerRectTransform.localEulerAngles = Vector3.zero;
         }
     }
 
@@ -85,6 +101,6 @@ public class ArrowPointer : MonoBehaviour
 
         Vector2 direction = (Vector2)targetPositionScreenPoint - screenCenter;
         float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) % 360;
-        _pointerRectTransform.localEulerAngles = new Vector3(0, 0, angle);
+        pointerRectTransform.localEulerAngles = new Vector3(0, 0, angle);
     }
 }

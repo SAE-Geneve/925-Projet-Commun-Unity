@@ -21,6 +21,9 @@ public class KartMovement : MonoBehaviour,  IRespawnable
     private Vector3 _startPosition;
     private Vector3 _startRotation;
 
+    private float _tempMaxSpeed = 0;
+    private float _tempTurnSpeed = 0;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -86,5 +89,20 @@ public class KartMovement : MonoBehaviour,  IRespawnable
     {
         _rb.position = _startPosition;
         _rb.rotation = Quaternion.Euler(_startRotation);
+    }
+
+    public void Breakdown()
+    {
+        _tempMaxSpeed = maxForwardSpeed;
+        maxForwardSpeed = 0f;
+        
+        _tempTurnSpeed = turnSpeed;
+        turnSpeed = 0f;
+    }
+
+    public void Restart()
+    {
+        maxForwardSpeed = _tempMaxSpeed;
+        turnSpeed = _tempTurnSpeed;
     }
 }

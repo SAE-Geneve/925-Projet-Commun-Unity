@@ -34,6 +34,15 @@ public class ArrowPointer : MonoBehaviour
 
     private void Update()
     {
+        if (missionManager.currentMission.IsLocked)
+        {
+            _pointerImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            _pointerImage.gameObject.SetActive(true);
+        }
+        
         switch (missionManager.missionIndex)
         {
             case 0:

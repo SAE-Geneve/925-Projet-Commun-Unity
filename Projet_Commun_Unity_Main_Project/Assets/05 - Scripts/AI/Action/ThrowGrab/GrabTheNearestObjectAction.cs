@@ -26,7 +26,7 @@ public partial class GrabTheNearestObjectAction : Action
 
     protected override Status OnStart()
     {
-        if (Self == null || Self.Value == null)
+        if (Self == null || Self.Value == null )
         {
             return Status.Failure;
         }

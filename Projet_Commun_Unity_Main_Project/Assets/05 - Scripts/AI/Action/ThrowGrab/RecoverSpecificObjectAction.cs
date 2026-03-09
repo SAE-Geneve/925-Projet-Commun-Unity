@@ -16,7 +16,6 @@ public partial class RecoverSpecificObjectAction : Action
     private Controller _controller; 
     private Transform selfTransform;
     
-    // Plus besoin de "Checking", on passe direct au mouvement !
     private enum Phase { Moving, Done }
     private Phase phase;
 
@@ -55,7 +54,6 @@ public partial class RecoverSpecificObjectAction : Action
         
         if (distance <= 1.5f)
         {
-            // On ramasse l'objet
             if (TargetObject.Value.TryGetComponent(out IGrabbable grabbable))
             {
                 grabbable.Grabbed(_controller);
@@ -66,7 +64,6 @@ public partial class RecoverSpecificObjectAction : Action
                 _controller.SetGrabbedProp(prop); 
             }
             
-            // NOUVEAU : On remet le booléen à false comme demandé !
             if (IsLostBool != null) IsLostBool.Value = false;
 
             aiMove.Stop();

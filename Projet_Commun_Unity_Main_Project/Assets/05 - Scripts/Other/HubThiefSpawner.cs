@@ -28,7 +28,7 @@ public class HubThiefSpawner : MonoBehaviour
             float waitTime = Random.Range(_minSpawnTime, _maxSpawnTime);
             yield return new WaitForSeconds(waitTime);
             
-            if (_activeThief == null && _spawnPoints.Count > 0)
+            if (_spawnPoints.Count > 0)
             {
                 int randomIndex = Random.Range(0, _spawnPoints.Count);
                 Transform spawnPoint = _spawnPoints[randomIndex];
@@ -36,6 +36,7 @@ public class HubThiefSpawner : MonoBehaviour
                 _activeThief = Instantiate(_thiefPrefab, spawnPoint.position, spawnPoint.rotation);
                 Debug.Log("Un voleur est apparu dans le Hub !");
             }
+            yield return new WaitUntil(() => _activeThief == null);
         }
     }
 }

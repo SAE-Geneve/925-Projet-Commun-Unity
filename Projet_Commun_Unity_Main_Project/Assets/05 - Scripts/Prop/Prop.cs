@@ -16,8 +16,8 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
     
     protected Rigidbody _rb;
     protected Collider _collider;
-    
-    protected Controller Controller;
+
+    [NonSerialized]public Controller Controller;
     protected Transform _originalParent;
 
     private ObjectOutline _outline;

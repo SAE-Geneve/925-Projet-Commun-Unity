@@ -22,14 +22,14 @@ public abstract class GameTask : MonoBehaviour
 
     public event Action OnSucceedAction;
     public event Action OnFailedAction;
+    public event Action<PlayerController> OnSucceedWithPlayer;
 
     public bool Done { get; protected set; }
     
     private int _multipleTaskCounter;
 
     protected virtual void Start() => OnStart?.Invoke();
-
-    protected virtual void Succeed()
+    protected virtual void Succeed(PlayerController player = null)
     {
         if (_multipleTaskLimit >= 0) _multipleTaskCounter++;
         else if(Done) return;
@@ -38,15 +38,14 @@ public abstract class GameTask : MonoBehaviour
         
         OnSucceed?.Invoke();
         OnSucceedAction?.Invoke();
+        OnSucceedWithPlayer?.Invoke(player);
 
         if (Done)
         {
             if(_finishedMission) GameManager.Instance.CurrentMission.Finish();
             
             OnFinished?.Invoke();
-            
             Debug.Log($"Task {_taskName} done!");
-            
             if(_destroyOnSucceed) Destroy(gameObject);
         }
     }
@@ -57,7 +56,6 @@ public abstract class GameTask : MonoBehaviour
         
         OnFailed?.Invoke();
         OnFailedAction?.Invoke();
-        
         Debug.Log($"Task {_taskName} failed!");
     }
 
@@ -67,8 +65,5 @@ public abstract class GameTask : MonoBehaviour
         _multipleTaskCounter = 0;
     }
 
-    public void SetMultipleTaskLimit(int limit)
-    {
-        _multipleTaskLimit = limit;
-    }
+    public void SetMultipleTaskLimit(int limit) => _multipleTaskLimit = limit;
 }

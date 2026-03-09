@@ -12,7 +12,8 @@ public class PuddleSpawnEvent : GameEvent
     [SerializeField] private List<Prop> _mopsToReset;
 
     private List<Transform> _availableSpawnPoints = new();
-    private List<PuddleTask> _activePuddlesList = new();
+    
+    private Dictionary<PuddleTask, Transform> _activePuddlesMap = new();
 
     private void Start()
     {
@@ -21,14 +22,12 @@ public class PuddleSpawnEvent : GameEvent
 
     public override bool IsEventActive()
     {
-        // Si on a atteint la limite de 3 flaques, le Manager ne pourra plus piocher cet évent !
-        return _activePuddlesList.Count >= _maxConcurrentPuddles || _availableSpawnPoints.Count == 0;
+        return _activePuddlesMap.Count >= _maxConcurrentPuddles || _availableSpawnPoints.Count == 0;
     }
 
     public override void TriggerEvent()
     {
-        // Double sécurité
-        if (_activePuddlesList.Count >= _maxConcurrentPuddles || _availableSpawnPoints.Count == 0) return;
+        if (_activePuddlesMap.Count >= _maxConcurrentPuddles || _availableSpawnPoints.Count == 0) return;
 
         Debug.Log("EVENT: Une nouvelle flaque apparaît !");
 
@@ -37,25 +36,44 @@ public class PuddleSpawnEvent : GameEvent
         _availableSpawnPoints.RemoveAt(randomIndex);
 
         PuddleTask newPuddle = Instantiate(_puddlePrefab, spawnPoint.position, spawnPoint.rotation);
-        _activePuddlesList.Add(newPuddle);
-
-        // On abonne la flaque pour qu'elle se retire de la liste quand elle est nettoyée
-        newPuddle.OnSucceedAction += () => OnPuddleCleaned(spawnPoint, newPuddle);
+        
+        _activePuddlesMap.Add(newPuddle, spawnPoint);
+        newPuddle.OnSucceedWithPlayer += HandlePuddleCleaned;
     }
 
-    private void OnPuddleCleaned(Transform freedSpawnPoint, PuddleTask puddle)
+    private void HandlePuddleCleaned(PlayerController player)
     {
-        _activePuddlesList.Remove(puddle);
-        _availableSpawnPoints.Add(freedSpawnPoint);
+        PuddleTask cleanedPuddle = null;
+        foreach (var kvp in _activePuddlesMap)
+        {
+            if (kvp.Key.Done)
+            {
+                cleanedPuddle = kvp.Key;
+                _availableSpawnPoints.Add(kvp.Value);
+                break;
+            }
+        }
+
+        if (cleanedPuddle != null)
+        {
+            cleanedPuddle.OnSucceedWithPlayer -= HandlePuddleCleaned;
+            _activePuddlesMap.Remove(cleanedPuddle);
+        }
+
+        RewardPlayer(player);
     }
 
     public override void ResetEvent()
     {
-        foreach (var puddle in _activePuddlesList)
+        foreach (var kvp in _activePuddlesMap)
         {
-            if (puddle != null) Destroy(puddle.gameObject);
+            if (kvp.Key != null)
+            {
+                kvp.Key.OnSucceedWithPlayer -= HandlePuddleCleaned;
+                Destroy(kvp.Key.gameObject);
+            }
         }
-        _activePuddlesList.Clear();
+        _activePuddlesMap.Clear();
         
         _availableSpawnPoints.Clear();
         _availableSpawnPoints.AddRange(_puddleSpawnPoints);

@@ -27,14 +27,13 @@ public class DebugConveyorTask : TriggerTask
         _renderer = GetComponent<Renderer>();
         SwitchType();
     }
-
-    protected override void Succeed()
+    protected override void Succeed(PlayerController player = null)
     {
-        base.Succeed();
+        base.Succeed(player); 
+        
         //After a success, cooldown to let NPC UI feedback be played without overlapping with timer
         StopAllCoroutines();
         StartCoroutine(WaitBetweenTasks());
-        //SwitchType();
     }
 
     private void SwitchType()

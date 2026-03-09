@@ -15,22 +15,24 @@ public class ScreenBreakdownEvent : GameEvent
     [SerializeField] private List<GameTask> _restartButtonTasks; 
     [SerializeField] private List<ConveyorBelt> _conveyorBelts;
 
+    [Header("Extra Score Settings")]
+    [Tooltip("Score bonus spécifique pour relancer le tapis de ce niveau")]
+    [SerializeField] private int _scoreRestartConveyor = 100;
+
     private bool _isScreenBroken = false;
     private bool _isConveyorStopped = false;
 
     private void Start()
     {
-        if (_screenRepairTask != null) _screenRepairTask.OnSucceedAction += HandleScreenRepaired;
+        // Abonnements propres
+        if (_screenRepairTask != null) _screenRepairTask.OnSucceedWithPlayer += HandleScreenRepaired;
         foreach (var buttonTask in _restartButtonTasks)
         {
-            if (buttonTask != null) buttonTask.OnSucceedAction += HandleButtonPressed;
+            if (buttonTask != null) buttonTask.OnSucceedWithPlayer += HandleButtonPressed;
         }
     }
 
-    public override bool IsEventActive()
-    {
-        return _isScreenBroken || _isConveyorStopped;
-    }
+    public override bool IsEventActive() => _isScreenBroken || _isConveyorStopped;
 
     public override void TriggerEvent()
     {
@@ -87,7 +89,7 @@ public class ScreenBreakdownEvent : GameEvent
         }
     }
 
-    private void HandleScreenRepaired()
+    private void HandleScreenRepaired(PlayerController player)
     {
         if (_isScreenBroken)
         {
@@ -101,10 +103,12 @@ public class ScreenBreakdownEvent : GameEvent
             {
                 if (buttonTask != null && buttonTask.TryGetComponent<Animator>(out Animator beltAnim)) beltAnim.SetBool("IsBroken", true);
             }
+
+            RewardPlayer(player);
         }
     }
 
-    private void HandleButtonPressed()
+    private void HandleButtonPressed(PlayerController player)
     {
         if (_isConveyorStopped)
         {
@@ -123,15 +127,17 @@ public class ScreenBreakdownEvent : GameEvent
             {
                 if (buttonTask != null && buttonTask.TryGetComponent<Animator>(out Animator beltAnim)) beltAnim.SetBool("IsBroken", false);
             }
+
+            RewardPlayer(player, _scoreRestartConveyor);
         }
     }
 
     private void OnDestroy()
     {
-        if (_screenRepairTask != null) _screenRepairTask.OnSucceedAction -= HandleScreenRepaired;
+        if (_screenRepairTask != null) _screenRepairTask.OnSucceedWithPlayer -= HandleScreenRepaired;
         foreach (var buttonTask in _restartButtonTasks)
         {
-            if (buttonTask != null) buttonTask.OnSucceedAction -= HandleButtonPressed;
+            if (buttonTask != null) buttonTask.OnSucceedWithPlayer -= HandleButtonPressed;
         }
     }
 }

@@ -19,7 +19,6 @@ public class PuddleTask : GameTask
         if(!_isCleaning) return;
 
         float cleanTime = _mop.CleanTime;
-        
         float ratio = Mathf.Clamp01(_cleanTimer / cleanTime);
         UpdateMaterial(ratio);
         
@@ -28,10 +27,10 @@ public class PuddleTask : GameTask
         if (_cleanTimer >= cleanTime) CompleteTask();
     }
     
+    // ... (OnTriggerEnter, Register, Unregister, StartClean, StopClean identiques...)
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out Ragdoll ragdoll))
-            ragdoll.RagdollOn();
+        if(other.TryGetComponent(out Ragdoll ragdoll)) ragdoll.RagdollOn();
     }
 
     public void Register(MopProp mop)
@@ -55,9 +54,9 @@ public class PuddleTask : GameTask
 
     private void CompleteTask()
     {
+        PlayerController player = _mop != null ? _mop.CurrentCleaner : null;
         _mop.RemovePuddleTask(this);
-        
-        Succeed();
+        Succeed(player);
     }
     
     private void UpdateMaterial(float ratio)

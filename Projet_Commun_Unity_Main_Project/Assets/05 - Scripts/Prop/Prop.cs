@@ -134,5 +134,6 @@ public enum PropType
     GoodProp,
     BadProp,
     StairKart,
-    Trash
+    Trash,
+    MoneyBag
 }

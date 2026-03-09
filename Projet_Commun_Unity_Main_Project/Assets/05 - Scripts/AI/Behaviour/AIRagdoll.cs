@@ -8,13 +8,14 @@ public class AIRagdoll : Ragdoll
     [SerializeField] private bool isRagdollable = true;
     
     [Header("Drop Settings")]
+    [Tooltip("Si coché, l'IA lâche ce qu'elle tient quand elle tombe en Ragdoll")]
     [SerializeField] private bool dropObjectOnRagdoll = true; 
 
     [Header("Score Penalty")]
     [SerializeField] private bool losePointsOnRagdoll = true;
     [SerializeField] private int ragdollPenalty = 10;
+    public bool IsRagdollState { get; private set; }
     
-    private bool IsRagdollState { get; set; }
     private float _lastRagdollOffTime;
     private Rigidbody _mainRb;
     
@@ -50,13 +51,14 @@ public class AIRagdoll : Ragdoll
     {
         if (Time.time < _lastRagdollOffTime + 1.0f) return;
         if (!isRagdollable || IsRagdollState) return;
-        
+
+        // --- LOGIQUE DE DROP ---
         if (dropObjectOnRagdoll)
         {
             Controller ctrl = GetComponent<Controller>();
             if (ctrl != null)
             {
-                ctrl.Drop(); 
+                ctrl.Drop();
             }
         }
 

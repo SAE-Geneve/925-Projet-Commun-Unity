@@ -11,6 +11,8 @@ public partial class CheckIfCaughtAction : Action
     [SerializeReference] public BlackboardVariable<AIRagdoll> Ragdoll;
     [SerializeReference] public BlackboardVariable<bool> Caught;
     [SerializeReference] public BlackboardVariable<int> Reward;
+    
+    [SerializeReference] public BlackboardVariable<bool> IsLostBool;
 
     protected override Status OnStart()
     {
@@ -45,6 +47,12 @@ public partial class CheckIfCaughtAction : Action
             
             return Status.Success;
         }
+        
+        if (Ragdoll.Value.IsRagdollState)
+        {
+            if (IsLostBool != null) IsLostBool.Value = true;
+        }
+
         if (Caught != null) Caught.Value = false;
         return Status.Running; 
     }

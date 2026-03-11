@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.LowLevelPhysics2D;
-using Action = System.Action;
 
 public class Ragdoll : MonoBehaviour
 {
@@ -13,8 +11,9 @@ public class Ragdoll : MonoBehaviour
     
     [Header("Parameters")]
     [SerializeField] protected float ragdollTime = 3f;
-    [SerializeField] private float _ragdollVelocityThreshold = 3f;
-    // [SerializeField] private float _ragdollImmunityDuration = 2f;
+    [SerializeField] protected float ragdollImmunityDuration = 1.5f; 
+    [SerializeField] protected float velocityThreshold = 7f;
+    [SerializeField] protected float impulseThreshold = 6f;
     
     public event Action OnRagdoll;
     public event Action<Ragdoll> OnRagdollSelf;
@@ -58,7 +57,6 @@ public class Ragdoll : MonoBehaviour
     {
         if (IsImmune && !ignoreImmunity) return;
         
-        //if(_audioManager) _audioManager.PlaySfx(_audioManager.HitSFX);
         foreach (var col in _ragdollColliders)
             col.enabled = true;
 
@@ -79,6 +77,7 @@ public class Ragdoll : MonoBehaviour
         
         if (_ragdollCoroutine != null)
             StopCoroutine(_ragdollCoroutine);
+            
         _ragdollCoroutine = StartCoroutine(RagdollTimer());
 
         IsRagdoll = true;
@@ -103,30 +102,37 @@ public class Ragdoll : MonoBehaviour
 
         IsRagdoll = false;
         
-        // StartImmunity();
+        StartImmunity();
     }
-
-    // private void StartImmunity()
-    // {
-    //     if (_immunityCoroutine != null)
-    //         StopCoroutine(_immunityCoroutine);
-    //     _immunityCoroutine = StartCoroutine(ImmunityTimer());
-    // }
-
-    // private IEnumerator ImmunityTimer()
-    // {
-    //     IsImmune = true;
-    //     yield return new WaitForSeconds(_ragdollImmunityDuration);
-    //     IsImmune = false;
-    // }
+    
+    private void StartImmunity()
+    {
+        if (_immunityCoroutine != null)
+            StopCoroutine(_immunityCoroutine);
+        _immunityCoroutine = StartCoroutine(ImmunityTimer());
+    }
+    
+    private IEnumerator ImmunityTimer()
+    {
+        IsImmune = true;
+        yield return new WaitForSeconds(ragdollImmunityDuration);
+        IsImmune = false;
+    }
 
     private void OnCollisionEnter(Collision other)
     {
         if (IsImmune || IsRagdoll) return; 
 
-        if (!other.gameObject.TryGetComponent(out Rigidbody otherRb)) return;
+        float currentRelativeVelocity = other.relativeVelocity.magnitude;
+        float currentImpulse = other.impulse.magnitude;
+        float strikerVelocity = 0f;
 
-        if (other.relativeVelocity.magnitude >= _ragdollVelocityThreshold)
+        if (other.rigidbody != null)
+        {
+            strikerVelocity = other.rigidbody.linearVelocity.magnitude;
+        }
+
+        if (currentRelativeVelocity >= velocityThreshold || currentImpulse >= impulseThreshold || strikerVelocity >= velocityThreshold)
         {
             OnRagdolledBy(other.gameObject); 
 
@@ -136,11 +142,12 @@ public class Ragdoll : MonoBehaviour
             
             if (other.gameObject.CompareTag("Player") || gameObject.CompareTag("Player") || player != null)
             {
-                Debug.Log($"{other.gameObject.name} collided with {gameObject.name} and activated camera shake");
-                if(CameraShakeManager.Instance) CameraShakeManager.Instance.Shake(0.7f, 0.7f, 0.2f);
+                if (CameraShakeManager.Instance) 
+                    CameraShakeManager.Instance.Shake(0.7f, 0.7f, 0.2f);
             }
         }
     }
+
     protected virtual void OnRagdolledBy(GameObject striker)
     {
     }

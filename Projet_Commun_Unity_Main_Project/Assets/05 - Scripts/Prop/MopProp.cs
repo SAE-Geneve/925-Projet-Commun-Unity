@@ -15,11 +15,12 @@ public class MopProp : InteractableProp
     
     public float CleanTime => cleanTime;
     
+    // NOUVEAU : On stocke le joueur en train de nettoyer
+    public PlayerController CurrentCleaner { get; private set; }
+    
     private Renderer _renderer;
     private Material _originalMaterial;
-
     private List<PuddleTask> _puddleTasks = new();
-
     private bool _isCleaning;
 
     protected override void Start()
@@ -32,6 +33,8 @@ public class MopProp : InteractableProp
     public override void Interact(PlayerController playerController)
     {
         if(playerController.InteractableGrabbed == null) return;
+        
+        CurrentCleaner = playerController; // On sauvegarde le joueur
         OnStartClean?.Invoke();
         
         _isCleaning = true;
@@ -41,11 +44,11 @@ public class MopProp : InteractableProp
     public override void InteractEnd()
     {
         OnStopClean?.Invoke();
+        CurrentCleaner = null; // On vide le joueur
         
         _isCleaning = false;
         _renderer.material = _originalMaterial;
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out PuddleTask puddleTask))

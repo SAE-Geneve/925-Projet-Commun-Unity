@@ -1,13 +1,17 @@
 using System;
 using UnityEngine;
 using Unity.Behavior;
-
-public class AIController : Controller
+public class AIController : Controller, IGrabbable
 {
+    [Header("Grab Settings")]
+    [Tooltip("Décoche cette case pour empêcher les joueurs d'attraper cette IA (ex: Voleur)")]
+    [SerializeField] private bool canBeGrabbed = true;
+
     public event Action<AIController> OnDestroyed;
     
     public BehaviorGraphAgent BehaviorAgent {get; protected set;}
     public GameTask GameTask {get; private set;}
+    
     protected virtual void Awake()
     {
         BehaviorAgent = GetComponent<BehaviorGraphAgent>();
@@ -21,5 +25,11 @@ public class AIController : Controller
         if(IsBeingHeld) Dropped();
         OnDestroyed?.Invoke(this);
         Destroy(gameObject);
+    }
+    
+    public new void Grabbed(Controller controller)
+    {
+        if (!canBeGrabbed) return;
+        base.Grabbed(controller);
     }
 }

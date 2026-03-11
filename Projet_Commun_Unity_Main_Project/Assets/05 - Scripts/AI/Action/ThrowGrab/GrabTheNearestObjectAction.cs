@@ -26,7 +26,7 @@ public partial class GrabTheNearestObjectAction : Action
 
     protected override Status OnStart()
     {
-        if (Self == null || Self.Value == null)
+        if (Self == null || Self.Value == null )
         {
             return Status.Failure;
         }
@@ -76,63 +76,42 @@ public partial class GrabTheNearestObjectAction : Action
 
     private void SearchForGrabbable()
     {
+        Collider[] hits = Physics.OverlapSphere(selfTransform.position, radius.Value);
         
-        Collider[] hits = Physics.OverlapSphere(selfTransform.position, radius);
-        
-        targetGrabbable = null;
-    
         foreach (var hit in hits)
         {
-            if (hit.gameObject == Self.Value)
-            {
-                continue;
-            }
-    
-            if (!hit.CompareTag(Object.Value))
-            {
-                continue;
-            }
+            if (hit.gameObject == Self.Value) continue;
+            if (!hit.CompareTag(Object.Value)) continue;
     
             if (hit.TryGetComponent(out IGrabbable grabbable))
             {
-                // Cible trouvée
                 targetGrabbable = grabbable;
-                aiMove.SetDestination(hit.transform.position); 
-                GrabbedObject.Value = hit.gameObject;
-                phase = Phase.Moving; 
+                GrabbedObject.Value = hit.gameObject; 
                 
+                aiMove.SetDestination(hit.transform.position); 
+                phase = Phase.Moving; 
                 return; 
             }
         }
-        searchFailed = true; 
     }
     
     private void MoveToTarget()
     {
-        if (targetGrabbable == null)
-        {
-            searchFailed = true;
-            return;
-        }
+        if (targetGrabbable == null) { searchFailed = true; return; }
 
-        if (!(targetGrabbable is MonoBehaviour targetMono))
-        {
-             searchFailed = true;
-             return;
-        }
+        if (!(targetGrabbable is MonoBehaviour targetMono)) { searchFailed = true; return; }
 
         float distance = Vector3.Distance(selfTransform.position, targetMono.transform.position);
-     
-
 
         if (distance <= 1.5f)
         {
             targetGrabbable.Grabbed(_controller);
-            
+            if (targetMono.TryGetComponent(out Prop prop))
+            {
+                _controller.SetGrabbedProp(prop); 
+            }
             aiMove.Stop();
-            
             phase = Phase.Done; 
-
         }
     }
 

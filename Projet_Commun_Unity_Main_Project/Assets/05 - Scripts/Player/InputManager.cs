@@ -68,7 +68,14 @@ public class InputManager : MonoBehaviour
         {
             GameManager.Instance.PauseTrigger();
         }
+    }
+
+    public void OnDebug(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
         
+        UIManager uiManager = UIManager.Instance;
+        if(uiManager) uiManager.TriggerDebugPanel();
     }
 
     #endregion

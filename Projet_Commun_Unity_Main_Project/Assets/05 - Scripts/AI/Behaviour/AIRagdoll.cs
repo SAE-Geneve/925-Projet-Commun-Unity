@@ -7,13 +7,20 @@ public class AIRagdoll : Ragdoll
     [SerializeField] private GameObject bHips;
     [SerializeField] private bool isRagdollable = true;
     
+    [Header("Drop Settings")]
+    [Tooltip("Si coché, l'IA lâche ce qu'elle tient quand elle tombe en Ragdoll")]
+    [SerializeField] private bool dropObjectOnRagdoll = true; 
+
     [Header("Score Penalty")]
     [SerializeField] private bool losePointsOnRagdoll = true;
     [SerializeField] private int ragdollPenalty = 10;
+    public bool IsRagdollState { get; private set; }
     
-    private bool IsRagdollState { get; set; }
     private float _lastRagdollOffTime;
     private Rigidbody _mainRb;
+    
+    public PlayerController Catcher { get; private set; }
+    public bool CaughtByPlayer => Catcher != null;
 
     protected override void Start()
     {
@@ -23,29 +30,37 @@ public class AIRagdoll : Ragdoll
     
     protected override void OnRagdolledBy(GameObject striker)
     {
-        if (!losePointsOnRagdoll) return;
         PlayerController playerController = striker.GetComponentInParent<PlayerController>();
         if (playerController != null)
         {
+            Catcher = playerController;
+            
+            if (!losePointsOnRagdoll) return;
+            
             if (GameManager.Instance != null && GameManager.Instance.Scores != null)
             {
                 if (GameManager.Instance.Context == GameContext.Hub)
-                {
                     GameManager.Instance.Scores.SubTotalScore(ragdollPenalty, playerController.Id);
-                    Debug.Log($"Hub ! Le joueur {playerController.Id} perd {ragdollPenalty} points globaux.");
-                }
-                else if (GameManager.Instance.Context == GameContext.Mission)
-                {
+                else
                     GameManager.Instance.Scores.SubMissionScore(ragdollPenalty, playerController.Id);
-                    Debug.Log($"Mission ! Le joueur {playerController.Id} perd {ragdollPenalty} points de mission.");
-                }
             }
         }
     }
+
     public override void RagdollOn(bool ignoreImmunity = false)
     {
         if (Time.time < _lastRagdollOffTime + 1.0f) return;
         if (!isRagdollable || IsRagdollState) return;
+
+        // --- LOGIQUE DE DROP ---
+        if (dropObjectOnRagdoll)
+        {
+            Controller ctrl = GetComponent<Controller>();
+            if (ctrl != null)
+            {
+                ctrl.Drop();
+            }
+        }
 
         Vector3 currentVelocity = Vector3.zero;
         if (_mainRb != null) currentVelocity = _mainRb.linearVelocity;
@@ -66,6 +81,8 @@ public class AIRagdoll : Ragdoll
         base.RagdollOn();
         SetVariableInBlackboard(true, "IsRagdoll");
     }
+
+    public void ClearCatcher() => Catcher = null;
 
     protected override void RagdollOff()
     {
@@ -94,6 +111,7 @@ public class AIRagdoll : Ragdoll
         }
 
         SetVariableInBlackboard(false, "IsRagdoll");
+        ClearCatcher();
     }
 
     private void SetVariableInBlackboard<T>(T value, string variableName)

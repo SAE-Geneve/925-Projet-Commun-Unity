@@ -31,8 +31,8 @@ public class GameManager : MonoBehaviour
 
     private Coroutine _sceneChange;
 
-    private bool annonce1Min = false;
-    private bool annonce30Sec = false;
+    private bool annonce1Min;
+    private bool annonce30Sec;
     public float Timer
     {
         get => _timer;
@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
             else
                 _playerManager.PlayerInputManager.DisableJoining();
 
-            if (newState == GameState.Lobby || newState == GameState.Menu || newState == GameState.Paused)
+            if (newState == GameState.Lobby || newState == GameState.Menu || newState == GameState.Paused || newState == GameState.Cinematic)
                 _playerManager.DisablePlayerControllers();
             else
                 _playerManager.EnablePlayerControllers();

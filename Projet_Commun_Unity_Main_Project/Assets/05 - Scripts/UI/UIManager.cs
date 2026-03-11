@@ -5,10 +5,13 @@ public class UIManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private Canvas _pauseCanvas;
     [SerializeField] private ScoreBoard scoreboard;
+    [SerializeField] private DebugPanel debugPanel;
     
     public static UIManager Instance { get; private set; }
     
     private GameManager _gameManager;
+    
+    private bool _isDebugPanelOpen;
 
     public void ShowPauseCanvas(bool state) => _pauseCanvas.gameObject.SetActive(state);
     
@@ -24,4 +27,10 @@ public class UIManager : MonoBehaviour
     public void SetupScoreBoard() => scoreboard.SetScores();
 
     public void DisplayScoreBoard() => scoreboard.Show();
+
+    public void TriggerDebugPanel()
+    {
+        debugPanel.gameObject.SetActive(!_isDebugPanelOpen);
+        _isDebugPanelOpen = !_isDebugPanelOpen;
+    }
 }

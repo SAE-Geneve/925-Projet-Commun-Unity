@@ -61,4 +61,24 @@ public class AudioManager : MonoBehaviour
         //Allows for SFX to be played in other scripts
         if(sfxSource) sfxSource.PlayOneShot(clip);
     }
+
+    public void SetVolumeMusic(float volume)
+    {
+        if (musicSource) musicSource.volume = volume;
+    }
+    
+    public void SetVolumeSfx(float volume)
+    {
+        if (sfxSource) sfxSource.volume = volume;
+    }
+
+    public void SetSpeedMusic(float speed)
+    {
+        if (musicSource) musicSource.pitch = speed;
+    }
+    
+    public void SetSpeedSfx(float speed)
+    {
+        if (sfxSource) sfxSource.pitch = speed;
+    }
 }

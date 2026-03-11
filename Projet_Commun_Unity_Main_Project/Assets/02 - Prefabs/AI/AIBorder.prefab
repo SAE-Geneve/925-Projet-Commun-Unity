@@ -1764,7 +1764,7 @@ Transform:
   m_GameObject: {fileID: 6383104205757673417}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.035, y: 0.969, z: 0.947}
+  m_LocalPosition: {x: -0.035, y: 1.435, z: 0.947}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2246,11 +2246,15 @@ MonoBehaviour:
   playerRig: {fileID: 790483521926269109}
   hipsTransform: {fileID: 3658928848270437219}
   ragdollTime: 3
-  _ragdollVelocityThreshold: 3
-  _ragdollImmunityDuration: 2
+  ragdollImmunityDuration: 1.5
+  velocityThreshold: 6
+  impulseThreshold: 7
   behaviorGraphAgent: {fileID: 5793317089375339005}
   bHips: {fileID: 5803986174921162408}
   isRagdollable: 1
+  dropObjectOnRagdoll: 1
+  losePointsOnRagdoll: 1
+  ragdollPenalty: 10
 --- !u!114 &5793317089375339005
 MonoBehaviour:
   m_ObjectHideFlags: 0

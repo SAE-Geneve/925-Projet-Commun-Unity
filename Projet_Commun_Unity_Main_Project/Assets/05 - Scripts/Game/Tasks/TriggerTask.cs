@@ -12,7 +12,10 @@ public class TriggerTask : GameTask
     {
         if(Done || !other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
         
-        Succeed();
+        PlayerController playerController = prop.Controller as PlayerController;
+         if (playerController == null && PlayerManager.Instance != null)
+             playerController = PlayerManager.Instance.Players.Find(p => p.Id == prop.OwnerId);
+        Succeed(playerController);
         
         GameManager gm = GameManager.Instance;
         

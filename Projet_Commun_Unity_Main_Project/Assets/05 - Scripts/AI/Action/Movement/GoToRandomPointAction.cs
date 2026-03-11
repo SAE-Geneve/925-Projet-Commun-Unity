@@ -10,7 +10,8 @@ using UnityEngine.AI;
 public partial class GoToRandomPointAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
-    public float RandomPointRadius = 10f;
+    [SerializeReference] public BlackboardVariable<float> RandomPointRadius = new (10f);
+    [SerializeReference] public BlackboardVariable<float> Speed = new (6f);
 
     private AIMovement aiMove;
     private Vector3 destination;
@@ -25,7 +26,7 @@ public partial class GoToRandomPointAction : Action
         if (!GetRandomPointOnNavMesh(Self.Value.transform.position, RandomPointRadius, out destination))
             return Status.Failure;
         
-        aiMove.SetSpeed(6f);
+        aiMove.SetSpeed(Speed);
         aiMove.SetDestination(destination);
         return Status.Running;
     }

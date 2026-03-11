@@ -41,7 +41,7 @@ public partial class FollowAndThrowAction : Action
         _timer = 0f;
         _repathTimer = 0f;
 
-        _aiMove.SetSpeed(6f);
+        _aiMove.SetSpeed(4f);
 
         return Status.Running;
     }

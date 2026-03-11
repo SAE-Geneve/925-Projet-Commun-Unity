@@ -1,4 +1,5 @@
 using System;
+using UnityEngine; // Ajouté au cas où pour ObjectOutline
 
 public class InteractableTask : GameTask, IInteractable
 {
@@ -16,7 +17,8 @@ public class InteractableTask : GameTask, IInteractable
     {
         if (Done) return;
         PlayerController = playerController;
-        Succeed();
+        
+        Succeed(playerController); 
     }
 
     public void InteractEnd() { }

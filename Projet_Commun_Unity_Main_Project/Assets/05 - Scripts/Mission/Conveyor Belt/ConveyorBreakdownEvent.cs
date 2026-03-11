@@ -13,25 +13,18 @@ public class ConveyorBreakdownEvent : GameEvent
     {
         foreach (var buttonTask in _restartButtonTasks)
         {
-            if (buttonTask != null) buttonTask.OnSucceedAction += HandleButtonPressed;
+            if (buttonTask != null) buttonTask.OnSucceedWithPlayer += HandleButtonPressed;
         }
     }
 
-    public override bool IsEventActive()
-    {
-        // Si le tapis est déjà en panne, le Manager ne pourra pas repiocher cet événement
-        return _isConveyorBroken;
-    }
+    public override bool IsEventActive() => _isConveyorBroken;
 
     public override void TriggerEvent()
     {
         Debug.Log("EVENT: Le tapis roulant tombe en panne !");
         _isConveyorBroken = true;
 
-        foreach (var belt in _conveyorBelts)
-        {
-            if(belt != null) belt.StopBelt();
-        }
+        foreach (var belt in _conveyorBelts) { if(belt != null) belt.StopBelt(); }
 
         foreach (var buttonTask in _restartButtonTasks)
         {
@@ -46,11 +39,7 @@ public class ConveyorBreakdownEvent : GameEvent
     public override void ResetEvent()
     {
         _isConveyorBroken = false;
-
-        foreach (var belt in _conveyorBelts)
-        {
-            if (belt != null) belt.StartBelt();
-        }
+        foreach (var belt in _conveyorBelts) { if (belt != null) belt.StartBelt(); }
         
         foreach (var buttonTask in _restartButtonTasks)
         {
@@ -61,25 +50,20 @@ public class ConveyorBreakdownEvent : GameEvent
             }
         }
     }
-
-    private void HandleButtonPressed()
+    private void HandleButtonPressed(PlayerController player)
     {
         if (_isConveyorBroken)
         {
             _isConveyorBroken = false;
-
-            foreach (var belt in _conveyorBelts)
-            {
-                if(belt != null) belt.StartBelt();
-            }
+            foreach (var belt in _conveyorBelts) { if(belt != null) belt.StartBelt(); }
 
             foreach (var buttonTask in _restartButtonTasks)
             {
                 if (buttonTask != null && buttonTask.TryGetComponent<Animator>(out Animator anim))
-                {
                     anim.SetBool("IsBroken", false); 
-                }
             }
+
+            RewardPlayer(player);
         }
     }
 
@@ -87,7 +71,7 @@ public class ConveyorBreakdownEvent : GameEvent
     {
         foreach (var buttonTask in _restartButtonTasks)
         {
-            if (buttonTask != null) buttonTask.OnSucceedAction -= HandleButtonPressed;
+            if (buttonTask != null) buttonTask.OnSucceedWithPlayer -= HandleButtonPressed;
         }
     }
 }

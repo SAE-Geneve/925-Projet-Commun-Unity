@@ -10,6 +10,9 @@ public class MissionManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI missionNameTmp;
     [SerializeField] private Animator missionNameAnimator;
     
+    public Mission currentMission;
+    public int missionIndex;
+    
     [Header("Parameters")]
     [SerializeField] private float hubTime = 30f;
 
@@ -26,9 +29,17 @@ public class MissionManager : MonoBehaviour
         int randomIndex = Random.Range(0, missions.Count);
         
         missions[randomIndex].Unlock();
+        currentMission = missions[randomIndex];
+        missionIndex=randomIndex;
         
         missionNameTmp.SetText(missions[randomIndex].Name);
         missionNameAnimator.SetTrigger("Display");
+    }
+
+    public void UnlockAllMissions()
+    {
+        foreach (Mission mission in missions)
+            mission.Unlock();
     }
 
     public void OnMissionFinished() => StartCoroutine(HubTimeRoutine());

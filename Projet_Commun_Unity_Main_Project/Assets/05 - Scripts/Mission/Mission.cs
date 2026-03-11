@@ -30,7 +30,7 @@ public class Mission : MonoBehaviour
         get => _timer;
         private set
         {
-            if (value < 0) Finish();
+            if (value < 0) Finish(true);
             _timer = value;
         }
     }
@@ -79,10 +79,12 @@ public class Mission : MonoBehaviour
         Debug.Log($"Mission {_name} began");
     }
     
-    public void Finish()
+    public void Finish(bool victory)
     {
-        _gameManager.Timer += _initialTimer / 2f;
-        _gameManager.StopMission();
+        if (victory)
+            _gameManager.Timer += _initialTimer / 2f;
+        
+        _gameManager.StopMission(false);
         SwitchMissionState(MissionState.Finished);
         _onMissionFinished?.Invoke();
         Debug.Log($"Mission {_name} finished");

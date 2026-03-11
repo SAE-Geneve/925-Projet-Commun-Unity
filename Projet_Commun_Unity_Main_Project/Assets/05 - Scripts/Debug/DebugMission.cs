@@ -39,6 +39,6 @@ public class DebugMission : Mission
 
     private void OnTriggerExit(Collider other)
     {
-        if(_missionState == MissionState.Playing && other.CompareTag("Player")) Finish();
+        if(_missionState == MissionState.Playing && other.CompareTag("Player")) Finish(true);
     }
 }

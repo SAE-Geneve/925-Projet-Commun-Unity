@@ -17,16 +17,25 @@ public class TimelineManager : MonoBehaviour
     
     public bool IsPlaying { get; private set; }
 
+    public void RegisterDirectors(PlayableDirector start = null, PlayableDirector victory= null, PlayableDirector loose= null,
+        PlayableDirector ending= null)
+    {
+        if (start   != null) startDirector   = start;
+        if (victory != null) victoryDirector = victory;
+        if (loose   != null) looseDirector   = loose;
+        if (ending  != null) endingDirector  = ending;
+    }
+
     private void Awake()
     {
         if (Instance !=null && Instance != this)
         {
             Destroy(gameObject);
-            DontDestroyOnLoad(gameObject);
+            
             return;
         }
         Instance = this;
-        
+        DontDestroyOnLoad(gameObject);
         
     }
     public Coroutine PlayStart(Action onFinished = null)   => PlayDirector(startDirector, onFinished);
@@ -97,6 +106,5 @@ public class TimelineManager : MonoBehaviour
         // - désactiver un PlayerController
         // - désactiver un InputActionAsset
         // - mettre GameManager en pause input
-        // Ici je laisse volontairement vide pour s’adapter à ton projet.
     }
 }

@@ -42,8 +42,11 @@ public abstract class GameTask : MonoBehaviour
 
         if (Done)
         {
-            if(_finishedMission) GameManager.Instance.CurrentMission.Finish();
-            
+            if(_finishedMission)
+            {
+                GameManager.Instance.CurrentMission.Finish(true);
+            }
+
             OnFinished?.Invoke();
             Debug.Log($"Task {_taskName} done!");
             if(_destroyOnSucceed) Destroy(gameObject);

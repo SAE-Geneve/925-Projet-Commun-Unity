@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -48,13 +49,21 @@ public class GameManager : MonoBehaviour
                 annonce30Sec = true;
                 _audioManager.PlaySfx(_audioManager.Annonce30SecSFX);
             }
+            // if (value <= 0)
+            // {
+            //     _timer = 0;
+            //     SwitchState(GameState.Menu);
+            //     _sceneChange = StartCoroutine(_playerManager.PrepareSceneChange());
+            //     SceneLoader.Instance.LoadScene("GameOver");
+            //     _playerManager.DisablePlayerMovements();
+            // }
             if (value <= 0)
             {
                 _timer = 0;
-                SwitchState(GameState.Menu);
-                _sceneChange = StartCoroutine(_playerManager.PrepareSceneChange());
-                SceneLoader.Instance.LoadScene("GameOver");
                 _playerManager.DisablePlayerMovements();
+                SwitchState(GameState.Cinematic);
+                if (TimelineManager.Instance != null) TimelineManager.Instance.PlayEnding(LoadGameOver);
+                else LoadGameOver();
             }
             else _timer = value;
 
@@ -108,6 +117,7 @@ public class GameManager : MonoBehaviour
         else Instance = this;
         
         Scores = new ScoreManager();
+        
     }
 
     private void Start()
@@ -117,6 +127,7 @@ public class GameManager : MonoBehaviour
         if(_playerManager) _playerManager.PlayerInputManager.DisableJoining();
         ResetGame();
         Debug.Log($"Game State: {_state}");
+        StartGameFlow();
     }
 
     #endregion
@@ -176,16 +187,23 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+    public void StartGameFlow()
+    {
+        if (_playerManager.Players.Count < _minPlayers) return;
 
+        SwitchState(GameState.Cinematic);
+        StartGame(); //StartGame actuel
+    }
     public void StartGame()
     {
         _audioManager.StopBGM();
         _audioManager.PlayBGM(_audioManager.gameMusic);
         if (_playerManager.Players.Count < _minPlayers) return;
 
-        SwitchState(GameState.Playing);
+        //SwitchState(GameState.Playing);
         _context = GameContext.Hub;
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
+        SceneManager.sceneLoaded+=OnHubSceneLoaded;
         if(SceneLoader.Instance) SceneLoader.Instance.LoadScene("HubScene");
     }
 
@@ -196,6 +214,27 @@ public class GameManager : MonoBehaviour
         else SwitchState(GameState.Cinematic);
     }
 
+    #region HubScene
+
+    private void OnHubSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "HubScene") return;
+
+        SceneManager.sceneLoaded -= OnHubSceneLoaded;
+
+        if (TimelineManager.Instance != null) TimelineManager.Instance.PlayStart(() =>
+            SwitchState(GameState.Playing));
+        else SwitchState(GameState.Playing);
+    }
+
+    private void LoadGameOver()
+    {
+        SwitchState(GameState.Menu);
+        _sceneChange = StartCoroutine(_playerManager.PrepareSceneChange());
+        SceneLoader.Instance.LoadScene("GameOver");
+    }
+    #endregion
+    
     #region Mission
 
     public void StartMission(Mission mission)
@@ -211,26 +250,43 @@ public class GameManager : MonoBehaviour
         _context = GameContext.Mission;
     }
 
-    public void StopMission()
+    public void StopMission(bool victory)
     {
         if (_state != GameState.Playing || _context == GameContext.Hub)
         {
             Debug.LogWarning("Mission can only be stopped when game is playing in a mission");
             return;
         }
-        
-        UIManager uiManager = UIManager.Instance;
-
-        if (Scores != null && uiManager)
+        SwitchState(GameState.Cinematic);
+        TimelineManager.Instance.PlayResult(victory, () =>
         {
-            uiManager.SetupScoreBoard();
-            uiManager.DisplayScoreBoard();
-            SwitchState(GameState.Cinematic);
-        }
+            UIManager uiManager = UIManager.Instance;
 
-        CurrentMission = null;
-        if(_playerManager) _playerManager.PlayerInputManager.EnableJoining();
-        _context = GameContext.Hub;
+            if (Scores != null && uiManager)
+            {
+                uiManager.SetupScoreBoard();
+                uiManager.DisplayScoreBoard();
+                //SwitchState(GameState.Cinematic);
+            }
+
+            CurrentMission = null;
+            if(_playerManager) _playerManager.PlayerInputManager.EnableJoining();
+            _context = GameContext.Hub;
+            SwitchState(GameState.Playing);
+        });
+        
+        // UIManager uiManager = UIManager.Instance;
+        //
+        // if (Scores != null && uiManager)
+        // {
+        //     uiManager.SetupScoreBoard();
+        //     uiManager.DisplayScoreBoard();
+        //     SwitchState(GameState.Cinematic);
+        // }
+        //
+        // CurrentMission = null;
+        // if(_playerManager) _playerManager.PlayerInputManager.EnableJoining();
+        // _context = GameContext.Hub;
     }
 
     #endregion
@@ -330,6 +386,9 @@ public class GameManager : MonoBehaviour
     #endregion
     
     public void ExitGame() => Application.Quit();
+
+    public void StopMission()=>StopMission(false);
+    
 }
 
 public enum GameState

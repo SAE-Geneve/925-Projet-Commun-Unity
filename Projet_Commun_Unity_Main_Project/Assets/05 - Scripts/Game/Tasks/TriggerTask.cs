@@ -11,10 +11,17 @@ public class TriggerTask : GameTask
     protected virtual void OnTriggerEnter(Collider other)
     {
         if(Done || !other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
-        
+        OnTriggerValid(prop);
+
+    }
+    
+    public void SetPropType(PropType propType) => _propType = propType;
+
+    protected virtual void OnTriggerValid(Prop prop)
+    {
         PlayerController playerController = prop.Controller as PlayerController;
-         if (playerController == null && PlayerManager.Instance != null)
-             playerController = PlayerManager.Instance.Players.Find(p => p.Id == prop.OwnerId);
+        if (playerController == null && PlayerManager.Instance != null)
+            playerController = PlayerManager.Instance.Players.Find(p => p.Id == prop.OwnerId);
         Succeed(playerController);
         
         GameManager gm = GameManager.Instance;
@@ -23,10 +30,9 @@ public class TriggerTask : GameTask
         {
             if (gm.CurrentMission != null) gm.Scores.AddMissionScore(score, prop.OwnerId);
             else gm.Scores.AddTotalScore(score, prop.OwnerId);
+            Debug.LogError("score called");
         }
-        
         if(isDestroyed) prop.Destroy();
+        Debug.LogError("trigger valid called");
     }
-    
-    public void SetPropType(PropType propType) => _propType = propType;
 }

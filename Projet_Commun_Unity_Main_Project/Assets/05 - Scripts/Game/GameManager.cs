@@ -258,8 +258,9 @@ public class GameManager : MonoBehaviour
             return;
         }
         SwitchState(GameState.Cinematic);
-        TimelineManager.Instance.PlayResult(victory, () =>
-        {
+        
+        // TimelineManager.Instance.PlayResult(victory, () =>
+        // {
             UIManager uiManager = UIManager.Instance;
 
             if (Scores != null && uiManager)
@@ -273,7 +274,7 @@ public class GameManager : MonoBehaviour
             if(_playerManager) _playerManager.PlayerInputManager.EnableJoining();
             _context = GameContext.Hub;
             SwitchState(GameState.Playing);
-        });
+        // });
         
         // UIManager uiManager = UIManager.Instance;
         //

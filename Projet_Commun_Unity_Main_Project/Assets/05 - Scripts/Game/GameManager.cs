@@ -189,7 +189,7 @@ public class GameManager : MonoBehaviour
     #endregion
     public void StartGameFlow()
     {
-        if (_playerManager.Players.Count < _minPlayers) return;
+        if(!_playerManager || _playerManager.Players.Count < _minPlayers) return;
 
         SwitchState(GameState.Cinematic);
         StartGame(); //StartGame actuel
@@ -257,7 +257,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Mission can only be stopped when game is playing in a mission");
             return;
         }
-        SwitchState(GameState.Cinematic);
+        // SwitchState(GameState.Cinematic);
         
         // TimelineManager.Instance.PlayResult(victory, () =>
         // {

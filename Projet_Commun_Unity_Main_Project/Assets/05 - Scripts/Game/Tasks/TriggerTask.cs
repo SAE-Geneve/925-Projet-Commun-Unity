@@ -30,9 +30,7 @@ public class TriggerTask : GameTask
         {
             if (gm.CurrentMission != null) gm.Scores.AddMissionScore(score, prop.OwnerId);
             else gm.Scores.AddTotalScore(score, prop.OwnerId);
-            Debug.LogError("score called");
         }
         if(isDestroyed) prop.Destroy();
-        Debug.LogError("trigger valid called");
     }
 }

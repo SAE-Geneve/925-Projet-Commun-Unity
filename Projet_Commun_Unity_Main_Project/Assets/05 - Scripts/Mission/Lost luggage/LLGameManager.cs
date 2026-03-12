@@ -42,6 +42,8 @@ public class LLGameManager : MonoBehaviour
         Transform selectedSpawnPoint = spawnPoints[randomSpawnIndex];
         
         currentValise = Instantiate(valisePrefab, selectedSpawnPoint.position, selectedSpawnPoint.rotation);
+        
+        currentValise.AddComponent<ObjectPulsing>();
     }
 
     public void ValiseLivree()

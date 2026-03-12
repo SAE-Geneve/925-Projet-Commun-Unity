@@ -30,6 +30,6 @@ public class DropZone : TriggerTask
         if (!isActiveTarget) return;
 
         base.OnTriggerValid(prop);
-        LLGameManager.Instance.ValiseLivree();
+        LostLuggage.Instance.ValiseLivree();
     }
 }

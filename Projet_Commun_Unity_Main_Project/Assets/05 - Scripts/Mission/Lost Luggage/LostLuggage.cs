@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class LLGameManager : MonoBehaviour
+public class LostLuggage : MonoBehaviour
 {
     
-    public static LLGameManager Instance;
+    public static LostLuggage Instance;
 
     [Header("Références")] 
     public Transform[] spawnPoints;

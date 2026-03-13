@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ScreenBreakdownEvent : GameEvent
 {
@@ -19,11 +20,16 @@ public class ScreenBreakdownEvent : GameEvent
     [Tooltip("Score bonus spécifique pour relancer le tapis de ce niveau")]
     [SerializeField] private int _scoreRestartConveyor = 100;
 
+    [SerializeField] private ParticleSystem _particleSystemScan;
+    [SerializeField] private ParticleSystem _particleSystemConvoyor;
+
     private bool _isScreenBroken = false;
     private bool _isConveyorStopped = false;
 
     private void Start()
     {
+        _particleSystemScan.Stop();
+        _particleSystemConvoyor.Stop();
         // Abonnements propres
         if (_screenRepairTask != null) _screenRepairTask.OnSucceedWithPlayer += HandleScreenRepaired;
         foreach (var buttonTask in _restartButtonTasks)
@@ -37,6 +43,8 @@ public class ScreenBreakdownEvent : GameEvent
     public override void TriggerEvent()
     {
         Debug.Log("EVENT: L'écran du scanner est brouillé !");
+        _particleSystemScan.Play();
+        _particleSystemConvoyor.Play();
         _isScreenBroken = true;
         _isConveyorStopped = true;
 
@@ -65,6 +73,7 @@ public class ScreenBreakdownEvent : GameEvent
 
     public override void ResetEvent()
     {
+        _particleSystemScan.Stop();
         _isScreenBroken = false;
         _isConveyorStopped = false;
 
@@ -93,6 +102,7 @@ public class ScreenBreakdownEvent : GameEvent
     {
         if (_isScreenBroken)
         {
+            _particleSystemScan.Stop();
             _isScreenBroken = false;
             if (_scrambledScreenVisual != null) _scrambledScreenVisual.SetActive(false);
             if (_warningLogoVisual != null) _warningLogoVisual.SetActive(false);
@@ -119,6 +129,7 @@ public class ScreenBreakdownEvent : GameEvent
             }
 
             _isConveyorStopped = false;
+            _particleSystemConvoyor.Stop();
             if (_aiManagerBorder != null) _aiManagerBorder.isSpawningPaused = false;
 
             foreach (var belt in _conveyorBelts) { if (belt != null) belt.StartBelt(); }

@@ -6,11 +6,13 @@ public class ConveyorBreakdownEvent : GameEvent
     [Header("Conveyor Settings")]
     [SerializeField] private List<GameTask> _restartButtonTasks; 
     [SerializeField] private List<ConveyorBelt> _conveyorBelts;
+    [SerializeField] private ParticleSystem _particleSystem;
 
     private bool _isConveyorBroken = false;
 
     private void Start()
     {
+        _particleSystem.Stop();
         foreach (var buttonTask in _restartButtonTasks)
         {
             if (buttonTask != null) buttonTask.OnSucceedWithPlayer += HandleButtonPressed;
@@ -23,6 +25,7 @@ public class ConveyorBreakdownEvent : GameEvent
     {
         Debug.Log("EVENT: Le tapis roulant tombe en panne !");
         _isConveyorBroken = true;
+        _particleSystem.Play();
 
         foreach (var belt in _conveyorBelts) { if(belt != null) belt.StopBelt(); }
 
@@ -39,6 +42,7 @@ public class ConveyorBreakdownEvent : GameEvent
     public override void ResetEvent()
     {
         _isConveyorBroken = false;
+        _particleSystem.Stop();
         foreach (var belt in _conveyorBelts) { if (belt != null) belt.StartBelt(); }
         
         foreach (var buttonTask in _restartButtonTasks)
@@ -55,6 +59,7 @@ public class ConveyorBreakdownEvent : GameEvent
         if (_isConveyorBroken)
         {
             _isConveyorBroken = false;
+            _particleSystem.Stop();
             foreach (var belt in _conveyorBelts) { if(belt != null) belt.StartBelt(); }
 
             foreach (var buttonTask in _restartButtonTasks)

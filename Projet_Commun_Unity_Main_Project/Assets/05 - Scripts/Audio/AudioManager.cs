@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class AudioManager : MonoBehaviour
 {
@@ -9,11 +10,14 @@ public class AudioManager : MonoBehaviour
     
     [Header("Mini-Game Music")]
     [SerializeField] public AudioClip conveyorBeltMusic;
-    [SerializeField] public AudioClip minigameMusic;
+    [SerializeField] public AudioClip borderControleMusic;
+    [SerializeField] public  AudioClip bordingMusic;
+    [SerializeField] public AudioClip lostLuggageMusic;
     
     [Header("Other Musics")]
-    [SerializeField] public AudioClip lobbyMusic;
-    [SerializeField] public AudioClip gameMusic;
+    [SerializeField] public AudioClip menuMusic;
+    [SerializeField] public AudioClip hubMusic;
+    [SerializeField] public AudioClip endMusic;
 
     [Header("Sounds")]
     [SerializeField] public AudioClip successSFX;

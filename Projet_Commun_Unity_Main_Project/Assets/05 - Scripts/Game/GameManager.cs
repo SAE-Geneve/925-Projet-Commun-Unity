@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
             // }
             if (value <= 0)
             {
+                _audioManager.StopBGM();
+                _audioManager.PlayBGM(_audioManager.endMusic);
                 _timer = 0;
                 _playerManager.DisablePlayerMovements();
                 SwitchState(GameState.Cinematic);
@@ -197,7 +199,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         _audioManager.StopBGM();
-        _audioManager.PlayBGM(_audioManager.gameMusic);
+        _audioManager.PlayBGM(_audioManager.hubMusic);
         if (_playerManager.Players.Count < _minPlayers) return;
 
         //SwitchState(GameState.Playing);

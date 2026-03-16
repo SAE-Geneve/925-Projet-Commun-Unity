@@ -9,7 +9,7 @@ public class StartMusicLobby : MonoBehaviour
     void Start()
     {
         _audioManager = AudioManager.Instance;
-        _audioManager.PlayBGM(_audioManager.lobbyMusic);
+        _audioManager.PlayBGM(_audioManager.menuMusic);
     }
 
     // Update is called once per frame

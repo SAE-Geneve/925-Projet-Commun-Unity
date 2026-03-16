@@ -4,7 +4,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     [Header("Physic")]
-    [SerializeField] protected float speed = 5f;
+    [SerializeField] public float speed = 5f;
     public event Action<Vector3> OnMove;
     
     protected Rigidbody Rb;

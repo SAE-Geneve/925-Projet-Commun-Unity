@@ -11,6 +11,7 @@ public class KartController : MonoBehaviour, IInteractable
     private KartPhysic _kartPhysic;
     
     private ObjectOutline _outline;
+    private bool _isUsed = false;
 
     private void Awake()
     {
@@ -18,11 +19,12 @@ public class KartController : MonoBehaviour, IInteractable
         _kartPhysic = GetComponent<KartPhysic>();
         
         _outline = GetComponent<ObjectOutline>();
-
     }
 
     public void Interact(PlayerController playerController)
     {
+        if (_isUsed) return;
+        
         var playerRb = playerController.GetComponent<Rigidbody>();
         var playerCol = playerController.GetComponent<Collider>();
         
@@ -46,7 +48,9 @@ public class KartController : MonoBehaviour, IInteractable
         playerController.KartPhysic = _kartPhysic;
         playerController.KartMovement = _kartMovement;
         
-        playerController.OnEnterKart?.Invoke();
+        playerController.OnEnterKart?.Invoke(); 
+            
+        _isUsed = true;
     }
     
     public void InteractEnd(){}
@@ -85,5 +89,7 @@ public class KartController : MonoBehaviour, IInteractable
         playerController.transform.rotation = Quaternion.identity;
         
         playerController.OnExitKart?.Invoke();
+        
+        _isUsed = false;
     }
 }

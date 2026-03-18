@@ -42,26 +42,37 @@ public class ScoreSlot : MonoBehaviour
 
     public IEnumerator ScoreFillRoutine()
     {
-        while (missionScoreDisplay != 0)
+        float duration = 3f;
+        float elapsed = 0f;
+    
+        int startMission = missionScoreDisplay;
+        int startTotal = totalScoreDisplay;
+    
+        int targetMission = 0;
+        int targetTotal = totalScoreDisplay + missionScoreDisplay;
+    
+        while (elapsed < duration)
         {
-            if (missionScoreDisplay > 0)
-            {
-                totalScoreDisplay++;
-                missionScoreDisplay--;
-            }
-            else
-            {
-                totalScoreDisplay--;
-                missionScoreDisplay++;
-            }
-
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+    
+            missionScoreDisplay = Mathf.RoundToInt(Mathf.Lerp(startMission, targetMission, t));
+            totalScoreDisplay = Mathf.RoundToInt(Mathf.Lerp(startTotal, targetTotal, t));
+    
             totalScoreTmp.SetText(totalScoreDisplay.ToString());
-            if(missionScoreTmp)
-            {
+    
+            if (missionScoreTmp)
                 missionScoreTmp.SetText(missionScoreDisplay.ToString());
-            }
-            
-            yield return new WaitForSeconds(scoreFillTime);
+    
+            yield return null;
         }
+    
+        // Ensure exact final values
+        missionScoreDisplay = targetMission;
+        totalScoreDisplay = targetTotal;
+    
+        totalScoreTmp.SetText(totalScoreDisplay.ToString());
+        if (missionScoreTmp)
+            missionScoreTmp.SetText(missionScoreDisplay.ToString());
     }
 }

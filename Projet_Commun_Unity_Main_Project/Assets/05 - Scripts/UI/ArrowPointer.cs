@@ -62,11 +62,11 @@ public class ArrowPointer : MonoBehaviour
         Vector3 targetPositionScreenPoint = _mainCamera.WorldToScreenPoint(_targetPosition);
         
         //Checks if the target is in the screen
-        float borderSize = 100f;
+        float borderSize = 150f;
         bool isOffScreen = targetPositionScreenPoint.x < borderSize ||
                            targetPositionScreenPoint.x > Screen.width - borderSize||
-                           targetPositionScreenPoint.y < borderSize ||
-                           targetPositionScreenPoint.y > Screen.height - borderSize;
+                           targetPositionScreenPoint.y < borderSize+50 ||
+                           targetPositionScreenPoint.y > Screen.height - borderSize-50;
 
         if (isOffScreen)
         {

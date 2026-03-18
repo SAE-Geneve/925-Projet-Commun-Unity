@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -84,6 +85,11 @@ public class PlayerManager : MonoBehaviour
 
     public void OnPlayerJoined(PlayerInput player)
     {
+        if (_gameManager.State != GameState.Lobby)
+        {
+            return;
+        }
+        
         player.transform.position = _spawnPoints[Players.Count].transform.position;
         player.GetComponent<InputManager>().OnControllerDisconnected += OnPlayerDisconnect;
 

@@ -8,7 +8,7 @@ public class KartMovement : MonoBehaviour, IRespawnable
     private float maxForwardSpeed = 30f;
 
     [SerializeField] private float acceleration = 60f;
-    [SerializeField] private float rotationSpeed = 720f; // Vitesse de rotation en degrés par seconde
+    [SerializeField] private float rotationSmoothFactor = 0.2f;
 
     [Header("Grip Settings")] [SerializeField]
     private float tireGripFactor = 5f;
@@ -22,7 +22,7 @@ public class KartMovement : MonoBehaviour, IRespawnable
     private Vector3 _moveDirection;
 
     private Vector3 _startPosition;
-    private Vector3 _startRotation;
+    private Quaternion _startRotation;
 
     private float _tempMaxSpeed = 0;
     private float _tempRotationSpeed = 0;
@@ -34,7 +34,7 @@ public class KartMovement : MonoBehaviour, IRespawnable
         _rb.centerOfMass = new Vector3(0, -0.5f, 0);
 
         _startPosition = _rb.position;
-        _startRotation = _rb.rotation.eulerAngles;
+        _startRotation = _rb.rotation;
     }
 
     void FixedUpdate()
@@ -82,10 +82,8 @@ public class KartMovement : MonoBehaviour, IRespawnable
         if (_moveDirection.sqrMagnitude < 0.01f) return;
 
         Quaternion targetRotation = Quaternion.LookRotation(_moveDirection, Vector3.up);
-
-        // Slerp for a smooth turn rather than an instant snap
-        float step = rotationSpeed * Time.fixedDeltaTime;
-        _rb.MoveRotation(Quaternion.RotateTowards(_rb.rotation, targetRotation, step));
+        _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation,
+            rotationSmoothFactor * Time.fixedDeltaTime * 60f));
     }
 
     private void ApplyTireGrip()
@@ -110,7 +108,10 @@ public class KartMovement : MonoBehaviour, IRespawnable
     public void Respawn()
     {
         _rb.position = _startPosition;
-        _rb.rotation = Quaternion.Euler(_startRotation);
+        _rb.rotation = _startRotation;
+
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
     }
 
     public void Breakdown()
@@ -118,13 +119,13 @@ public class KartMovement : MonoBehaviour, IRespawnable
         _tempMaxSpeed = maxForwardSpeed;
         maxForwardSpeed = 0f;
 
-        _tempRotationSpeed = rotationSpeed;
-        rotationSpeed = 0f;
+        _tempRotationSpeed = rotationSmoothFactor;
+        rotationSmoothFactor = 0f;
     }
 
     public void Restart()
     {
         maxForwardSpeed = _tempMaxSpeed;
-        rotationSpeed = _tempRotationSpeed;
+        rotationSmoothFactor = _tempRotationSpeed;
     }
 }

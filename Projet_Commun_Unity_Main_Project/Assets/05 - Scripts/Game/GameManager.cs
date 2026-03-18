@@ -204,7 +204,7 @@ public class GameManager : MonoBehaviour
         _audioManager.PlayBGM(_audioManager.hubMusic);
         if (_playerManager.Players.Count < _minPlayers) return;
 
-        //SwitchState(GameState.Playing);
+        SwitchState(GameState.Playing);
         _context = GameContext.Hub;
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
         // SceneManager.sceneLoaded+=OnHubSceneLoaded;

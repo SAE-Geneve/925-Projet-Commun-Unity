@@ -39,7 +39,7 @@ public class AIManager : MonoBehaviour
             maxSpawnAmount = Mathf.RoundToInt(maxSpawnAmount * multiplier);
         }
 
-        Debug.Log($"[AIManager] Difficulté adaptée pour {playerCount} joueurs. Nouvel intervalle : {spawnInterval}s, Max IA : {maxSpawnAmount}");
+        // Debug.Log($"[AIManager] Difficulté adaptée pour {playerCount} joueurs. Nouvel intervalle : {spawnInterval}s, Max IA : {maxSpawnAmount}");
     }
 
     public void StartSpawn()

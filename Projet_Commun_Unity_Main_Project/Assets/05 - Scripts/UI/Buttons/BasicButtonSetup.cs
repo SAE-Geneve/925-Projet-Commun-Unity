@@ -8,11 +8,15 @@ using UnityEngine.UI;
 public class BasicButtonSetup : MonoBehaviour
 {
     [SerializeField] private GameObject firstButton;
+    [SerializeField] private GameObject changeButton;
     private GameObject _lastSelected = null;
     
     void OnEnable()
     {
-        EventSystem.current.SetSelectedGameObject(firstButton);
+        if(firstButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(firstButton);
+        }
     }
 
     void Update()
@@ -28,6 +32,11 @@ public class BasicButtonSetup : MonoBehaviour
     }
     
     public void ButtonChange()
+    {
+        EventSystem.current.SetSelectedGameObject(firstButton);
+    }
+
+    public void ActivateButton()
     {
         EventSystem.current.SetSelectedGameObject(firstButton);
     }

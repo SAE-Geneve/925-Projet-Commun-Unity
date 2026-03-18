@@ -1,89 +1,133 @@
 using UnityEngine;
 using UnityEngine.Playables;
-using System;
-using System.Collections;
+using Unity.Cinemachine;
+
 public class TimelineManager : MonoBehaviour
 {
-    public static TimelineManager Instance {get; private set; }
-    
-    [Header ("Directors")]
+    public static TimelineManager Instance { get; private set; }
+
+    [Header("Directors")]
     [SerializeField] private PlayableDirector startDirector;
     [SerializeField] private PlayableDirector victoryDirector;
     [SerializeField] private PlayableDirector looseDirector;
     [SerializeField] private PlayableDirector endingDirector;
-    
-    [Header ("Options")]
+
+    [Header("Cameras")]
+    [SerializeField] private CinemachineCamera timelineCamera;
+    [SerializeField] private CinemachineCamera gameplayCamera;
+
+    [Header("Options")]
     [SerializeField] private bool disablePlayerInputWhilePlaying = true;
-    
+
     public bool IsPlaying { get; private set; }
 
-    public void RegisterDirectors(PlayableDirector start = null, PlayableDirector victory= null, PlayableDirector loose= null,
-        PlayableDirector ending= null)
-    {
-        if (start   != null) startDirector   = start;
-        if (victory != null) victoryDirector = victory;
-        if (loose   != null) looseDirector   = loose;
-        if (ending  != null) endingDirector  = ending;
-    }
+    private PlayableDirector currentDirector;
 
     private void Awake()
     {
-        if (Instance !=null && Instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
-            
             return;
         }
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        
     }
-    public Coroutine PlayStart(Action onFinished = null)   => PlayDirector(startDirector, onFinished);
-    public Coroutine PlayVictory(Action onFinished = null) => PlayDirector(victoryDirector, onFinished);
-    public Coroutine PlayLoose(Action onFinished = null)   => PlayDirector(looseDirector, onFinished);
-    public Coroutine PlayEnding(Action onFinished = null)  => PlayDirector(endingDirector, onFinished);
-    
-    public Coroutine PlayResult(bool isVictory, Action onFinished = null)=> isVictory ? PlayVictory(onFinished) : PlayLoose(onFinished);
-    private Coroutine PlayDirector(PlayableDirector director, Action onFinished)
+
+    private void Start()
+    {
+        GameManager.Instance.SwitchState(GameState.Cinematic);
+        PlayStart();
+    }
+
+    public void RegisterDirectors(
+        PlayableDirector start = null,
+        PlayableDirector victory = null,
+        PlayableDirector loose = null,
+        PlayableDirector ending = null)
+    {
+        if (start != null) startDirector = start;
+        if (victory != null) victoryDirector = victory;
+        if (loose != null) looseDirector = loose;
+        if (ending != null) endingDirector = ending;
+    }
+
+    public void PlayStart()   => PlayDirector(startDirector);
+    public void PlayVictory() => PlayDirector(victoryDirector);
+    public void PlayLoose()   => PlayDirector(looseDirector);
+    public void PlayEnding()  => PlayDirector(endingDirector);
+
+    public void PlayResult(bool isVictory)
+    {
+        if (isVictory) PlayVictory();
+        else PlayLoose();
+    }
+
+    public void PlayDirector(PlayableDirector director)
     {
         if (director == null)
         {
-            Debug.LogWarning("[TimelineManager] PlayDirector called but director is null.");
-            onFinished?.Invoke();
-            return null;
+            Debug.Log("[TimelineManager] PlayDirector called but director is null.");
+            GameManager.Instance.SwitchState(GameState.Playing);
+            return;
         }
 
-        return StartCoroutine(PlayRoutine(director, onFinished));
+        Debug.Log($"[TimelineManager] Trying to play director: {director.name}");
+        Debug.Log($"[TimelineManager] Playable asset: {director.playableAsset}");
+
+        StopCurrentTimeline();
+
+        currentDirector = director;
+        BeginTimelineState();
+
+        currentDirector.time = 0;
+        currentDirector.extrapolationMode = DirectorWrapMode.None;
+        currentDirector.stopped += OnDirectorStopped;
+        
+        Debug.Log($"[TimelineManager] timeUpdateMode = {currentDirector.timeUpdateMode}");
+        Debug.Log($"[TimelineManager] duration = {currentDirector.duration}");
+        Debug.Log($"[TimelineManager] initialTime = {currentDirector.time}");
+        Debug.Log($"[TimelineManager] director enabled = {currentDirector.enabled}");
+        Debug.Log($"[TimelineManager] director activeInHierarchy = {currentDirector.gameObject.activeInHierarchy}");
+        currentDirector.Play();
+
+        Debug.Log($"[TimelineManager] Director state after Play(): {currentDirector.state}");
     }
-    private IEnumerator PlayRoutine(PlayableDirector director, Action onFinished)
+
+    private void BeginTimelineState()
     {
-        // Si une timeline est déjà en cours, on la stop.
-        StopAllTimelines();
-
         IsPlaying = true;
-        if (disablePlayerInputWhilePlaying) SetGameplayInput(false);
 
-        bool done = false;
+        if (timelineCamera != null)
+            timelineCamera.Priority = 100;
 
-        void OnStopped(PlayableDirector d)
-        {
-            if (d == director) done = true;
-        }
+        if (gameplayCamera != null)
+            gameplayCamera.Priority = 0;
+    }
 
-        director.time = 0;
-        director.stopped += OnStopped;
-        director.Play();
-
-        // Attend la fin
-        while (!done)
-            yield return null;
-
-        director.stopped -= OnStopped;
-
-        if (disablePlayerInputWhilePlaying) SetGameplayInput(true);
+    private void EndTimelineState()
+    {
         IsPlaying = false;
 
-        onFinished?.Invoke();
+        if (timelineCamera != null)
+            timelineCamera.Priority = 0;
+
+        if (gameplayCamera != null)
+            gameplayCamera.Priority = 100;
+
+        GameManager.Instance.SwitchState(GameState.Playing);
+    }
+
+    private void OnDirectorStopped(PlayableDirector director)
+    {
+        director.stopped -= OnDirectorStopped;
+
+        if (director != currentDirector)
+            return;
+
+        currentDirector = null;
+        EndTimelineState();
     }
 
     public void StopAllTimelines()
@@ -92,19 +136,29 @@ public class TimelineManager : MonoBehaviour
         StopDirector(victoryDirector);
         StopDirector(looseDirector);
         StopDirector(endingDirector);
+
+        currentDirector = null;
         IsPlaying = false;
     }
 
-    private void StopDirector(PlayableDirector d)
+    private void StopCurrentTimeline()
     {
-        if (d != null && d.state == PlayState.Playing)
-            d.Stop();
+        if (currentDirector == null)
+            return;
+
+        currentDirector.stopped -= OnDirectorStopped;
+        currentDirector.Stop();
+        currentDirector = null;
     }
-    private void SetGameplayInput(bool enabled)
+
+    private void StopDirector(PlayableDirector director)
     {
-        // Exemples possibles :
-        // - désactiver un PlayerController
-        // - désactiver un InputActionAsset
-        // - mettre GameManager en pause input
+        if (director == null)
+            return;
+
+        director.stopped -= OnDirectorStopped;
+
+        if (director.state == PlayState.Playing)
+            director.Stop();
     }
 }

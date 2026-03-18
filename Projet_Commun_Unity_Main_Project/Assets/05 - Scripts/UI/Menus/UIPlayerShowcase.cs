@@ -13,12 +13,16 @@ public class UIPlayerShowcase : MonoBehaviour
     [SerializeField] private Image[] playerIconImages;
     [SerializeField] private Sprite playerIcon;
     [SerializeField] private Sprite missingIcon;
+    [SerializeField] private GameObject[] lobbyWarnings;
 
     [Header("Colors")]
     [SerializeField] private Color[] playerBoxColors;
     [SerializeField] private Color[] playerIconColors;
     [SerializeField] private Color missingBoxColor;
     [SerializeField] private Color missingIconColor;
+    
+    [Header("Environnement")]
+    [SerializeField] private bool isInLobby;
 
     void Update()
     {
@@ -28,6 +32,12 @@ public class UIPlayerShowcase : MonoBehaviour
             {
                 RectTransform rt = playerIconImages[i].GetComponent<RectTransform>();
                 rt.sizeDelta = new Vector2(rt.sizeDelta.x, 335);
+            }
+
+            if (isInLobby)
+            {
+                playerIconImages[i].gameObject.SetActive(true);
+                lobbyWarnings[i].SetActive(false);
             }
             playerIconImages[i].sprite = playerIcon;
             playerIconImages[i].color = playerIconColors[i];
@@ -41,6 +51,11 @@ public class UIPlayerShowcase : MonoBehaviour
             {
                 RectTransform rt = playerIconImages[i].GetComponent<RectTransform>();
                 rt.sizeDelta = new Vector2(rt.sizeDelta.x, rt.sizeDelta.x);
+            }
+            if (isInLobby)
+            {
+                playerIconImages[i].gameObject.SetActive(false);
+                lobbyWarnings[i].SetActive(true);
             }
             playerIconImages[i].sprite = missingIcon;
             playerIconImages[i].color = missingIconColor;

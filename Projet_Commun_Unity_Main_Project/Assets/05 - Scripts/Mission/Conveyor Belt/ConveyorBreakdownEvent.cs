@@ -12,7 +12,7 @@ public class ConveyorBreakdownEvent : GameEvent
 
     private void Start()
     {
-        _particleSystem.Stop();
+        if(_particleSystem) _particleSystem.Stop();
         foreach (var buttonTask in _restartButtonTasks)
         {
             if (buttonTask != null) buttonTask.OnSucceedWithPlayer += HandleButtonPressed;

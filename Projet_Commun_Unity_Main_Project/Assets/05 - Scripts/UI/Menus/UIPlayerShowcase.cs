@@ -11,6 +11,7 @@ public class UIPlayerShowcase : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] playerNames;
     [SerializeField] private Image[] playerBoxImages;
     [SerializeField] private Image[] playerIconImages;
+    [SerializeField] private RawImage[] playerCameraDisplay;
     [SerializeField] private Sprite playerIcon;
     [SerializeField] private Sprite missingIcon;
     [SerializeField] private GameObject[] lobbyWarnings;
@@ -36,7 +37,8 @@ public class UIPlayerShowcase : MonoBehaviour
 
             if (isInLobby)
             {
-                playerIconImages[i].gameObject.SetActive(true);
+                playerCameraDisplay[i].gameObject.SetActive(true);
+                playerIconImages[i].gameObject.SetActive(false);
                 lobbyWarnings[i].SetActive(false);
             }
             playerIconImages[i].sprite = playerIcon;
@@ -54,6 +56,7 @@ public class UIPlayerShowcase : MonoBehaviour
             }
             if (isInLobby)
             {
+                playerCameraDisplay[i].gameObject.SetActive(false);
                 playerIconImages[i].gameObject.SetActive(false);
                 lobbyWarnings[i].SetActive(true);
             }

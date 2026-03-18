@@ -11,7 +11,10 @@ public class ButtonPress : MonoBehaviour
     {
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
         //currentCanvas.enabled = false;
-        currentCanvas.gameObject.SetActive(false);
+        if(currentCanvas != null)
+        {
+            currentCanvas.gameObject.SetActive(false);
+        }
         EventSystem.current.SetSelectedGameObject(null);
 
         if (newCanvas != null)

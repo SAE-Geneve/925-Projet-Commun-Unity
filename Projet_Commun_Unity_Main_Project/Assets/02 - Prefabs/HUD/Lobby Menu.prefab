@@ -1814,7 +1814,7 @@ GameObject:
   - component: {fileID: 8562736847859466203}
   - component: {fileID: 6738088923568329815}
   m_Layer: 5
-  m_Name: Pause Buttons
+  m_Name: Lobby Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2081,6 +2081,7 @@ GameObject:
   - component: {fileID: 1745370232889069047}
   - component: {fileID: 2608490666644231540}
   - component: {fileID: 4443285198421705215}
+  - component: {fileID: 762721081141081863}
   m_Layer: 5
   m_Name: Lobby Menu
   m_TagString: Untagged
@@ -2186,6 +2187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstButton: {fileID: 4887311035052489144}
+  changeButton: {fileID: 0}
 --- !u!114 &2608490666644231540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2244,6 +2246,20 @@ MonoBehaviour:
   - {r: 1, g: 0.7137255, b: 0.7568628, a: 1}
   missingBoxColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
   missingIconColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+--- !u!114 &762721081141081863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7746799734334145172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d5b3f6f9f27d874db6354045b636463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::UILobbyWarning
+  warningText: {fileID: 7475160493605586445}
+  continueButton: {fileID: 1545640414665454856}
 --- !u!1 &8047069304388036939
 GameObject:
   m_ObjectHideFlags: 0

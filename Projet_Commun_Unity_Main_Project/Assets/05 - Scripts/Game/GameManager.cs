@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("The minimum numbers of players needed to start the game")] [SerializeField] [UnityEngine.Range(1,4)]
     private int _minPlayers = 1;
 
+    [SerializeField] private string hubSceneName = "HubScene";
+
     private AudioManager _audioManager;
     public static GameManager Instance { get; private set; }
 
@@ -64,8 +66,8 @@ public class GameManager : MonoBehaviour
                 _timer = 0;
                 _playerManager.DisablePlayerMovements();
                 SwitchState(GameState.Cinematic);
-                if (TimelineManager.Instance != null) TimelineManager.Instance.PlayEnding(LoadGameOver);
-                else LoadGameOver();
+                // if (TimelineManager.Instance != null) TimelineManager.Instance.PlayEnding(LoadGameOver);
+                // else LoadGameOver();
             }
             else _timer = value;
 
@@ -205,8 +207,8 @@ public class GameManager : MonoBehaviour
         //SwitchState(GameState.Playing);
         _context = GameContext.Hub;
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
-        SceneManager.sceneLoaded+=OnHubSceneLoaded;
-        if(SceneLoader.Instance) SceneLoader.Instance.LoadScene("HubScene");
+        // SceneManager.sceneLoaded+=OnHubSceneLoaded;
+        if(SceneLoader.Instance) SceneLoader.Instance.LoadScene(hubSceneName);
     }
 
     public void StartCinematic()
@@ -220,13 +222,17 @@ public class GameManager : MonoBehaviour
 
     private void OnHubSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "HubScene") return;
+        if (scene.name != "HubScene 1")
+        {
+            return;
+        }
+
 
         SceneManager.sceneLoaded -= OnHubSceneLoaded;
 
-        if (TimelineManager.Instance != null) TimelineManager.Instance.PlayStart(() =>
-            SwitchState(GameState.Playing));
-        else SwitchState(GameState.Playing);
+        // if (TimelineManager.Instance != null) TimelineManager.Instance.PlayStart(() =>
+        //     SwitchState(GameState.Playing));
+        // else SwitchState(GameState.Playing);
     }
 
     private void LoadGameOver()

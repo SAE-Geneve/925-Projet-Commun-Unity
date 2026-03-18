@@ -116,10 +116,11 @@ public class Mission : MonoBehaviour
         _audioManager.PlayBGM(_audioManager.hubMusic);
         if (victory)
             _gameManager.Timer += _initialTimer / 2f;
-        
+
         _gameManager.StopMission(false);
         SwitchMissionState(MissionState.Finished);
         _onMissionFinished?.Invoke();
+        // TimelineManager.Instance?.PlayResult(victory);
         Debug.Log($"Mission {_name} finished");
     }
 

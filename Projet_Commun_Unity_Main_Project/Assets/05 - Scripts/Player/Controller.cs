@@ -10,6 +10,7 @@ public class Controller : MonoBehaviour, IGrabbable
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Slider _throwBar;
     [SerializeField] private Collider _collider;
+    [SerializeField] private Canvas throwBarCanvas;
 
     [Header("Throw bar")] 
     [SerializeField] private float _barSpeed = 2f;
@@ -49,7 +50,7 @@ public class Controller : MonoBehaviour, IGrabbable
 
         _ragdoll.OnRagdoll += Drop;
         
-        _throwBar.gameObject.SetActive(false);
+        if(throwBarCanvas) throwBarCanvas.enabled = false;
     }
     
     public void CatchCanceled()
@@ -65,7 +66,7 @@ public class Controller : MonoBehaviour, IGrabbable
             _isCharging = true;
             _grabStartTime = Time.time;
             _throwPower = 0f;
-            _throwBar.gameObject.SetActive(true);
+            if(throwBarCanvas) throwBarCanvas.enabled = true;
             _throwBar.value = 0f;
             Debug.Log(_grabbedObject);
         }
@@ -143,7 +144,7 @@ public class Controller : MonoBehaviour, IGrabbable
     public void Reset()
     {
         _grabbedObject = null;
-        _throwBar.gameObject.SetActive(false);
+        if(throwBarCanvas) throwBarCanvas.enabled = false;
         _isCharging = false;
     }
 

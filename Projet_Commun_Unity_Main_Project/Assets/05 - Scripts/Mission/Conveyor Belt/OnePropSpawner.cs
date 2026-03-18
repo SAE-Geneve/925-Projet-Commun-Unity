@@ -12,66 +12,61 @@ public class OnePropSpawner : MonoBehaviour
     [SerializeField] private PropManager _propManager;
     
     [Header("Parameters")]
-    // [SerializeField] private bool _spawnOnEnable = true;
-    // [SerializeField] private bool _useRandomDelay;
     [SerializeField] [Min(0.1f)] private float _spawnDelay = 2f;
-    // [SerializeField] [Min(0.1f)] private float _minSpawnDelay = 2f;
-    // [SerializeField] [Min(0.2f)] private float _maxSpawnDelay = 5f;
     
     public event Action OnPropSpawned;
     
     private ConveyorProp _conveyorProp;
     private Coroutine _spawnCoroutine;
     private bool _isSpawning;
+    private PropType? _targetedType = null;
 
     private void OnEnable()
     {
         if(_conveyorProp == null) SpawnLuggage();
     }
 
+    public void SetNextTargetedType(PropType? type)
+    {
+        _targetedType = type;
+    }
+
     private void SpawnLuggage()
     {
-        // if(!_isSpawning || _conveyorProp || _propsToSpawn == null || _propsToSpawn.Length == 0) return;
+        ConveyorProp toSpawn = null;
+
+        if (_targetedType.HasValue)
+        {
+            string typeName = _targetedType.Value.ToString();
+
+            foreach (var prefab in _propsToSpawn)
+            {
+                if (prefab.name.Contains(typeName))
+                {
+                    toSpawn = prefab;
+                    break;
+                }
+            }
+
+            _targetedType = null;
+        }
         
-        _conveyorProp = Instantiate(_propsToSpawn[Random.Range(0, _propsToSpawn.Length)], transform.position,
-            transform.rotation);
-        
+        toSpawn ??= _propsToSpawn[Random.Range(0, _propsToSpawn.Length)];
+
+        _conveyorProp = Instantiate(toSpawn, transform.position, transform.rotation);
         OnPropSpawned?.Invoke();
-        
         if(_propManager) _propManager.AddProp(_conveyorProp);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        // if (!_isSpawning) return;
-        
         if (_conveyorProp && other.gameObject == _conveyorProp.gameObject)
         {
             _conveyorProp = null;
-
             StartCoroutine(SpawnCoroutine());
         }
     }
 
-    // public void StartSpawning()
-    // {
-    //     if (_isSpawning) return;
-    //     _isSpawning = true;
-    //
-    //     if (!_conveyorProp) StartSpawnRoutine();
-    // }
-    //
-    // public void StopSpawning()
-    // {
-    //     if(_isSpawning) _isSpawning = false;
-    //
-    //     if (_spawnCoroutine != null)
-    //     {
-    //         StopCoroutine(_spawnCoroutine);
-    //         _spawnCoroutine = null;
-    //     }
-    // }
-    
     private void StartSpawnRoutine()
     {
         if (_spawnCoroutine != null)

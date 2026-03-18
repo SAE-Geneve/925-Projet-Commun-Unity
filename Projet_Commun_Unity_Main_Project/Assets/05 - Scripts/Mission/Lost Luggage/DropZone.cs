@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DropZone : MonoBehaviour
+public class DropZone : TriggerTask
 {
     private bool isActiveTarget = false;
 
@@ -11,22 +11,24 @@ public class DropZone : MonoBehaviour
     {
         isActiveTarget = status;
         if (visualHighlight != null) visualHighlight.SetActive(status);
+        
+        Collider col = GetComponent<Collider>();
+        if (col != null) col.enabled = status;
+        
+        if(status) ResetTask();
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         if (!isActiveTarget) return;
 
-        Prop valiseProp = other.GetComponent<Prop>();
+        base.OnTriggerEnter(other);
+    }
 
-        if (valiseProp != null)
-        {
-            
-            Debug.Log($"Valise livrée ! Le joueur {valiseProp.OwnerId} marque un point !");
-            
-            valiseProp.Destroy(); 
-            
-            LLGameManager.Instance.ValiseLivree();
-        }
+    protected override void OnTriggerValid(Prop prop)
+    {
+        if (!isActiveTarget) return;
+
+        base.OnTriggerValid(prop);
     }
 }

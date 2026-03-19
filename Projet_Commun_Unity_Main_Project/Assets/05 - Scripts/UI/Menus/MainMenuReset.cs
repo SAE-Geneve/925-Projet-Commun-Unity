@@ -4,6 +4,7 @@ public class MainMenuReset : MonoBehaviour
 {
     void OnEnable()
     {
-        PlayerManager.Instance.Reset();
+        if(PlayerManager.Instance)
+            PlayerManager.Instance.Reset();
     }
 }

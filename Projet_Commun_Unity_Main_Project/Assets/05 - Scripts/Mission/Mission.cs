@@ -1,10 +1,12 @@
 using System;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Mission : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private Transform arrowTarget;
+    
     [Header("Parameters")] 
     [SerializeField] private string _name = "New Mission";
     [SerializeField] protected MissionState _missionState = MissionState.Unlocked;
@@ -21,8 +23,6 @@ public class Mission : MonoBehaviour
     [SerializeField] private UnityEvent _onMissionStarted;
     [SerializeField] private UnityEvent _onMissionFinished;
     
-    
-    
     private enum MissionName
     {
         BorderControl,
@@ -35,6 +35,7 @@ public class Mission : MonoBehaviour
     private AudioManager _audioManager;
     public event Action OnSwitchState;
     
+    public Transform ArrowTarget => arrowTarget;
     public string Name => _name;
     public bool IsLocked => _missionState == MissionState.Locked;
     

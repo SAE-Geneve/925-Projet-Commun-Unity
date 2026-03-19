@@ -34,30 +34,25 @@ public class ArrowPointer : MonoBehaviour
 
     private void Update()
     {
-        if (missionManager.currentMission.IsLocked)
-        {
-            _pointerImage.gameObject.SetActive(false);
-        }
-        else
-        {
-            _pointerImage.gameObject.SetActive(true);
-        }
-        
-        switch (missionManager.missionIndex)
-        {
-            case 0:
-                _targetPosition = missionPositions[0].position;
-                break;
-            case 1:
-                _targetPosition = missionPositions[1].position;
-                break;
-            case 2:
-                _targetPosition = missionPositions[2].position;
-                break;
-            case 3:
-                _targetPosition = missionPositions[3].position;
-                break;
-        }
+        _pointerImage.gameObject.SetActive(!missionManager.currentMission.IsLocked);
+
+        _targetPosition = missionManager.currentMission.ArrowTarget.position;
+
+        // switch (missionManager.missionIndex)
+        // {
+        //     case 0:
+        //         _targetPosition = missionPositions[0].position;
+        //         break;
+        //     case 1:
+        //         _targetPosition = missionPositions[1].position;
+        //         break;
+        //     case 2:
+        //         _targetPosition = missionPositions[2].position;
+        //         break;
+        //     case 3:
+        //         _targetPosition = missionPositions[3].position;
+        //         break;
+        // }
         
         Vector3 targetPositionScreenPoint = _mainCamera.WorldToScreenPoint(_targetPosition);
         

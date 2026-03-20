@@ -210,6 +210,7 @@ public class GameManager : MonoBehaviour
         // SceneManager.sceneLoaded+=OnHubSceneLoaded;
         //if(SceneLoader.Instance) SceneLoader.Instance.LoadScene(hubSceneName);
         if(SceneLoader.Instance) SceneLoader.Instance.LoadScene("OneMissionCopy");
+
     }
 
     public void StartCinematic()

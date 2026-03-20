@@ -52,26 +52,34 @@ public class MissionTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player") || !other.TryGetComponent(out Ragdoll ragdoll)) return;
-
-        if (_ragdolls.Add(ragdoll))
-        {
-            _playerNumber++;
-            ragdoll.OnRagdollSelf += _ragdollHandler;
-            UpdateTmpNumber();
-            CheckPlayerNumber();
-        }
+        if (!other.CompareTag("Player")) return;
+        _playerNumber++;
+        UpdateTmpNumber();
+        CheckPlayerNumber();
+        
+        //if (!other.CompareTag("Player") || !other.TryGetComponent(out Ragdoll ragdoll)) return;
+        //
+        // if (_ragdolls.Add(ragdoll))
+        // {
+        //     _playerNumber++;
+        //     ragdoll.OnRagdollSelf += _ragdollHandler;
+        //     UpdateTmpNumber();
+        //     CheckPlayerNumber();
+        // }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Player") || !other.TryGetComponent(out Ragdoll ragdoll)) return;
-
-        if (_ragdolls.Remove(ragdoll))
-        {
-            ragdoll.OnRagdollSelf -= _ragdollHandler;
-            Decrement();
-        }
+        if (!other.CompareTag("Player")) return;
+        Decrement();
+        
+        // if (!other.CompareTag("Player") || !other.TryGetComponent(out Ragdoll ragdoll)) return;
+        //
+        // if (_ragdolls.Remove(ragdoll))
+        // {
+        //     ragdoll.OnRagdollSelf -= _ragdollHandler;
+        //     Decrement();
+        // }
     }
 
     private void CheckPlayerNumber()

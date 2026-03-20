@@ -22,7 +22,7 @@ public class Ragdoll : MonoBehaviour
     public bool IsImmune { get; set; }
 
     private Animator _animator;
-    private Collider _mainCollider;
+    private CapsuleCollider _mainCollider;
     private Rigidbody _mainRigidbody;
     private PlayerInput _playerInput;
 
@@ -33,19 +33,44 @@ public class Ragdoll : MonoBehaviour
     private Coroutine _immunityCoroutine;
     private AudioManager _audioManager;
 
+    private Vector3 _playerRigLocalPosition;
+    private Quaternion _playerRigLocalRotation;
+
+    private static Transform _rigContainer;
+
+    private static Transform RigContainer
+    {
+        get
+        {
+            if (_rigContainer != null) return _rigContainer;
+            _rigContainer = new GameObject("ActiveRagdolls").transform;
+            _rigContainer.SetParent(GameManager.Instance.transform);
+            return _rigContainer;
+        }
+    }
+
     protected virtual void Start()
     {
         _audioManager = AudioManager.Instance;
         _animator = GetComponent<Animator>();
-        _mainCollider = GetComponent<Collider>();
+        _mainCollider = GetComponent<CapsuleCollider>();
         _mainRigidbody = GetComponent<Rigidbody>();
 
         if (_playerInput == null)
             _playerInput = GetComponent<PlayerInput>();
 
         GetRagdollBits();
+        _playerRigLocalPosition = playerRig.transform.localPosition;
+        _playerRigLocalRotation = playerRig.transform.localRotation;
         RagdollOff();
     }
+    
+    private void Update()
+    {
+        if (IsRagdoll && hipsTransform != null)
+            transform.position = hipsTransform.position;
+    }
+
 
     private void GetRagdollBits()
     {
@@ -72,8 +97,10 @@ public class Ragdoll : MonoBehaviour
         OnRagdollSelf?.Invoke(this);
         
         _mainRigidbody.isKinematic = true;
-        _mainCollider.enabled = false;
+        _mainCollider.isTrigger = true;
         _animator.enabled = false;
+
+        playerRig.transform.SetParent(RigContainer);
         
         if (_ragdollCoroutine != null)
             StopCoroutine(_ragdollCoroutine);
@@ -85,8 +112,9 @@ public class Ragdoll : MonoBehaviour
 
     protected virtual void RagdollOff()
     {
-        if (hipsTransform)
-            transform.position = hipsTransform.position;
+        playerRig.transform.SetParent(transform);
+        playerRig.transform.localPosition = _playerRigLocalPosition;
+        playerRig.transform.localRotation = _playerRigLocalRotation;
 
         foreach (var col in _ragdollColliders)
             col.enabled = false;
@@ -95,7 +123,7 @@ public class Ragdoll : MonoBehaviour
             rb.isKinematic = true;
 
         _mainRigidbody.isKinematic = false;
-        _mainCollider.enabled = true;
+        _mainCollider.isTrigger = false;
         _animator.enabled = true;
 
         if (_playerInput) _playerInput.currentActionMap.Enable();

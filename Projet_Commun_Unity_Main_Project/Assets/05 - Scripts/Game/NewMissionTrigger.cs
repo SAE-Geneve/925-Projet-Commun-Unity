@@ -14,7 +14,8 @@ public class NewMissionTrigger : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _stateTmp;
     [SerializeField] private TextMeshProUGUI _numberTmp;
     [SerializeField] private float _scrollSpeed;
-    
+    [SerializeField] private float _countdownDuration = 3f;
+
     [SerializeField] private Color _unlockedColor;
     [SerializeField] private Color _lockedColor;
 
@@ -24,8 +25,9 @@ public class NewMissionTrigger : MonoBehaviour
     private bool _isSequenceStarted = false;
     private int _playerNumber;
     private AudioManager _audioManager;
-    
+
     private Material _edgeMaterial;
+    private Coroutine _countdownCoroutine;
 
 
     private void Start()
@@ -84,8 +86,34 @@ public class NewMissionTrigger : MonoBehaviour
     {
         if (_playerManager && _playerNumber == _playerManager.PlayerCount && !_isSequenceStarted)
         {
-            StartMissionSequence();
+            if (_countdownCoroutine == null)
+                _countdownCoroutine = StartCoroutine(CountdownCoroutine());
         }
+        else
+        {
+            CancelCountdown();
+        }
+    }
+
+    private void CancelCountdown()
+    {
+        if (_countdownCoroutine == null) return;
+        StopCoroutine(_countdownCoroutine);
+        _countdownCoroutine = null;
+        UpdateState();
+    }
+
+    private IEnumerator CountdownCoroutine()
+    {
+        float remaining = _countdownDuration;
+        while (remaining > 0f)
+        {
+            _numberTmp.SetText($"{Mathf.CeilToInt(remaining)}...");
+            yield return new WaitForSeconds(1f);
+            remaining--;
+        }
+        _countdownCoroutine = null;
+        StartMissionSequence();
     }
 
     private void StartMissionSequence()
@@ -143,11 +171,13 @@ public class NewMissionTrigger : MonoBehaviour
     {
         _playerNumber--;
         if(_playerNumber < 0) _playerNumber = 0;
+        CancelCountdown();
         UpdateTmpNumber();
     }
 
     private void UpdateTmpNumber()
     {
+        if (_countdownCoroutine != null) return;
         if (_playerManager) _numberTmp.SetText($"{_playerNumber}/{_playerManager.PlayerCount}");
     }
 

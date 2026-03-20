@@ -208,7 +208,8 @@ public class GameManager : MonoBehaviour
         _context = GameContext.Hub;
         AudioManager.Instance.PlaySfx(AudioManager.Instance.buttonSFX);
         // SceneManager.sceneLoaded+=OnHubSceneLoaded;
-        if(SceneLoader.Instance) SceneLoader.Instance.LoadScene(hubSceneName);
+        //if(SceneLoader.Instance) SceneLoader.Instance.LoadScene(hubSceneName);
+        if(SceneLoader.Instance) SceneLoader.Instance.LoadScene("OneMissionCopy");
     }
 
     public void StartCinematic()

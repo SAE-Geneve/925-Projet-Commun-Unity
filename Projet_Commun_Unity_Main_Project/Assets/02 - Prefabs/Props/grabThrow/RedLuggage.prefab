@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4520767985199273727}
   - component: {fileID: 1471674605239466520}
   - component: {fileID: 3988806704691982747}
+  - component: {fileID: 715400581722171826}
   m_Layer: 0
   m_Name: RedLuggage
   m_TagString: Prop
@@ -146,6 +147,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMaskName: PropOutline
+--- !u!114 &715400581722171826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838621322768625333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6901887a38eee4da60334a9c9e49c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::PropFeedback
+  impactEffectPrefab: {fileID: 5062905599751970331, guid: cc4fc89f041d13e4d84c1f7b7873ade6, type: 3}
+  velocityThreshold: 2
 --- !u!1001 &3081387924394294680
 PrefabInstance:
   m_ObjectHideFlags: 0

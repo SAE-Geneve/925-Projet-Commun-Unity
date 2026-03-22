@@ -60,12 +60,14 @@ public class PlayerController : Controller
     {
         if (InteractableGrabbed != null)
         {
+            TriggerObjectFeedback(InteractableGrabbed);
             InteractableGrabbed.Interact(this);
             return;
         }
         
         TryAction<IInteractable>(interactable =>
         {
+            TriggerObjectFeedback(interactable);
             interactable.Interact(this);
         });
     }
@@ -79,5 +81,14 @@ public class PlayerController : Controller
     protected override float CalculateThrowForce()
     {
         return _throwPower * (_maxThrowForce + PlayerBonus.Strength);
+    }
+    
+    private void TriggerObjectFeedback(object interactable)
+    {
+        if (interactable is MonoBehaviour mono)
+        {
+            PropFeedback fb = mono.GetComponent<PropFeedback>();
+            if (fb != null) fb.PlayGrabEffect();
+        }
     }
 }

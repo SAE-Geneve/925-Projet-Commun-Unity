@@ -58,6 +58,7 @@ public class PlayerController : Controller
     
     public void TryInteract()
     {
+        
         if (InteractableGrabbed != null)
         {
             TriggerObjectFeedback(InteractableGrabbed);

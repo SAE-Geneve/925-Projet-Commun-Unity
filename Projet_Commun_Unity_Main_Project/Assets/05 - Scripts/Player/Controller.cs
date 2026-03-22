@@ -138,6 +138,12 @@ public class Controller : MonoBehaviour, IGrabbable
         {
             grabbable.Grabbed(this);
             _grabbedObject = grabbable;
+            
+            if (grabbable is MonoBehaviour mono)
+            {
+                PropFeedback fb = mono.GetComponent<PropFeedback>();
+                if (fb != null) fb.PlayGrabEffect();
+            }
         });
     }
 

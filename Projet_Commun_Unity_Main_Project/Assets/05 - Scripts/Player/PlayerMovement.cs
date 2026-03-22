@@ -7,6 +7,9 @@ public class PlayerMovement : CharacterMovement
     [SerializeField] private float dashForce = 5f;
     [SerializeField] private float dashDuration = 5f;
     
+    [Header("Effects")]
+    [SerializeField] private ParticleSystem diveParticles;
+    
     private PlayerController _player;
     
     private bool _isDashing;
@@ -16,6 +19,11 @@ public class PlayerMovement : CharacterMovement
         base.Start();
         
         _player = GetComponent<PlayerController>();
+        if (diveParticles != null) 
+        {
+            var emission = diveParticles.emission;
+            emission.enabled = false;
+        }
     }
 
     protected override void HorizontalMovement()
@@ -33,6 +41,13 @@ public class PlayerMovement : CharacterMovement
         if (!Rb || _isDashing) return;
     
         _isDashing = true;
+        if (diveParticles != null)
+        {
+            var emission = diveParticles.emission;
+            emission.enabled = true;
+            diveParticles.Play();
+        }
+        
         StartCoroutine(nameof(DashCoroutine));
     
         Rb.AddForce(transform.forward * (dashForce + _player.PlayerBonus.Dive), ForceMode.Impulse);
@@ -42,6 +57,11 @@ public class PlayerMovement : CharacterMovement
     {
         yield return new WaitForSeconds(dashDuration);
         _isDashing = false;
+        if (diveParticles != null)
+        {
+            var emission = diveParticles.emission;
+            emission.enabled = false;
+        }
     }
 
     protected override Vector3 CalculateTargetVelocity(Vector3 direction)

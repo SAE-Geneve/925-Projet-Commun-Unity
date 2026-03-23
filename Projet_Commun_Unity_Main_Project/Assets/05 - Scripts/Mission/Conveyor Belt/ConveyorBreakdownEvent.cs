@@ -67,6 +67,8 @@ public class ConveyorBreakdownEvent : GameEvent
     {
         _isConveyorBroken = true;
 
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.CarpetBreakSFX);
+        
         foreach (var p in _particlesSystems)
             if (p) p.Play();
 
@@ -93,6 +95,9 @@ public class ConveyorBreakdownEvent : GameEvent
 
         if (!_isConveyorBroken) yield break;
 
+        
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.WorsenCarpetBreakSFX);
+        
         foreach (var p in _particlesSystems)
         {
             if (!p) continue;
@@ -138,6 +143,7 @@ public class ConveyorBreakdownEvent : GameEvent
         foreach (var p in _particlesSystems)
             if (p) p.Stop();
 
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.FinishedRepairSFX);
         RestoreParticleColors();
 
         foreach (var belt in _conveyorBelts)

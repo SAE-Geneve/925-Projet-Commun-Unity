@@ -52,6 +52,7 @@ public class TimerUI : MonoBehaviour
         if (timeRemainingText != null)
         {
             timeRemainingText.text = $"{time} seconds remaining.";
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.TimeRemainingSFX);
             StartCoroutine(_uiScreenEffects.DoTextFade(timeRemainingText));
             StartCoroutine(_uiScreenEffects.DoImageFade(timeRemainingImage));
         }

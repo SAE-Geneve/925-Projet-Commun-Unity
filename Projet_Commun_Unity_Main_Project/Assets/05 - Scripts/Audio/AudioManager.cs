@@ -34,6 +34,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioClip LevierOffSFX;
     [SerializeField] public AudioClip Annonce1MinSFX;
     [SerializeField] public AudioClip Annonce30SecSFX;
+    [SerializeField] public AudioClip TimeRemainingSFX;
+    [SerializeField] public AudioClip CarpetBreakSFX;
+    [SerializeField] public AudioClip WorsenCarpetBreakSFX;
+    [SerializeField] public AudioClip RepairSFX;
+    [SerializeField] public AudioClip FinishedRepairSFX;
     
     public static AudioManager Instance;
     

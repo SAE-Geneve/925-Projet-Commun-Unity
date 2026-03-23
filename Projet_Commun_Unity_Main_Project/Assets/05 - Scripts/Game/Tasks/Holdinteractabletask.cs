@@ -25,6 +25,7 @@ public class HoldInteractableTask : GameTask, IInteractable
 
     protected override void Start()
     {
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.RepairSFX);
         base.Start();
         _outline = GetComponent<ObjectOutline>();
         SetCanvasVisible(false);

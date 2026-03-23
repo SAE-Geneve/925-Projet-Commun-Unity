@@ -25,7 +25,6 @@ public class HoldInteractableTask : GameTask, IInteractable
 
     protected override void Start()
     {
-        AudioManager.Instance.PlaySfx(AudioManager.Instance.RepairSFX);
         base.Start();
         _outline = GetComponent<ObjectOutline>();
         SetCanvasVisible(false);
@@ -61,6 +60,7 @@ public class HoldInteractableTask : GameTask, IInteractable
         _currentPlayer = playerController;
         _isHolding = true;
         playerController.InteractableGrabbed = this;
+        AudioManager.Instance.PlayContinousSfx(AudioManager.Instance.RepairSFX);
     }
 
     public void InteractEnd()
@@ -70,6 +70,7 @@ public class HoldInteractableTask : GameTask, IInteractable
             _currentPlayer.InteractableGrabbed = null;
 
         _currentPlayer = null;
+        AudioManager.Instance.StopContinousSfx();
     }
 
     public void AreaEnter()
@@ -112,6 +113,7 @@ public class HoldInteractableTask : GameTask, IInteractable
         _currentPlayer = null;
         if (_outline) _outline.DisableOutline();
         SetCanvasVisible(false);
+        AudioManager.Instance.StopContinousSfx();
     }
 
     private void CompleteHold()

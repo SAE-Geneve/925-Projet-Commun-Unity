@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
     [Header("Audio Sources")]
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource continousSfxSource;
     
     [Header("Mini-Game Music")]
     [SerializeField] public AudioClip conveyorBeltMusic;
@@ -69,6 +70,16 @@ public class AudioManager : MonoBehaviour
     {
         //Allows for SFX to be played in other scripts
         if(sfxSource) sfxSource.PlayOneShot(clip);
+    }
+    public void PlayContinousSfx(AudioClip clip)
+    {
+        //Allows for SFX to be played in other scripts
+        if(sfxSource) continousSfxSource.PlayOneShot(clip);
+    }
+
+    public void StopContinousSfx()
+    {
+        if(continousSfxSource) continousSfxSource.Stop();
     }
 
     public void SetVolumeMusic(float volume)

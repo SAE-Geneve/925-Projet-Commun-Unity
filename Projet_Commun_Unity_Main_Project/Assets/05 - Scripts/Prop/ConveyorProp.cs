@@ -7,14 +7,14 @@ public class ConveyorProp : Prop
     [Header("Conveyor Belt Settings")]
     [SerializeField] private float _conveyorLinearDamping = 10f;
     [SerializeField] private float _conveyorAngularDamping = 10f;
-
-    [NonSerialized] public int Lap = 0;
     
+    [NonSerialized] public int Lap = 0;
+    [NonSerialized] public int BreakdownTicks = 0;
+
     private readonly List<ConveyorBelt> _conveyorBelts = new();
     private float _originalLinearDamping;
     private float _originalAngularDamping;
     private bool _onConveyor;
-    
 
     protected override void Start()
     {
@@ -53,8 +53,6 @@ public class ConveyorProp : Prop
     protected override void OnDestroy()
     {
         foreach (ConveyorBelt conveyorBelt in _conveyorBelts)
-        {
             if (conveyorBelt != null) conveyorBelt.Remove(this);
-        }
     }
 }

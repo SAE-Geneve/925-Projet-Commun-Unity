@@ -12,7 +12,6 @@ public class PuddleSpawnEvent : GameEvent
     [SerializeField] private List<Prop> _mopsToReset;
 
     private List<Transform> _availableSpawnPoints = new();
-    
     private Dictionary<PuddleTask, Transform> _activePuddlesMap = new();
 
     private void Start()
@@ -36,7 +35,7 @@ public class PuddleSpawnEvent : GameEvent
         _availableSpawnPoints.RemoveAt(randomIndex);
 
         PuddleTask newPuddle = Instantiate(_puddlePrefab, spawnPoint.position, spawnPoint.rotation);
-        
+
         _activePuddlesMap.Add(newPuddle, spawnPoint);
         newPuddle.OnSucceedWithPlayer += HandlePuddleCleaned;
     }
@@ -74,7 +73,7 @@ public class PuddleSpawnEvent : GameEvent
             }
         }
         _activePuddlesMap.Clear();
-        
+
         _availableSpawnPoints.Clear();
         _availableSpawnPoints.AddRange(_puddleSpawnPoints);
 

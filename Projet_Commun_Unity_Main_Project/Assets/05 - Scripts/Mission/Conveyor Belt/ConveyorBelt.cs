@@ -49,7 +49,6 @@ public class ConveyorBelt : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag != "Prop" || !other.TryGetComponent(out ConveyorProp prop)) return;
-        
         prop.AddConveyorBelt(this);
         _props.Add(prop);
     }
@@ -57,7 +56,6 @@ public class ConveyorBelt : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if(other.tag != "Prop" || !other.TryGetComponent(out ConveyorProp prop)) return;
-        
         prop.RemoveConveyorBelt(this);
         Remove(prop);
     }
@@ -66,4 +64,5 @@ public class ConveyorBelt : MonoBehaviour
     
     public void StartBelt() => _isRunning = true;
     public void StopBelt() => _isRunning = false;
+    public List<Prop> GetProps() => new List<Prop>(_props);
 }

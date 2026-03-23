@@ -8,7 +8,7 @@ public class LuggageRemover : MonoBehaviour
     [SerializeField] private float destroyDuration = 0.5f;
     
     [Tooltip("Nombre de tours complets avant destruction (1 tour = 2 passages)")]
-    [SerializeField] private int lapsBeforeDestroy = 1;
+    public int lapsBeforeDestroy = 1;
 
     [Header("Shrink Settings")]
     [Tooltip("Durée de l'animation de rétrécissement à chaque passage")]
@@ -16,7 +16,6 @@ public class LuggageRemover : MonoBehaviour
     
     [Tooltip("Pourcentage de taille perdu à chaque passage (0.2 = perd 20% de sa taille actuelle)")]
     [SerializeField] private float shrinkFactorPerPass = 0.2f;
-
     private int _maxCheckpoints;
 
     private void Start()
@@ -27,46 +26,42 @@ public class LuggageRemover : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         ConveyorProp prop = other.GetComponentInParent<ConveyorProp>();
+        if (prop == null) return;
 
-        if (prop != null)
+        prop.Lap++;
+        if (prop.Lap >= _maxCheckpoints)
         {
-            prop.Lap++;
-            if (prop.Lap >= _maxCheckpoints)
-            {
-                prop.enabled = false; 
-                StartCoroutine(AnimateAndDestroy(prop.gameObject));
-            }
-            else
-            {
-                StartCoroutine(AnimateShrinkStep(prop.transform));
-            }
+            prop.enabled = false; 
+            StartCoroutine(AnimateAndDestroy(prop.gameObject));
+        }
+        else
+        {
+            StartCoroutine(AnimateShrinkStep(prop.transform));
         }
     }
+
     private IEnumerator AnimateShrinkStep(Transform target)
     {
         Vector3 startScale = target.localScale;
         Vector3 targetScale = startScale * (1.0f - shrinkFactorPerPass);
         
         float timer = 0f;
-
         while (timer < stepShrinkDuration)
         {
             if (target == null) yield break;
-
             timer += Time.deltaTime;
-            float progress = timer / stepShrinkDuration;
-            target.localScale = Vector3.Lerp(startScale, targetScale, progress);
-
+            target.localScale = Vector3.Lerp(startScale, targetScale, timer / stepShrinkDuration);
             yield return null;
         }
 
         if (target != null)
-        {
             target.localScale = targetScale;
-        }
     }
+
     private IEnumerator AnimateAndDestroy(GameObject target)
     {
+        if (target == null) yield break;
+
         Collider col = target.GetComponent<Collider>();
         if (col != null) col.enabled = false;
         
@@ -78,21 +73,13 @@ public class LuggageRemover : MonoBehaviour
 
         while (timer < destroyDuration)
         {
+            if (target == null) yield break;
             timer += Time.deltaTime;
-            float progress = timer / destroyDuration;
-            
-            if (target != null)
-            {
-                target.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, progress);
-            }
-            else 
-            { 
-                yield break; 
-            }
-            
+            target.transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, timer / destroyDuration);
             yield return null;
         }
         
         if (target != null) Destroy(target);
     }
+    public int MaxCheckpoints => _maxCheckpoints;
 }

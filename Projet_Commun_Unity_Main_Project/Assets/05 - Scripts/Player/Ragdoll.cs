@@ -80,7 +80,7 @@ public class Ragdoll : MonoBehaviour
 
     public virtual void RagdollOn(bool ignoreImmunity = false)
     {
-        if (IsImmune && !ignoreImmunity) return;
+        if (IsRagdoll || IsImmune && !ignoreImmunity) return;
         
         foreach (var col in _ragdollColliders)
             col.enabled = true;

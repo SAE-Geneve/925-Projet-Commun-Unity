@@ -6,15 +6,17 @@ public class PropFeedback : MonoBehaviour
     [Header("Settings")]
     public GameObject impactEffectPrefab;
     public float velocityThreshold = 2f;
-    [SerializeField] private AudioClip grabSound;
+    public AudioClip grabSound; 
+    public AudioClip throwSound; 
 
     private Vector3 initialScale;
     private Coroutine wobbleCoroutine;
-    private AudioSource audioSource;
+    private AudioSource audioSource; 
 
     private void Awake()
     {
         initialScale = transform.localScale;
+        
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
@@ -30,7 +32,6 @@ public class PropFeedback : MonoBehaviour
             Instantiate(impactEffectPrefab, transform.position, Quaternion.identity);
         }
         
-        // Joue le son de grab
         if (grabSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(grabSound);
@@ -38,6 +39,14 @@ public class PropFeedback : MonoBehaviour
 
         if (wobbleCoroutine != null) StopCoroutine(wobbleCoroutine);
         wobbleCoroutine = StartCoroutine(GrabWobbleRoutine());
+    }
+
+    public void PlayThrowEffect()
+    {
+        if (throwSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(throwSound);
+        }
     }
 
     private IEnumerator GrabWobbleRoutine()

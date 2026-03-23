@@ -21,9 +21,12 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
     protected Transform _originalParent;
 
     private ObjectOutline _outline;
+    private PropFeedback _feedback;
     
     public int OwnerId { get; private set; }
+
     
+    // Respawn parameters
     Vector3 _respawnPosition;
     Quaternion _respawnRotation;
     Vector3 _respawnScale;
@@ -33,6 +36,7 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
         _collider = GetComponent<Collider>();
         _rb = GetComponent<Rigidbody>();
         _outline = GetComponent<ObjectOutline>();
+        _feedback = GetComponent<PropFeedback>();
         
         _respawnPosition = transform.position;
         _respawnRotation = transform.rotation;
@@ -84,6 +88,11 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
             float curveValue = _speedCurve.Evaluate(throwForce.magnitude);
             Vector3 curvedForce = throwForce * curveValue;
             _rb.AddForce(curvedForce, ForceMode.Impulse);
+            
+            if (_feedback != null)
+            {
+                _feedback.PlayThrowEffect();
+            }
         }
         IsGrabbed = false;
     }

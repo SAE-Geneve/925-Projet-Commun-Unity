@@ -6,17 +6,35 @@ public class PropFeedback : MonoBehaviour
     [Header("Settings")]
     public GameObject impactEffectPrefab;
     public float velocityThreshold = 2f;
+    [SerializeField] private AudioClip grabSound;
 
-    [Tooltip("Délai minimum entre deux wobbles de collision (évite le spam sur les tapis)")]
-    [SerializeField] private float _wobbleCooldown = 0.5f;
-
+    private Vector3 initialScale;
     private Coroutine wobbleCoroutine;
-    private float _lastWobbleTime = -999f;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        initialScale = transform.localScale;
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+        }
+    }
 
     public void PlayGrabEffect()
     {
         if (impactEffectPrefab != null)
+        {
             Instantiate(impactEffectPrefab, transform.position, Quaternion.identity);
+        }
+        
+        // Joue le son de grab
+        if (grabSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(grabSound);
+        }
 
         if (wobbleCoroutine != null) StopCoroutine(wobbleCoroutine);
         wobbleCoroutine = StartCoroutine(GrabWobbleRoutine());
@@ -24,16 +42,16 @@ public class PropFeedback : MonoBehaviour
 
     private IEnumerator GrabWobbleRoutine()
     {
-        Vector3 currentScale = transform.localScale;
-
-        Vector3 squashScale  = new Vector3(currentScale.x * 1.2f, currentScale.y * 0.8f, currentScale.z * 1.2f);
-        Vector3 stretchScale = new Vector3(currentScale.x * 0.8f, currentScale.y * 1.3f, currentScale.z * 0.8f);
-
         float elapsed = 0;
+        
+        Vector3 squashScale = new Vector3(initialScale.x * 1.2f, initialScale.y * 0.8f, initialScale.z * 1.2f);
+        
+        Vector3 stretchScale = new Vector3(initialScale.x * 0.8f, initialScale.y * 1.3f, initialScale.z * 0.8f);
+
         while (elapsed < 0.07f)
         {
             elapsed += Time.deltaTime;
-            transform.localScale = Vector3.Lerp(currentScale, squashScale, elapsed / 0.07f);
+            transform.localScale = Vector3.Lerp(initialScale, squashScale, elapsed / 0.07f);
             yield return null;
         }
 
@@ -49,27 +67,22 @@ public class PropFeedback : MonoBehaviour
         while (elapsed < 0.15f)
         {
             elapsed += Time.deltaTime;
-            transform.localScale = Vector3.Lerp(stretchScale, currentScale, elapsed / 0.15f);
+            transform.localScale = Vector3.Lerp(stretchScale, initialScale, elapsed / 0.15f);
             yield return null;
         }
 
-        transform.localScale = currentScale;
+        transform.localScale = initialScale;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.relativeVelocity.magnitude <= velocityThreshold) return;
-        if (Time.time - _lastWobbleTime < _wobbleCooldown) return;
-
-        _lastWobbleTime = Time.time;
-
-        if (impactEffectPrefab != null)
+        if (collision.relativeVelocity.magnitude > velocityThreshold)
         {
             ContactPoint contact = collision.contacts[0];
             Instantiate(impactEffectPrefab, contact.point, Quaternion.identity);
+            
+            if (wobbleCoroutine != null) StopCoroutine(wobbleCoroutine);
+            wobbleCoroutine = StartCoroutine(GrabWobbleRoutine());
         }
-
-        if (wobbleCoroutine != null) StopCoroutine(wobbleCoroutine);
-        wobbleCoroutine = StartCoroutine(GrabWobbleRoutine());
     }
 }

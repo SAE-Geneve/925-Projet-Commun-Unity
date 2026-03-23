@@ -9,8 +9,10 @@ public class PlayerMovement : CharacterMovement
     
     [Header("Effects")]
     [SerializeField] private ParticleSystem diveParticles;
+    [SerializeField] private AudioClip dashSound;
     
     private PlayerController _player;
+    private AudioSource _audioSource;
     
     private bool _isDashing;
 
@@ -19,6 +21,14 @@ public class PlayerMovement : CharacterMovement
         base.Start();
         
         _player = GetComponent<PlayerController>();
+        
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+            _audioSource.playOnAwake = false;
+        }
+
         if (diveParticles != null) 
         {
             var emission = diveParticles.emission;
@@ -41,6 +51,12 @@ public class PlayerMovement : CharacterMovement
         if (!Rb || _isDashing) return;
     
         _isDashing = true;
+        
+        if (dashSound != null && _audioSource != null)
+        {
+            _audioSource.PlayOneShot(dashSound);
+        }
+
         if (diveParticles != null)
         {
             var emission = diveParticles.emission;

@@ -23,9 +23,7 @@ public class Prop: MonoBehaviour, IGrabbable, IRespawnable
     private ObjectOutline _outline;
     
     public int OwnerId { get; private set; }
-
     
-    // Respawn parameters
     Vector3 _respawnPosition;
     Quaternion _respawnRotation;
     Vector3 _respawnScale;

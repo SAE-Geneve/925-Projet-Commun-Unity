@@ -29,10 +29,8 @@ public class InputManager : MonoBehaviour
             _playerMovement.SetMovement(context.ReadValue<Vector2>());
     } 
 
-
     public void OnDash(InputAction.CallbackContext context)
     {
-
         if (context.started && active)
         {
             _playerMovement.Dash();
@@ -42,20 +40,22 @@ public class InputManager : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (!active)
+        if (!active) return;
+
+        if (context.started)
         {
-            return;
+            _playerController.TryInteract();
         }
-        if(context.started) _playerController.TryInteract();
-        else if(context.canceled) _playerController.TryEndInteract();
+        else if (context.canceled)
+        {
+            _playerController.TryEndInteract();
+        }
     }
 
     public void OnCatch(InputAction.CallbackContext context)
     {
-        if (!active)
-        {
-            return;
-        }
+        if (!active) return;
+
         if (context.started)
             _playerController.CatchStart();
         else if (context.canceled)
@@ -65,9 +65,7 @@ public class InputManager : MonoBehaviour
     public void OnPause(InputAction.CallbackContext context)
     {
         if (context.started)
-        {
             GameManager.Instance.PauseTrigger();
-        }
     }
 
     public void OnDebug(InputAction.CallbackContext context)
@@ -84,14 +82,11 @@ public class InputManager : MonoBehaviour
 
     public void OnKartMove(InputAction.CallbackContext context)
     {
-        if (!active)
-        {
-            return;
-        }
+        if (!active) return;
+
         if (context.canceled)
-        {
             _playerController.KartMovement.ResetInputs();
-        }
+
         _playerController.KartMovement.Move(context.ReadValue<Vector2>());
         _playerController.KartPhysic.Move(context.ReadValue<Vector2>());
     }

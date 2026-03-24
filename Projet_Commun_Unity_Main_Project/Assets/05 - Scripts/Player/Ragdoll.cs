@@ -15,6 +15,10 @@ public class Ragdoll : MonoBehaviour
     [SerializeField] protected float velocityThreshold = 7f;
     [SerializeField] protected float impulseThreshold = 6f;
     
+    [Header("Audio")]
+    [SerializeField] private AudioClip ragdollClip;
+    [SerializeField] [Range(0f, 1f)] private float ragdollVolume = 1f;
+    [SerializeField] private AudioSource audioSource;
     public event Action OnRagdoll;
     public event Action<Ragdoll> OnRagdollSelf;
     

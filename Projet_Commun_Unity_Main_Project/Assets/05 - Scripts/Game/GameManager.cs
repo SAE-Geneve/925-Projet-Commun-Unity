@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("The minimum numbers of players needed to start the game")] [SerializeField] [UnityEngine.Range(1,4)]
     private int _minPlayers = 1;
 
-    [SerializeField] private string hubSceneName = "HubScene";
+    [SerializeField] private string hubSceneName = "OneMission";
 
     private AudioManager _audioManager;
     public static GameManager Instance { get; private set; }

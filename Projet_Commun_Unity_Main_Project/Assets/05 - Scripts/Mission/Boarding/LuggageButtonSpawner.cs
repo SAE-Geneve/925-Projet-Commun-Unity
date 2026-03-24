@@ -22,6 +22,11 @@ public class LuggageButtonSpawner : MonoBehaviour, IInteractable
         _buttonUnpressedColor = buttonRenderer.material;
     }
 
+    public string GetPromptText()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Interact(PlayerController playerController)
     {
         propSpawner.SpawnProp();

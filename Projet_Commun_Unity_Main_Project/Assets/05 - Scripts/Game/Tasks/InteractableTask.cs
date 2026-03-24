@@ -13,6 +13,11 @@ public class InteractableTask : GameTask, IInteractable
         _outline = GetComponent<ObjectOutline>();
     }
 
+    public string GetPromptText()
+    {
+        throw new NotImplementedException();
+    }
+
     public void Interact(PlayerController playerController)
     {
         if (Done) return;

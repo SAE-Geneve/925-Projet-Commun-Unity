@@ -52,6 +52,11 @@ public class HoldInteractableTask : GameTask, IInteractable
             CompleteHold();
     }
 
+    public string GetPromptText()
+    {
+        throw new NotImplementedException();
+    }
+
     public void Interact(PlayerController playerController)
     {
         if (Done || !_isActive) return;

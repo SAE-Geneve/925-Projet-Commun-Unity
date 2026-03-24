@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class InteractableProp : Prop, IInteractable
 {
+    public string GetPromptText()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public virtual void Interact(PlayerController playerController)
     {
         if(playerController.InteractableGrabbed == null) return;
@@ -22,4 +27,5 @@ public class InteractableProp : Prop, IInteractable
         base.Dropped(throwForce, controller);
         InteractEnd();
     }
+    
 }

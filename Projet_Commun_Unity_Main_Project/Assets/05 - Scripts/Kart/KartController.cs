@@ -21,6 +21,11 @@ public class KartController : MonoBehaviour, IInteractable
         _outline = GetComponent<ObjectOutline>();
     }
 
+    public string GetPromptText()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Interact(PlayerController playerController)
     {
         if (_isUsed) return;

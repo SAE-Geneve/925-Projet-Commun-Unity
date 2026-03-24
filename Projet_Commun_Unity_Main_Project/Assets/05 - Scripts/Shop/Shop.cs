@@ -22,6 +22,11 @@ public abstract class Shop : MonoBehaviour, IInteractable
 
     protected abstract void Buy(PlayerController playerController);
 
+    public string GetPromptText()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Interact(PlayerController playerController)
     {
         ScoreManager scoreManager = GameManager.Instance.Scores;

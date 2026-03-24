@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2274146080906510473}
   - component: {fileID: 7177953940550787110}
   - component: {fileID: 1680595591678261835}
+  - component: {fileID: -2615018748592218429}
   m_Layer: 0
   m_Name: Mop
   m_TagString: Untagged
@@ -195,3 +196,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &-2615018748592218429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953462570413156859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6901887a38eee4da60334a9c9e49c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::PropFeedback
+  impactEffectPrefab: {fileID: 5062905599751970331, guid: cc4fc89f041d13e4d84c1f7b7873ade6, type: 3}
+  velocityThreshold: 2
+  grabSound: {fileID: 8300000, guid: 2c147aabd47d879428c40394ab2a4e23, type: 3}
+  throwSound: {fileID: 8300000, guid: bea9989d8559f95449beb401f02fb8e4, type: 3}

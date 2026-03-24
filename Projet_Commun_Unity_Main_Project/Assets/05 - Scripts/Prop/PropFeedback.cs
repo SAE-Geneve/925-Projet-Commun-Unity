@@ -6,12 +6,14 @@ public class PropFeedback : MonoBehaviour
     [Header("Settings")]
     public GameObject impactEffectPrefab;
     public float velocityThreshold = 2f;
+    public float impactCooldown = 0.5f; // Cooldown pour éviter le spam d'effets d'impact
     public AudioClip grabSound; 
     public AudioClip throwSound; 
 
     private Vector3 initialScale;
     private Coroutine wobbleCoroutine;
     private AudioSource audioSource; 
+    private float lastImpactTime = -1f;
 
     private void Awake()
     {
@@ -85,8 +87,13 @@ public class PropFeedback : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // On vérifie d'abord si le cooldown est passé
+        if (Time.time < lastImpactTime + impactCooldown) return;
+        
         if (collision.relativeVelocity.magnitude > velocityThreshold)
         {
+            lastImpactTime = Time.time; // On met à jour le temps du dernier impact
+            
             ContactPoint contact = collision.contacts[0];
             Instantiate(impactEffectPrefab, contact.point, Quaternion.identity);
             

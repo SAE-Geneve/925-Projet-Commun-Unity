@@ -43,10 +43,17 @@ public class MissionManager : MonoBehaviour
     }
 
     public void OnMissionFinished() => StartCoroutine(HubTimeRoutine());
+    public void OnOneMissionFinished() => StartCoroutine(OneMissionTimeRoutine());
 
     private IEnumerator HubTimeRoutine()
     {
         yield return new WaitForSeconds(hubTime);
         UnlockRandomMission();
+    }
+
+    private IEnumerator OneMissionTimeRoutine()
+    {
+        yield return new WaitForSeconds(hubTime);
+        currentMission.Unlock();
     }
 }

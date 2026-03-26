@@ -46,9 +46,12 @@ public class Ragdoll : MonoBehaviour
     {
         get
         {
-            if (_rigContainer != null) return _rigContainer;
+            if (_rigContainer) return _rigContainer;
             _rigContainer = new GameObject("ActiveRagdolls").transform;
-            _rigContainer.SetParent(GameManager.Instance.transform);
+            
+            GameManager gm = GameManager.Instance;
+            
+            if(gm) _rigContainer.SetParent(gm.transform);
             return _rigContainer;
         }
     }

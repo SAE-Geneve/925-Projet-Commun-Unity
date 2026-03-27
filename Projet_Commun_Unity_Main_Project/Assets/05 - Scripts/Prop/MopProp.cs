@@ -51,7 +51,8 @@ public class MopProp : InteractableProp
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out PuddleTask puddleTask))
+        PuddleTask puddleTask = other.GetComponentInParent<PuddleTask>();
+        if (puddleTask != null && other.gameObject != puddleTask.gameObject && !_puddleTasks.Contains(puddleTask))
         {
             puddleTask.Register(this);
             if(_isCleaning) puddleTask.StartClean();
@@ -61,7 +62,8 @@ public class MopProp : InteractableProp
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out PuddleTask puddleTask))
+        PuddleTask puddleTask = other.GetComponentInParent<PuddleTask>();
+        if (puddleTask != null && other.gameObject != puddleTask.gameObject)
             RemovePuddleTask(puddleTask);
     }
 

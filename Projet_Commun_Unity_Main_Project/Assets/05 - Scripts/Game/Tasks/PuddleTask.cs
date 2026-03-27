@@ -14,40 +14,52 @@ public class PuddleTask : GameTask
     [Tooltip("Durée en secondes pour atteindre la taille max")]
     [SerializeField] private float growDuration = 15f;
 
+    [Header("Puddle References")]
+    [Tooltip("Child object that holds the meshes and renderer")]
+    [SerializeField] private Transform _visualTransform;
+
     private MopProp _mop;
-    private Material _puddleMaterial;
+    private SphereCollider _ragdollCollider;
 
     private float _cleanTimer;
+    private float _effectiveCleanTime;
     private bool _isCleaning;
 
     private float _growTimer = 0f;
-    private Vector3 _initialScale;
+    private float _initialRadius;
+    private float _radiusAtCleanStart;
+    private Vector3 _initialVisualScale;
+    private Vector3 _visualScaleAtCleanStart;
 
     protected override void Start()
     {
         base.Start();
-        _puddleMaterial = GetComponent<Renderer>().material;
-        _initialScale = transform.localScale;
+        _ragdollCollider = GetComponent<SphereCollider>();
+        _initialRadius = _ragdollCollider.radius;
+        _initialVisualScale = _visualTransform.localScale;
     }
 
     private void Update()
     {
         if (Done) return;
-        if (canGrow)
+
+        if (canGrow && !_isCleaning)
         {
             _growTimer += Time.deltaTime;
             float growProgress = Mathf.Clamp01(_growTimer / growDuration);
-            transform.localScale = _initialScale * Mathf.Lerp(1f, maxScale, growProgress);
+            float scale = Mathf.Lerp(1f, maxScale, growProgress);
+            _ragdollCollider.radius = _initialRadius * scale;
+            _visualTransform.localScale = _initialVisualScale * scale;
         }
+
         if (!_isCleaning) return;
 
-        float cleanTime = _mop.CleanTime;
-        float ratio = Mathf.Clamp01(_cleanTimer / cleanTime);
-        UpdateMaterial(ratio);
-
         _cleanTimer += Time.deltaTime;
+        float ratio = Mathf.Clamp01(_cleanTimer / _effectiveCleanTime);
+        _ragdollCollider.radius = Mathf.Lerp(_radiusAtCleanStart, 0f, ratio);
+        _visualTransform.localScale = Vector3.Lerp(_visualScaleAtCleanStart, Vector3.zero, ratio);
 
-        if (_cleanTimer >= cleanTime) CompleteTask();
+        if (_cleanTimer >= _effectiveCleanTime) CompleteTask();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -71,13 +83,26 @@ public class PuddleTask : GameTask
         _mop = null;
     }
 
-    public void StartClean() => _isCleaning = true;
-    public void StopClean() => _isCleaning = false;
+    public void StartClean()
+    {
+        _radiusAtCleanStart = _ragdollCollider.radius;
+        _visualScaleAtCleanStart = _visualTransform.localScale;
+        float sizeMultiplier = _radiusAtCleanStart / _initialRadius;
+        _effectiveCleanTime = _mop.CleanTime * sizeMultiplier;
+        _cleanTimer = 0f;
+        _isCleaning = true;
+    }
+
+    public void StopClean()
+    {
+        _isCleaning = false;
+    }
 
     private void CompleteTask()
     {
-        PlayerController player = _mop != null ? _mop.CurrentCleaner : null;
-        _mop.RemovePuddleTask(this);
+        MopProp mop = _mop;
+        PlayerController player = mop != null ? mop.CurrentCleaner : null;
+        mop?.RemovePuddleTask(this);
 
         if (givePointsOnClean && player != null)
         {
@@ -90,12 +115,5 @@ public class PuddleTask : GameTask
             }
         }
         Succeed(player);
-    }
-
-    private void UpdateMaterial(float ratio)
-    {
-        Color color = _puddleMaterial.color;
-        color.a = 1f - ratio;
-        _puddleMaterial.color = color;
     }
 }

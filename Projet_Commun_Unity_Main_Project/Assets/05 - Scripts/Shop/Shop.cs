@@ -11,12 +11,13 @@ public abstract class Shop : MonoBehaviour, IInteractable
     
     ObjectOutline _outline;
     Animator _animator;
+    private AudioManager _audioManager;
     
     private void Start()
     {
         _outline = GetComponent<ObjectOutline>();
         _animator = GetComponent<Animator>();
-        
+        _audioManager = AudioManager.Instance;
         priceTmp.SetText($"{price}$");
     }
 
@@ -35,6 +36,7 @@ public abstract class Shop : MonoBehaviour, IInteractable
         if (BuyCondition(playerController) && scoreManager.TotalScores[playerId] >= price)
         {
             Buy(playerController);
+            _audioManager.PlaySfx(_audioManager.ShopSFX);
             scoreManager.SubTotalScore(price, playerId);
             _animator.SetTrigger("Buy");
         }

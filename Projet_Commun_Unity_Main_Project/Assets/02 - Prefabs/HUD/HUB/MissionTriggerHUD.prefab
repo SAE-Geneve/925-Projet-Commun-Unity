@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 7420401178103076598}
   - component: {fileID: 1297923833116319120}
   - component: {fileID: 5250400762435914407}
+  - component: {fileID: 7751894809134843217}
   m_Layer: 0
   m_Name: MissionTriggerHUD
   m_TagString: Untagged
@@ -376,6 +377,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7751894809134843217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9048746182480730032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55f430e17579e1e4cbc6a3f6e3808122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::HUBTriggerUI
+  playersNeededText: {fileID: 2081858066183440144}
+  backdropReference: {fileID: 4410338298195054436}
+  missingPlayerSprite: {fileID: 21300000, guid: d60fea6629dd0084a9bd4222b73c3c8a, type: 3}
+  enoughPlayerSprite: {fileID: 21300000, guid: db18b58bd24f65b4f8f3f2dc979c9e26, type: 3}
 --- !u!1 &9137820399917422762
 GameObject:
   m_ObjectHideFlags: 0

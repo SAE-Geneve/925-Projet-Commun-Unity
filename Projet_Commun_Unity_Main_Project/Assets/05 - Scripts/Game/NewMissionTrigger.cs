@@ -71,6 +71,7 @@ public class NewMissionTrigger : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
         _playerNumber++;
+        if (_audioManager != null) _audioManager.PlaySfx(_audioManager.EnterTriggerZoneSFX);
         UpdateTmpNumber();
         CheckPlayerNumber();
     }
@@ -86,7 +87,10 @@ public class NewMissionTrigger : MonoBehaviour
         if (_playerManager && _playerNumber == _playerManager.PlayerCount && !_isSequenceStarted)
         {
             if (_countdownCoroutine == null)
+            {
+                _audioManager.PlayContinousSfx(_audioManager.CountdownSFX);
                 _countdownCoroutine = StartCoroutine(CountdownCoroutine());
+            }
         }
         else
         {
@@ -97,6 +101,7 @@ public class NewMissionTrigger : MonoBehaviour
     private void CancelCountdown()
     {
         if (_countdownCoroutine == null) return;
+        _audioManager.StopContinousSfx();
         StopCoroutine(_countdownCoroutine);
         _countdownCoroutine = null;
         UpdateState();

@@ -41,6 +41,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioClip RepairSFX;
     [SerializeField] public AudioClip FinishedRepairSFX;
     [SerializeField] public AudioClip ShopSFX;
+    [SerializeField] public AudioClip EnterTriggerZoneSFX;
+    [SerializeField] public AudioClip CountdownSFX;
     
     public static AudioManager Instance;
     

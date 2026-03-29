@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class HoldInteractableTask : GameTask, IInteractable
@@ -9,7 +10,8 @@ public class HoldInteractableTask : GameTask, IInteractable
     [SerializeField] private float releaseDuration = 1f;
 
     [Header("UI References")]
-    [SerializeField] private Canvas holdCanvas;
+    [SerializeField] private Canvas donutCanvas;
+    [SerializeField] private Canvas repairCanvas;
     [SerializeField] private Image donutFill;
     [SerializeField] private GameObject donutBackground;
 
@@ -27,7 +29,8 @@ public class HoldInteractableTask : GameTask, IInteractable
     {
         base.Start();
         _outline = GetComponent<ObjectOutline>();
-        SetCanvasVisible(false);
+        SetDonutCanvasVisible(false);
+        SetRepairCanvas(false);
         if (donutFill) donutFill.fillAmount = 0f;
         _isActive = false;
     }
@@ -46,7 +49,10 @@ public class HoldInteractableTask : GameTask, IInteractable
         if (donutFill) donutFill.fillAmount = _progress;
 
         if (_progress <= 0f && !_playerInRange)
-            SetCanvasVisible(false);
+        {
+            SetDonutCanvasVisible(false);
+            SetRepairCanvas(true);
+        }
 
         if (_progress >= 1f)
             CompleteHold();
@@ -83,7 +89,8 @@ public class HoldInteractableTask : GameTask, IInteractable
         _playerInRange = true;
         if (!_isActive) return;
         if (_outline) _outline.EnableOutline();
-        SetCanvasVisible(true);
+        SetDonutCanvasVisible(true);
+        SetRepairCanvas(false);
     }
 
     public void AreaExit()
@@ -103,7 +110,7 @@ public class HoldInteractableTask : GameTask, IInteractable
         if (_playerInRange)
         {
             if (_outline) _outline.EnableOutline();
-            SetCanvasVisible(true);
+            SetDonutCanvasVisible(true);
         }
     }
 
@@ -117,7 +124,8 @@ public class HoldInteractableTask : GameTask, IInteractable
 
         _currentPlayer = null;
         if (_outline) _outline.DisableOutline();
-        SetCanvasVisible(false);
+        SetDonutCanvasVisible(false);
+        SetRepairCanvas(false);
         AudioManager.Instance.StopContinousSfx();
     }
 
@@ -133,15 +141,21 @@ public class HoldInteractableTask : GameTask, IInteractable
         _currentPlayer = null;
 
         if (donutFill) donutFill.fillAmount = 0f;
-        SetCanvasVisible(false);
+        SetDonutCanvasVisible(false);
+        SetRepairCanvas(false);
 
         Succeed(PlayerController);
     }
 
-    private void SetCanvasVisible(bool visible)
+    private void SetDonutCanvasVisible(bool visible)
     {
-        if (holdCanvas)      holdCanvas.enabled = visible;
+        if (donutCanvas)      donutCanvas.enabled = visible;
         if (donutBackground) donutBackground.SetActive(visible);
+    }
+    
+    private void SetRepairCanvas(bool visible)
+    {
+        if (repairCanvas)      repairCanvas.enabled = visible;
     }
 
     public override void ResetTask()
@@ -155,6 +169,10 @@ public class HoldInteractableTask : GameTask, IInteractable
 
         _currentPlayer = null;
         if (donutFill) donutFill.fillAmount = 0f;
-        if (!_playerInRange || !_isActive) SetCanvasVisible(false);
+        if (!_playerInRange || !_isActive)
+        {
+            SetDonutCanvasVisible(false);
+            SetRepairCanvas(false);
+        }
     }
 }

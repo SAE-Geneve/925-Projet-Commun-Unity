@@ -86,11 +86,7 @@ public class NewMissionTrigger : MonoBehaviour
     {
         if (_playerManager && _playerNumber == _playerManager.PlayerCount && !_isSequenceStarted)
         {
-            if (_countdownCoroutine == null)
-            {
-                _audioManager.PlayContinousSfx(_audioManager.CountdownSFX);
-                _countdownCoroutine = StartCoroutine(CountdownCoroutine());
-            }
+            StartMissionSequence();
         }
         else
         {
@@ -101,6 +97,7 @@ public class NewMissionTrigger : MonoBehaviour
     private void CancelCountdown()
     {
         if (_countdownCoroutine == null) return;
+        if (_isSequenceStarted) return;
         _audioManager.StopContinousSfx();
         StopCoroutine(_countdownCoroutine);
         _countdownCoroutine = null;
@@ -117,7 +114,7 @@ public class NewMissionTrigger : MonoBehaviour
             remaining--;
         }
         _countdownCoroutine = null;
-        StartMissionSequence();
+        StartMission();
     }
 
     private void StartMissionSequence()
@@ -134,11 +131,12 @@ public class NewMissionTrigger : MonoBehaviour
 
             if (uiScript != null)
             {
-                uiScript.OnContinueClicked += () => 
+                uiScript.OnContinueClicked += () =>
                 {
                     Destroy(rulesInstance);
                     Time.timeScale = 1f;
-                    StartMission();
+                    _audioManager.PlayContinousSfx(_audioManager.CountdownSFX);
+                    _countdownCoroutine = StartCoroutine(CountdownCoroutine());
                 };
             }
             else
@@ -146,13 +144,15 @@ public class NewMissionTrigger : MonoBehaviour
                 Debug.LogError("Le script MissionExplanationUI est manquant sur le prefab !");
                 Destroy(rulesInstance);
                 Time.timeScale = 1f;
-                StartMission();
+                _audioManager.PlayContinousSfx(_audioManager.CountdownSFX);
+                _countdownCoroutine = StartCoroutine(CountdownCoroutine());
             }
         }
         else
         {
             Time.timeScale = 1f;
-            StartMission();
+            _audioManager.PlayContinousSfx(_audioManager.CountdownSFX);
+            _countdownCoroutine = StartCoroutine(CountdownCoroutine());
         }
     }
 

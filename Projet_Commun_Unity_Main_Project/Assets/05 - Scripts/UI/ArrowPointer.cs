@@ -28,45 +28,43 @@ public class ArrowPointer : MonoBehaviour
         _mainCamera = Camera.main;
         _missionManager = MissionManager.Instance;
         _isMissionCooldown = false;
+        
+        
+        _missionManager.OnMissionReady += HandleMissionReady;
+        _missionManager.OnMissionCooldownStarted += HandleMissionCooldownStarted;
     }
 
     private void Update()
     {
-        VerifyMissionState();
-        
         if(!_isMissionCooldown)
         {
-            _targetPosition = _missionManager.currentMission.ArrowTarget.position;
+            _targetPosition = _missionManager.CurrentMission.ArrowTarget.position;
 
             RotatePointerTowardsTarget();
             CalculateDistance();
         }
-        else if (_isMissionCooldown)
+        else
         {
             _hubTimer -= Time.deltaTime;
             cooldownText.text = (int)_hubTimer+"";
         }
     }
 
-    private void VerifyMissionState()
+    private void HandleMissionReady()
     {
-        if (_missionManager.missionCooldown == _isMissionCooldown) return;
-        if (!_missionManager.missionCooldown && _isMissionCooldown)
-        {
-            _isMissionCooldown = false;
-            distanceBox.gameObject.SetActive(true);
-            pointerImage.gameObject.SetActive(true);
-            cooldownText.gameObject.SetActive(false);
-        }
+        _isMissionCooldown = false;
+        distanceBox.gameObject.SetActive(true);
+        pointerImage.gameObject.SetActive(true);
+        cooldownText.gameObject.SetActive(false);
+    }
 
-        if (_missionManager.missionCooldown && !_isMissionCooldown)
-        {
-            _isMissionCooldown = true;
-            distanceBox.gameObject.SetActive(false);
-            pointerImage.gameObject.SetActive(false);
-            cooldownText.gameObject.SetActive(true);
-            _hubTimer=_missionManager.GetHubTime();
-        }
+    private void HandleMissionCooldownStarted()
+    {
+        _isMissionCooldown = true;
+        distanceBox.gameObject.SetActive(false);
+        pointerImage.gameObject.SetActive(false);
+        cooldownText.gameObject.SetActive(true);
+        _hubTimer = _missionManager.GetHubTime();
     }
 
     private void CalculateDistance()

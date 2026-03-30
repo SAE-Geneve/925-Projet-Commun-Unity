@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class MissionManager : MonoBehaviour
 {
@@ -11,12 +13,17 @@ public class MissionManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI missionNameTmp;
     [SerializeField] private Animator missionNameAnimator;
     
-    public Mission currentMission;
-    public int missionIndex;
+    [SerializeField] private Mission currentMission;
+    public Mission CurrentMission => currentMission;
+    
+    private int _missionIndex;
+    public int MissionIndex => _missionIndex;
+    
+    public event Action OnMissionReady;
+    public event Action OnMissionCooldownStarted;
     
     [Header("Parameters")]
     [SerializeField] private float hubTime = 30f;
-    public bool missionCooldown;
     
     public float GetHubTime() => hubTime;
     public static MissionManager Instance { get; private set; }
@@ -41,10 +48,12 @@ public class MissionManager : MonoBehaviour
         
         missions[randomIndex].Unlock();
         currentMission = missions[randomIndex];
-        missionIndex=randomIndex;
+        _missionIndex=randomIndex;
         
         missionNameTmp.SetText(missions[randomIndex].Name);
         missionNameAnimator.SetTrigger("Display");
+        
+        OnMissionReady?.Invoke();
     }
 
     public void UnlockAllMissions()
@@ -55,26 +64,25 @@ public class MissionManager : MonoBehaviour
 
     public void OnMissionFinished()
     { 
-        missionCooldown = true;
+        OnMissionCooldownStarted?.Invoke();
         StartCoroutine(HubTimeRoutine());
     }
     public void OnOneMissionFinished()
     { 
-        missionCooldown = true;
+        OnMissionCooldownStarted?.Invoke();
         StartCoroutine(OneMissionTimeRoutine());
     }
 
     private IEnumerator HubTimeRoutine()
     {
         yield return new WaitForSeconds(hubTime);
-        missionCooldown = false;
         UnlockRandomMission();
     }
 
     private IEnumerator OneMissionTimeRoutine()
     {
         yield return new WaitForSeconds(hubTime);
-        missionCooldown = false;
         currentMission.Unlock();
+        OnMissionReady?.Invoke();
     }
 }

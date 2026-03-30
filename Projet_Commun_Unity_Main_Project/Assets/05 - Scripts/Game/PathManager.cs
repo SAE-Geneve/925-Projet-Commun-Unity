@@ -63,7 +63,7 @@ public class PathManager : MonoBehaviour
     {
         if (_missionManager == null) return;
 
-        int idx = _missionManager.missionIndex;
+        int idx = _missionManager.MissionIndex;
         if (idx < 0 || idx >= missionIndexToType.Length) return;
 
         MiniGameType newDest = missionIndexToType[idx];

@@ -12,14 +12,23 @@ public class ConveyorBeltTask : TriggerTask
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if(Done || !other.TryGetComponent(out Prop prop) || prop.Type != _propType) return;
-        
+        if(Done || !other.TryGetComponent(out Prop prop)) return;
         if(prop.IsGrabbed) return;
-        
-        Succeed();
-        GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
-        ScoreSystem.IncreaseScore(1);
-        
+
+        bool isCorrect = prop.Type == _propType;
+
+        if(isCorrect)
+        {
+            Succeed();
+            GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
+            ScoreSystem.IncreaseScore(1);
+        }
+        else
+        {
+            Failed();
+            ScoreSystem.IncreaseScore(3);
+        }
+
         prop.Grabbed(_controller);
         _controller.SetGrabbedProp(prop);
     }

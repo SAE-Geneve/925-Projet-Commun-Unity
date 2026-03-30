@@ -159,10 +159,8 @@ public class GameManager : MonoBehaviour
             else
                 _playerManager.PlayerInputManager.DisableJoining();
 
-            if (newState == GameState.Lobby || newState == GameState.Menu || newState == GameState.Paused || newState == GameState.Cinematic)
-                _playerManager.DisablePlayerControllers();
-            else
-                _playerManager.EnablePlayerControllers();
+            if (newState != GameState.Playing) _playerManager.DisablePlayerControllers();
+            else _playerManager.EnablePlayerControllers();
         }
 
         _lastState = _state;

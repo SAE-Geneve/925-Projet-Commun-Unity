@@ -43,6 +43,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioClip ShopSFX;
     [SerializeField] public AudioClip EnterTriggerZoneSFX;
     [SerializeField] public AudioClip CountdownSFX;
+    [SerializeField] public AudioClip RagdollSFX;
     
     public static AudioManager Instance;
     

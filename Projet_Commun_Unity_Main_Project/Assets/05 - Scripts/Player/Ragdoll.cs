@@ -19,6 +19,7 @@ public class Ragdoll : MonoBehaviour
     [SerializeField] private AudioClip ragdollClip;
     [SerializeField] [Range(0f, 1f)] private float ragdollVolume = 1f;
     [SerializeField] private AudioSource audioSource;
+    
     public event Action OnRagdoll;
     public event Action<Ragdoll> OnRagdollSelf;
     
@@ -36,6 +37,7 @@ public class Ragdoll : MonoBehaviour
     private Coroutine _ragdollCoroutine;
     private Coroutine _immunityCoroutine;
     private AudioManager _audioManager;
+    
 
     private Vector3 _playerRigLocalPosition;
     private Quaternion _playerRigLocalRotation;
@@ -113,7 +115,11 @@ public class Ragdoll : MonoBehaviour
             StopCoroutine(_ragdollCoroutine);
             
         _ragdollCoroutine = StartCoroutine(RagdollTimer());
-
+        if (_audioManager != null && _audioManager.RagdollSFX != null)
+        {
+            _audioManager.SetVolumeSfx(0.05f);
+            _audioManager.PlaySfx(_audioManager.RagdollSFX);
+        }
         IsRagdoll = true;
     }
 

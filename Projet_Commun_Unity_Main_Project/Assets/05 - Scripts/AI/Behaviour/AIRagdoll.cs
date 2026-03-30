@@ -6,7 +6,7 @@ public class AIRagdoll : Ragdoll
     [SerializeField] private BehaviorGraphAgent behaviorGraphAgent;
     [SerializeField] private GameObject bHips;
     [SerializeField] private bool isRagdollable = true;
-    
+    [SerializeField] private ParticleSystem hitEffect;
     [Header("Drop Settings")]
     [Tooltip("Si coché, l'IA lâche ce qu'elle tient quand elle tombe en Ragdoll")]
     [SerializeField] private bool dropObjectOnRagdoll = true; 
@@ -34,9 +34,11 @@ public class AIRagdoll : Ragdoll
         if (playerController != null)
         {
             Catcher = playerController;
-            
+        
+            hitEffect?.Play();
+        
             if (!losePointsOnRagdoll) return;
-            
+        
             if (GameManager.Instance != null && GameManager.Instance.Scores != null)
             {
                 if (GameManager.Instance.Context == GameContext.Hub)
@@ -46,7 +48,6 @@ public class AIRagdoll : Ragdoll
             }
         }
     }
-
     public override void RagdollOn(bool ignoreImmunity = false)
     {
         if (Time.time < _lastRagdollOffTime + 1.0f) return;

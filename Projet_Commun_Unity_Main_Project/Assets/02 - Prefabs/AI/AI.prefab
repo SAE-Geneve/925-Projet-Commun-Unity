@@ -1273,6 +1273,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5021046413783467986}
   - {fileID: 3500695944868564522}
   - {fileID: 4482354734763658400}
   m_Father: {fileID: 0}
@@ -1320,9 +1321,13 @@ MonoBehaviour:
   ragdollImmunityDuration: 1.5
   velocityThreshold: 6
   impulseThreshold: 7
+  ragdollClip: {fileID: 0}
+  ragdollVolume: 1
+  audioSource: {fileID: 0}
   behaviorGraphAgent: {fileID: 2759791066519186907}
   bHips: {fileID: 3371690788066588864}
   isRagdollable: 1
+  hitEffect: {fileID: 7397970291640441887}
   dropObjectOnRagdoll: 1
   losePointsOnRagdoll: 1
   ragdollPenalty: 10
@@ -2089,3 +2094,70 @@ Transform:
   - {fileID: 6165583130348388796}
   m_Father: {fileID: 6776270314510114356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4616778499146315356
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 6969992119166505481}
+    m_Modifications:
+    - target: {fileID: 413276226289332622, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 413276226289332622, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.148
+      objectReference: {fileID: 0}
+    - target: {fileID: 413276226289332622, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.019
+      objectReference: {fileID: 0}
+    - target: {fileID: 413276226289332622, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 413276226289332622, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 413276226289332622, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 413276226289332622, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 413276226289332622, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 413276226289332622, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 413276226289332622, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2916387522295624853, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+      propertyPath: m_Name
+      value: AngrySparks
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+--- !u!4 &5021046413783467986 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 413276226289332622, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+  m_PrefabInstance: {fileID: 4616778499146315356}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7397970291640441887 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2790201371169253955, guid: 99162c9fc1aefaa47a2e479bf9cf3f3a, type: 3}
+  m_PrefabInstance: {fileID: 4616778499146315356}
+  m_PrefabAsset: {fileID: 0}

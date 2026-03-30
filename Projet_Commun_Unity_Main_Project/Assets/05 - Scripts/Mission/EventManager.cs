@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// La petite structure pour ta liste dans l'inspecteur
 [System.Serializable]
 public struct EventChance
 {
@@ -64,8 +63,7 @@ public class EventManager : MonoBehaviour
     private void TriggerRandomEvent()
     {
         if (_availableEvents.Count == 0) return;
-
-        // 1. On calcule le total des probabilités des événements qui NE SONT PAS déjà actifs
+        
         float totalWeight = 0f;
         List<EventChance> possibleEvents = new List<EventChance>();
 
@@ -77,11 +75,9 @@ public class EventManager : MonoBehaviour
                 possibleEvents.Add(ev);
             }
         }
-
-        // Si tout est déjà en cours, on annule pour ce tour
+        
         if (possibleEvents.Count == 0) return;
-
-        // 2. On tire au sort !
+        
         float randomValue = Random.Range(0f, totalWeight);
         float currentWeight = 0f;
 
@@ -90,7 +86,6 @@ public class EventManager : MonoBehaviour
             currentWeight += ev.weight;
             if (randomValue <= currentWeight)
             {
-                // ON A UN GAGNANT ! On lance l'événement
                 ev.eventScript.TriggerEvent();
                 break;
             }

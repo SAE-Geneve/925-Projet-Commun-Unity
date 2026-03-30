@@ -13,6 +13,9 @@ public class AIManagerConveyorBelt : AIManager
     [SerializeField] private List<OnePropSpawner> propSpawners;
     [SerializeField] [Range(0f, 1f)] private float targetedSpawnChance = 0.5f;
 
+    [Header("Breakdown")]
+    [SerializeField] private ConveyorBreakdownEvent conveyorBreakdown;
+
     [Header("Events")]
     [SerializeField] private UnityEvent onSucceed;
     [SerializeField] private UnityEvent onFailed;
@@ -56,6 +59,10 @@ public class AIManagerConveyorBelt : AIManager
         npc.GameTask.OnSucceedAction += Succeed;
         npc.GameTask.OnFailedAction += Failed;
         npc.OnDestroyed += RemoveAI;
+
+        // Passe le breakdown event au ConveyorBeltTask du NPC
+        ConveyorBeltTask task = npc.GetComponentInChildren<ConveyorBeltTask>();
+        if(task != null) task.SetBreakdownEvent(conveyorBreakdown);
 
         BehaviorGraphAgent agent = npc.BehaviorAgent;
         if (!agent) return;

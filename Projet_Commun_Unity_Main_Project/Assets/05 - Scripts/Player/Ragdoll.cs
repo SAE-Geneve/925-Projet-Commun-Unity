@@ -163,18 +163,16 @@ public class Ragdoll : MonoBehaviour
         float strikerVelocity = 0f;
 
         if (other.rigidbody != null)
-        {
             strikerVelocity = other.rigidbody.linearVelocity.magnitude;
-        }
 
         if (currentRelativeVelocity >= velocityThreshold || currentImpulse >= impulseThreshold || strikerVelocity >= velocityThreshold)
         {
-            OnRagdolledBy(other.gameObject); 
-
+            GameObject striker = other.rigidbody != null ? other.rigidbody.gameObject : other.gameObject;
+        
+            OnRagdolledBy(striker);
             RagdollOn();
-            
-            PlayerController player = other.gameObject.GetComponentInParent<PlayerController>();
-            
+        
+            PlayerController player = striker.GetComponentInParent<PlayerController>();
             if (other.gameObject.CompareTag("Player") || gameObject.CompareTag("Player") || player != null)
             {
                 if (CameraShakeManager.Instance) 

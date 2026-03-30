@@ -31,10 +31,15 @@ public class AIRagdoll : Ragdoll
     protected override void OnRagdolledBy(GameObject striker)
     {
         PlayerController playerController = striker.GetComponentInParent<PlayerController>();
+        if (playerController == null && striker.CompareTag("Player"))
+            playerController = striker.GetComponent<PlayerController>();
+        if (playerController == null)
+            playerController = PlayerManager.Instance?.Players.Find(
+                p => p.Rb != null && Vector3.Distance(p.transform.position, transform.position) < 3f
+            );
         if (playerController != null)
         {
             Catcher = playerController;
-        
             hitEffect?.Play();
         
             if (!losePointsOnRagdoll) return;

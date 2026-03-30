@@ -63,7 +63,7 @@ public class MopProp : InteractableProp
     private void OnTriggerExit(Collider other)
     {
         PuddleTask puddleTask = other.GetComponentInParent<PuddleTask>();
-        if (puddleTask != null && other.gameObject != puddleTask.gameObject)
+        if (puddleTask != null && other.CompareTag("MopZone"))
             RemovePuddleTask(puddleTask);
     }
 

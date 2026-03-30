@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 5097351064381225332}
   - component: {fileID: 3786696628100355982}
   - component: {fileID: 8569929526638052246}
+  - component: {fileID: 5146830075247111570}
+  - component: {fileID: 2919582337904966083}
   m_Layer: 0
-  m_Name: Renderer
+  m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,6 +92,39 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566105868902816170}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &5146830075247111570
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566105868902816170}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &2919582337904966083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566105868902816170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a70d393a6ecd361458c83e155573eb0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::PuddleRagdollZone
 --- !u!1 &6817805516351796421
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +137,7 @@ GameObject:
   - component: {fileID: 297741125770264212}
   m_Layer: 0
   m_Name: MopZone
-  m_TagString: Untagged
+  m_TagString: MopZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -153,7 +188,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1982821412262581631}
   - component: {fileID: 3452333859995698074}
-  - component: {fileID: 7921026823877356466}
   m_Layer: 0
   m_Name: Puddle
   m_TagString: Untagged
@@ -213,24 +247,3 @@ MonoBehaviour:
   maxScale: 2
   growDuration: 15
   _visualTransform: {fileID: 5097351064381225332}
---- !u!135 &7921026823877356466
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7790418403461979177}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

@@ -10,6 +10,7 @@ public class PlayerInteractor : MonoBehaviour
     [SerializeField] private InteractionPromptUI promptUI;
 
     private IInteractable currentInteractable;
+    private IInteractable previousInteractable;
     private PlayerController playerController;
 
     private void Awake()
@@ -27,14 +28,13 @@ public class PlayerInteractor : MonoBehaviour
         if (currentInteractable != null && Input.GetKeyDown(KeyCode.E))
         {
             currentInteractable.Interact(playerController);
+            Debug.Log("Interaction déclenchée.");
             promptUI.Flash();
         }
     }
 
     private void DetectInteractable()
     {
-        currentInteractable = null;
-
         Collider[] hits = Physics.OverlapSphere(transform.position, interactRange, interactableLayer);
 
         float closestDistance = Mathf.Infinity;
@@ -43,7 +43,6 @@ public class PlayerInteractor : MonoBehaviour
         foreach (Collider hit in hits)
         {
             IInteractable interactable = hit.GetComponentInParent<IInteractable>();
-
             if (interactable == null)
                 continue;
 
@@ -56,15 +55,19 @@ public class PlayerInteractor : MonoBehaviour
             }
         }
 
-        if (closestInteractable != null)
+        if (closestInteractable != previousInteractable)
         {
-            currentInteractable = closestInteractable;
+            previousInteractable?.AreaExit();
+            closestInteractable?.AreaEnter();
+        }
+
+        previousInteractable = closestInteractable;
+        currentInteractable = closestInteractable;
+
+        if (currentInteractable != null)
             promptUI.Show(currentInteractable.GetPromptText());
-        }
         else
-        {
             promptUI.Hide();
-        }
     }
 
     private void OnDrawGizmosSelected()

@@ -1,19 +1,17 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class NewMissionTrigger : MonoBehaviour
 {
-    [Header("References")] 
+    [Header("References")]
     [Tooltip("The mission to trigger")]
     [SerializeField] private Mission _mission;
     [Tooltip("The tmp of the state of the mission")]
     [SerializeField] private TextMeshProUGUI _stateTmp;
     [SerializeField] private TextMeshProUGUI _numberTmp;
     [SerializeField] private float _scrollSpeed;
-    [SerializeField] private float _countdownDuration = 3f;
 
     [SerializeField] private Color _unlockedColor;
     [SerializeField] private Color _lockedColor;
@@ -26,19 +24,18 @@ public class NewMissionTrigger : MonoBehaviour
     private AudioManager _audioManager;
 
     private Material _edgeMaterial;
-    private Coroutine _countdownCoroutine;
 
 
     private void Start()
     {
         _audioManager = AudioManager.Instance;
         _playerManager = PlayerManager.Instance;
-        
-        var renderers = GetComponentsInChildren<Renderer>();                                                                                                                                                                                                              
+
+        var renderers = GetComponentsInChildren<Renderer>();
         if (renderers.Length > 0)                                                                                                                                                                                                                                           {
-            _edgeMaterial = renderers[0].material; // creates a unique instance for this trigger                                                                                                                                                                          
+            _edgeMaterial = renderers[0].material; // creates a unique instance for this trigger
             foreach (var r in renderers)                                                                                                                                                                                                                                            r.material = _edgeMaterial; // all 4 quads share that same instance
-        }         
+        }
         Debug.Log($"Found {renderers.Length} renderers");
 
         if (_playerManager)
@@ -64,7 +61,7 @@ public class NewMissionTrigger : MonoBehaviour
     private void Update()
     {
         if (_edgeMaterial)
-            _edgeMaterial.mainTextureOffset -= new Vector2(_scrollSpeed * Time.deltaTime, 0);   
+            _edgeMaterial.mainTextureOffset -= new Vector2(_scrollSpeed * Time.deltaTime, 0);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -88,45 +85,18 @@ public class NewMissionTrigger : MonoBehaviour
         {
             StartMissionSequence();
         }
-        else
-        {
-            CancelCountdown();
-        }
-    }
-
-    private void CancelCountdown()
-    {
-        if (_countdownCoroutine == null) return;
-        if (_isSequenceStarted) return;
-        _audioManager.StopContinousSfx();
-        StopCoroutine(_countdownCoroutine);
-        _countdownCoroutine = null;
-        UpdateState();
-    }
-
-    private IEnumerator CountdownCoroutine()
-    {
-        float remaining = _countdownDuration;
-        while (remaining > 0f)
-        {
-            _numberTmp.SetText($"{Mathf.CeilToInt(remaining)}...");
-            yield return new WaitForSeconds(1f);
-            remaining--;
-        }
-        _countdownCoroutine = null;
-        StartMission();
     }
 
     private void StartMissionSequence()
     {
         _isSequenceStarted = true;
-        
+
         Time.timeScale = 0f;
 
         if (_mission != null && _mission.ExplanationPrefab != null)
         {
             GameObject rulesInstance = Instantiate(_mission.ExplanationPrefab);
-            
+
             var uiScript = rulesInstance.GetComponent<MissionExplanationUI>();
 
             if (uiScript != null)
@@ -135,8 +105,7 @@ public class NewMissionTrigger : MonoBehaviour
                 {
                     Destroy(rulesInstance);
                     Time.timeScale = 1f;
-                    _audioManager.PlayContinousSfx(_audioManager.CountdownSFX);
-                    _countdownCoroutine = StartCoroutine(CountdownCoroutine());
+                    StartMission();
                 };
             }
             else
@@ -144,29 +113,25 @@ public class NewMissionTrigger : MonoBehaviour
                 Debug.LogError("Le script MissionExplanationUI est manquant sur le prefab !");
                 Destroy(rulesInstance);
                 Time.timeScale = 1f;
-                _audioManager.PlayContinousSfx(_audioManager.CountdownSFX);
-                _countdownCoroutine = StartCoroutine(CountdownCoroutine());
+                StartMission();
             }
         }
         else
         {
             Time.timeScale = 1f;
-            _audioManager.PlayContinousSfx(_audioManager.CountdownSFX);
-            _countdownCoroutine = StartCoroutine(CountdownCoroutine());
+            StartMission();
         }
     }
 
     private void StartMission()
     {
-        _audioManager.PlaySfx(_audioManager.StartMissionSFX);
-        
         foreach (var ragdoll in _ragdolls)
             if (ragdoll) ragdoll.OnRagdollSelf -= _ragdollHandler;
 
         _ragdolls.Clear();
         _playerNumber = 0;
         UpdateTmpNumber();
-            
+
         _mission.StartMission();
         _isSequenceStarted = false;
     }
@@ -175,13 +140,11 @@ public class NewMissionTrigger : MonoBehaviour
     {
         _playerNumber--;
         if(_playerNumber < 0) _playerNumber = 0;
-        CancelCountdown();
         UpdateTmpNumber();
     }
 
     private void UpdateTmpNumber()
     {
-        if (_countdownCoroutine != null) return;
         if (_playerManager) _numberTmp.SetText($"{_playerNumber}/{_playerManager.PlayerCount}");
     }
 

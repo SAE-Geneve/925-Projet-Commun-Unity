@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,9 +16,13 @@ public class Mission : MonoBehaviour
     [SerializeField] private GameObject _explanationPrefab; 
     public GameObject ExplanationPrefab => _explanationPrefab;
     
-    [Header("Timer")] 
+    [Header("Timer")]
     [SerializeField] [Min(1f)] private float _initialTimer = 60f;
     [SerializeField] private bool _isTimerActive;
+    [SerializeField] [Min(1f)] private float _countdownDuration = 5f;
+
+    public static event Action<int> OnCountdownTick;
+    public static event Action OnCountdownEnd;
 
     [Header("Events")] 
     [SerializeField] private UnityEvent _onMissionStarted;
@@ -106,11 +111,31 @@ public class Mission : MonoBehaviour
         }
         Timer = _initialTimer;
         _gameManager.StartMission(this);
-        SwitchMissionState(MissionState.Playing);
         _onMissionStarted?.Invoke();
         Debug.Log($"Mission {_name} began");
+        StartCoroutine(CountdownRoutine());
     }
     
+    private IEnumerator CountdownRoutine()
+    {
+        _gameManager.SwitchState(GameState.Countdown);
+        _audioManager.PlayContinousSfx(_audioManager.CountdownSFX);
+
+        int remaining = Mathf.CeilToInt(_countdownDuration);
+        while (remaining > 0)
+        {
+            OnCountdownTick?.Invoke(remaining);
+            yield return new WaitForSeconds(1f);
+            remaining--;
+        }
+
+        _audioManager.StopContinousSfx();
+        _audioManager.PlaySfx(_audioManager.StartMissionSFX);
+        OnCountdownEnd?.Invoke();
+        _gameManager.SwitchState(GameState.Playing);
+        SwitchMissionState(MissionState.Playing);
+    }
+
     public void Finish(bool victory)
     {
         _audioManager.StopBGM();

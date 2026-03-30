@@ -405,6 +405,7 @@ public enum GameState
     Menu,
     Lobby,
     Playing,
+    Countdown,
     Paused,
     Cinematic,
     Disconnected

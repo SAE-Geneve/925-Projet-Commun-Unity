@@ -51,6 +51,9 @@ public class NPCFeedback : MonoBehaviour
         }
 
         _audioManager = AudioManager.Instance;
+        if(timerBackdropImage != null) timerBackdropImage.gameObject.SetActive(false);
+
+        _audioManager = AudioManager.Instance;
     }
 
     private void Update()

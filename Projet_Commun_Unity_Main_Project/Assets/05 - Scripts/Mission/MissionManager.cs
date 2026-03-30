@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MissionManager : MonoBehaviour
 {
@@ -15,7 +16,17 @@ public class MissionManager : MonoBehaviour
     
     [Header("Parameters")]
     [SerializeField] private float hubTime = 30f;
-
+    public bool missionCooldown;
+    
+    public float GetHubTime() => hubTime;
+    public static MissionManager Instance { get; private set; }
+    
+    private void Awake()
+    {
+        if (Instance && Instance != this) Destroy(gameObject);
+        else Instance = this;
+    }
+    
     private void Start() => UnlockRandomMission();
 
     public void UnlockRandomMission()
@@ -42,18 +53,28 @@ public class MissionManager : MonoBehaviour
             mission.Unlock();
     }
 
-    public void OnMissionFinished() => StartCoroutine(HubTimeRoutine());
-    public void OnOneMissionFinished() => StartCoroutine(OneMissionTimeRoutine());
+    public void OnMissionFinished()
+    { 
+        missionCooldown = true;
+        StartCoroutine(HubTimeRoutine());
+    }
+    public void OnOneMissionFinished()
+    { 
+        missionCooldown = true;
+        StartCoroutine(OneMissionTimeRoutine());
+    }
 
     private IEnumerator HubTimeRoutine()
     {
         yield return new WaitForSeconds(hubTime);
+        missionCooldown = false;
         UnlockRandomMission();
     }
 
     private IEnumerator OneMissionTimeRoutine()
     {
         yield return new WaitForSeconds(hubTime);
+        missionCooldown = false;
         currentMission.Unlock();
     }
 }

@@ -4525,8 +4525,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Scripts::EventManager
   _startDelay: 4
-  _minEventInterval: 5
-  _maxEventInterval: 7
+  _minEventInterval: 3
+  _maxEventInterval: 6
   _availableEvents:
   - eventScript: {fileID: 172709451}
     weight: 30
@@ -4535,7 +4535,7 @@ MonoBehaviour:
   - eventScript: {fileID: 172709450}
     weight: 50
   - eventScript: {fileID: 110995476}
-    weight: 50
+    weight: 15
 --- !u!1001 &111778585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27376,6 +27376,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9027514048236820042, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
   m_PrefabInstance: {fileID: 434823426}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &434823428 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9027514048236820043, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
+  m_PrefabInstance: {fileID: 434823426}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &437778500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37384,25 +37389,24 @@ MonoBehaviour:
   _eventScoreReward: 100
   _conveyorSides:
   - belts:
-    - {fileID: 0}
+    - {fileID: 1918243896}
     - {fileID: 1567050298}
     restartButtonTasks:
     - {fileID: 216639156}
     particleSystems:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 1500787579}
+    - {fileID: 824464259}
+    - {fileID: 1431461700}
     - {fileID: 1888958789}
     - {fileID: 150332563}
   - belts:
-    - {fileID: 0}
+    - {fileID: 1248303038}
     - {fileID: 2024715258}
     restartButtonTasks:
     - {fileID: 372176056}
     particleSystems:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 434823428}
+    - {fileID: 1577393617}
     - {fileID: 461267502}
     - {fileID: 417064997}
   _escalationDelay: 5
@@ -47164,6 +47168,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9027514048236820042, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
   m_PrefabInstance: {fileID: 824464257}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &824464259 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9027514048236820043, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
+  m_PrefabInstance: {fileID: 824464257}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &830385325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49915,7 +49924,7 @@ Transform:
   m_GameObject: {fileID: 891712796}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 19.330128, z: -6.975159}
+  m_LocalPosition: {x: 2.983654, y: 26.161188, z: -11.998608}
   m_LocalScale: {x: 1, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -50043,7 +50052,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 1
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -75680,6 +75689,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9027514048236820042, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
   m_PrefabInstance: {fileID: 1431461698}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &1431461700 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9027514048236820043, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
+  m_PrefabInstance: {fileID: 1431461698}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1432899746
 Mesh:
   m_ObjectHideFlags: 0
@@ -78319,11 +78333,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9027514048236820042, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.20000005
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 9027514048236820042, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.46
+      value: 5.9
       objectReference: {fileID: 0}
     - target: {fileID: 9027514048236820042, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
       propertyPath: m_LocalRotation.w
@@ -78370,6 +78384,11 @@ PrefabInstance:
 --- !u!4 &1500787578 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9027514048236820042, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
+  m_PrefabInstance: {fileID: 1500787577}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1500787579 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9027514048236820043, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
   m_PrefabInstance: {fileID: 1500787577}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1503731079
@@ -81493,6 +81512,11 @@ PrefabInstance:
 --- !u!4 &1577393616 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9027514048236820042, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
+  m_PrefabInstance: {fileID: 1577393615}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1577393617 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9027514048236820043, guid: effb650189dc5714e9e9801b1cfb3991, type: 3}
   m_PrefabInstance: {fileID: 1577393615}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1581724214

@@ -24,11 +24,13 @@ public class PuddleTask : GameTask
     private float _growTimer = 0f;
     private Vector3 _initialVisualScale;
     private Vector3 _visualScaleAtCleanStart;
+    private float _initialMopZoneRadius;
 
     protected override void Start()
     {
         base.Start();
         _initialVisualScale = _visualTransform.localScale;
+        if (_mopZoneCollider) _initialMopZoneRadius = _mopZoneCollider.radius;
     }
 
     private void Update()
@@ -43,6 +45,10 @@ public class PuddleTask : GameTask
             float growProgress = Mathf.Clamp01(_growTimer / growDuration);
             float scale = Mathf.Lerp(1f, maxScale, growProgress);
             _visualTransform.localScale = _initialVisualScale * scale;
+            
+            if (_mopZoneCollider)
+                _mopZoneCollider.radius = _initialMopZoneRadius * scale;
+        
             return;
         }
 
@@ -84,10 +90,11 @@ public class PuddleTask : GameTask
     public void StopClean()
     {
         _isCleaning = false;
+
         if (_mopZoneCollider && _visualTransform)
         {
             float currentScale = _visualTransform.localScale.x / _initialVisualScale.x;
-            _mopZoneCollider.radius = _mopZoneCollider.radius * currentScale;
+            _mopZoneCollider.radius = _initialMopZoneRadius * currentScale;
         }
     }
 

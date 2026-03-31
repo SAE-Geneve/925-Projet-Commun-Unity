@@ -75,6 +75,7 @@ public class PuddleTask : GameTask
         _effectiveCleanTime = _mop.CleanTime * sizeMultiplier;
         _cleanTimer = 0f;
         _isCleaning = true;
+        canGrow = false;
     }
 
     public void StopClean()

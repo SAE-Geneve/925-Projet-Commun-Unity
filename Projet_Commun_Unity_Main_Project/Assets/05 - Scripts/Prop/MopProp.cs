@@ -15,7 +15,6 @@ public class MopProp : InteractableProp
     
     public float CleanTime => cleanTime;
     
-    // NOUVEAU : On stocke le joueur en train de nettoyer
     public PlayerController CurrentCleaner { get; private set; }
     
     private Renderer _renderer;
@@ -34,7 +33,7 @@ public class MopProp : InteractableProp
     {
         if(playerController.InteractableGrabbed == null) return;
         
-        CurrentCleaner = playerController; // On sauvegarde le joueur
+        CurrentCleaner = playerController;
         OnStartClean?.Invoke();
         
         _isCleaning = true;
@@ -44,15 +43,18 @@ public class MopProp : InteractableProp
     public override void InteractEnd()
     {
         OnStopClean?.Invoke();
-        CurrentCleaner = null; // On vide le joueur
+        CurrentCleaner = null;
         
         _isCleaning = false;
         _renderer.material = _originalMaterial;
     }
+
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.CompareTag("MopZone")) return;
+    
         PuddleTask puddleTask = other.GetComponentInParent<PuddleTask>();
-        if (puddleTask != null && other.gameObject != puddleTask.gameObject && !_puddleTasks.Contains(puddleTask))
+        if (puddleTask != null && !_puddleTasks.Contains(puddleTask))
         {
             puddleTask.Register(this);
             if(_isCleaning) puddleTask.StartClean();
@@ -62,8 +64,10 @@ public class MopProp : InteractableProp
 
     private void OnTriggerExit(Collider other)
     {
+        if (!other.CompareTag("MopZone")) return;
+    
         PuddleTask puddleTask = other.GetComponentInParent<PuddleTask>();
-        if (puddleTask != null && other.CompareTag("MopZone"))
+        if (puddleTask != null && _puddleTasks.Contains(puddleTask))
             RemovePuddleTask(puddleTask);
     }
 

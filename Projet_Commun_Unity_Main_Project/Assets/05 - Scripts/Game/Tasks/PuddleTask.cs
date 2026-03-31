@@ -13,6 +13,7 @@ public class PuddleTask : GameTask
 
     [Header("Puddle References")]
     [SerializeField] private Transform _visualTransform;
+    [SerializeField] private SphereCollider _mopZoneCollider;
 
     private MopProp _mop;
 
@@ -70,6 +71,8 @@ public class PuddleTask : GameTask
 
     public void StartClean()
     {
+        if (!_visualTransform) return;
+
         _visualScaleAtCleanStart = _visualTransform.localScale;
         float sizeMultiplier = _visualTransform.localScale.x / _initialVisualScale.x;
         _effectiveCleanTime = _mop.CleanTime * sizeMultiplier;
@@ -81,6 +84,11 @@ public class PuddleTask : GameTask
     public void StopClean()
     {
         _isCleaning = false;
+        if (_mopZoneCollider && _visualTransform)
+        {
+            float currentScale = _visualTransform.localScale.x / _initialVisualScale.x;
+            _mopZoneCollider.radius = _mopZoneCollider.radius * currentScale;
+        }
     }
 
     private void CompleteTask()

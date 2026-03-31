@@ -4,6 +4,10 @@ public class ConveyorBeltTask : TriggerTask
 {
     [SerializeField] private ParticleSystem electricEffect;
     
+    [Header("Score Settings")]
+    [SerializeField] private int correctScore = 1;
+    [SerializeField] private int wrongScore = 3;
+    
     private Controller _controller;
     private ConveyorBreakdownEvent _conveyorBreakdown;
 
@@ -29,12 +33,12 @@ public class ConveyorBeltTask : TriggerTask
         {
             Succeed();
             GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
-            ScoreSystem.IncreaseScore(1);
+            GameManager.Instance.Scores.AddMissionScore(correctScore, prop.OwnerId);
         }
         else
         {
             Failed();
-            ScoreSystem.IncreaseScore(3);
+            GameManager.Instance.Scores.SubMissionScore(wrongScore, prop.OwnerId);
         }
 
         if(_conveyorBreakdown != null && _conveyorBreakdown.IsEventActive())

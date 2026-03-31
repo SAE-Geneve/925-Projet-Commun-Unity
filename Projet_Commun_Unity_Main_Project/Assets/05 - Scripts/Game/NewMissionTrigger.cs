@@ -53,8 +53,11 @@ public class NewMissionTrigger : MonoBehaviour
 
         _ragdollHandler = ragdoll =>
         {
-            Decrement();
-            ragdoll.OnRagdollSelf -= _ragdollHandler;
+            if (_ragdolls.Remove(ragdoll))
+            {
+                ragdoll.OnRagdollSelf -= _ragdollHandler;
+                Decrement();
+            }
         };
     }
 
@@ -67,6 +70,15 @@ public class NewMissionTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
+
+        // Only the root capsule has Ragdoll directly on its GameObject.
+        // Body part colliders (children of playerRig) return null here, so they are ignored.
+        var ragdoll = other.GetComponent<Ragdoll>();
+        if (ragdoll == null || ragdoll.IsRagdoll) return;
+
+        if (!_ragdolls.Add(ragdoll)) return;
+        ragdoll.OnRagdollSelf += _ragdollHandler;
+
         _playerNumber++;
         if (_audioManager != null) _audioManager.PlaySfx(_audioManager.EnterTriggerZoneSFX);
         UpdateTmpNumber();
@@ -76,6 +88,13 @@ public class NewMissionTrigger : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player")) return;
+
+        var ragdoll = other.GetComponent<Ragdoll>();
+        if (ragdoll == null) return;
+
+        if (!_ragdolls.Remove(ragdoll)) return;
+        ragdoll.OnRagdollSelf -= _ragdollHandler;
+
         Decrement();
     }
 
@@ -89,11 +108,12 @@ public class NewMissionTrigger : MonoBehaviour
 
     private void StartMissionSequence()
     {
+        if (_mission == null || _mission.IsLocked) return;
+        
         _isSequenceStarted = true;
-
         Time.timeScale = 0f;
-
-        if (_mission != null && _mission.ExplanationPrefab != null)
+        
+        if (_mission.ExplanationPrefab != null)
         {
             GameObject rulesInstance = Instantiate(_mission.ExplanationPrefab);
 
@@ -127,7 +147,6 @@ public class NewMissionTrigger : MonoBehaviour
     {
         foreach (var ragdoll in _ragdolls)
             if (ragdoll) ragdoll.OnRagdollSelf -= _ragdollHandler;
-
         _ragdolls.Clear();
         _playerNumber = 0;
         UpdateTmpNumber();

@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct ConveyorSide
+{
+    public List<ConveyorBelt> belts;
+    public List<GameTask> restartButtonTasks;
+    public List<ParticleSystem> particleSystems;
+}
+
 public class ConveyorBreakdownEvent : GameEvent
 {
     [Header("Conveyor Settings")]
-    [SerializeField] private List<GameTask> _restartButtonTasks; 
-    [SerializeField] private List<ConveyorBelt> _conveyorBelts;
-    [SerializeField] private List<ParticleSystem> _particlesSystems;
+    [SerializeField] private List<ConveyorSide> _conveyorSides;
 
     [Header("Escalation Settings")]
     [Tooltip("Délai en secondes avant que la panne empire (phase 2)")]
@@ -32,32 +38,38 @@ public class ConveyorBreakdownEvent : GameEvent
     private LuggageRemover _luggageRemover;
     private int _maxCheckpoints;
 
-    private ParticleSystem.MinMaxGradient[] _defaultColors;
+    private Dictionary<ConveyorSide, ParticleSystem.MinMaxGradient[]> _defaultColors = new();
+    private ConveyorSide _currentBrokenSide;
 
     private void Start()
     {
-        foreach (var p in _particlesSystems)
-            if (p) p.Stop();
+        foreach (var side in _conveyorSides)
+        {
+            foreach (var p in side.particleSystems)
+                if (p) p.Stop();
 
-        _defaultColors = new ParticleSystem.MinMaxGradient[_particlesSystems.Count];
-        for (int i = 0; i < _particlesSystems.Count; i++)
-            if (_particlesSystems[i] != null)
-                _defaultColors[i] = _particlesSystems[i].main.startColor;
+            var colors = new ParticleSystem.MinMaxGradient[side.particleSystems.Count];
+            for (int i = 0; i < side.particleSystems.Count; i++)
+                if (side.particleSystems[i] != null)
+                    colors[i] = side.particleSystems[i].main.startColor;
 
-        foreach (var buttonTask in _restartButtonTasks)
-            if (buttonTask != null) buttonTask.OnSucceedWithPlayer += HandleButtonPressed;
+            _defaultColors[side] = colors;
+        }
 
         _luggageRemover = FindObjectOfType<LuggageRemover>();
         _maxCheckpoints = (_luggageRemover != null ? _luggageRemover.MaxCheckpoints : 3) - 1;
     }
 
-    private void RestoreParticleColors()
+    private void RestoreParticleColors(ConveyorSide side)
     {
-        for (int i = 0; i < _particlesSystems.Count; i++)
+        if (!_defaultColors.ContainsKey(side)) return;
+        var colors = _defaultColors[side];
+
+        for (int i = 0; i < side.particleSystems.Count; i++)
         {
-            if (_particlesSystems[i] == null) continue;
-            var main = _particlesSystems[i].main;
-            main.startColor = _defaultColors[i];
+            if (side.particleSystems[i] == null) continue;
+            var main = side.particleSystems[i].main;
+            main.startColor = colors[i];
         }
     }
 
@@ -65,24 +77,28 @@ public class ConveyorBreakdownEvent : GameEvent
 
     public override void TriggerEvent()
     {
+        if (_conveyorSides == null || _conveyorSides.Count == 0) return;
+
         _isConveyorBroken = true;
+        _currentBrokenSide = _conveyorSides[Random.Range(0, _conveyorSides.Count)];
 
         AudioManager.Instance.PlaySfx(AudioManager.Instance.CarpetBreakSFX);
-        
-        foreach (var p in _particlesSystems)
+
+        foreach (var p in _currentBrokenSide.particleSystems)
             if (p) p.Play();
 
-        foreach (var belt in _conveyorBelts)
+        foreach (var belt in _currentBrokenSide.belts)
             if (belt != null) belt.StopBelt();
 
-        foreach (var buttonTask in _restartButtonTasks)
+        foreach (var buttonTask in _currentBrokenSide.restartButtonTasks)
         {
             if (buttonTask == null) continue;
+            buttonTask.OnSucceedWithPlayer += HandleButtonPressed;
             buttonTask.ResetTask();
             if (buttonTask.TryGetComponent<HoldInteractableTask>(out var holdTask))
                 holdTask.Activate();
             if (buttonTask.TryGetComponent<Animator>(out var anim))
-                anim.SetBool("IsBroken", true); 
+                anim.SetBool("IsBroken", true);
         }
 
         if (_escalationCoroutine != null) StopCoroutine(_escalationCoroutine);
@@ -95,10 +111,9 @@ public class ConveyorBreakdownEvent : GameEvent
 
         if (!_isConveyorBroken) yield break;
 
-        
         AudioManager.Instance.PlaySfx(AudioManager.Instance.WorsenCarpetBreakSFX);
-        
-        foreach (var p in _particlesSystems)
+
+        foreach (var p in _currentBrokenSide.particleSystems)
         {
             if (!p) continue;
             var main = p.main;
@@ -114,22 +129,25 @@ public class ConveyorBreakdownEvent : GameEvent
         _isConveyorBroken = false;
         StopEscalation();
 
-        foreach (var p in _particlesSystems)
-            if (p) p.Stop();
-
-        RestoreParticleColors();
-
-        foreach (var belt in _conveyorBelts)
-            if (belt != null) belt.StartBelt();
-
-        foreach (var buttonTask in _restartButtonTasks)
+        foreach (var side in _conveyorSides)
         {
-            if (buttonTask == null) continue;
-            buttonTask.ResetTask();
-            if (buttonTask.TryGetComponent<HoldInteractableTask>(out var holdTask))
-                holdTask.Deactivate();
-            if (buttonTask.TryGetComponent<Animator>(out var anim))
-                anim.SetBool("IsBroken", false);
+            foreach (var p in side.particleSystems)
+                if (p) p.Stop();
+
+            RestoreParticleColors(side);
+
+            foreach (var belt in side.belts)
+                if (belt != null) belt.StartBelt();
+
+            foreach (var buttonTask in side.restartButtonTasks)
+            {
+                if (buttonTask == null) continue;
+                buttonTask.OnSucceedWithPlayer -= HandleButtonPressed;
+                if (buttonTask.TryGetComponent<HoldInteractableTask>(out var holdTask))
+                    holdTask.Deactivate();
+                if (buttonTask.TryGetComponent<Animator>(out var anim))
+                    anim.SetBool("IsBroken", false);
+            }
         }
     }
 
@@ -140,22 +158,23 @@ public class ConveyorBreakdownEvent : GameEvent
         _isConveyorBroken = false;
         StopEscalation();
 
-        foreach (var p in _particlesSystems)
+        foreach (var p in _currentBrokenSide.particleSystems)
             if (p) p.Stop();
 
         AudioManager.Instance.PlaySfx(AudioManager.Instance.FinishedRepairSFX);
-        RestoreParticleColors();
+        RestoreParticleColors(_currentBrokenSide);
 
-        foreach (var belt in _conveyorBelts)
+        foreach (var belt in _currentBrokenSide.belts)
             if (belt != null) belt.StartBelt();
 
-        foreach (var buttonTask in _restartButtonTasks)
+        foreach (var buttonTask in _currentBrokenSide.restartButtonTasks)
         {
             if (buttonTask == null) continue;
+            buttonTask.OnSucceedWithPlayer -= HandleButtonPressed;
             if (buttonTask.TryGetComponent<HoldInteractableTask>(out var holdTask))
                 holdTask.Deactivate();
             if (buttonTask.TryGetComponent<Animator>(out var anim))
-                anim.SetBool("IsBroken", false); 
+                anim.SetBool("IsBroken", false);
         }
 
         RewardPlayer(player);
@@ -170,7 +189,7 @@ public class ConveyorBreakdownEvent : GameEvent
             yield return wait;
             if (!_isConveyorBroken) yield break;
 
-            foreach (var belt in _conveyorBelts)
+            foreach (var belt in _currentBrokenSide.belts)
             {
                 if (belt == null) continue;
 
@@ -262,11 +281,5 @@ public class ConveyorBreakdownEvent : GameEvent
         if (_shrinkCoroutine == null) return;
         StopCoroutine(_shrinkCoroutine);
         _shrinkCoroutine = null;
-    }
-
-    private void OnDestroy()
-    {
-        foreach (var buttonTask in _restartButtonTasks)
-            if (buttonTask != null) buttonTask.OnSucceedWithPlayer -= HandleButtonPressed;
     }
 }

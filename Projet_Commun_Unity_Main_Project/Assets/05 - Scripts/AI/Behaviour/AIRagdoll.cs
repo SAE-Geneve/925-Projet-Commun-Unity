@@ -47,7 +47,7 @@ public class AIRagdoll : Ragdoll
             if (GameManager.Instance != null && GameManager.Instance.Scores != null)
             {
                 if (GameManager.Instance.Context == GameContext.Hub)
-                    GameManager.Instance.Scores.SubTotalScore(ragdollPenalty, playerController.Id);
+                    GameManager.Instance.Scores.SubPlayerScore(ragdollPenalty, playerController.Id);
                 else
                     GameManager.Instance.Scores.SubMissionScore(ragdollPenalty, playerController.Id);
             }

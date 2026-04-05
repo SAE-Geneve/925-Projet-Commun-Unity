@@ -4,37 +4,49 @@ using UnityEngine;
 
 public class ScoreManager
 {
-    public readonly int[] TotalScores = new int[4];
+    public readonly int[] PlayerScores = new int[4];
     public readonly int[] MissionScores = new int[4];
-    
+
+    private int _totalScore;
+    public int TotalScore => _totalScore;
     public event Action OnScoreUpdated;
+    public event Action OnTotalScoreUpdated;
 
     public void FillTotalScores()
     {
         for (int i = 0; i < MissionScores.Length; i++)
         {
-            AddTotalScore(MissionScores[i], i);
+            AddPlayerScore(MissionScores[i], i);
             MissionScores[i] = 0;
         }
         Debug.Log("Score Reset");
         OnScoreUpdated?.Invoke();
     }
     
-    public int TotalGameScore() => TotalScores.Sum();
+    //public int TotalGameScore() => TotalScores.Sum();
 
     public int TotalMissionScore() => MissionScores.Sum();
-    
-    public void AddTotalScore(int score, int id)
+
+    private void AddTotalScore(int score)
     {
-        TotalScores[id] += score;
-        Debug.Log("added " + score + " to " + id + " total score");
+        _totalScore += score;
+        Debug.Log("added " + score + " to total score");
+        OnTotalScoreUpdated?.Invoke();
+    }
+    
+    public void AddPlayerScore(int score, int id)
+    {
+        PlayerScores[id] += score;
+        Debug.Log("added " + score + " to " + id + " player score");
         OnScoreUpdated?.Invoke();
+        
+        AddTotalScore(score);
     }
 
-    public void SubTotalScore(int score, int id)
+    public void SubPlayerScore(int score, int id)
     {
-        TotalScores[id] -= score;
-        Debug.Log("removed " + score + " to " + id + "total score");
+        PlayerScores[id] -= score;
+        Debug.Log("removed " + score + " to " + id + "player score");
         OnScoreUpdated?.Invoke();
     }
     

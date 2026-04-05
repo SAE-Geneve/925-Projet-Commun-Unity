@@ -29,7 +29,7 @@ public class TriggerTask : GameTask
         if (gm)
         {
             if (gm.CurrentMission != null) gm.Scores.AddMissionScore(score, prop.OwnerId);
-            else gm.Scores.AddTotalScore(score, prop.OwnerId);
+            else gm.Scores.AddPlayerScore(score, prop.OwnerId);
         }
         if(isDestroyed) prop.Destroy();
     }

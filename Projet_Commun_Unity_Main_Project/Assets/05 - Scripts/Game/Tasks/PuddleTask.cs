@@ -108,7 +108,7 @@ public class PuddleTask : GameTask
         if (givePointsOnClean && player && gm != null && gm.Scores != null)
         {
             if (gm.Context == GameContext.Hub)
-                gm.Scores.AddTotalScore(cleanReward, player.Id);
+                gm.Scores.AddPlayerScore(cleanReward, player.Id);
             else if (gm.Context == GameContext.Mission)
                 gm.Scores.AddMissionScore(cleanReward, player.Id);
         }

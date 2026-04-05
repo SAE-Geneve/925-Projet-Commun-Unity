@@ -19,10 +19,10 @@ public class GameOverScoreUI : MonoBehaviour
         {
             scoreBox[i].enabled = true;
             scoresTmp[i].enabled = true;
-            scoresTmp[i].SetText(scoreManager.TotalScores[i].ToString());
+            scoresTmp[i].SetText(scoreManager.PlayerScores[i].ToString());
             scoresTmp[i].color = textColors[i];
             scoreBox[i].color = scoreBoxColors[i];
         }
-        totalScoreTmp.SetText(scoreManager.TotalGameScore().ToString("000000"));
+        totalScoreTmp.SetText(scoreManager.TotalScore.ToString("000000"));
     }
 }

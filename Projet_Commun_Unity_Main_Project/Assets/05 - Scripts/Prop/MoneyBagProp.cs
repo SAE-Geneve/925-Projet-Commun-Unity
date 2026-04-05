@@ -14,7 +14,7 @@ public class MoneyBagProp : InteractableProp
         {
             if (GameManager.Instance.Context == GameContext.Hub)
             {
-                GameManager.Instance.Scores.AddTotalScore(_scoreReward, playerController.Id);
+                GameManager.Instance.Scores.AddPlayerScore(_scoreReward, playerController.Id);
             }
             else
             {

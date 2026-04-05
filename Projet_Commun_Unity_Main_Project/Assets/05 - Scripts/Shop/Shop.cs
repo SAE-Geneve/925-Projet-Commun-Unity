@@ -33,11 +33,11 @@ public abstract class Shop : MonoBehaviour, IInteractable
         ScoreManager scoreManager = GameManager.Instance.Scores;
         int playerId = playerController.Id;
         
-        if (BuyCondition(playerController) && scoreManager.TotalScores[playerId] >= price)
+        if (BuyCondition(playerController) && scoreManager.PlayerScores[playerId] >= price)
         {
             Buy(playerController);
             _audioManager.PlaySfx(_audioManager.ShopSFX);
-            scoreManager.SubTotalScore(price, playerId);
+            scoreManager.SubPlayerScore(price, playerId);
             _animator.SetTrigger("Buy");
         }
         else _animator.SetTrigger("Fail");

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +22,12 @@ public class GameManager : MonoBehaviour
     private int _minPlayers = 1;
 
     [SerializeField] private string hubSceneName = "OneMission";
+    
+    [Tooltip("The points objectives to gain more time")]
+    [SerializeField] private int[] _pointObjectives = {250,500,1000,2000};
+    [Tooltip("The time gained for each rank (in seconds)")]
+    [SerializeField] private int[] _bonusTime = {120,240,450,600};
+    private int _rank = 0;
 
     private AudioManager _audioManager;
     public static GameManager Instance { get; private set; }
@@ -129,6 +136,9 @@ public class GameManager : MonoBehaviour
         _playerManager = PlayerManager.Instance;
         _audioManager = AudioManager.Instance;
         if(_playerManager) _playerManager.PlayerInputManager.DisableJoining();
+
+        Scores.OnTotalScoreUpdated += CheckRank;
+        
         ResetGame();
         Debug.Log($"Game State: {_state}");
         StartGameFlow();
@@ -298,6 +308,21 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Score
+
+    private void CheckRank()
+    {
+        if (_rank >= _pointObjectives.Length) return;
+        Debug.Log($"(Rank Checked) Rank {_rank}: {Scores.TotalScore}/{_pointObjectives[_rank]}");
+        if (Scores.TotalScore < _pointObjectives[_rank]) return;
+                                                   
+        _timer += _bonusTime[_rank];
+        _rank++;
+        Debug.Log($"Rank Passed: {_rank}");
+    }
+
+    #endregion
+    
     #region Pause
 
     /// <summary>

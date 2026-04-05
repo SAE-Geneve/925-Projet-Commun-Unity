@@ -9,16 +9,29 @@ public struct EventChance
     [Tooltip("Poids de cet événement (Plus c'est haut, plus ça tombe souvent)")]
     public float weight;
 }
+[System.Serializable]
+public struct EventIntervalByPlayerCount
+{
+    public float minInterval;
+    public float maxInterval;
+}
 
 public class EventManager : MonoBehaviour
 {
     [Header("Global Event Settings")]
     [SerializeField] protected float _startDelay = 15f;
-    [SerializeField] protected float _minEventInterval = 25f;
-    [SerializeField] protected float _maxEventInterval = 45f;
+
+    [Header("Event Intervals by Player Count")]
+    [Tooltip("Index 0 = 1 joueur, Index 1 = 2 joueurs, etc.")]
+    [SerializeField] private EventIntervalByPlayerCount[] _intervalsByPlayerCount = new EventIntervalByPlayerCount[]
+    {
+        new EventIntervalByPlayerCount { minInterval = 20f, maxInterval = 30f },
+        new EventIntervalByPlayerCount { minInterval = 15f, maxInterval = 25f },
+        new EventIntervalByPlayerCount { minInterval = 15f, maxInterval = 20f },
+        new EventIntervalByPlayerCount { minInterval = 10f, maxInterval = 15f },
+    };
 
     [Header("Event List")]
-    [Tooltip("Ajoute ici tous les scripts d'événements et leurs probabilités !")]
     [SerializeField] private List<EventChance> _availableEvents;
 
     private Coroutine _eventRoutine;
@@ -41,11 +54,8 @@ public class EventManager : MonoBehaviour
     public virtual void ResetManager()
     {
         StopEventLoop();
-        
         foreach (var ev in _availableEvents)
-        {
             if (ev.eventScript != null) ev.eventScript.ResetEvent();
-        }
     }
 
     private IEnumerator EventLoopRoutine()
@@ -55,15 +65,22 @@ public class EventManager : MonoBehaviour
         while (true)
         {
             TriggerRandomEvent();
-            float randomWaitTime = Random.Range(_minEventInterval, _maxEventInterval);
-            yield return new WaitForSeconds(randomWaitTime);
+            yield return new WaitForSeconds(GetRandomInterval());
         }
+    }
+
+    private float GetRandomInterval()
+    {
+        int playerCount = PlayerManager.Instance != null ? PlayerManager.Instance.PlayerCount : 1;
+        int index = Mathf.Clamp(playerCount - 1, 0, _intervalsByPlayerCount.Length - 1);
+        var interval = _intervalsByPlayerCount[index];
+        return Random.Range(interval.minInterval, interval.maxInterval);
     }
 
     private void TriggerRandomEvent()
     {
         if (_availableEvents.Count == 0) return;
-        
+
         float totalWeight = 0f;
         List<EventChance> possibleEvents = new List<EventChance>();
 
@@ -75,9 +92,9 @@ public class EventManager : MonoBehaviour
                 possibleEvents.Add(ev);
             }
         }
-        
+
         if (possibleEvents.Count == 0) return;
-        
+
         float randomValue = Random.Range(0f, totalWeight);
         float currentWeight = 0f;
 

@@ -4454,13 +4454,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Scripts::EventManager
   _startDelay: 4
-  _minEventInterval: 3
-  _maxEventInterval: 6
+  _intervalsByPlayerCount:
+  - minInterval: 20
+    maxInterval: 30
+  - minInterval: 15
+    maxInterval: 25
+  - minInterval: 15
+    maxInterval: 20
+  - minInterval: 10
+    maxInterval: 15
   _availableEvents:
   - eventScript: {fileID: 172709451}
-    weight: 30
+    weight: 20
   - eventScript: {fileID: 627088182}
-    weight: 30
+    weight: 20
   - eventScript: {fileID: 172709450}
     weight: 50
   - eventScript: {fileID: 110995476}
@@ -50231,7 +50238,7 @@ Transform:
   m_GameObject: {fileID: 891712796}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
-  m_LocalPosition: {x: 0, y: 19.330128, z: -6.975159}
+  m_LocalPosition: {x: 2.983654, y: 26.161188, z: -11.998608}
   m_LocalScale: {x: 1, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -50359,7 +50366,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 1
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1

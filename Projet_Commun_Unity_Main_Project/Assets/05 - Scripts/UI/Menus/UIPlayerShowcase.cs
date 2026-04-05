@@ -41,10 +41,7 @@ public class UIPlayerShowcase : MonoBehaviour
                 playerIconImages[i].gameObject.SetActive(false);
                 lobbyWarnings[i].SetActive(false);
             }
-            playerIconImages[i].sprite = playerIcon;
-            playerIconImages[i].color = playerIconColors[i];
-            playerBoxImages[i].color = playerBoxColors[i];
-            playerNames[i].color = playerIconColors[i];
+            SetActiveSlot(i);
         }
 
         for (int i = PlayerManager.Instance.PlayerCount; i < 4; i++)
@@ -60,10 +57,24 @@ public class UIPlayerShowcase : MonoBehaviour
                 playerIconImages[i].gameObject.SetActive(false);
                 lobbyWarnings[i].SetActive(true);
             }
-            playerIconImages[i].sprite = missingIcon;
-            playerIconImages[i].color = missingIconColor;
-            playerBoxImages[i].color = missingBoxColor;
-            playerNames[i].color = missingIconColor;
+            SetMissingSlot(i);
         }
+    }
+
+    private void SetActiveSlot(int playerIndex)
+    {
+        playerIconImages[playerIndex].sprite = playerIcon;
+        playerIconImages[playerIndex].color = playerIconColors[playerIndex];
+        playerBoxImages[playerIndex].color = playerBoxColors[playerIndex];
+        playerNames[playerIndex].color = playerIconColors[playerIndex];
+    }
+    
+    private void SetMissingSlot(int playerIndex)
+    {
+        
+            playerIconImages[playerIndex].sprite = missingIcon;
+            playerIconImages[playerIndex].color = missingIconColor;
+            playerBoxImages[playerIndex].color = missingBoxColor;
+            playerNames[playerIndex].color = missingIconColor;
     }
 }

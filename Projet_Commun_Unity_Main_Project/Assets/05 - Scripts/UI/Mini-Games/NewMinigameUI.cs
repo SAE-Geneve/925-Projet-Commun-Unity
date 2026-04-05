@@ -10,27 +10,29 @@ public class NewMinigameUI : MonoBehaviour
     
     [Header("Score Texts")]
     [SerializeField] private TextMeshProUGUI totalScore;
-    private int _totalScore;
-    
-    [SerializeField] private GameObject[] scorePanel;
     [SerializeField] private TextMeshProUGUI[] playerScoreText;
+    
+    [Header("Panels")]
+    [SerializeField] private GameObject[] scorePanel;
+    [SerializeField] private GameObject timerPanel;
+    
+    [Header("Effects")]
+    [SerializeField] private Image scoreImageFade;
+    [SerializeField] private TextMeshProUGUI scoreTextFade;
     [SerializeField] private TextMeshProUGUI[] subScoreEffectText;
+    
     private int[] _playerScore;
+    private int _totalScore;
     
     private Canvas _canvas;
     private ScoreManager _scoreManager;
-    
-    [SerializeField] private GameObject timerPanel;
-    
-    [Header("Total Score Effects")]
-    [SerializeField] private Image scoreImageFade;
-    [SerializeField] private TextMeshProUGUI scoreTextFade;
-    
     private UIScreenEffects _uiScreenEffects;
+    private PlayerManager _playerManager;
     
     private void Start()
     {
         _scoreManager = GameManager.Instance.Scores;
+        _playerManager = PlayerManager.Instance;
 
         _playerScore = new int[4];
         for (int i = 0; i < 4; i++)
@@ -64,7 +66,7 @@ public class NewMinigameUI : MonoBehaviour
     {
         _canvas.enabled = true;
         timerPanel.SetActive(true);
-        for (int i = 0; i < PlayerManager.Instance.Players.Count; i++)
+        for (int i = 0; i < _playerManager.Players.Count; i++)
         {
             scorePanel[i].SetActive(true);
         }
@@ -74,7 +76,7 @@ public class NewMinigameUI : MonoBehaviour
     {
         _canvas.enabled = false;
         timerPanel.SetActive(false);
-        for (int i = 0; i < PlayerManager.Instance.Players.Count; i++)
+        for (int i = 0; i < _playerManager.Players.Count; i++)
         {
             playerScoreText[i].text = 0.ToString("00000");
             scorePanel[i].SetActive(false);
@@ -88,7 +90,7 @@ public class NewMinigameUI : MonoBehaviour
     {
         if(GameManager.Instance.Context==GameContext.Mission)
         {
-            for (int id = 0; id < PlayerManager.Instance.Players.Count; id++)
+            for (int id = 0; id < _playerManager.Players.Count; id++)
             {
                 if (_playerScore[id] != _scoreManager.MissionScores[id])
                 {

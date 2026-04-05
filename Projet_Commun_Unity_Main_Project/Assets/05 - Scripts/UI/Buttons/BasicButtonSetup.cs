@@ -10,35 +10,37 @@ public class BasicButtonSetup : MonoBehaviour
     [SerializeField] private GameObject firstButton;
     [SerializeField] private GameObject changeButton;
     private GameObject _lastSelected = null;
+    private EventSystem _eventSystem;
     
     void OnEnable()
     {
         if(firstButton != null)
         {
-            EventSystem.current.SetSelectedGameObject(firstButton);
+            _eventSystem=EventSystem.current;
+            _eventSystem.SetSelectedGameObject(firstButton);
         }
     }
 
     void Update()
     {
-        if (EventSystem.current.currentSelectedGameObject)
+        if (_eventSystem.currentSelectedGameObject)
         {
-            _lastSelected = EventSystem.current.currentSelectedGameObject;
+            _lastSelected = _eventSystem.currentSelectedGameObject;
         }
         else
         { 
-            EventSystem.current.SetSelectedGameObject(_lastSelected);
+            _eventSystem.SetSelectedGameObject(_lastSelected);
         }
     }
     
     public void ButtonChange()
     {
-        EventSystem.current.SetSelectedGameObject(firstButton);
+        _eventSystem.SetSelectedGameObject(firstButton);
     }
 
     public void ActivateButton()
     {
-        EventSystem.current.SetSelectedGameObject(firstButton);
+        _eventSystem.SetSelectedGameObject(firstButton);
     }
 }
 

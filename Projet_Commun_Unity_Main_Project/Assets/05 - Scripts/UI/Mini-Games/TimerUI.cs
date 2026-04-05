@@ -28,7 +28,7 @@ public class TimerUI : MonoBehaviour
         UpdateTimer();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (GameManager.Instance.Context == GameContext.Mission)
         {

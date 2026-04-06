@@ -20,6 +20,7 @@ public class Mission : MonoBehaviour
     [SerializeField] [Min(1f)] private float _initialTimer = 60f;
     [SerializeField] private bool _isTimerActive;
     [SerializeField] [Min(1f)] private float _countdownDuration = 5f;
+    [SerializeField] private float _lockTimer = 30f;
 
     public static event Action<int> OnCountdownTick;
     public static event Action OnCountdownEnd;
@@ -148,6 +149,17 @@ public class Mission : MonoBehaviour
         _onMissionFinished?.Invoke();
         // TimelineManager.Instance?.PlayResult(victory);
         Debug.Log($"Mission {_name} finished");
+
+        StartCoroutine(LockCoroutine());
+    }
+
+    private IEnumerator LockCoroutine()
+    {
+        Lock();
+        Debug.Log($"Mission {_name} locked for {_lockTimer} seconds");
+        yield return new WaitForSeconds(_lockTimer);
+        Unlock();
+        Debug.Log($"Mission {_name} unlocked");
     }
 
     public void Unlock() => SwitchMissionState(MissionState.Unlocked);

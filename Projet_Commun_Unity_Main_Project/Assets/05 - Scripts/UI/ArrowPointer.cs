@@ -30,15 +30,15 @@ public class ArrowPointer : MonoBehaviour
         _isMissionCooldown = false;
         
         
-        _missionManager.OnMissionReady += HandleMissionReady;
-        _missionManager.OnMissionCooldownStarted += HandleMissionCooldownStarted;
+        //_missionManager.OnMissionReady += HandleMissionReady;
+        //_missionManager.OnMissionCooldownStarted += HandleMissionCooldownStarted;
     }
 
     private void Update()
     {
         if(!_isMissionCooldown)
         {
-            _targetPosition = _missionManager.CurrentMission.ArrowTarget.position;
+           // _targetPosition = _missionManager.CurrentMission.ArrowTarget.position;
 
             RotatePointerTowardsTarget();
             CalculateDistance();
@@ -64,7 +64,7 @@ public class ArrowPointer : MonoBehaviour
         distanceBox.gameObject.SetActive(false);
         pointerImage.gameObject.SetActive(false);
         cooldownText.gameObject.SetActive(true);
-        _hubTimer = _missionManager.GetHubTime();
+        //_hubTimer = _missionManager.GetHubTime();
     }
 
     private void CalculateDistance()

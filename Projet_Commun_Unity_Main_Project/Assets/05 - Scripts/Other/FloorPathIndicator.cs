@@ -53,7 +53,8 @@ public class FloorPathIndicator : MonoBehaviour
         if (_player == null || _missionManager == null) return;
 
         bool inHub = GameManager.Instance != null && GameManager.Instance.Context == GameContext.Hub;
-        Mission current = _missionManager.CurrentMission;
+        //Mission current = _missionManager.CurrentMission;
+        Mission current = null;
         bool hasMission = current != null && !current.IsLocked;
 
         if (!inHub || !hasMission)

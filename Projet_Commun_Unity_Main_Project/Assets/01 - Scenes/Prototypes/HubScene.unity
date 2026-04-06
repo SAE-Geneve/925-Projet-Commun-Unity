@@ -25708,6 +25708,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1082850100972684091, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
+      propertyPath: _missionState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1082850100972684091, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
       propertyPath: _onMissionStarted.m_PersistentCalls.m_Calls.Array.data[7].m_Target
       value: 
       objectReference: {fileID: 1808751002}
@@ -27356,6 +27360,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1825030428}
     - target: {fileID: 3432223757144056934, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
+      propertyPath: _missionState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3432223757144056934, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
       propertyPath: _onMissionStarted.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
       objectReference: {fileID: 1808751002}
@@ -28254,6 +28262,10 @@ PrefabInstance:
     - target: {fileID: 5093760698047910881, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
       propertyPath: _missionName
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5093760698047910881, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
+      propertyPath: _missionState
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5093760698047910881, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
       propertyPath: _onMissionFinished.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
@@ -29918,6 +29930,10 @@ PrefabInstance:
     - target: {fileID: 7951729795949418524, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
       propertyPath: _missionName
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7951729795949418524, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
+      propertyPath: _missionState
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7951729795949418524, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
       propertyPath: _onMissionStarted.m_PersistentCalls.m_Calls.Array.data[5].m_Target
@@ -40637,11 +40653,6 @@ MonoBehaviour:
   - {fileID: 420302691}
   - {fileID: 150281961}
   - {fileID: 150281960}
-  missionNameTmp: {fileID: 1724524235}
-  missionNameAnimator: {fileID: 1724524237}
-  currentMission: {fileID: 0}
-  missionIndex: 0
-  hubTime: 30
 --- !u!43 &826872264
 Mesh:
   m_ObjectHideFlags: 0
@@ -43872,8 +43883,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Scripts::EventManager
   _startDelay: 4
-  _minEventInterval: 3
-  _maxEventInterval: 5
+  _intervalsByPlayerCount:
+  - minInterval: 20
+    maxInterval: 30
+  - minInterval: 15
+    maxInterval: 25
+  - minInterval: 15
+    maxInterval: 20
+  - minInterval: 10
+    maxInterval: 15
   _availableEvents:
   - eventScript: {fileID: 902288453}
     weight: 30

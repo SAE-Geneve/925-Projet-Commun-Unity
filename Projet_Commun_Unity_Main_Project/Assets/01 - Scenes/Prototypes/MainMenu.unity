@@ -995,8 +995,15 @@ MonoBehaviour:
   _maxSatisfaction: 100
   _minPlayers: 1
   hubSceneName: OneMission
-  _objectives: fa000000f4010000e8030000d0070000
-  _bonusTime: 78000000f0000000c201000058020000
+  ranks:
+  - pointObjectif: 1000
+    bonusTime: 120
+  - pointObjectif: 2500
+    bonusTime: 240
+  - pointObjectif: 4500
+    bonusTime: 300
+  - pointObjectif: 6000
+    bonusTime: 600
 --- !u!1 &240564457 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4887311035052489144, guid: 1570e6a541788e240b92468c5f62b848, type: 3}
@@ -3854,6 +3861,7 @@ MonoBehaviour:
   _initialTimer: 60
   _isTimerActive: 1
   _countdownDuration: 5
+  _lockTimer: 30
   _onMissionStarted:
     m_PersistentCalls:
       m_Calls:
@@ -4217,6 +4225,7 @@ MonoBehaviour:
   _initialTimer: 60
   _isTimerActive: 1
   _countdownDuration: 5
+  _lockTimer: 30
   _onMissionStarted:
     m_PersistentCalls:
       m_Calls:
@@ -4299,6 +4308,7 @@ MonoBehaviour:
   _initialTimer: 60
   _isTimerActive: 1
   _countdownDuration: 5
+  _lockTimer: 30
   _onMissionStarted:
     m_PersistentCalls:
       m_Calls:
@@ -5389,6 +5399,7 @@ MonoBehaviour:
   _initialTimer: 60
   _isTimerActive: 1
   _countdownDuration: 5
+  _lockTimer: 30
   _onMissionStarted:
     m_PersistentCalls:
       m_Calls:
@@ -8716,6 +8727,7 @@ MonoBehaviour:
   _initialTimer: 60
   _isTimerActive: 1
   _countdownDuration: 5
+  _lockTimer: 30
   _onMissionStarted:
     m_PersistentCalls:
       m_Calls:

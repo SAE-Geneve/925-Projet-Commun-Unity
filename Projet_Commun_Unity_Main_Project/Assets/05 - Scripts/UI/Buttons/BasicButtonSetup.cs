@@ -16,13 +16,15 @@ public class BasicButtonSetup : MonoBehaviour
     {
         if(firstButton != null)
         {
-            _eventSystem=EventSystem.current;
+            _eventSystem= EventSystem.current;
             _eventSystem.SetSelectedGameObject(firstButton);
         }
     }
 
     void Update()
     {
+        if(!_eventSystem) return;
+        
         if (_eventSystem.currentSelectedGameObject)
         {
             _lastSelected = _eventSystem.currentSelectedGameObject;

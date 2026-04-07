@@ -23,14 +23,14 @@ public class ScoreSlot : MonoBehaviour
         missionScoreDisplay = score;
         if(missionScoreTmp)
         {
-            missionScoreTmp.SetText(missionScoreDisplay.ToString());
+            missionScoreTmp.SetText($"{missionScoreDisplay}$");
         }
     }
 
     public void SetTotalScore(int score)
     {
         totalScoreDisplay = score;
-        if(totalScoreTmp) totalScoreTmp.SetText(totalScoreDisplay.ToString());
+        if(totalScoreTmp) totalScoreTmp.SetText($"{totalScoreDisplay}$");
     }
 
     public void DisabledAppearance()
@@ -59,10 +59,10 @@ public class ScoreSlot : MonoBehaviour
             missionScoreDisplay = Mathf.RoundToInt(Mathf.Lerp(startMission, targetMission, t));
             totalScoreDisplay = Mathf.RoundToInt(Mathf.Lerp(startTotal, targetTotal, t));
     
-            totalScoreTmp.SetText(totalScoreDisplay.ToString());
+            totalScoreTmp.SetText($"{totalScoreDisplay}$");
     
             if (missionScoreTmp)
-                missionScoreTmp.SetText(missionScoreDisplay.ToString());
+                missionScoreTmp.SetText($"{missionScoreDisplay}$");
     
             yield return null;
         }
@@ -71,8 +71,8 @@ public class ScoreSlot : MonoBehaviour
         missionScoreDisplay = targetMission;
         totalScoreDisplay = targetTotal;
     
-        totalScoreTmp.SetText(totalScoreDisplay.ToString());
+        totalScoreTmp.SetText($"{totalScoreDisplay}$");
         if (missionScoreTmp)
-            missionScoreTmp.SetText(missionScoreDisplay.ToString());
+            missionScoreTmp.SetText($"{missionScoreDisplay}$");
     }
 }

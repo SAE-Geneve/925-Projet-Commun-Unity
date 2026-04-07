@@ -78,11 +78,11 @@ public class NewMinigameUI : MonoBehaviour
         timerPanel.SetActive(false);
         for (int i = 0; i < _playerManager.Players.Count; i++)
         {
-            playerScoreText[i].text = 0.ToString("00000");
+            playerScoreText[i].text = 0.ToString("0000$");
             scorePanel[i].SetActive(false);
             _playerScore[i] = 0;
         }
-        totalScore.text = 0.ToString("00000000");
+        totalScore.text = 0.ToString("0000000$");
         
     }
 
@@ -123,14 +123,14 @@ public class NewMinigameUI : MonoBehaviour
         
         if (totalScore != null)
         {
-            totalScore.text = _scoreManager.TotalMissionScore().ToString("00000000");
+            totalScore.text = _scoreManager.TotalMissionScore().ToString("0000000$");
         }
         _totalScore = score;
     }
     
     private void PlayerScoreIncrease(int id, int score)
     {
-        playerScoreText[id].text = score.ToString("00000");
+        playerScoreText[id].text = score.ToString("0000$");
         
         if (_playerScore[id] < score)
         {

@@ -31,7 +31,7 @@ public class PersonalScoreDisplay : MonoBehaviour
         
         for (int i = 0; i < PlayerManager.Instance.PlayerCount; i++)
         {
-            scoreText[i].SetText($"{_scoreManager.PlayerScores[i]:00000}");
+            scoreText[i].SetText($"{_scoreManager.PlayerScores[i]:0000}$");
         }
     }
     

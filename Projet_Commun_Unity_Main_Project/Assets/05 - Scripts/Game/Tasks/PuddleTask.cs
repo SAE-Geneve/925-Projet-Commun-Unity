@@ -35,6 +35,12 @@ public class PuddleTask : GameTask
         base.Start();
         _initialVisualScale = _visualTransform.localScale;
         if (_mopZoneCollider) _initialMopZoneRadius = _mopZoneCollider.radius;
+        
+        if (donutImage != null)
+        {
+            donutImage.fillAmount = 0f;
+            donutImage.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
@@ -94,6 +100,11 @@ public class PuddleTask : GameTask
         _cleanTimer = 0f;
         _isCleaning = true;
         canGrow = false;
+        
+        if (donutImage != null)
+        {
+            donutImage.gameObject.SetActive(true);
+        }
     }
 
     public void StopClean()
@@ -104,6 +115,11 @@ public class PuddleTask : GameTask
         {
             float currentScale = _visualTransform.localScale.x / _initialVisualScale.x;
             _mopZoneCollider.radius = _initialMopZoneRadius * currentScale;
+        }
+        
+        if (donutImage != null)
+        {
+            donutImage.gameObject.SetActive(false);
         }
     }
 
@@ -120,6 +136,11 @@ public class PuddleTask : GameTask
                 gm.Scores.AddPlayerScore(cleanReward, player.Id);
             else if (gm.Context == GameContext.Mission)
                 gm.Scores.AddMissionScore(cleanReward, player.Id);
+        }
+        
+        if (donutImage != null)
+        {
+            donutImage.gameObject.SetActive(false);
         }
 
         Succeed(player);

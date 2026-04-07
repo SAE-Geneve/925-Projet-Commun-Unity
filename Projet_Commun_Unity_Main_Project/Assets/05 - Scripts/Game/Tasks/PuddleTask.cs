@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PuddleTask : GameTask
 {
@@ -14,6 +15,9 @@ public class PuddleTask : GameTask
     [Header("Puddle References")]
     [SerializeField] private Transform _visualTransform;
     [SerializeField] private SphereCollider _mopZoneCollider;
+
+    [Header("UI")]
+    [SerializeField] private Image donutImage;
 
     private MopProp _mop;
 
@@ -54,6 +58,11 @@ public class PuddleTask : GameTask
 
         _cleanTimer += Time.deltaTime;
         float ratio = Mathf.Clamp01(_cleanTimer / _effectiveCleanTime);
+        if (donutImage != null) 
+        {
+            donutImage.fillAmount = ratio;
+        }
+
         _visualTransform.localScale = Vector3.Lerp(_visualScaleAtCleanStart, Vector3.zero, ratio);
 
         if (_cleanTimer >= _effectiveCleanTime) CompleteTask();

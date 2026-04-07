@@ -4,11 +4,11 @@ using UnityEngine;
 public class TriggerTask : GameTask
 {
     [Header("Trigger Parameters")]
-    [Tooltip("The prop type that needs to touch the task collider to succeed")]
-    [SerializeField] protected PropType _propType = PropType.None;
     [SerializeField] protected List<PropType> _acceptedTypes = new();
     [SerializeField] protected bool isDestroyed = true;
     [SerializeField] protected int score = 100;
+
+    protected PropType _propType = PropType.None;
 
     protected virtual void OnTriggerEnter(Collider other)
     {

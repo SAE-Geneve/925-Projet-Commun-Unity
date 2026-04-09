@@ -10,7 +10,7 @@ public class Trigger2WayTask : TriggerTask
     {
         if(Done || !other.TryGetComponent(out Prop prop)) return;
 
-        if (prop.Type == _propType)
+        if (IsTypeAccepted(prop.Type))
         {
             Succeed();
             GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);

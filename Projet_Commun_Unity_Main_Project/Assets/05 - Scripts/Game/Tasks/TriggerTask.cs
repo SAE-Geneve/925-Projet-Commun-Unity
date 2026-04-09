@@ -17,7 +17,7 @@ public class TriggerTask : GameTask
         OnTriggerValid(prop);
     }
 
-    private bool IsTypeAccepted(PropType type)
+    protected bool IsTypeAccepted(PropType type)
     {
         if (_acceptedTypes.Count > 0) return _acceptedTypes.Contains(type);
         return type == _propType;

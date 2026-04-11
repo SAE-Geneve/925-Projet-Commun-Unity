@@ -24,12 +24,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string hubSceneName = "OneMission";
 
     [SerializeField] private Rank[] ranks;
-    
-    private int _rank = 0;
+    public Rank[] Ranks => ranks;
+
+    private int _currentRank = 0;
+    public int CurrentRankIndex => _currentRank;
 
     [Serializable]
-    struct Rank
+    public struct Rank
     {
+        public string rankName;
         public int pointObjectif;
         public int bonusTime;
     }
@@ -319,13 +322,13 @@ public class GameManager : MonoBehaviour
 
     private void CheckRank()
     {
-        if (_rank >= ranks.Length) return;
-        Debug.Log($"(Rank Checked) Rank {_rank}: {Scores.TotalScore}/{ranks[_rank].pointObjectif}");
-        if (Scores.TotalScore < ranks[_rank].pointObjectif) return;
+        if (_currentRank >= ranks.Length) return;
+        Debug.Log($"(Rank Checked) Rank {_currentRank}: {Scores.TotalScore}/{ranks[_currentRank].pointObjectif}");
+        if (Scores.TotalScore < ranks[_currentRank].pointObjectif) return;
                                                    
-        _timer += ranks[_rank].bonusTime;
-        _rank++;
-        Debug.Log($"Rank Passed: {_rank}");
+        _timer += ranks[_currentRank].bonusTime;
+        _currentRank++;
+        Debug.Log($"Rank Passed: {_currentRank}");
     }
 
     #endregion

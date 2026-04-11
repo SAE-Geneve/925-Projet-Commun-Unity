@@ -83,8 +83,8 @@ public class GameManager : MonoBehaviour
                 _timer = 0;
                 _playerManager.DisablePlayerMovements();
                 SwitchState(GameState.Cinematic);
-                // if (TimelineManager.Instance != null) TimelineManager.Instance.PlayEnding(LoadGameOver);
-                // else LoadGameOver();
+                if (TimelineManager.Instance != null) TimelineManager.Instance.PlayEnding();
+                else LoadGameOver();
             }
             else _timer = value;
 

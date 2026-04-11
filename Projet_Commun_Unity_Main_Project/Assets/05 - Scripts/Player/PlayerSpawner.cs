@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
@@ -18,10 +19,24 @@ public class PlayerSpawner : MonoBehaviour
     {
         for (int i = 0; i < PlayerManager.Instance.Players.Count; i++)
         {
-            Transform playerTransform = PlayerManager.Instance.Players[i].transform;
-            playerTransform.position = _spawnPoints[i].position;
-            if(_useSpawnRotation) playerTransform.rotation = _spawnPoints[i].rotation;
-            
+            if (PlayerManager.Instance.Players[i].Ragdoll.IsRagdoll)
+            {
+                StartCoroutine(WaitRagdollCoroutine(i));
+            }
+            else
+            {
+                Transform playerTransform = PlayerManager.Instance.Players[i].transform;
+                playerTransform.position = _spawnPoints[i].position;
+                if(_useSpawnRotation) playerTransform.rotation = _spawnPoints[i].rotation;
+            }
         }
+    }
+
+    private IEnumerator WaitRagdollCoroutine(int idx)
+    {
+        yield return new WaitUntil(() => !PlayerManager.Instance.Players[idx].Ragdoll.IsRagdoll);
+        Transform playerTransform = PlayerManager.Instance.Players[idx].transform;
+        playerTransform.position = _spawnPoints[idx].position;
+        if(_useSpawnRotation) playerTransform.rotation = _spawnPoints[idx].rotation;
     }
 }

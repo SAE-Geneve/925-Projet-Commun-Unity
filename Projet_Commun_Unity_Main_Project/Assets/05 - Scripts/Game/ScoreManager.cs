@@ -39,8 +39,11 @@ public class ScoreManager
         PlayerScores[id] += score;
         Debug.Log("added " + score + " to " + id + " player score");
         OnScoreUpdated?.Invoke();
-        
-        AddTotalScore(score);
+
+        if (score > 0)
+        {
+            AddTotalScore(score);
+        }
     }
 
     public void SubPlayerScore(int score, int id)

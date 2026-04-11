@@ -2183,6 +2183,7 @@ MonoBehaviour:
   behaviorGraphAgent: {fileID: 2759791066519186907}
   bHips: {fileID: 3371690788066588864}
   isRagdollable: 0
+  hitEffect: {fileID: 0}
   dropObjectOnRagdoll: 1
   losePointsOnRagdoll: 1
   ragdollPenalty: 10
@@ -2239,10 +2240,12 @@ MonoBehaviour:
   OnFinished:
     m_PersistentCalls:
       m_Calls: []
-  _propType: 0
+  _acceptedTypes: 
   isDestroyed: 1
   score: 100
   electricEffect: {fileID: 5185808474342339505}
+  correctScore: 0
+  wrongScore: 10
 --- !u!114 &2114158343834923108
 MonoBehaviour:
   m_ObjectHideFlags: 0

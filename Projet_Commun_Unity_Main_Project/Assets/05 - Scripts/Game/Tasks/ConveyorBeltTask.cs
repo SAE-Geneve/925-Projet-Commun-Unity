@@ -5,8 +5,8 @@ public class ConveyorBeltTask : TriggerTask
     [SerializeField] private ParticleSystem electricEffect;
     
     [Header("Score Settings")]
-    [SerializeField] private int correctScore = 1;
-    [SerializeField] private int wrongScore = 3;
+    [SerializeField] private int correctScore = 0;
+    [SerializeField] private int wrongScore = 10;
     
     private Controller _controller;
     private ConveyorBreakdownEvent _conveyorBreakdown;

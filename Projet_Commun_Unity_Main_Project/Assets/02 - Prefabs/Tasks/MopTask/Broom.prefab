@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -2615018748592218429}
   - component: {fileID: 4287165184931841670}
   - component: {fileID: 5714452973031169919}
+  - component: {fileID: 5157684083832122571}
   m_Layer: 0
   m_Name: Broom
   m_TagString: Untagged
@@ -78,6 +79,7 @@ MonoBehaviour:
   _minForceToThrow: 3
   _interactMaterial: {fileID: 2100000, guid: 6d9d834293066934b887a7780d7d5ee2, type: 2}
   cleanTime: 3
+  _animator: {fileID: 5157684083832122571}
 --- !u!114 &5691006712357545681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +207,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9290365, y: 3.5090463, z: 0.6435849}
   m_Center: {x: 0.0050688386, y: 0.79778516, z: 0.00041404366}
+--- !u!95 &5157684083832122571
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953462570413156859}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bbc6ebab95274ce4195f43999bd51d17, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2223722742101542688
 GameObject:
   m_ObjectHideFlags: 0

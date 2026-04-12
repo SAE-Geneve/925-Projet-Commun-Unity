@@ -6193,19 +6193,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
---- !u!114 &110995476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 172709449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c80682efa3c0dc14d8bc77c48f23e247, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Scripts::DoNothingEvent
-  _eventScoreReward: 0
 --- !u!114 &110995477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6235,8 +6222,6 @@ MonoBehaviour:
     weight: 20
   - eventScript: {fileID: 172709450}
     weight: 50
-  - eventScript: {fileID: 110995476}
-    weight: 15
 --- !u!1001 &111778585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10717,6 +10702,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1349534023}
+    - target: {fileID: 507366510253297027, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
+      propertyPath: _availableEvents.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 507366510253297027, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
+      propertyPath: _availableEvents.Array.data[1].eventScript
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 518223023638540503, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -18620,6 +18613,7 @@ PrefabInstance:
     - {fileID: 3250034461203772472, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
     - {fileID: 589468334343198522, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
     - {fileID: 8786165207485938777, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
+    - {fileID: 5871706799228014144, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
     m_RemovedGameObjects:
     - {fileID: 1539185617861405776, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
     - {fileID: 9052660563781934379, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
@@ -18825,9 +18819,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8640044734722493078, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
       insertIndex: -1
       addedObject: {fileID: 110995477}
-    - targetCorrespondingSourceObject: {fileID: 8640044734722493078, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 110995476}
     - targetCorrespondingSourceObject: {fileID: 1468804622501952117, guid: d9c418179f99411489cbd5bc43cd24db, type: 3}
       insertIndex: 5
       addedObject: {fileID: 1895434209}

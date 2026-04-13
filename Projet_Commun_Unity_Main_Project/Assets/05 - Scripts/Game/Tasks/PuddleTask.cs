@@ -16,6 +16,10 @@ public class PuddleTask : GameTask
     [SerializeField] private Transform _visualTransform;
     [SerializeField] private SphereCollider _mopZoneCollider;
 
+    [Header("Feedback")]
+    [SerializeField] private FloatingFeedback scoreFeedbackPrefab;
+    [SerializeField] private Transform feedbackSpawnPoint; // Optionnel : pour choisir exactement d'où part le texte
+
     [Header("UI")]
     [SerializeField] private Image donutImage;
 
@@ -141,6 +145,14 @@ public class PuddleTask : GameTask
         if (donutImage != null)
         {
             donutImage.gameObject.SetActive(false);
+        }
+
+        // Instanciation du Feedback visuel
+        if (givePointsOnClean && scoreFeedbackPrefab != null)
+        {
+            Transform spawnPos = feedbackSpawnPoint != null ? feedbackSpawnPoint : transform;
+            FloatingFeedback feedback = Instantiate(scoreFeedbackPrefab, spawnPos.position, Quaternion.identity);
+            feedback.Setup($"+{cleanReward}$");
         }
 
         Succeed(player);

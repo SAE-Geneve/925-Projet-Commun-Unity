@@ -240,6 +240,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb957ba366bd8645976488569f3ea39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Scripts::UIFaceCamera
+--- !u!1 &3347653355682077210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3971690234599722834}
+  m_Layer: 0
+  m_Name: FeedbackSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3971690234599722834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3347653355682077210}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.7, y: 0, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1982821412262581631}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3510041001112440324
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +432,7 @@ Transform:
   - {fileID: 5097351064381225332}
   - {fileID: 2589634759307825050}
   - {fileID: 3502426174404033541}
+  - {fileID: 3971690234599722834}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3452333859995698074
@@ -439,4 +471,6 @@ MonoBehaviour:
   growDuration: 15
   _visualTransform: {fileID: 5097351064381225332}
   _mopZoneCollider: {fileID: 297741125770264212}
+  scoreFeedbackPrefab: {fileID: 6330723680178578645, guid: 27f92279baa3e364abdcf28ce9f40440, type: 3}
+  feedbackSpawnPoint: {fileID: 3971690234599722834}
   donutImage: {fileID: 547691695356354927}

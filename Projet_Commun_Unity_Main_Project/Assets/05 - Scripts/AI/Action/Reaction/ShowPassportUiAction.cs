@@ -8,7 +8,7 @@ using Unity.Properties;
 [NodeDescription(name: "Show Passport UI", story: "Display [ui] passport based on [IsEvil] and show", category: "Action", id: "ShowPassport")]
 public partial class ShowPassportUiAction : Action
 {
-    [SerializeReference] public BlackboardVariable<BoardingNPCUI> Ui;
+    [SerializeReference] public BlackboardVariable<BorderNPCUI> Ui;
     [SerializeReference] public BlackboardVariable<bool> IsEvil;
     protected override Status OnStart()
     {

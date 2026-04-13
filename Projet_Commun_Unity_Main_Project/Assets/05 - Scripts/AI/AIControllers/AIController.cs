@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using Unity.Behavior;
+using UnityEngine.UI;
+
 public class AIController : Controller, IGrabbable
 {
     [Header("Grab Settings")]
@@ -8,7 +10,7 @@ public class AIController : Controller, IGrabbable
     [SerializeField] private bool canBeGrabbed = true;
 
     public event Action<AIController> OnDestroyed;
-    
+    public RawImage cctvRawImage;
     public BehaviorGraphAgent BehaviorAgent {get; protected set;}
     public GameTask GameTask {get; private set;}
     

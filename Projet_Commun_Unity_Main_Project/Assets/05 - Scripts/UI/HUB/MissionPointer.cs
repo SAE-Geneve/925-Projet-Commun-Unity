@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UI;
 
 public class MissionPointer : MonoBehaviour
@@ -6,9 +8,14 @@ public class MissionPointer : MonoBehaviour
     [Header("Position")]
     [SerializeField] private Mission mission;
     
-    [Header("Images")]
+    [Header("Arrow Sprites")]
     [SerializeField] private Sprite arrowSprite;
     [SerializeField] private Sprite crossSprite;
+    [SerializeField] private Sprite missionSprite;
+    
+    [Header("Icon Images")]
+    [SerializeField] private Image missionIcon;
+    [SerializeField] private TextMeshProUGUI cooldownText;
     
     [Header("Arrow References")]
     [SerializeField] private Image pointerImage;
@@ -17,12 +24,16 @@ public class MissionPointer : MonoBehaviour
     private Camera _mainCamera;
     private Vector3 _targetPosition;
     private RectTransform _canvasTransform;
+    private bool _isMissionCooldown;
+    private float _missionTimer;
 
     private void Start()
     {
         _mainCamera = Camera.main;
         _targetPosition=mission.gameObject.transform.position;
         _canvasTransform=GetComponent<RectTransform>();
+        missionIcon.sprite = missionSprite;
+        cooldownText.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -44,8 +55,39 @@ public class MissionPointer : MonoBehaviour
         {
             ArrowOnScreen(targetPositionScreenPoint);
         }
+
+        //This is so bad, I tried events but it didn't work
+        if (!_isMissionCooldown && mission.IsLocked)
+        {
+            HandleMissionLocked();
+        }
+        else if (_isMissionCooldown && !mission.IsLocked)
+        {
+            HandleMissionUnlocked();
+        }
+        
+        if (_isMissionCooldown)
+        {
+            _missionTimer -= Time.deltaTime;
+            cooldownText.text = (int)_missionTimer+"";
+        }
     }
 
+    private void HandleMissionLocked()
+    {
+        missionIcon.gameObject.SetActive(false);
+        cooldownText.gameObject.SetActive(true);
+        _missionTimer = mission.Timer;
+        _isMissionCooldown = true;
+    }
+
+    private void HandleMissionUnlocked()
+    {
+        missionIcon.gameObject.SetActive(true);
+        cooldownText.gameObject.SetActive(false);
+        _isMissionCooldown = false;
+    }
+    
     private void ArrowOffScreen(Vector3 targetPositionScreenPoint, float borderSize)
     {
         RotatePointerTowardsTarget();
@@ -64,6 +106,7 @@ public class MissionPointer : MonoBehaviour
             out Vector2 localPos
         );
         pointerRectTransform.anchoredPosition = localPos;
+        UpdateIconPosition(localPos);
     }
 
     private void ArrowOnScreen(Vector3 targetPositionScreenPoint)
@@ -78,8 +121,20 @@ public class MissionPointer : MonoBehaviour
         );
         pointerRectTransform.anchoredPosition = localPos;
         pointerRectTransform.localEulerAngles = Vector3.zero;
+        UpdateIconPosition(localPos);
     }
 
+    private void UpdateIconPosition(Vector2 localPos)
+    {
+        float offsetDistance = 40f;
+    
+        float angle = (pointerRectTransform.localEulerAngles.z - 90f) * Mathf.Deg2Rad;
+        Vector2 arrowDirection = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+    
+        missionIcon.rectTransform.anchoredPosition = localPos + arrowDirection * offsetDistance;
+        missionIcon.rectTransform.localEulerAngles = Vector3.zero;
+    }
+    
     private void RotatePointerTowardsTarget()
     {
         Vector3 targetPositionScreenPoint = _mainCamera.WorldToScreenPoint(_targetPosition);

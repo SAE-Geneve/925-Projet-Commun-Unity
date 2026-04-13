@@ -29358,9 +29358,9 @@ GameObject:
   - component: {fileID: 398587997}
   - component: {fileID: 398587996}
   - component: {fileID: 398587995}
-  - component: {fileID: 398587994}
   - component: {fileID: 398587993}
   - component: {fileID: 398587992}
+  - component: {fileID: 398587998}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -29376,9 +29376,9 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 398587990}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5633334}
-  m_LocalScale: {x: 0.049999997, y: 0.19999999, z: 0.049999997}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.049999997, y: 0.05, z: 0.049999997}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 603073208}
   - {fileID: 873612345}
@@ -29386,7 +29386,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.061, y: 9.552244}
+  m_AnchoredPosition: {x: 0, y: 9}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &398587992
@@ -29440,18 +29440,6 @@ MonoBehaviour:
   effectDuration: 2.5
   happyImage: {fileID: 603073209}
   unhappyImage: {fileID: 873612346}
---- !u!114 &398587994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 398587990}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1473a2ec60e4c7841a2b1e1a4d36b217, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &398587995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29515,6 +29503,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &398587998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398587990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a2a0dfffc4307242a49fedf58cfd892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::UIFacingCamera
 --- !u!43 &399192271
 Mesh:
   m_ObjectHideFlags: 0
@@ -116271,9 +116271,9 @@ GameObject:
   - component: {fileID: 2106139093}
   - component: {fileID: 2106139092}
   - component: {fileID: 2106139091}
-  - component: {fileID: 2106139090}
   - component: {fileID: 2106139089}
   - component: {fileID: 2106139088}
+  - component: {fileID: 2106139094}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -116289,9 +116289,9 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106139086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5633334}
-  m_LocalScale: {x: 0.049999997, y: 0.19999999, z: 0.049999997}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.049999997, y: 0.05, z: 0.049999997}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1334513555}
   - {fileID: 871794522}
@@ -116299,7 +116299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.061, y: 9.552244}
+  m_AnchoredPosition: {x: 0, y: 9}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2106139088
@@ -116353,18 +116353,6 @@ MonoBehaviour:
   effectDuration: 2.5
   happyImage: {fileID: 1334513556}
   unhappyImage: {fileID: 871794523}
---- !u!114 &2106139090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2106139086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1473a2ec60e4c7841a2b1e1a4d36b217, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2106139091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116428,6 +116416,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &2106139094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106139086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a2a0dfffc4307242a49fedf58cfd892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::UIFacingCamera
 --- !u!43 &2106198866
 Mesh:
   m_ObjectHideFlags: 0

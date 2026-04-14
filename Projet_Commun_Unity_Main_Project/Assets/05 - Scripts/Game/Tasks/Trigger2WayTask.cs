@@ -13,23 +13,22 @@ public class Trigger2WayTask : TriggerTask
             prop = other.GetComponentInParent<Prop>();
             if (!prop) return;
         }
-
-        if (IsTypeAccepted(prop.Type))
-        {
-            PlayerController playerController = prop.Controller as PlayerController;
-            if (playerController == null && PlayerManager.Instance != null)
-                playerController = PlayerManager.Instance.Players.Find(p => p.Id == prop.OwnerId);
-
-            Succeed(playerController);
-            GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
-        }
-        else if (prop.Type == _badPropType)
+        if (prop.Type == _badPropType)
         {
             Failed();
             GameManager.Instance.Scores.SubMissionScore(_badScore, prop.OwnerId);
         }
+        else if (IsTypeAccepted(prop.Type))
+        {
+            PlayerController playerController = prop.Controller as PlayerController;
+            if (playerController == null && PlayerManager.Instance != null)
+                playerController = PlayerManager.Instance.Players.Find(p => p.Id == prop.OwnerId);
+    
+            Succeed(playerController);
+            GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
+        }
         else return;
-
+    
         if (isDestroyed) prop.Destroy();
     }
 }

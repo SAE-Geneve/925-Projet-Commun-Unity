@@ -75,6 +75,7 @@ public class MissionPointer : MonoBehaviour
 
     private void HandleMissionLocked()
     {
+        pointerImage.gameObject.SetActive(false);
         missionIcon.gameObject.SetActive(false);
         cooldownText.gameObject.SetActive(true);
         _missionTimer = mission.Timer;
@@ -83,6 +84,7 @@ public class MissionPointer : MonoBehaviour
 
     private void HandleMissionUnlocked()
     {
+        pointerImage.gameObject.SetActive(true);
         missionIcon.gameObject.SetActive(true);
         cooldownText.gameObject.SetActive(false);
         _isMissionCooldown = false;

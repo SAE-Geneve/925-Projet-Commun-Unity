@@ -9,10 +9,12 @@ public class AIController : Controller, IGrabbable
     [Tooltip("Décoche cette case pour empêcher les joueurs d'attraper cette IA (ex: Voleur)")]
     [SerializeField] private bool canBeGrabbed = true;
 
+    [SerializeField] private RawImage _cctvRawImage;
+    public RawImage CctvRawImage => _cctvRawImage;
+
     public event Action<AIController> OnDestroyed;
-    public RawImage cctvRawImage;
-    public BehaviorGraphAgent BehaviorAgent {get; protected set;}
-    public GameTask GameTask {get; private set;}
+    public BehaviorGraphAgent BehaviorAgent { get; protected set; }
+    public GameTask GameTask { get; private set; }
     
     protected virtual void Awake()
     {

@@ -19,7 +19,8 @@ public struct EventIntervalByPlayerCount
 public class EventManager : MonoBehaviour
 {
     [Header("Global Event Settings")]
-    [SerializeField] protected float _startDelay = 15f;
+    [SerializeField] private float _minStartDelay = 10f;
+    [SerializeField] private float _maxStartDelay = 20f;
 
     [Header("Event Intervals by Player Count")]
     [Tooltip("Index 0 = 1 joueur, Index 1 = 2 joueurs, etc.")]
@@ -60,7 +61,7 @@ public class EventManager : MonoBehaviour
 
     private IEnumerator EventLoopRoutine()
     {
-        yield return new WaitForSeconds(_startDelay);
+        yield return new WaitForSeconds(Random.Range(_minStartDelay, _maxStartDelay));
 
         while (true)
         {

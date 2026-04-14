@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class LuggageScanner : MonoBehaviour
 {
@@ -8,9 +7,8 @@ public class LuggageScanner : MonoBehaviour
     [SerializeField] private AudioSource audioSource; 
     [SerializeField] private AudioClip beepSound;
 
-    [Header("Events")] 
-    [SerializeField] private UnityEvent onGoodProp;
-    [SerializeField] private UnityEvent onBadProp;
+    [Header("Screen Connection")]
+    [SerializeField] private BorderControlScreen borderScreen; 
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,8 +16,7 @@ public class LuggageScanner : MonoBehaviour
         
         PlayScanFeedbacks();
         
-        if (prop.Type == PropType.GoodProp) onGoodProp.Invoke();
-        else if(prop.Type == PropType.BadProp) onBadProp.Invoke();
+        if (borderScreen) borderScreen.DisplayScreenForProp(prop);
     }
 
     private void PlayScanFeedbacks()

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6537336580343493891}
   - component: {fileID: -8540052081739801665}
   - component: {fileID: -4411741972147093266}
+  - component: {fileID: 4900001381831509931}
   m_Layer: 0
   m_Name: Trash
   m_TagString: Untagged
@@ -75,6 +76,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _minForceToThrow: 3
+  _destroyAnimDuration: 0.5
 --- !u!65 &2175692642301155825
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -156,6 +158,19 @@ MonoBehaviour:
   impactCooldown: 0.5
   grabSound: {fileID: 8300000, guid: 2c147aabd47d879428c40394ab2a4e23, type: 3}
   throwSound: {fileID: 8300000, guid: bea9989d8559f95449beb401f02fb8e4, type: 3}
+--- !u!114 &4900001381831509931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2344330670201042711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94fbe1c9bc3ea9408a88ea4ee7505c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::ObjectOutline
+  outlineMaskName: PropOutline
 --- !u!1 &4543570515542880990
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +182,7 @@ GameObject:
   - component: {fileID: 3766647436327479396}
   - component: {fileID: 282049429700110273}
   - component: {fileID: 2598292484890071819}
+  - component: {fileID: 8465910061012225774}
   m_Layer: 0
   m_Name: Renderer
   m_TagString: Untagged
@@ -246,3 +262,16 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8465910061012225774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4543570515542880990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94fbe1c9bc3ea9408a88ea4ee7505c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Scripts::ObjectOutline
+  outlineMaskName: PropOutline

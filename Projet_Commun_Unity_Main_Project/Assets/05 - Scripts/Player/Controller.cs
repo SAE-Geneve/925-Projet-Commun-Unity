@@ -76,6 +76,11 @@ public class Controller : MonoBehaviour, IGrabbable
     {
         if (_grabbedObject != null)
         {
+            if (_grabbedObject is InteractableProp prop && prop.gameObject.CompareTag("Mop"))
+            {
+                _ragdoll.IsImmune = false;
+            }
+            
             _grabbedObject.Dropped(ThrowDirection(), this);
             _grabbedObject = null;
         }
@@ -143,6 +148,11 @@ public class Controller : MonoBehaviour, IGrabbable
             {
                 PropFeedback fb = mono.GetComponent<PropFeedback>();
                 if (fb != null) fb.PlayGrabEffect();
+            }
+            
+            if (_grabbedObject is InteractableProp prop && prop.gameObject.CompareTag("Mop"))
+            {
+                _ragdoll.IsImmune = true;
             }
         });
     }

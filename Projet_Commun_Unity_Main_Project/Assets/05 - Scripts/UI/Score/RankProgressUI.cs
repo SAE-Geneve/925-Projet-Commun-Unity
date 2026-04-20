@@ -15,7 +15,14 @@ public class RankProgressUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI rankText;
     [SerializeField] private TextMeshProUGUI progressText;
-    [SerializeField] private Image progressBarFill;
+
+    [Header("Progress Bar")]
+    [SerializeField] private Image progressBarFill; // L'image orange qui doit se remplir
+
+    [Header("Settings")]
+    [SerializeField] private float fillSpeed = 0.5f; // 0.5 = met 2 secondes pour se remplir de 0% à 100%
+
+    private float _targetFillRatio;
 
     // [Header("Rank Configuration")]
     // [SerializeField] private RankData[] ranks; // Liste de tous tes rangs
@@ -37,6 +44,9 @@ public class RankProgressUI : MonoBehaviour
 
         // Première mise à jour au lancement
         UpdateUI();
+
+        // Au démarrage, on initialise la jauge visuelle directement à la bonne taille
+        if (progressBarFill != null) progressBarFill.fillAmount = _targetFillRatio;
     }
 
     private void OnDestroy()
@@ -45,6 +55,16 @@ public class RankProgressUI : MonoBehaviour
         {
             // On se désabonne quand l'objet est détruit
             _scoreManager.OnTotalScoreUpdated -= UpdateUI;
+        }
+    }
+
+    private void Update()
+    {
+        // Remplit visuellement la barre à chaque frame jusqu'à atteindre la cible
+        if (progressBarFill != null && progressBarFill.fillAmount != _targetFillRatio)
+        {
+            // Mathf.MoveTowards avance à une vitesse constante (fillSpeed)
+            progressBarFill.fillAmount = Mathf.MoveTowards(progressBarFill.fillAmount, _targetFillRatio, fillSpeed * Time.deltaTime);
         }
     }
 
@@ -71,14 +91,13 @@ public class RankProgressUI : MonoBehaviour
         moneyText.SetText($"Money {_scoreManager.TotalScore}$");
         rankText.SetText($"Rank - {_gameManager.Ranks[_gameManager.CurrentRankIndex].rankName}");
 
-        float fillRatio = Mathf.Clamp01((float)_scoreManager.TotalScore / _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif);
-        progressBarFill.fillAmount = fillRatio;
+        _targetFillRatio = Mathf.Clamp01((float)_scoreManager.TotalScore / _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif);
 
         // Si on est au rang max, on peut afficher un texte différent (optionnel)
         if (_gameManager.CurrentRankIndex >= _gameManager.Ranks.Length - 1 && _scoreManager.TotalScore >= _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif)
         {
             progressText.SetText("MAX !");
-            progressBarFill.fillAmount = 1f;
+            _targetFillRatio = 1f;
         }
         else
         {

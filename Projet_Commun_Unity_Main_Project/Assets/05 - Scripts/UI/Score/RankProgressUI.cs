@@ -16,6 +16,13 @@ public class RankProgressUI : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float fillSpeed = 0.5f;
 
+    [Header("Rank Up Feedback")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip rankUpClip;
+    [SerializeField] private float bounceScale = 1.5f;
+    [SerializeField] private float bounceDuration = 0.5f;
+
+    private int _lastRankIndex;
     private float _targetFillRatio;
 
     private ScoreManager _scoreManager;
@@ -30,6 +37,8 @@ public class RankProgressUI : MonoBehaviour
         {
             _scoreManager.OnTotalScoreUpdated += UpdateUI;
         }
+
+        _lastRankIndex = _gameManager.CurrentRankIndex;
 
         UpdateUI();
 
@@ -60,6 +69,12 @@ public class RankProgressUI : MonoBehaviour
         moneyText.SetText($"Money {_scoreManager.TotalScore}$");
         rankText.SetText($"Rank - {_gameManager.Ranks[_gameManager.CurrentRankIndex].rankName}");
 
+        if (_gameManager.CurrentRankIndex > _lastRankIndex)
+        {
+            TriggerRankUpFeedback();
+            _lastRankIndex = _gameManager.CurrentRankIndex;
+        }
+
         _targetFillRatio = Mathf.Clamp01((float)_scoreManager.TotalScore / _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif);
 
         if (_gameManager.CurrentRankIndex >= _gameManager.Ranks.Length - 1 && _scoreManager.TotalScore >= _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif)
@@ -73,4 +88,40 @@ public class RankProgressUI : MonoBehaviour
         }
     }
     
+    private void TriggerRankUpFeedback()
+    {
+        if (audioSource != null && rankUpClip != null)
+        {
+            audioSource.PlayOneShot(rankUpClip);
+        }
+
+        if (rankText != null)
+        {
+            StartCoroutine(BounceAnimation(rankText.transform));
+        }
+    }
+
+    private System.Collections.IEnumerator BounceAnimation(Transform target)
+    {
+        Vector3 originalScale = Vector3.one;
+        float halfDuration = bounceDuration / 2f;
+        float timer = 0f;
+
+        while (timer < halfDuration)
+        {
+            timer += Time.deltaTime;
+            target.localScale = Vector3.Lerp(originalScale, originalScale * bounceScale, timer / halfDuration);
+            yield return null;
+        }
+
+        timer = 0f;
+        while (timer < halfDuration)
+        {
+            timer += Time.deltaTime;
+            target.localScale = Vector3.Lerp(originalScale * bounceScale, originalScale, timer / halfDuration);
+            yield return null;
+        }
+
+        target.localScale = originalScale;
+    }
 }

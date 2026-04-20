@@ -4,23 +4,27 @@ using UnityEngine.UI;
 
 public class RankProgressUI : MonoBehaviour
 {
-    // [System.Serializable]
-    // public struct RankData
-    // {
-    //     public string rankName;    // Ex: "Bronze", "Argent", "Or"
-    //     public int moneyRequired;  // Ex: 100, 500, 1000
-    // }
-
+    
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI rankText;
     [SerializeField] private TextMeshProUGUI progressText;
+
+    [Header("Progress Bar")]
     [SerializeField] private Image progressBarFill;
 
-    // [Header("Rank Configuration")]
-    // [SerializeField] private RankData[] ranks; // Liste de tous tes rangs
+    [Header("Settings")]
+    [SerializeField] private float fillSpeed = 0.5f;
 
-    // private int _currentRankIndex = 0;
+    [Header("Rank Up Feedback")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip rankUpClip;
+    [SerializeField] private float bounceScale = 1.5f;
+    [SerializeField] private float bounceDuration = 0.5f;
+
+    private int _lastRankIndex;
+    private float _targetFillRatio;
+
     private ScoreManager _scoreManager;
     private GameManager _gameManager;
 
@@ -31,66 +35,93 @@ public class RankProgressUI : MonoBehaviour
         
         if (_scoreManager != null)
         {
-            // On s'abonne à l'événement de mise à jour du score
             _scoreManager.OnTotalScoreUpdated += UpdateUI;
         }
 
-        // Première mise à jour au lancement
+        _lastRankIndex = _gameManager.CurrentRankIndex;
+
         UpdateUI();
+
+        if (progressBarFill != null) progressBarFill.fillAmount = _targetFillRatio;
     }
 
     private void OnDestroy()
     {
         if (_scoreManager != null)
         {
-            // On se désabonne quand l'objet est détruit
             _scoreManager.OnTotalScoreUpdated -= UpdateUI;
+        }
+    }
+
+    private void Update()
+    {
+        if (progressBarFill != null && progressBarFill.fillAmount != _targetFillRatio)
+        {
+            progressBarFill.fillAmount = Mathf.MoveTowards(progressBarFill.fillAmount, _targetFillRatio, fillSpeed * Time.deltaTime);
         }
     }
 
     private void UpdateUI()
     {
         if (_gameManager.Ranks == null || _gameManager.Ranks.Length == 0) return;
-
-        // // 1. Calculer le score total
-        // int totalMoney = 0;
-        // if (_scoreManager != null)
-        // {
-        //     for (int i = 0; i < PlayerManager.Instance.PlayerCount; i++)
-        //     {
-        //         totalMoney += _scoreManager.PlayerScores[i];
-        //     }
-        // }
-
-        // // 2. Vérifier si on passe au rang supérieur
-        // CheckRankUp(totalMoney);
-
-        // // 3. Mettre à jour l'interface
-        // RankData currentRank = ranks[_currentRankIndex];
+        
         
         moneyText.SetText($"Money {_scoreManager.TotalScore}$");
         rankText.SetText($"Rank - {_gameManager.Ranks[_gameManager.CurrentRankIndex].rankName}");
 
-        float fillRatio = Mathf.Clamp01((float)_scoreManager.TotalScore / _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif);
-        progressBarFill.fillAmount = fillRatio;
+        if (_gameManager.CurrentRankIndex > _lastRankIndex)
+        {
+            TriggerRankUpFeedback();
+            _lastRankIndex = _gameManager.CurrentRankIndex;
+        }
 
-        // Si on est au rang max, on peut afficher un texte différent (optionnel)
+        _targetFillRatio = Mathf.Clamp01((float)_scoreManager.TotalScore / _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif);
+
         if (_gameManager.CurrentRankIndex >= _gameManager.Ranks.Length - 1 && _scoreManager.TotalScore >= _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif)
         {
             progressText.SetText("MAX !");
-            progressBarFill.fillAmount = 1f;
+            _targetFillRatio = 1f;
         }
         else
         {
             progressText.SetText($"{_scoreManager.TotalScore}$ / { _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif}$");
         }
     }
+    
+    private void TriggerRankUpFeedback()
+    {
+        if (audioSource != null && rankUpClip != null)
+        {
+            audioSource.PlayOneShot(rankUpClip);
+        }
 
-    // private void CheckRankUp(int currentMoney)
-    // {
-    //     while (_currentRankIndex < ranks.Length - 1 && currentMoney >= ranks[_currentRankIndex].moneyRequired)
-    //     {
-    //         _currentRankIndex++;
-    //     }
-    // }
+        if (rankText != null)
+        {
+            StartCoroutine(BounceAnimation(rankText.transform));
+        }
+    }
+
+    private System.Collections.IEnumerator BounceAnimation(Transform target)
+    {
+        Vector3 originalScale = Vector3.one;
+        float halfDuration = bounceDuration / 2f;
+        float timer = 0f;
+
+        while (timer < halfDuration)
+        {
+            timer += Time.deltaTime;
+            target.localScale = Vector3.Lerp(originalScale, originalScale * bounceScale, timer / halfDuration);
+            yield return null;
+        }
+
+        timer = 0f;
+        while (timer < halfDuration)
+        {
+            timer += Time.deltaTime;
+            target.localScale = Vector3.Lerp(originalScale * bounceScale, originalScale, timer / halfDuration);
+            yield return null;
+        }
+
+        target.localScale = originalScale;
+    }
 }

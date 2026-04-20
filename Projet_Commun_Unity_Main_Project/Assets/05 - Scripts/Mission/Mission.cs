@@ -45,6 +45,8 @@ public class Mission : MonoBehaviour
     public string Name => _name;
     public bool IsLocked => _missionState == MissionState.Locked;
     
+    public float LockTimer => _lockTimer;
+    
     public float Timer
     {
         get => _timer;

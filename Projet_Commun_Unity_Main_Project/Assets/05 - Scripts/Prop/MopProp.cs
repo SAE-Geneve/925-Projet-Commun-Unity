@@ -79,4 +79,22 @@ public class MopProp : InteractableProp
         if(_isCleaning) puddleTask.StopClean();
         _puddleTasks.Remove(puddleTask);
     }
+
+    public override void Grabbed(Controller controller)
+    {
+        base.Grabbed(controller);
+        if (controller is PlayerController pc)
+        {
+            pc.Ragdoll.IsImmune = true;
+        }
+    }
+
+    public override void Dropped(Vector3 throwForce = default, Controller controller = null)
+    {
+        base.Dropped(throwForce, controller);
+        if (controller is PlayerController pc)
+        {
+            pc.Ragdoll.IsImmune = false;
+        }
+    }
 }

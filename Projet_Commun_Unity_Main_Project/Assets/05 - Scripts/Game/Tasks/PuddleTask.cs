@@ -16,10 +16,6 @@ public class PuddleTask : GameTask
     [SerializeField] private Transform _visualTransform;
     [SerializeField] private SphereCollider _mopZoneCollider;
 
-    [Header("Feedback")]
-    [SerializeField] private FloatingFeedback scoreFeedbackPrefab;
-    [SerializeField] private Transform feedbackSpawnPoint; // Optionnel : pour choisir exactement d'où part le texte
-
     [Header("UI")]
     [SerializeField] private Image donutImage;
 
@@ -137,22 +133,22 @@ public class PuddleTask : GameTask
         if (givePointsOnClean && player && gm != null && gm.Scores != null)
         {
             if (gm.Context == GameContext.Hub)
+            {
                 gm.Scores.AddPlayerScore(cleanReward, player.Id);
+                
+                // On déclenche le feedback visuel directement sur le joueur
+                CharacterDisplay display = player.GetComponentInChildren<CharacterDisplay>();
+                if (display != null) display.ShowScoreFeedback(cleanReward);
+            }
             else if (gm.Context == GameContext.Mission)
+            {
                 gm.Scores.AddMissionScore(cleanReward, player.Id);
+            }
         }
         
         if (donutImage != null)
         {
             donutImage.gameObject.SetActive(false);
-        }
-
-        // Instanciation du Feedback visuel
-        if (givePointsOnClean && scoreFeedbackPrefab != null)
-        {
-            Transform spawnPos = feedbackSpawnPoint != null ? feedbackSpawnPoint : transform;
-            FloatingFeedback feedback = Instantiate(scoreFeedbackPrefab, spawnPos.position, Quaternion.identity);
-            feedback.Setup($"+{cleanReward}$");
         }
 
         Succeed(player);

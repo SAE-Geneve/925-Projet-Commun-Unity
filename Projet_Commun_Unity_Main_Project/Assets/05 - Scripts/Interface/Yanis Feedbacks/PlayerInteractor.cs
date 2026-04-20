@@ -24,13 +24,6 @@ public class PlayerInteractor : MonoBehaviour
     private void Update()
     {
         DetectInteractable();
-
-        if (currentInteractable != null && Input.GetKeyDown(KeyCode.E))
-        {
-            currentInteractable.Interact(playerController);
-            Debug.Log("Interaction déclenchée.");
-            promptUI.Flash();
-        }
     }
 
     private void DetectInteractable()
@@ -65,7 +58,24 @@ public class PlayerInteractor : MonoBehaviour
         currentInteractable = closestInteractable;
 
         if (currentInteractable != null)
+        {
             promptUI.Show(currentInteractable.GetPromptText());
+            return;
+        }
+
+        PropFeedback closestProp = null;
+        float closestPropDistance = Mathf.Infinity;
+        Collider[] allHits = Physics.OverlapSphere(transform.position, interactRange);
+        foreach (Collider hit in allHits)
+        {
+            PropFeedback pf = hit.GetComponentInParent<PropFeedback>();
+            if (pf == null) continue;
+            float d = Vector3.Distance(transform.position, hit.transform.position);
+            if (d < closestPropDistance) { closestPropDistance = d; closestProp = pf; }
+        }
+
+        if (closestProp != null)
+            promptUI.Show(closestProp.GetPromptText());
         else
             promptUI.Hide();
     }

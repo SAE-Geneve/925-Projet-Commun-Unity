@@ -9,16 +9,19 @@ public class PropFeedback : MonoBehaviour
     public float impactCooldown = 0.5f; // Cooldown pour éviter le spam d'effets d'impact
     public AudioClip grabSound; 
     public AudioClip throwSound; 
-
+    
+    [Header("Prompt Text")]
+    [SerializeField] private string promptText = "Ramasser (E)";
+    
     private Vector3 initialScale;
     private Coroutine wobbleCoroutine;
-    private AudioSource audioSource; 
+    private AudioSource audioSource;
     private float lastImpactTime = -1f;
 
     private void Awake()
     {
         initialScale = transform.localScale;
-        
+
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
@@ -100,5 +103,9 @@ public class PropFeedback : MonoBehaviour
             if (wobbleCoroutine != null) StopCoroutine(wobbleCoroutine);
             wobbleCoroutine = StartCoroutine(GrabWobbleRoutine());
         }
+    }
+    public string GetPromptText()
+    {
+        return promptText;
     }
 }

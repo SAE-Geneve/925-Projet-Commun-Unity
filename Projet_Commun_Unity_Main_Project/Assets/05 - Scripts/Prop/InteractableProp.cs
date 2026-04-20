@@ -4,7 +4,8 @@ public class InteractableProp : Prop, IInteractable
 {
     public string GetPromptText()
     {
-        throw new System.NotImplementedException();
+        PropFeedback feedback = GetComponent<PropFeedback>();
+        return feedback != null ? feedback.GetPromptText() : string.Empty;
     }
 
     public virtual void Interact(PlayerController playerController)

@@ -6,6 +6,10 @@ public class CharacterDisplay : MonoBehaviour
     [Header("References")]
      [SerializeField] private SkinnedMeshRenderer skinnedMeshRenderer;
     
+    [Header("Feedback UI")]
+    [SerializeField] private FloatingFeedback scoreFeedbackPrefab;
+    [SerializeField] private Transform feedbackSpawnPoint;
+    
     private CharacterMovement _characterMovement;
     private Animator _animator;
     
@@ -20,5 +24,15 @@ public class CharacterDisplay : MonoBehaviour
     void Update()
     { 
         _animator.SetFloat("Speed", Mathf.Abs(_characterMovement.Velocity.magnitude) > Mathf.Epsilon ? Mathf.Abs(_characterMovement.Velocity.magnitude) : 0);
+    }
+
+    public void ShowScoreFeedback(int scoreAmount)
+    {
+        if (scoreFeedbackPrefab != null)
+        {
+            Transform spawnPos = feedbackSpawnPoint != null ? feedbackSpawnPoint : transform;
+            FloatingFeedback feedback = Instantiate(scoreFeedbackPrefab, spawnPos.position, Quaternion.identity);
+            feedback.Setup($"+{scoreAmount}$");
+        }
     }
 }

@@ -9,6 +9,7 @@ public struct EventChance
     [Tooltip("Poids de cet événement (Plus c'est haut, plus ça tombe souvent)")]
     public float weight;
 }
+
 [System.Serializable]
 public struct EventIntervalByPlayerCount
 {
@@ -16,11 +17,24 @@ public struct EventIntervalByPlayerCount
     public float maxInterval;
 }
 
+[System.Serializable]
+public struct EventStartDelayByPlayerCount
+{
+    public float minStartDelay;
+    public float maxStartDelay;
+}
+
 public class EventManager : MonoBehaviour
 {
-    [Header("Global Event Settings")]
-    [SerializeField] private float _minStartDelay = 10f;
-    [SerializeField] private float _maxStartDelay = 20f;
+    [Header("Event Start Delay by Player Count")]
+    [Tooltip("Index 0 = 1 joueur, Index 1 = 2 joueurs, etc.")]
+    [SerializeField] private EventStartDelayByPlayerCount[] _startDelaysByPlayerCount = new EventStartDelayByPlayerCount[]
+    {
+        new EventStartDelayByPlayerCount { minStartDelay = 15f, maxStartDelay = 25f },
+        new EventStartDelayByPlayerCount { minStartDelay = 12f, maxStartDelay = 20f },
+        new EventStartDelayByPlayerCount { minStartDelay = 10f, maxStartDelay = 18f },
+        new EventStartDelayByPlayerCount { minStartDelay = 8f,  maxStartDelay = 15f },
+    };
 
     [Header("Event Intervals by Player Count")]
     [Tooltip("Index 0 = 1 joueur, Index 1 = 2 joueurs, etc.")]
@@ -61,13 +75,21 @@ public class EventManager : MonoBehaviour
 
     private IEnumerator EventLoopRoutine()
     {
-        yield return new WaitForSeconds(Random.Range(_minStartDelay, _maxStartDelay));
+        yield return new WaitForSeconds(GetRandomStartDelay());
 
         while (true)
         {
             TriggerRandomEvent();
             yield return new WaitForSeconds(GetRandomInterval());
         }
+    }
+
+    private float GetRandomStartDelay()
+    {
+        int playerCount = PlayerManager.Instance != null ? PlayerManager.Instance.PlayerCount : 1;
+        int index = Mathf.Clamp(playerCount - 1, 0, _startDelaysByPlayerCount.Length - 1);
+        var delay = _startDelaysByPlayerCount[index];
+        return Random.Range(delay.minStartDelay, delay.maxStartDelay);
     }
 
     private float GetRandomInterval()
@@ -92,21 +114,29 @@ public class EventManager : MonoBehaviour
                 totalWeight += ev.weight;
                 possibleEvents.Add(ev);
             }
+            else
+            {
+                Debug.Log($"[EventManager] Filtré (actif ou null): {ev.eventScript?.name}");
+            }
         }
 
         if (possibleEvents.Count == 0) return;
 
         float randomValue = Random.Range(0f, totalWeight);
-        float currentWeight = 0f;
+        Debug.Log($"[EventManager] randomValue={randomValue}, totalWeight={totalWeight}, possibleEvents={possibleEvents.Count}");
 
+        float currentWeight = 0f;
         foreach (var ev in possibleEvents)
         {
             currentWeight += ev.weight;
-            if (randomValue <= currentWeight)
+            if (randomValue < currentWeight)
             {
+                Debug.Log($"[EventManager] Triggered: {ev.eventScript.name}");
                 ev.eventScript.TriggerEvent();
-                break;
+                return;
             }
         }
+
+        possibleEvents[possibleEvents.Count - 1].eventScript.TriggerEvent();
     }
 }

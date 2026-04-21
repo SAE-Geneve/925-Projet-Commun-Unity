@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioClip successSFX;
     [SerializeField] public AudioClip failureSFX;
     [SerializeField] public AudioClip buttonSFX;
+    [SerializeField] public AudioClip rankUpSFX;
     [SerializeField] public AudioClip StartMissionSFX;
     [SerializeField] public AudioClip HitSFX;
     [SerializeField] public AudioClip StepSFX;

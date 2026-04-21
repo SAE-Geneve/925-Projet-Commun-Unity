@@ -17,8 +17,6 @@ public class RankProgressUI : MonoBehaviour
     [SerializeField] private float fillSpeed = 0.5f;
 
     [Header("Rank Up Feedback")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip rankUpClip;
     [SerializeField] private float bounceScale = 1.5f;
     [SerializeField] private float bounceDuration = 0.5f;
 
@@ -90,9 +88,9 @@ public class RankProgressUI : MonoBehaviour
     
     private void TriggerRankUpFeedback()
     {
-        if (audioSource != null && rankUpClip != null)
+        if (AudioManager.Instance != null && AudioManager.Instance.rankUpSFX != null)
         {
-            audioSource.PlayOneShot(rankUpClip);
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.rankUpSFX);
         }
 
         if (rankText != null)

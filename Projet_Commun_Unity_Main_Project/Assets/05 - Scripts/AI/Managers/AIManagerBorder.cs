@@ -26,31 +26,38 @@ public class AIManagerBorder : AIManager
     [SerializeField] private BorderQueue queue2;
 
     [Header("Spawning Settings")]
-    [SerializeField] private float spawnCooldown = 1.5f;
     [SerializeField] private float timeToReachQueue = 4f;
-    
+
+    [Header("Spawn Cooldown by Player Count")]
+    [Tooltip("Index 0 = 1 joueur, Index 1 = 2 joueurs, etc.")]
+    [SerializeField] private float[] minSpawnCooldowns = { 10f, 8f, 7f, 5f };
+    [SerializeField] private float[] maxSpawnCooldowns = { 15f, 13f, 11f, 10f };
+
     private float _lastSpawnTime;
+    private float _currentSpawnCooldown;
     private List<float> _npcInTransitTimes = new List<float>();
-    
+
     [HideInInspector] public bool isSpawningPaused = false;
-    
+
     protected override void AdaptToPlayerCount()
     {
         base.AdaptToPlayerCount();
-        
-        if (PlayerManager.Instance != null)
-        {
-            int playerCount = PlayerManager.Instance.PlayerCount;
-            float multiplier = 1f + (playerCount - 1) * 0.5f;
-            spawnCooldown = spawnCooldown / multiplier;
-        }
+        RollNewCooldown();
+    }
+
+    private void RollNewCooldown()
+    {
+        int playerCount = PlayerManager.Instance != null ? PlayerManager.Instance.PlayerCount : 1;
+        int index = Mathf.Clamp(playerCount - 1, 0, minSpawnCooldowns.Length - 1);
+        _currentSpawnCooldown = Random.Range(minSpawnCooldowns[index], maxSpawnCooldowns[index]);
+        Debug.Log($"[AIManagerBorder] Joueurs: {playerCount} | Prochain spawn dans: {_currentSpawnCooldown:F1}s");
     }
 
     protected override void SpawnNPC()
     {
         if (isSpawningPaused) return;
         if (spawnPoints == null || spawnPoints.Count == 0 || !npcPrefab) return;
-        if (Time.time - _lastSpawnTime < spawnCooldown) return;
+        if (Time.time - _lastSpawnTime < _currentSpawnCooldown) return;
 
         BorderQueue chosenQueue = GetShortestQueue();
         if (chosenQueue.locations == null || chosenQueue.locations.Length == 0) return;
@@ -60,10 +67,17 @@ public class AIManagerBorder : AIManager
 
         _lastSpawnTime = Time.time;
         _npcInTransitTimes.Add(Time.time);
+        RollNewCooldown();
 
         AIController npc = InstantiateNPC();
         ApplyCCTV(npc, chosenQueue);
         ApplyBlackboard(npc, chosenQueue);
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        _lastSpawnTime = -999f;
     }
 
     private void CleanTransitTimes()

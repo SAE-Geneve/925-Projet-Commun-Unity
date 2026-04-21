@@ -4,7 +4,6 @@ public class LuggageScanner : MonoBehaviour
 {
     [Header("Feedbacks")]
     [SerializeField] private Animator alarmAnimator;
-    [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip beepGoodSound;
     [SerializeField] private AudioClip beepBadSound;
 
@@ -28,7 +27,8 @@ public class LuggageScanner : MonoBehaviour
             alarmAnimator.SetTrigger(isDangerous ? "AlertBad" : "AlertGood");
 
         AudioClip clip = isDangerous ? beepBadSound : beepGoodSound;
-        if (audioSource && clip)
-            audioSource.PlayOneShot(clip);
+        AudioManager.Instance.SetVolumeSfx(1.0f);
+        AudioManager.Instance.PlaySfx(clip);
+        AudioManager.Instance.SetVolumeSfx(0.5f);
     }
 }

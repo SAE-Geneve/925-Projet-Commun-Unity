@@ -135,9 +135,8 @@ public class PuddleTask : GameTask
             if (gm.Context == GameContext.Hub)
             {
                 gm.Scores.AddPlayerScore(cleanReward, player.Id);
-                
-                // On déclenche le feedback visuel directement sur le joueur
-                CharacterDisplay display = player.GetComponentInChildren<CharacterDisplay>();
+
+                CharacterDisplay display = player.Display;
                 if (display != null) display.ShowScoreFeedback(cleanReward);
             }
             else if (gm.Context == GameContext.Mission)

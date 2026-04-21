@@ -5,7 +5,7 @@ public class PuddleTask : GameTask
 {
     [Header("Score Reward (Hub Only)")]
     [SerializeField] private bool givePointsOnClean = false;
-    [SerializeField] private int cleanReward = 50;
+    [SerializeField] private int cleanReward = 100;
 
     [Header("Growth Settings")]
     [SerializeField] private bool canGrow = false;

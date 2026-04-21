@@ -13,7 +13,7 @@ public class AIRagdoll : Ragdoll
 
     [Header("Score Penalty")]
     [SerializeField] private bool losePointsOnRagdoll = true;
-    [SerializeField] private int ragdollPenalty = 10;
+    [SerializeField] private int ragdollPenalty = 50;
     public bool IsRagdollState { get; private set; }
     
     private float _lastRagdollOffTime;

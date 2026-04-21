@@ -4,7 +4,7 @@ public class MoneyBagProp : InteractableProp
 {
     [Header("Score Settings")]
     [Tooltip("Les points donnés au joueur qui ramasse le sac")]
-    [SerializeField] private int _scoreReward = 200;
+    [SerializeField] private int _scoreReward = 250;
 
     public override void Interact(PlayerController playerController)
     {

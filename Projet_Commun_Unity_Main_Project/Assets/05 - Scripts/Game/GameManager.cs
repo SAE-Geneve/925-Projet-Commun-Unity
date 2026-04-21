@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     private float _initialDisconnectionTime = 60f;
 
     [Tooltip("The maximal client satisfaction point we can get")] [SerializeField] [Min(0)]
-    private int _maxSatisfaction = 100;
+    private int _maxSatisfaction = 150;
 
     [Tooltip("The minimum numbers of players needed to start the game")] [SerializeField] [UnityEngine.Range(1,4)]
     private int _minPlayers = 1;

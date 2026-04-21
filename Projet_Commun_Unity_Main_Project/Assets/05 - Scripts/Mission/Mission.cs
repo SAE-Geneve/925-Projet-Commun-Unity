@@ -17,7 +17,7 @@ public class Mission : MonoBehaviour
     public GameObject ExplanationPrefab => _explanationPrefab;
     
     [Header("Timer")]
-    [SerializeField] [Min(1f)] private float _initialTimer = 60f;
+    [SerializeField] [Min(1f)] private float _initialTimer = 36f;
     [SerializeField] private bool _isTimerActive;
     [SerializeField] [Min(1f)] private float _countdownDuration = 5f;
     [SerializeField] private float _lockTimer = 30f;

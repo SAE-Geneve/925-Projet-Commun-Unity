@@ -6,7 +6,7 @@ public class TriggerTask : GameTask
     [Header("Trigger Parameters")]
     [SerializeField] protected List<PropType> _acceptedTypes = new();
     [SerializeField] protected bool isDestroyed = true;
-    [SerializeField] protected int score = 100;
+    [SerializeField] protected int score = 150;
 
     protected PropType _propType = PropType.None;
 

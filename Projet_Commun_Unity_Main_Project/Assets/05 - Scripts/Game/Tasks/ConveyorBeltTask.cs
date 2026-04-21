@@ -6,7 +6,7 @@ public class ConveyorBeltTask : TriggerTask
     
     [Header("Score Settings")]
     [SerializeField] private int correctScore = 0;
-    [SerializeField] private int wrongScore = 10;
+    [SerializeField] private int wrongScore = 100;
     
     private Controller _controller;
     private ConveyorBreakdownEvent _conveyorBreakdown;

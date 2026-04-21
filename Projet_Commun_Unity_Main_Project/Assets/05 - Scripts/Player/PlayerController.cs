@@ -10,6 +10,11 @@ public struct PlayerBonus
     public float Speed;
     public float Dive;
     public float Strength;
+
+    public static int MaxBuyForAllShop = 3;
+    public int SpeedBuy;
+    public int DiveBuy;
+    public int StrengthBuy;
     
     public static PlayerBonus operator+(PlayerBonus a, PlayerBonus b)
     {
@@ -17,7 +22,10 @@ public struct PlayerBonus
         {
             Speed = a.Speed + b.Speed,
             Dive = a.Dive + b.Dive,
-            Strength = a.Strength + b.Strength
+            Strength = a.Strength + b.Strength,
+            SpeedBuy = a.SpeedBuy + b.SpeedBuy,
+            DiveBuy = a.DiveBuy + b.DiveBuy,
+            StrengthBuy = a.StrengthBuy + b.StrengthBuy
         };
     }
 }

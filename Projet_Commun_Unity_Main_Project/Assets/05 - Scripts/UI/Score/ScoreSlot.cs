@@ -62,7 +62,7 @@ public class ScoreSlot : MonoBehaviour
             totalScoreTmp.SetText($"{totalScoreDisplay}$");
     
             if (missionScoreTmp)
-                missionScoreTmp.SetText($"{missionScoreDisplay}$");
+                missionScoreTmp.SetText($"+{missionScoreDisplay}$");
     
             yield return null;
         }
@@ -73,6 +73,6 @@ public class ScoreSlot : MonoBehaviour
     
         totalScoreTmp.SetText($"{totalScoreDisplay}$");
         if (missionScoreTmp)
-            missionScoreTmp.SetText($"{missionScoreDisplay}$");
+            missionScoreTmp.SetText($"+{missionScoreDisplay}$");
     }
 }

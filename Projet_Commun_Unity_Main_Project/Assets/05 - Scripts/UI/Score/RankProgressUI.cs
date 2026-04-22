@@ -9,7 +9,10 @@ public class RankProgressUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moneyText;
     [SerializeField] private TextMeshProUGUI rankText;
     [SerializeField] private TextMeshProUGUI progressText;
-
+    
+    [Header("Progress Bar")]
+    [SerializeField] private Color[] rankColors;
+    
     [Header("Progress Bar")]
     [SerializeField] private Image progressBarFill;
 
@@ -66,6 +69,8 @@ public class RankProgressUI : MonoBehaviour
         
         moneyText.SetText($"Money {_scoreManager.TotalScore}$");
         rankText.SetText($"Rank - {_gameManager.Ranks[_gameManager.CurrentRankIndex].rankName}");
+        rankText.color = rankColors[_gameManager.CurrentRankIndex];
+        progressBarFill.color = rankColors[_gameManager.CurrentRankIndex];
 
         if (_gameManager.CurrentRankIndex > _lastRankIndex)
         {

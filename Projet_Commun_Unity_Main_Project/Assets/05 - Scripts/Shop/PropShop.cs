@@ -6,8 +6,9 @@ public class PropShop : Shop
     [SerializeField] private Prop propPrefab;
     [SerializeField] private Transform spawnTransform;
     
-    protected override void Buy(PlayerController playerController)
+    protected override bool Buy(PlayerController playerController)
     {
         Instantiate(propPrefab, spawnTransform.position, Quaternion.identity);
+        return true;
     }
 }

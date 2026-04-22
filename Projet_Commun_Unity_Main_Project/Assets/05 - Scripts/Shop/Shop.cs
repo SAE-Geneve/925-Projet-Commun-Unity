@@ -21,7 +21,7 @@ public abstract class Shop : MonoBehaviour, IInteractable
         priceTmp.SetText($"{price}$");
     }
 
-    protected abstract void Buy(PlayerController playerController);
+    protected abstract bool Buy(PlayerController playerController);
 
     public string GetPromptText()
     {
@@ -35,10 +35,17 @@ public abstract class Shop : MonoBehaviour, IInteractable
         
         if (BuyCondition(playerController) && scoreManager.PlayerScores[playerId] >= price)
         {
-            Buy(playerController);
-            _audioManager.PlaySfx(_audioManager.ShopSFX);
-            scoreManager.SubPlayerScore(price, playerId);
-            _animator.SetTrigger("Buy");
+            var isBuy = Buy(playerController);
+            if (isBuy)
+            {
+                _audioManager.PlaySfx(_audioManager.ShopSFX);
+                scoreManager.SubPlayerScore(price, playerId);
+                _animator.SetTrigger("Buy");
+            }
+            else
+            {
+                _animator.SetTrigger("Fail");
+            }
         }
         else _animator.SetTrigger("Fail");
     }

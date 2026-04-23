@@ -19,12 +19,12 @@ public partial class AddScoreAction : Action
 
         if (Enemy.Value == Good.Value)
         {
-            GameManager.Instance.Scores.AddMissionScore(Score, Manager.Value.PlayerController.Id);
+            GameManager.Instance.Scores.AddPlayerScore(Score, Manager.Value.PlayerController.Id);
         }
         else
         {
             int halfScore = Score.Value / 2;
-            GameManager.Instance.Scores.SubMissionScore(halfScore, Manager.Value.PlayerController.Id);
+            GameManager.Instance.Scores.SubPlayerScore(halfScore, Manager.Value.PlayerController.Id);
         }
 
         return Status.Success;

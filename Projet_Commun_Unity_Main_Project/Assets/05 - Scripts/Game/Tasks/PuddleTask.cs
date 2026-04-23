@@ -141,7 +141,7 @@ public class PuddleTask : GameTask
             }
             else if (gm.Context == GameContext.Mission)
             {
-                gm.Scores.AddMissionScore(cleanReward, player.Id);
+                gm.Scores.AddPlayerScore(cleanReward, player.Id);
             }
         }
         

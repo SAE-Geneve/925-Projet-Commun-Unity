@@ -12,16 +12,16 @@ public class ScoreManager
     public event Action OnScoreUpdated;
     public event Action OnTotalScoreUpdated;
 
-    public void FillTotalScores()
-    {
-        for (int i = 0; i < MissionScores.Length; i++)
-        {
-            AddPlayerScore(MissionScores[i], i);
-            MissionScores[i] = 0;
-        }
-        Debug.Log("Score Reset");
-        OnScoreUpdated?.Invoke();
-    }
+    // public void FillTotalScores()
+    // {
+    //     for (int i = 0; i < MissionScores.Length; i++)
+    //     {
+    //         AddPlayerScore(MissionScores[i], i);
+    //         MissionScores[i] = 0;
+    //     }
+    //     Debug.Log("Score Reset");
+    //     OnScoreUpdated?.Invoke();
+    // }
     
     //public int TotalGameScore() => TotalScores.Sum();
 
@@ -34,36 +34,79 @@ public class ScoreManager
         OnTotalScoreUpdated?.Invoke();
     }
     
+    private void SubTotalScore(int score)
+    {
+        _totalScore -= score;
+        Debug.Log("removed " + score + " from total score");
+        OnTotalScoreUpdated?.Invoke();
+    }
+    
+    // public void AddPlayerScore(int score, int id)
+    // {
+    //     PlayerScores[id] += score;
+    //     Debug.Log("added " + score + " to " + id + " player score");
+    //     OnScoreUpdated?.Invoke();
+    //
+    //     if (score > 0)
+    //     {
+    //         AddTotalScore(score);
+    //     }
+    // }
+    //
+    // public void SubPlayerScore(int score, int id)
+    // {
+    //     PlayerScores[id] -= score;
+    //     Debug.Log("removed " + score + " to " + id + "player score");
+    //     OnScoreUpdated?.Invoke();
+    //     
+    //     if (score > 0)
+    //     {
+    //         SubTotalScore(score);
+    //     }
+    // }
+    
     public void AddPlayerScore(int score, int id)
     {
         PlayerScores[id] += score;
         Debug.Log("added " + score + " to " + id + " player score");
         OnScoreUpdated?.Invoke();
-
+        
         if (score > 0)
         {
             AddTotalScore(score);
         }
+        
+        if (GameManager.Instance.CurrentMission != null)
+        {
+            MissionScores[id] += score;
+            Debug.Log("added " + score + " to " + id + " mission score");
+            OnScoreUpdated?.Invoke();
+        }
     }
-
+    
     public void SubPlayerScore(int score, int id)
     {
         PlayerScores[id] -= score;
         Debug.Log("removed " + score + " to " + id + "player score");
         OnScoreUpdated?.Invoke();
+        
+        if (score > 0)
+        {
+            SubTotalScore(score);
+        }
+
+        if (GameManager.Instance.CurrentMission != null)
+        {
+            MissionScores[id] -= score;
+            Debug.Log("removed " + score + " to " + id + " mission score");
+            OnScoreUpdated?.Invoke();
+        }
     }
     
-    public void AddMissionScore(int score, int id)
+    public void SubOnlyPlayerScore(int score, int id)
     {
-        MissionScores[id] += score;
-        Debug.Log("added " + score + " to " + id + " mission score");
-        OnScoreUpdated?.Invoke();
-    }
-    
-    public void SubMissionScore(int score, int id)
-    {
-        MissionScores[id] -= score;
-        Debug.Log("removed " + score + " to " + id + " mission score");
+        PlayerScores[id] -= score;
+        Debug.Log("removed " + score + " to " + id + "player score");
         OnScoreUpdated?.Invoke();
     }
 }

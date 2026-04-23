@@ -37,7 +37,7 @@ public partial class CheckIfCaughtAction : Action
                 if (GameManager.Instance.Context == GameContext.Hub)
                     GameManager.Instance.Scores.AddPlayerScore(Reward.Value, catcher.Id);
                 else
-                    GameManager.Instance.Scores.AddMissionScore(Reward.Value, catcher.Id);
+                    GameManager.Instance.Scores.AddPlayerScore(Reward.Value, catcher.Id);
                     
                 Debug.Log($"[Score] Le joueur {catcher.Id} gagne {Reward.Value} points !");
             }

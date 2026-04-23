@@ -32,13 +32,13 @@ public class ConveyorBeltTask : TriggerTask
         if(isCorrect)
         {
             Succeed();
-            GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
-            GameManager.Instance.Scores.AddMissionScore(correctScore, prop.OwnerId);
+            GameManager.Instance.Scores.AddPlayerScore(score, prop.OwnerId);
+            GameManager.Instance.Scores.AddPlayerScore(correctScore, prop.OwnerId);
         }
         else
         {
             Failed();
-            GameManager.Instance.Scores.SubMissionScore(wrongScore, prop.OwnerId);
+            GameManager.Instance.Scores.SubPlayerScore(wrongScore, prop.OwnerId);
         }
 
         if(_conveyorBreakdown != null && _conveyorBreakdown.IsEventActive())

@@ -39,7 +39,7 @@ public abstract class Shop : MonoBehaviour, IInteractable
             if (isBuy)
             {
                 _audioManager.PlaySfx(_audioManager.ShopSFX);
-                scoreManager.SubPlayerScore(price, playerId);
+                scoreManager.SubOnlyPlayerScore(price, playerId);
                 _animator.SetTrigger("Buy");
             }
             else

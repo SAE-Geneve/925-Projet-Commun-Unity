@@ -18,7 +18,7 @@ public abstract class GameEvent : MonoBehaviour
         {
             int scoreToGive = customScore >= 0 ? customScore : _eventScoreReward;
             
-            GameManager.Instance.Scores.AddMissionScore(scoreToGive, player.Id);
+            GameManager.Instance.Scores.AddPlayerScore(scoreToGive, player.Id);
             Debug.Log($"[Score] {scoreToGive} points accordés au joueur {player.Id} ({gameObject.name})");
         }
     }

@@ -31,7 +31,7 @@ public class ScoreBoard : MonoBehaviour
         {
             scoreSlots[i].gameObject.SetActive(true);
             scoreSlots[i].SetMissionScore(_scoreManager.MissionScores[i]);
-            scoreSlots[i].SetTotalScore(_scoreManager.PlayerScores[i]);
+            scoreSlots[i].SetTotalScore((_scoreManager.PlayerScores[i] - _scoreManager.MissionScores[i]));
         }
 
         for (int x = _playerManager.Players.Count; x < 4; x++)
@@ -65,7 +65,7 @@ public class ScoreBoard : MonoBehaviour
         ScoreBoardCanvas.enabled = false;
         
         GameManager gm = GameManager.Instance;
-        gm.Scores.FillTotalScores();
+        //gm.Scores.FillTotalScores();
         gm.SwitchState(GameState.Playing);
     }
 }

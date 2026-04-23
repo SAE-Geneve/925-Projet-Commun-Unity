@@ -16,7 +16,7 @@ public class Trigger2WayTask : TriggerTask
         if (prop.Type == _badPropType)
         {
             Failed();
-            GameManager.Instance.Scores.SubMissionScore(_badScore, prop.OwnerId);
+            GameManager.Instance.Scores.SubPlayerScore(_badScore, prop.OwnerId);
         }
         else if (IsTypeAccepted(prop.Type))
         {
@@ -25,7 +25,7 @@ public class Trigger2WayTask : TriggerTask
                 playerController = PlayerManager.Instance.Players.Find(p => p.Id == prop.OwnerId);
     
             Succeed(playerController);
-            GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
+            GameManager.Instance.Scores.AddPlayerScore(score, prop.OwnerId);
         }
         else return;
     

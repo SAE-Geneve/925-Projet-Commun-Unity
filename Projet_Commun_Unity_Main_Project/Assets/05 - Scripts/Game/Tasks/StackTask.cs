@@ -16,7 +16,7 @@ public class StackTask : TriggerTask
         if (!prop.IsStacked)
         {
             prop.IsStacked = true;
-            GameManager.Instance.Scores.AddMissionScore(score, prop.OwnerId);
+            GameManager.Instance.Scores.AddPlayerScore(score, prop.OwnerId);
         }
         
         _currentStack++;

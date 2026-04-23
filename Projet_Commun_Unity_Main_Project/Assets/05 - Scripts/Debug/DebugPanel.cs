@@ -41,7 +41,7 @@ public class DebugPanel : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             if(total) scoreManager.AddPlayerScore(score, i);
-            else scoreManager.AddMissionScore(score, i);
+            else scoreManager.AddPlayerScore(score, i);
         }
     }
 
@@ -64,7 +64,7 @@ public class DebugPanel : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             if(total) scoreManager.SubPlayerScore(score, i);
-            else scoreManager.SubMissionScore(score, i);
+            else scoreManager.SubPlayerScore(score, i);
         }
     }
     

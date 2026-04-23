@@ -18,7 +18,7 @@ public class MoneyBagProp : InteractableProp
             }
             else
             {
-                GameManager.Instance.Scores.AddMissionScore(_scoreReward, playerController.Id);
+                GameManager.Instance.Scores.AddPlayerScore(_scoreReward, playerController.Id);
             }
             
             Debug.Log($"[Score] Joueur {playerController.Id} a récupéré le sac d'argent ! +{_scoreReward}");

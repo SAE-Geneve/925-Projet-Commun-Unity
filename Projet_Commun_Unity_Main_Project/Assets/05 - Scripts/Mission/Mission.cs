@@ -152,6 +152,8 @@ public class Mission : MonoBehaviour
         // TimelineManager.Instance?.PlayResult(victory);
         Debug.Log($"Mission {_name} finished");
 
+        _gameManager.Scores.ResetMissionScores();
+
         StartCoroutine(LockCoroutine());
     }
 

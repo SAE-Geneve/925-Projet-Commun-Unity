@@ -109,4 +109,12 @@ public class ScoreManager
         Debug.Log("removed " + score + " to " + id + "player score");
         OnScoreUpdated?.Invoke();
     }
+
+    public void ResetMissionScores()
+    {
+        for (int i = 0; i < MissionScores.Length; i++)
+        {
+            MissionScores[i] = 0;
+        }
+    }
 }

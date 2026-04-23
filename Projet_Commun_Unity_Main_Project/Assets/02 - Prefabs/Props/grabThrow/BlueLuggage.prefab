@@ -76,6 +76,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _minForceToThrow: 3
+  _destroyAnimDuration: 0.5
   _conveyorLinearDamping: 10
   _conveyorAngularDamping: 10
 --- !u!33 &1237961105949444621
@@ -161,8 +162,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Scripts::PropFeedback
   impactEffectPrefab: {fileID: 5062905599751970331, guid: cc4fc89f041d13e4d84c1f7b7873ade6, type: 3}
   velocityThreshold: 2
+  impactCooldown: 0.5
   grabSound: {fileID: 8300000, guid: 2c147aabd47d879428c40394ab2a4e23, type: 3}
   throwSound: {fileID: 8300000, guid: bea9989d8559f95449beb401f02fb8e4, type: 3}
+  promptText: Ramasser (CTRL)
 --- !u!1001 &983309765054036283
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,6 +7,8 @@ public class PuddleSpawnEvent : GameEvent
     [SerializeField] private PuddleTask _puddlePrefab;
     [SerializeField] private List<Transform> _puddleSpawnPoints;
     [SerializeField] private int _maxConcurrentPuddles = 3;
+    [SerializeField] private int _minPuddlesPerEvent = 2; 
+    [SerializeField] private int _maxPuddlesPerEvent = 3; 
 
     [Header("Prop Reset Settings")]
     [SerializeField] private List<Prop> _mopsToReset;
@@ -28,16 +30,22 @@ public class PuddleSpawnEvent : GameEvent
     {
         if (_activePuddlesMap.Count >= _maxConcurrentPuddles || _availableSpawnPoints.Count == 0) return;
 
-        Debug.Log("EVENT: Une nouvelle flaque apparaît !");
+        int puddlesToSpawn = Random.Range(_minPuddlesPerEvent, _maxPuddlesPerEvent + 1);
 
-        int randomIndex = Random.Range(0, _availableSpawnPoints.Count);
-        Transform spawnPoint = _availableSpawnPoints[randomIndex];
-        _availableSpawnPoints.RemoveAt(randomIndex);
+        for (int i = 0; i < puddlesToSpawn; i++)
+        {
+            if (_activePuddlesMap.Count >= _maxConcurrentPuddles || _availableSpawnPoints.Count == 0) 
+                break;
 
-        PuddleTask newPuddle = Instantiate(_puddlePrefab, spawnPoint.position, spawnPoint.rotation);
+            int randomIndex = Random.Range(0, _availableSpawnPoints.Count);
+            Transform spawnPoint = _availableSpawnPoints[randomIndex];
+            _availableSpawnPoints.RemoveAt(randomIndex);
 
-        _activePuddlesMap.Add(newPuddle, spawnPoint);
-        newPuddle.OnSucceedWithPlayer += HandlePuddleCleaned;
+            PuddleTask newPuddle = Instantiate(_puddlePrefab, spawnPoint.position, spawnPoint.rotation);
+
+            _activePuddlesMap.Add(newPuddle, spawnPoint);
+            newPuddle.OnSucceedWithPlayer += HandlePuddleCleaned;
+        }
     }
 
     private void HandlePuddleCleaned(PlayerController player)

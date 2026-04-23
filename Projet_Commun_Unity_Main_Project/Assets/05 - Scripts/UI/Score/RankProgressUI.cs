@@ -66,11 +66,18 @@ public class RankProgressUI : MonoBehaviour
     {
         if (_gameManager.Ranks == null || _gameManager.Ranks.Length == 0) return;
         
-        
+        // Sécurise l'index pour ne jamais dépasser la taille des tableaux
+        int displayRankIndex = Mathf.Min(_gameManager.CurrentRankIndex, _gameManager.Ranks.Length - 1);
+        int colorIndex = Mathf.Min(_gameManager.CurrentRankIndex, rankColors.Length - 1);
+
         moneyText.SetText($"Money {_scoreManager.TotalScore}$");
-        rankText.SetText($"Rank - {_gameManager.Ranks[_gameManager.CurrentRankIndex].rankName}");
-        rankText.color = rankColors[_gameManager.CurrentRankIndex];
-        progressBarFill.color = rankColors[_gameManager.CurrentRankIndex];
+        rankText.SetText($"Rank - {_gameManager.Ranks[displayRankIndex].rankName}");
+        
+        if (rankColors != null && rankColors.Length > 0)
+        {
+            rankText.color = rankColors[colorIndex];
+            progressBarFill.color = rankColors[colorIndex];
+        }
 
         if (_gameManager.CurrentRankIndex > _lastRankIndex)
         {
@@ -78,16 +85,15 @@ public class RankProgressUI : MonoBehaviour
             _lastRankIndex = _gameManager.CurrentRankIndex;
         }
 
-        _targetFillRatio = Mathf.Clamp01((float)_scoreManager.TotalScore / _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif);
-
-        if (_gameManager.CurrentRankIndex >= _gameManager.Ranks.Length - 1 && _scoreManager.TotalScore >= _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif)
+        if (_gameManager.CurrentRankIndex >= _gameManager.Ranks.Length)
         {
             progressText.SetText("MAX !");
             _targetFillRatio = 1f;
         }
         else
         {
-            progressText.SetText($"{_scoreManager.TotalScore}$ / { _gameManager.Ranks[_gameManager.CurrentRankIndex].pointObjectif}$");
+            _targetFillRatio = Mathf.Clamp01((float)_scoreManager.TotalScore / _gameManager.Ranks[displayRankIndex].pointObjectif);
+            progressText.SetText($"{_scoreManager.TotalScore}$ / { _gameManager.Ranks[displayRankIndex].pointObjectif}$");
         }
     }
     

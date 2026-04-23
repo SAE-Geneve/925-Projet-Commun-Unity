@@ -35,7 +35,6 @@ public class PermanentTimerUI : MonoBehaviour
         int minutes = Mathf.FloorToInt(_gameManager.Timer / 60f);
         int seconds = Mathf.FloorToInt(_gameManager.Timer % 60f);
 
-        // Debug.Log(minutes + " and " + seconds);
         timeText.SetText($"{minutes:00}:{seconds:00}");
 
         float t = 1f - Mathf.Clamp01(_gameManager.Timer / _totalTime);

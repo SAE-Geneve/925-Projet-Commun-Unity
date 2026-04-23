@@ -322,13 +322,13 @@ public class GameManager : MonoBehaviour
 
     private void CheckRank()
     {
-        if (_currentRank >= ranks.Length) return;
-        Debug.Log($"(Rank Checked) Rank {_currentRank}: {Scores.TotalScore}/{ranks[_currentRank].pointObjectif}");
-        if (Scores.TotalScore < ranks[_currentRank].pointObjectif) return;
-                                                   
-        _timer += ranks[_currentRank].bonusTime;
-        _currentRank++;
-        Debug.Log($"Rank Passed: {_currentRank}");
+        while (_currentRank < ranks.Length && Scores.TotalScore >= ranks[_currentRank].pointObjectif)
+        {
+            Debug.Log($"(Rank Checked) Rank {_currentRank}: {Scores.TotalScore}/{ranks[_currentRank].pointObjectif}");
+            _timer += ranks[_currentRank].bonusTime;
+            _currentRank++;
+            Debug.Log($"Rank Passed: {_currentRank}");
+        }
     }
 
     #endregion

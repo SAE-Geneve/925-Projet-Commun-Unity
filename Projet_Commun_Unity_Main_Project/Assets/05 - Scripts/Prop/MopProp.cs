@@ -6,6 +6,7 @@ public class MopProp : InteractableProp
 {
     [Header("Mop References")]
     [SerializeField] private Material _interactMaterial;
+    [SerializeField] private ParticleSystem _particleSystem;
 
     [Header("Mop Parameters")]
     [SerializeField] [Min(0.1f)] private float cleanTime = 3f;
@@ -39,6 +40,7 @@ public class MopProp : InteractableProp
         OnStartClean?.Invoke();
         _animator.SetBool("Swip", true);
         _isCleaning = true;
+        _particleSystem.Play();
         _renderer.material = _interactMaterial;
     }
 
@@ -48,6 +50,7 @@ public class MopProp : InteractableProp
         CurrentCleaner = null;
         _animator.SetBool("Swip", false);
         _isCleaning = false;
+        _particleSystem.Stop();
         _renderer.material = _originalMaterial;
     }
 

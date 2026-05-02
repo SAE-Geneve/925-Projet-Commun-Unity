@@ -56,8 +56,8 @@ public class PuddleTask : GameTask
             float scale = Mathf.Lerp(1f, maxScale, growProgress);
             _visualTransform.localScale = _initialVisualScale * scale;
             
-            if (_mopZoneCollider)
-                _mopZoneCollider.radius = _initialMopZoneRadius * scale;
+            // if (_mopZoneCollider)
+            //     _mopZoneCollider.radius = _initialMopZoneRadius * scale;
         
             return;
         }
@@ -111,11 +111,11 @@ public class PuddleTask : GameTask
     {
         _isCleaning = false;
 
-        if (_mopZoneCollider && _visualTransform)
-        {
-            float currentScale = _visualTransform.localScale.x / _initialVisualScale.x;
-            _mopZoneCollider.radius = _initialMopZoneRadius * currentScale;
-        }
+        // if (_mopZoneCollider && _visualTransform)
+        // {
+        //     float currentScale = _visualTransform.localScale.x / _initialVisualScale.x;
+        //     _mopZoneCollider.radius = _initialMopZoneRadius * currentScale;
+        // }
         
         if (donutImage != null)
         {
